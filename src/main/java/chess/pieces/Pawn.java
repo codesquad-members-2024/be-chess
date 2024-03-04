@@ -25,4 +25,5 @@ public class Pawn {
         }
         return BLACK_REPRESENTATION;
     }
+    
 }
