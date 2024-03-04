@@ -37,4 +37,13 @@ public class BoardTest {
         assertEquals(PieceSymbol.WHITE_PAWN.getSymbol().repeat(8), board.getWhitePawnsResult());
         assertEquals(PieceSymbol.BLACK_PAWN.getSymbol().repeat(8), board.getBlackPawnsResult());
     }
+
+    @Test
+    @DisplayName("초기화된 체스판은 8개의 흰색 Pawn과 8개의 검은색 Pawn이 각 위치에 일렬로 배치되어 있어야 한다.")
+    public void print() throws Exception {
+        board.initialize();
+        String result = board.print();
+        System.out.println(result);
+        assertEquals(result, "        \n♟♟♟♟♟♟♟♟\n        \n        \n        \n        \n♙♙♙♙♙♙♙♙\n        ");
+    }
 }
