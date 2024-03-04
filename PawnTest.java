@@ -3,12 +3,16 @@ import static org.assertj.core.api.Assertions.*;
 
 public class PawnTest {
     @Test
-    @DisplayName("흰색 폰이 생성되어야 한다")
+    @DisplayName("폰 생성 확인 중복 코드 제거")
     public void create() {
-        String color = "white";
-        Pawn pawn = new Pawn(color);
-        assertThat(pawn.getColor()).isEqualTo("white");
-//        assertThat(pawn.getColor()).isEqualTo("black");
-    }
+        String colorWhite = "white";
+        String colorBlack = "black";
 
+        verifyPawn(colorWhite);
+        verifyPawn(colorBlack);
+    }
+    public void verifyPawn(final String color) {
+        Pawn pawn = new Pawn(color);
+        assertThat(pawn.getColor()).isEqualTo(color);
+    }
 }
