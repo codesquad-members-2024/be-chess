@@ -1,8 +1,9 @@
+package chess;
+
 import chess.pieces.Pawn;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
 
@@ -13,12 +14,12 @@ public class BoardTest {
 
         Pawn white = new Pawn(Pawn.WHITE_COLOR);
         board.addPawn(white);
-        assertThat(board.getPawnsSize()).isEqualTo(1);
-        assertThat(board.findPawn(0)).isEqualTo(white);
+        Assertions.assertThat(board.getPawnsSize()).isEqualTo(1);
+        Assertions.assertThat(board.findPawn(0)).isEqualTo(white);
 
         Pawn black = new Pawn(Pawn.BLACK_COLOR);
         board.addPawn(black);
-        assertThat(board.getPawnsSize()).isEqualTo(2);
-        assertThat(board.findPawn(1)).isEqualTo(black);
+        Assertions.assertThat(board.getPawnsSize()).isEqualTo(2);
+        Assertions.assertThat(board.findPawn(1)).isEqualTo(black);
     }
 }

@@ -1,3 +1,5 @@
+package chess.pieces;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +30,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("기본 생성자로 Pawn 객체를 생성하면 색상은 흰색이어야 합니다.")
+    @DisplayName("기본 생성자로 chess.pieces.Pawn 객체를 생성하면 색상은 흰색이어야 합니다.")
     public void createPawnBy기본생성자() {
         Pawn pawn = new Pawn();
         assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
