@@ -1,9 +1,9 @@
-package chess.pieces;
+package pieces;
 
-import static chess.pieces.Pawn.BLACK_COLOR;
-import static chess.pieces.Pawn.WHITE_COLOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static pieces.Pawn.BLACK_COLOR;
+import static pieces.Pawn.WHITE_COLOR;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
