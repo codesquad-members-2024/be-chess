@@ -10,7 +10,13 @@ class PawnTest {
         verifyPawn("black");
     }
 
-    void verifyPawn(String color) {
+    @Test
+    public void create_기본생성자() {
+        Pawn pawn = new Pawn();
+        assertThat("white").isEqualTo(pawn.getColor());
+    }
+
+    void verifyPawn(final String color) {
         Pawn pawn = new Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(pawn.getColor());
     }
