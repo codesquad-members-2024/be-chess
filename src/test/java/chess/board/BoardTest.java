@@ -1,11 +1,15 @@
 package chess.board;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.common.Color;
 import chess.pieces.Pawn;
+import java.lang.reflect.Method;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
 
@@ -32,5 +36,19 @@ class BoardTest {
         // then
         assertEquals(2, board.size());
         assertEquals(black, board.findPawn(1));
+    }
+
+    @DisplayName("체스 기물(폰)이 아니면 체스판에 추가 할 수 없다")
+    @ParameterizedTest(name = "체스판에 추가할 값 = {0}")
+    @ValueSource(strings = {"1", "2", "3"})
+    void add_compileError(String number) {
+        Board board = new Board();
+
+        assertThatCode(
+                () -> {
+                    Method addMethod = Board.class.getDeclaredMethod("add", Pawn.class);
+                    addMethod.setAccessible(true);
+                    addMethod.invoke(board, Integer.parseInt(number));
+                }).isInstanceOf(IllegalArgumentException.class);
     }
 }
