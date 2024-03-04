@@ -10,7 +10,7 @@ public class BoardTest {
     private Board board;
 
     @BeforeEach
-    public void initialize() {
+    public void setBoard() {
         this.board = new Board();
     }
 
