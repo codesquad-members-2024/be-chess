@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.pieces;
+
+import chess.common.Color;
 
 public class Pawn {
     private final Color color;
