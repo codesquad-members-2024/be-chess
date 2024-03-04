@@ -24,8 +24,12 @@ public class Board {
     }
 
     public void initialize() {
-        IntStream.range(0, 8).forEach(i -> pawns.add(new Pawn()));
-        IntStream.range(0, 8).forEach(i -> pawns.add(new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL)));
+        initializePawns(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL);
+        initializePawns(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL);
+    }
+
+    private void initializePawns(String color, String symbol) {
+        IntStream.range(0, 8).forEach(i -> pawns.add(new Pawn(color, symbol)));
     }
 
     public String getWhitePawnsResult() {
