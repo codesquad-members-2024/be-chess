@@ -6,18 +6,20 @@ import pieces.Pawn;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+    Board board;
     @Test
     public void create() throws Exception {
-        Board board = new Board();
+        board = new Board();
 
         Pawn white = new Pawn(Pawn.WHITE_COLOR);
-        board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findPawn(0));
+        testAddPawn(white,1,0);
 
         Pawn black = new Pawn(Pawn.BLACK_COLOR);
-        board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findPawn(1));
+        testAddPawn(black,2,1);
+    }
+    public void testAddPawn(Pawn pawn, int pawnNumber, int indexNumber){
+        board.add(pawn);
+        assertEquals(pawnNumber, board.size());
+        assertEquals(pawn, board.findPawn(indexNumber));
     }
 }
