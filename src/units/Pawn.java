@@ -1,3 +1,5 @@
+package units;
+
 public class Pawn {
 
     private final String color;
