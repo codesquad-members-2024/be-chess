@@ -17,6 +17,7 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("추가한 Pawn을 정상적으로 가져야 한다.")
     public void create() throws Exception {
         Pawn white = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL);
         board.add(white);
