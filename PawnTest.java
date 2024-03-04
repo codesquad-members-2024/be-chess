@@ -1,16 +1,19 @@
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
 
     @Test
     void create() {
-        Pawn pawn1 = new Pawn("white");
-        assertThat(pawn1.getColor()).isEqualTo("white");
+        String color = "white";
+        verifyPawn(color);
 
-        Pawn pawn2 = new Pawn("black");
-        assertThat(pawn2.getColor()).isEqualTo("black");
+        color = "black";
+        verifyPawn(color);
+    }
+
+    void verifyPawn(final String color) {
+        assertThat(new Pawn(color).getColor()).isEqualTo(color);
     }
 }
