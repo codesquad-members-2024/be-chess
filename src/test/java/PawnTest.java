@@ -1,11 +1,11 @@
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static piece.Pawn.BLACK;
-import static piece.Pawn.WHITE;
+import static pieces.Pawn.BLACK;
+import static pieces.Pawn.WHITE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import piece.Pawn;
+import pieces.Pawn;
 
 public class PawnTest {
     @Test
@@ -24,7 +24,7 @@ public class PawnTest {
     }
 
     private void verifyPawn(final String color) {
-        Pawn pawn = new piece.Pawn(color);
+        Pawn pawn = new pieces.Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(color);
     }
 }
