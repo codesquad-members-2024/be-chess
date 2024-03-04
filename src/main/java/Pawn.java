@@ -3,6 +3,9 @@ public class Pawn {
     public Pawn(String teamColor){
         this.teamColor = teamColor;
     }
+    public Pawn(){
+        this.teamColor = "white";
+    }
     public String getColor(){
         return teamColor;
     }
