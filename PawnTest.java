@@ -13,6 +13,13 @@ public class PawnTest {
         verifyPawn(black);
     }
 
+    @Test
+    @DisplayName("색상을 입력하지 않고 폰 생성시 흰색 폰이 생성되어야 한다")
+    public void createDefault(){
+        Pawn defaultPawn = new Pawn();
+        assertThat(defaultPawn.getColor()).isEqualTo("white");
+    }
+
     private static void verifyPawn(final String color) {
         Pawn blackPawn = new Pawn(color);
         assertThat(blackPawn.getColor()).isEqualTo(color);
