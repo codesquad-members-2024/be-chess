@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -5,7 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PawnTest {
 
     @Test
-    void create() {
+    @DisplayName("흰색 혹은 검은색 폰이 정상적으로 생성되어야 합니다.")
+    void createPawnByWhiteAndBlackColor() {
         String color = "white";
         verifyPawn(color);
 
