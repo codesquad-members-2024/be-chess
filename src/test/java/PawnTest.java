@@ -1,7 +1,4 @@
-package Test;
-
 import org.junit.jupiter.api.*;
-import src.Pawn;
 
 import static org.assertj.core.api.Assertions.*;
 
