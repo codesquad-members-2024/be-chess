@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PawnTest {
 
     @Test
-    @DisplayName("흰색 폰이 생성되어야 한다")
+    @DisplayName("입력받은 색의 폰이 생성되어야 한다")
     public void create() {
         String white = "white";
         String black = "black";
@@ -14,6 +14,7 @@ public class PawnTest {
         verifyPawn(black);
     }
     @Test
+    @DisplayName("기본 생성자 구현 테스트")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
         assertEquals("white", pawn.getColor());
