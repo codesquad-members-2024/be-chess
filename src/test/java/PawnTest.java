@@ -21,18 +21,21 @@ public class PawnTest {
         assertThat(pawn.getColor()).isEqualTo(color);
     }
 
-    /*
+
     private static Stream<Arguments> isColor_색상검증_실패한다() {
         return Stream.of(
-                Arguments.of("white"),
-                Arguments.of("black")
+                Arguments.of("red"),
+                Arguments.of("bule"),
+                Arguments.of(" "),
+                Arguments.of(""),
+                Arguments.of("yellow")
         );
     }
+
     @ParameterizedTest
     @MethodSource("isColor_색상검증_실패한다")
     void isColor(String color) {
         assertThatThrownBy(() -> Validator.isColor(color))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-     */
 }
