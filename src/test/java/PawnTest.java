@@ -9,10 +9,10 @@ public class PawnTest {
     @Test
     @DisplayName("흰색 혹은 검은색 폰이 정상적으로 생성되어야 합니다.")
     void createPawnByWhiteAndBlackColor() {
-        String color = "white";
+        String color = Pawn.WHITE_COLOR;
         verifyPawn(color);
 
-        color = "black";
+        color = Pawn.BLACK_COLOR;
         verifyPawn(color);
     }
 
@@ -31,6 +31,6 @@ public class PawnTest {
     @DisplayName("기본 생성자로 Pawn 객체를 생성하면 색상은 흰색이어야 합니다.")
     public void createPawnBy기본생성자() {
         Pawn pawn = new Pawn();
-        assertThat(pawn.getColor()).isEqualTo("white");
+        assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
     }
 }
