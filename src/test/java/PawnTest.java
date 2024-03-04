@@ -26,4 +26,11 @@ public class PawnTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Pawn("blue"));
     }
+
+    @Test
+    @DisplayName("기본 생성자로 Pawn 객체를 생성하면 색상은 흰색이어야 합니다.")
+    public void createPawnBy기본생성자() {
+        Pawn pawn = new Pawn();
+        assertThat(pawn.getColor()).isEqualTo("white");
+    }
 }
