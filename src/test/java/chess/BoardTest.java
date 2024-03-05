@@ -14,7 +14,7 @@ public class BoardTest {
     }
     @Test
     @DisplayName("보드 생성")
-    public void create() {
+    public void create() { // for문
         int index = 0;
         Pawn white = new Pawn(Pawn.WHITE_COLOR);
         verifyBoard(white,index++);
@@ -32,7 +32,9 @@ public class BoardTest {
     @DisplayName("폰 이외의 객체 추가 방지")
     public void createInteger() {
         Board board = new Board();
+
         //컴파일 에러 발생
-//        board.add(new Integer(7));
+        Integer seven = Integer.valueOf(7);
+//        board.add(seven);
     }
 }

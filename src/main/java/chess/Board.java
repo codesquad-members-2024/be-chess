@@ -1,12 +1,11 @@
 package chess;
 
 import chess.pieces.Pawn;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    List<Pawn> pawns = new ArrayList<>();
+    private final List<Pawn> pawns = new ArrayList<>(); //final 변경
     public void add(final Pawn pawn) {
         this.pawns.add(pawn);
     }
