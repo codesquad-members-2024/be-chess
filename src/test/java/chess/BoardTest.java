@@ -46,4 +46,20 @@ class BoardTest {
         assertEquals("최대 폰 개수를 초과하였습니다.", assertThrows(IllegalStateException.class,
             () -> board.addPawn(new Pawn())).getMessage());
     }
+
+    @Test
+    @DisplayName("하얀색 Pawn에 정상적인 symbol값이 할당되었는지 테스트")
+    void testInitializeWhitePawn() {
+        board.initialize();
+        assertEquals("pppppppp", board.getWhitePawnResult());
+
+    }
+
+    @Test
+    @DisplayName("검은색 Pawn에 정상적인 symbol값이 할당되었는지 테스트 ")
+    void testInitializeBlackPawn() {
+        board.initialize();
+        assertEquals("PPPPPPPP", board.getBlackPawnResult());
+    }
+
 }
