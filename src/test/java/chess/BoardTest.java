@@ -19,11 +19,25 @@ class BoardTest {
         testAddPawn(white,1,0);
 
         Pawn black = new Pawn(PieceColor.BLACK, Representation.p);
-        testAddPawn(black,2,1);
+        testAddPawn(black,2,0);
     }
     private void testAddPawn(Pawn pawn, int pawnNumber, int indexNumber){
-        board.add(pawn);
-        assertEquals(pawnNumber, board.size());
-        assertEquals(pawn, board.findPawn(indexNumber));
+        if (pawn.getColor().equals(PieceColor.WHITE)){
+            board.addWhitePawn(pawn);
+            assertEquals(pawn, board.findWhitePawn(indexNumber));
+        }else if (pawn.getColor().equals(PieceColor.BLACK)){
+            board.addBlackPawn(pawn);
+            assertEquals(pawn, board.findBlackPawn(indexNumber));
+        }
+        assertEquals(pawnNumber, board.totalSize());
+    }
+    @Test
+    @DisplayName("폰 객체가 흰색 검은색 각각 8개씩 추가되었습니다.")
+    public void initialize() throws Exception {
+        Board board = new Board();
+        board.initialize();
+        assertEquals("pppppppp", board.getWhitePawnsResult());
+        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        board.print();
     }
 }
