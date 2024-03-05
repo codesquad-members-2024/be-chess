@@ -24,6 +24,7 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("추가한 폰의 개수와 존재를 검증한다")
     public void create() throws Exception {
         Pawn white = new Pawn(Pawn.WHITE);
         verifyBoard(white, 1);
