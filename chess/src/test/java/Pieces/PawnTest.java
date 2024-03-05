@@ -24,8 +24,8 @@ public class PawnTest{
     public void createBlackPawn() {
         verifyPawn(Pawn.BLACK_COLOR);
     }
-    private void verifyPawn(String expectedColor) {
+    private void verifyPawn(boolean expectedColor) {
         Pawn pawn = new Pawn(expectedColor);
-        assertThat(pawn.getColor()).isEqualTo(expectedColor);
+        assertEquals(expectedColor, pawn.getColor());
     }
 }

@@ -12,11 +12,11 @@ public class Board {
         pawns = new ArrayList<>();
     }
 
-    public void add(Pawn pawn) {
+    public void addPawn(Pawn pawn) {
         pawns.add(pawn);
     }
 
-    public int size() {
+    public int getPawnsSize() {
         return pawns.size();
     }
 
@@ -24,6 +24,7 @@ public class Board {
         if (index >= 0 && index < pawns.size()) {
             return pawns.get(index);
         }
-        return null;
+        throw new IndexOutOfBoundsException("Invalid index: " + index);
     }
+
 }

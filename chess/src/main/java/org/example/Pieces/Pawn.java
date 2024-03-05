@@ -1,18 +1,19 @@
 package org.example.Pieces;
 
 public class Pawn {
-    public static final String WHITE_COLOR = "white";
-    public final static String BLACK_COLOR = "black";
-    private static String pawnColor;
+    public static final boolean WHITE_COLOR = true;
+    public static final boolean BLACK_COLOR = false;
+    private final boolean color;
 
-    public Pawn(){
-        this.pawnColor = WHITE_COLOR;
-    }
-    public Pawn(String color) {
-        this.pawnColor = color;
+    public Pawn() {
+        this.color = WHITE_COLOR;
     }
 
-    public static String getColor() {
-        return pawnColor;
+    public Pawn(boolean color) {
+        this.color = color;
+    }
+
+    public boolean getColor() {
+        return color;
     }
 }
