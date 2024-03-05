@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PieceTest {
+class PieceTest {
     @Test
     @DisplayName("pawn, knight, rook, bishop, queen, king 기물들의 색깔과 유니코드 심볼이 알맞게 생성되어야 한다.")
     public void create_piece() {

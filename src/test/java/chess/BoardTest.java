@@ -7,11 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BoardTest {
+class BoardTest {
     private Board board;
 
     @BeforeEach
-    public void setBoard() {
+    void setBoard() {
         this.board = new Board();
     }
 
