@@ -6,6 +6,7 @@ import static utils.StringUtils.appendNewLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
 
@@ -48,5 +49,15 @@ class BoardTest {
         assertThat(board.getPieceCount(Color.BLACK, PieceSymbol.QUEEN)).isEqualTo(1);
         assertThat(board.getPieceCount(Color.BLACK, PieceSymbol.KING)).isEqualTo(1);
         assertThat(board.getPieceCount(Color.BLACK, PieceSymbol.PAWN)).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("주어진 위치의 기물을 가져올 수 있다.")
+    public void findPiece() throws Exception {
+        board.initialize();
+        assertThat(Piece.createBlackRook()).isEqualTo(board.findPiece("a8"));
+        assertThat(Piece.createBlackRook()).isEqualTo(board.findPiece("h8"));
+        assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("a1"));
+        assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("h1"));
     }
 }
