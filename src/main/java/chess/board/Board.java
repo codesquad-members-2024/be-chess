@@ -2,78 +2,91 @@ package chess.board;
 
 import static chess.utils.StringUtils.appendNewLine;
 
-import chess.pieces.Color;
-import chess.pieces.Name;
 import chess.pieces.Piece;
+import chess.pieces.Piece.Color;
+import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Board {
     public static final int COLUMN_AND_ROW_SIZE = 8;
     private static final int BLACK_INITIAL_OTHERS_ROW = 0;
     private static final int BLACK_INITIAL_PAWNS_ROW = 1;
-    private static final int WHITE_INITIAL_OTHERS_ROW = 7;
     private static final int WHITE_INITIAL_PAWNS_ROW = 6;
+    private static final int WHITE_INITIAL_OTHERS_ROW = 7;
 
-    public static final String EMPTY_SPACE = ".";
     public static final String EMPTY_STRING = "";
     private final Piece[][] pieces = new Piece[COLUMN_AND_ROW_SIZE][COLUMN_AND_ROW_SIZE];
 
     public void initialize() {
-        List<Name> otherNames = makeOtherNames();
-
+        List<Type> otherTypes = makeOtherNames();
         for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            pieces[BLACK_INITIAL_OTHERS_ROW][i] = Piece.createPiece(otherNames.get(i), Color.BLACK);
-        }
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            pieces[BLACK_INITIAL_PAWNS_ROW][i] = Piece.createPiece(Name.PAWN, Color.BLACK);
-        }
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            pieces[WHITE_INITIAL_OTHERS_ROW][i] = Piece.createPiece(otherNames.get(i), Color.WHITE);
-        }
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            pieces[WHITE_INITIAL_PAWNS_ROW][i] = Piece.createPiece(Name.PAWN, Color.WHITE);
+            fillRank(i, otherTypes);
         }
     }
 
-    private List<Name> makeOtherNames() {
-        List<Name> otherNames = new ArrayList<>();
-        otherNames.add(Name.ROOK);
-        otherNames.add(Name.KNIGHT);
-        otherNames.add(Name.BISHOP);
-        otherNames.add(Name.QUEEN);
-        otherNames.add(Name.KING);
-        otherNames.add(Name.BISHOP);
-        otherNames.add(Name.KNIGHT);
-        otherNames.add(Name.ROOK);
-        return otherNames;
+    private void fillRank(int i, List<Type> otherTypes) {
+        for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+            if (i == BLACK_INITIAL_OTHERS_ROW) {
+                pieces[i][j] = Piece.createBlack(otherTypes.get(j));
+                continue;
+            }
+            if (i == BLACK_INITIAL_PAWNS_ROW) {
+                pieces[i][j] = Piece.createBlack(Type.PAWN);
+                continue;
+            }
+            if (i == WHITE_INITIAL_PAWNS_ROW) {
+                pieces[i][j] = Piece.createWhite(Type.PAWN);
+                continue;
+            }
+            if (i == WHITE_INITIAL_OTHERS_ROW) {
+                pieces[i][j] = Piece.createWhite(otherTypes.get(j));
+                continue;
+            }
+            pieces[i][j] = Piece.createBlank();
+        }
+    }
+
+    private List<Type> makeOtherNames() {
+        List<Type> otherTypes = new ArrayList<>();
+        otherTypes.add(Type.ROOK);
+        otherTypes.add(Type.KNIGHT);
+        otherTypes.add(Type.BISHOP);
+        otherTypes.add(Type.QUEEN);
+        otherTypes.add(Type.KING);
+        otherTypes.add(Type.BISHOP);
+        otherTypes.add(Type.KNIGHT);
+        otherTypes.add(Type.ROOK);
+        return otherTypes;
     }
 
     public int pieceCount() {
         return (int) Arrays.stream(pieces)
                 .flatMap(Arrays::stream)
-                .filter(Objects::nonNull)
+                .filter(piece -> !piece.isBlank())
+                .count();
+    }
+
+    public int pieceCount(Type type, Color color) {
+        return (int) Arrays.stream(pieces)
+                .flatMap(Arrays::stream)
+                .filter(piece -> piece.getType() == type && piece.getColor() == color)
                 .count();
     }
 
     public String showBoard() {
         StringBuilder sb = new StringBuilder();
         for (Piece[] pieceArray : pieces) {
-            appendRow(pieceArray, sb);
+            for (Piece piece : pieceArray) {
+                sb.append(piece.getRepresentation());
+            }
+            sb.append(appendNewLine(EMPTY_STRING));
         }
         return sb.toString();
     }
 
-    private void appendRow(Piece[] pieceArray, StringBuilder sb) {
-        for (Piece piece : pieceArray) {
-            if (piece == null) {
-                sb.append(EMPTY_SPACE);
-                continue;
-            }
-            sb.append(piece.getRepresentation().getValue());
-        }
-        sb.append(appendNewLine(EMPTY_STRING));
+    public Piece findPiece(String a8) {
+        return null;
     }
 }
