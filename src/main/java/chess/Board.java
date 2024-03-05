@@ -1,9 +1,11 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
+import pieces.PieceSymbol;
 
 public class Board {
     private ArrayList<Piece> pieces;
@@ -79,8 +81,15 @@ public class Board {
     public String showBoard() {
         return IntStream.range(0, 8)
                 .mapToObj(row -> IntStream.range(0, 8)
-                        .mapToObj(col -> board[row][col] == null ? " " : board[row][col].getSymbol())
+                        .mapToObj(col -> getSymbol(board[row][col]))
                         .collect(Collectors.joining()))
                 .collect(Collectors.joining("\n")).concat("\n");
+    }
+
+    private String getSymbol(Piece piece) {
+        if (Objects.isNull(piece)) {
+            return PieceSymbol.NO_PIECE.getSymbol();
+        }
+        return piece.getSymbol();
     }
 }
