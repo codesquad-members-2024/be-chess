@@ -2,6 +2,7 @@ package chess.pieces;
 
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class PawnTest {
         verifyPawn(Pawn.BLACK);
     }
 
-    void verifyPawn(final String color){
+    private void verifyPawn(final String color){
         Pawn pawn = new Pawn(color);
         AssertionsForClassTypes.assertThat(pawn.getColor()).isEqualTo(color);
     }

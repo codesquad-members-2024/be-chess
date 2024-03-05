@@ -2,24 +2,33 @@ package chess;
 
 import chess.Board;
 import chess.pieces.Pawn;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
-    @Test
-    public void create() throws Exception {
-        Board board = new Board();
+    Board board;
 
-        Pawn white = new Pawn(Pawn.WHITE);
-        board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findPawn(0));
-
-        Pawn black = new Pawn(Pawn.BLACK);
-        board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findPawn(1));
+    // 테스트 실행되기 전 Board 객체 생성
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
     }
 
+    private void verifyBoard(Pawn pawn, int expectedSize) {
+        board.add(pawn);
+        assertEquals(expectedSize, board.size());
+        assertEquals(pawn, board.findPawn(expectedSize - 1));
+    }
+
+    @Test
+    public void create() throws Exception {
+        Pawn white = new Pawn(Pawn.WHITE);
+        verifyBoard(white, 1);
+
+        Pawn black = new Pawn(Pawn.BLACK);
+        verifyBoard(black, 2);
+    }
 }
