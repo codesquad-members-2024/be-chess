@@ -1,9 +1,9 @@
 package chess;
 
-import java.util.ArrayList;
-import java.util.List;
 import chess.pieces.Pawn;
 import chess.pieces.Pawn.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
@@ -14,12 +14,10 @@ public class Board {
     private final List<Pawn> pieces = new ArrayList<>();
     private Pawn[][] piecePositions = new Pawn[8][8];
 
-    public Board() {
-        initialize();
-    }
 
     public void initialize() {
-
+        initializeWhitePawn();
+        initializeBlackPawn();
     }
 
     public void addPawn(Pawn pawn) {
@@ -42,7 +40,7 @@ public class Board {
     }
 
     private void initializeBlackPawn() {
-        for (int i = 0; i < MAXIMUM_PAWN_NUMBER; i++) {
+        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
             Pawn pawn = new Pawn(Color.BLACK);
             pieces.add(pawn);
             piecePositions[PAWN_INIT_POSITION][i] = pawn;
@@ -50,11 +48,27 @@ public class Board {
     }
 
     private void initializeWhitePawn() {
-        for (int i = 0; i < MAXIMUM_PAWN_NUMBER; i++) {
+        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
             Pawn pawn = new Pawn(Color.WHITE);
             pieces.add(pawn);
             piecePositions[CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION][i] = pawn;
         }
+    }
+
+    public String getWhitePawnResult() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
+            sb.append(piecePositions[CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION][i].getSymbol());
+        }
+        return sb.toString();
+    }
+
+    public String getBlackPawnResult() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
+            sb.append(piecePositions[PAWN_INIT_POSITION][i].getSymbol());
+        }
+        return sb.toString();
     }
 
 }
