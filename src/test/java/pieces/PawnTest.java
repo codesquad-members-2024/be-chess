@@ -1,4 +1,8 @@
+package pieces;
+
 import org.junit.jupiter.api.*;
+import pieces.Pawn;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals; // JUnit 5의 assertEquals를 임포트
 
