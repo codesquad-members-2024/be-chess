@@ -8,11 +8,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class Board {
     private final int BOARD_WIDTH = 8;
-//    private final int BOARD_HEIGHT = 8;
-//    private final String[][] board = new String[BOARD_HEIGHT][BOARD_WIDTH];
+    private final int BOARD_HEIGHT = 8;
+    private final Pawn[][] board = new Pawn[BOARD_HEIGHT][BOARD_WIDTH];
+    private final int BLACK_PAWN_LINE =1;
+    private final int WHITE_PAWN_LINE =6;
     private List<Pawn> whitePawns = new ArrayList<Pawn>();
     private List<Pawn> blackPawns = new ArrayList<Pawn>();
     public void addWhitePawn(Pawn pawn){
@@ -34,10 +37,12 @@ public class Board {
     public void initialize(){
         for(int i = 0; i < BOARD_WIDTH; i++) {
             addWhitePawn(new Pawn(PieceColor.WHITE, Representation.p));
+            board[WHITE_PAWN_LINE][i] = new Pawn(PieceColor.WHITE, Representation.p);
         }
 
         for(int i = 0; i < BOARD_WIDTH; i++) {
             addBlackPawn(new Pawn(PieceColor.BLACK, Representation.P));
+            board[BLACK_PAWN_LINE][i] = new Pawn(PieceColor.BLACK, Representation.p);
         }
     }
 
@@ -58,17 +63,31 @@ public class Board {
     }
     public void print(){
         StringBuilder sb = new StringBuilder();
-        sb.append(addEmptyLine());
-        sb.append('\n');
-        sb.append(getBlackPawnsResult());
-        sb.append('\n');
-        for (int i = 0; i<4 ; i++){
-            sb.append(addEmptyLine());
-            sb.append('\n');
+//        sb.append(addEmptyLine());
+//        sb.append('\n');
+//        sb.append(getBlackPawnsResult());
+//        sb.append('\n');
+//        for (int i = 0; i<4 ; i++){
+//            sb.append(addEmptyLine());
+//            sb.append('\n');
+//        }
+//        sb.append(getWhitePawnsResult());
+//        sb.append('\n');
+//        sb.append(addEmptyLine());
+//        System.out.println(sb.toString());
+
+        for (int i=0;i<BOARD_HEIGHT;i++){
+            for (int j=0;j<BOARD_WIDTH;j++){
+                if (board[i][j] != null){
+                    sb.append(board[i][j].getRepresentation());
+                }else{
+                    sb.append('.');
+                }
+            }
+            if (i < 7){
+                sb.append('\n');
+            }
         }
-        sb.append(getWhitePawnsResult());
-        sb.append('\n');
-        sb.append(addEmptyLine());
         System.out.println(sb.toString());
     }
     private String addEmptyLine(){
