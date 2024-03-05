@@ -17,7 +17,7 @@ public class PawnTest {
     }
 
     @Test
-    public void createDefaultConstructor() throws Exception {
+    public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
         assertEquals(Pawn.WHITE_COLOR, pawn.getColor());
     }
