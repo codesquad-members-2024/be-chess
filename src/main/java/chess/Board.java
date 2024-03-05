@@ -9,8 +9,10 @@ import java.util.StringJoiner;
 import java.util.stream.IntStream;
 
 public class Board {
+    private final int MIN_RANK = 1;
+    private final int MAX_RANK = 8;
     private final List<Pawn> pieces = new ArrayList<>();
-    private final Pawn[][] board = new Pawn[8][8];
+    private final Pawn[][] board = new Pawn[MAX_RANK][MAX_RANK];
 
     public void add(Pawn piece){
         pieces.add(piece);
@@ -30,12 +32,12 @@ public class Board {
     }
 
     private void addPawns(int rank , Pawn.Color color){
-        Arrays.fill(board[8-rank], new Pawn(color));
-        Arrays.stream(board[8-rank]).forEach(this::add);
+        Arrays.fill(board[MAX_RANK-rank], new Pawn(color));
+        Arrays.stream(board[MAX_RANK-rank]).forEach(this::add);
     }
 
     public void print() {
-        IntStream.rangeClosed(1,8).forEach(rank -> System.out.println(getRankResult(rank)));
+        IntStream.rangeClosed(MIN_RANK,MAX_RANK).forEach(rank -> System.out.println(getRankResult(rank)));
     }
 
     public String getWhitePawnsResult() {
@@ -48,7 +50,7 @@ public class Board {
 
     private String getRankResult(int rank){
         StringJoiner sj = new StringJoiner("");
-        Arrays.stream(board[8-rank]).forEach(p->{
+        Arrays.stream(board[MAX_RANK-rank]).forEach(p->{
             if(p!=null) sj.add(p.getRepresentation());
             else sj.add(".");
         });
