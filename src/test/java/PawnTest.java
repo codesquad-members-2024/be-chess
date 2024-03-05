@@ -6,11 +6,8 @@ public class PawnTest {
     @Test
     @DisplayName("흰색/검은색 폰이 생성되어야 한다")
     public void create() {
-        String whiteColor = "white";
-        String blackColor = "black";
-
-        verifyPawn(whiteColor);
-        verifyPawn(blackColor);
+        verifyPawn(Pawn.COLOR_WHITE);
+        verifyPawn(Pawn.COLOR_BLACK);
     }
 
     private void verifyPawn(String color) {

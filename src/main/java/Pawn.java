@@ -1,5 +1,13 @@
 public class Pawn {
-    private final String color;
+    public static final String COLOR_WHITE = "white";
+    public static final String COLOR_BLACK = "black";
+
+    private String color;
+
+
+    Pawn() {
+        this.color = COLOR_WHITE;
+    }
 
     public Pawn(String color) {
         this.color = color;
