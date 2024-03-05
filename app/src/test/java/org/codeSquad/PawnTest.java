@@ -28,4 +28,11 @@ public class PawnTest {
         Pawn pawn = new Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(color);
     }
+
+    @DisplayName("기본생성자로 폰을 생성하였을 때 흰색 폰이 생성된다")
+    @Test
+    void create_기본생성자() throws Exception{
+        Pawn pawn = new Pawn();
+        assertThat(pawn.getColor()).isEqualTo(ChessPieceColor.WHITE);
+    }
 }
