@@ -26,6 +26,14 @@ public class Board {
         }
     }
 
+    public void initializeEmpty() {
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+                pieces[i][j] = Piece.createBlank();
+            }
+        }
+    }
+
     private void fillRank(int i, List<Type> otherTypes) {
         for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
             if (i == BLACK_INITIAL_OTHERS_ROW) {
@@ -88,5 +96,9 @@ public class Board {
 
     public Piece findPiece(Position position) {
         return pieces[position.getYPos()][position.getXPos()];
+    }
+
+    public void move(Position position, Piece piece) {
+        pieces[position.getYPos()][position.getXPos()] = piece;
     }
 }

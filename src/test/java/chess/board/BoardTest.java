@@ -16,11 +16,11 @@ public class BoardTest {
     @BeforeEach
     public void setup() {
         board = new Board();
-        board.initialize();
     }
 
     @Test
     void create() {
+        board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);
         String blankRank = appendNewLine("........");
         assertThat(board.showBoard()).isEqualTo(
@@ -35,6 +35,7 @@ public class BoardTest {
     @Test
     @DisplayName("특정 피스의 개수를 셀 수 있다.")
     void pieceCount() {
+        board.initialize();
         assertThat(board.pieceCount(Type.ROOK, Color.WHITE)).isEqualTo(2);
         assertThat(board.pieceCount(Type.ROOK, Color.BLACK)).isEqualTo(2);
         assertThat(board.pieceCount(Type.KING, Color.WHITE)).isEqualTo(1);
@@ -44,11 +45,24 @@ public class BoardTest {
     @Test
     @DisplayName("특정 위치의 피스 정보를 가져올 수 있다.")
     public void findPiece() {
+        board.initialize();
         assertThat(board.findPiece(new Position("a8"))).isEqualTo(Piece.createBlack(Type.ROOK));
         assertThat(board.findPiece(new Position("h8"))).isEqualTo(Piece.createBlack(Type.ROOK));
         assertThat(board.findPiece(new Position("a1"))).isEqualTo(Piece.createWhite(Type.ROOK));
         assertThat(board.findPiece(new Position("h1"))).isEqualTo(Piece.createWhite(Type.ROOK));
 
         assertThat(board.findPiece(new Position("e1"))).isEqualTo(Piece.createWhite(Type.KING));
+    }
+
+    @Test
+    @DisplayName("원하는 위치에 피스를 놓을 수 있다.")
+    public void move() {
+        board.initializeEmpty();
+
+        Position position = new Position("b5");
+        Piece piece = Piece.createBlack(Type.ROOK);
+        board.move(position, piece);
+
+        assertThat(board.findPiece(position)).isEqualTo(piece);
     }
 }
