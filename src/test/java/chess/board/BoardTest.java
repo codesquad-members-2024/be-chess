@@ -1,6 +1,7 @@
 package chess.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import chess.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,29 @@ class BoardTest {
 
         assertThat(board.findPawn(0)).isEqualTo(white);
         assertThat(board.findPawn(1)).isEqualTo(black);
+    }
 
+    @Test
+    @DisplayName("보드를 초기화하면 흑색폰과 흰색폰을 각각 8개씩 생성한다.")
+    public void initialize() {
+        board.initialize();
+        assertEquals("pppppppp", board.getPawnsResult(Pawn.WHITE_COLOR));
+        assertEquals("PPPPPPPP", board.getPawnsResult(Pawn.BLACK_COLOR));
+    }
+
+    @Test
+    @DisplayName("보드는 현재의 보드 상태를 반환할 수 있다.")
+    void print() {
+        board.initialize();
+        assertThat(board.print()).isEqualTo("""
+                ........
+                PPPPPPPP
+                ........
+                ........
+                ........
+                ........
+                pppppppp
+                ........
+                """);
     }
 }
