@@ -1,12 +1,13 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
 
 public class Board {
-    private ArrayList<Piece> pieces;
+    private List<Piece> pieces;
     private Piece[][] board;
 
     public Board() {
