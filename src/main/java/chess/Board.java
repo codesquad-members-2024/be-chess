@@ -111,4 +111,11 @@ public class Board {
                         piece.getPieceSymbol().equals(pieceSymbol))
                 .count();
     }
+
+    public Piece findPiece(String position) {
+        int row = 8 - Character.getNumericValue(position.charAt(1));
+        int col = position.charAt(0) - 'a';
+
+        return board.get(row).getPiece(col);
+    }
 }
