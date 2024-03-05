@@ -18,32 +18,30 @@ public class Piece {
     }
 
     public enum PieceSymbol {
-        NO_PIECE("•"),
-        PAWN("♙"),
-        ROOK("♖"),
-        KNIGHT("♘"),
-        BISHOP("♗"),
-        QUEEN("♕"),
-        KING("♔");
+        NO_PIECE("no-piece", "•"),
+        PAWN("pawn", "♙"),
+        ROOK("rook", "♖"),
+        KNIGHT("knight", "♘"),
+        BISHOP("bishop", "♗"),
+        QUEEN("queen", "♕"),
+        KING("king", "♔");
 
+        private final String name;
         private final String symbol;
 
-        PieceSymbol(String symbol) {
+        PieceSymbol(String name, String symbol) {
+            this.name = name;
             this.symbol = symbol;
         }
 
         public String getSymbol() {
             return symbol;
         }
-    }
 
-    public static final String NO_PIECE = "no-piece";
-    public static final String PAWN = "pawn";
-    public static final String ROOK = "rook";
-    public static final String KNIGHT = "knight";
-    public static final String BISHOP = "bishop";
-    public static final String QUEEN = "queen";
-    public static final String KING = "king";
+        public String getName() {
+            return name;
+        }
+    }
 
     private final String name;
     private final String color;
@@ -56,55 +54,63 @@ public class Piece {
     }
 
     public static Piece createWhitePawn() {
-        return new Piece(PAWN, Color.WHITE.color, PieceSymbol.PAWN);
+        return creatWhite(PieceSymbol.PAWN);
     }
 
     public static Piece createBlackPawn() {
-        return new Piece(PAWN, Color.BLACK.color, PieceSymbol.PAWN);
+        return createBlack(PieceSymbol.PAWN);
     }
 
     public static Piece createWhiteRook() {
-        return new Piece(ROOK, Color.WHITE.color, PieceSymbol.ROOK);
+        return creatWhite(PieceSymbol.ROOK);
     }
 
     public static Piece createBlackRook() {
-        return new Piece(ROOK, Color.BLACK.color, PieceSymbol.ROOK);
+        return createBlack(PieceSymbol.ROOK);
     }
 
     public static Piece createWhiteKnight() {
-        return new Piece(KNIGHT, Color.WHITE.color, PieceSymbol.KNIGHT);
+        return creatWhite(PieceSymbol.KNIGHT);
     }
 
     public static Piece createBlackKnight() {
-        return new Piece(KNIGHT, Color.BLACK.color, PieceSymbol.KNIGHT);
+        return createBlack(PieceSymbol.KNIGHT);
     }
 
     public static Piece createWhiteBishop() {
-        return new Piece(BISHOP, Color.WHITE.color, PieceSymbol.BISHOP);
+        return creatWhite(PieceSymbol.BISHOP);
     }
 
     public static Piece createBlackBishop() {
-        return new Piece(BISHOP, Color.BLACK.color, PieceSymbol.BISHOP);
+        return createBlack(PieceSymbol.BISHOP);
     }
 
     public static Piece createWhiteQueen() {
-        return new Piece(QUEEN, Color.WHITE.color, PieceSymbol.QUEEN);
+        return creatWhite(PieceSymbol.QUEEN);
     }
 
     public static Piece createBlackQueen() {
-        return new Piece(QUEEN, Color.BLACK.color, PieceSymbol.QUEEN);
+        return createBlack(PieceSymbol.QUEEN);
     }
 
     public static Piece createWhiteKing() {
-        return new Piece(KING, Color.WHITE.color, PieceSymbol.KING);
+        return creatWhite(PieceSymbol.KING);
     }
 
     public static Piece createBlackKing() {
-        return new Piece(KING, Color.BLACK.color, PieceSymbol.KING);
+        return createBlack(PieceSymbol.KING);
     }
 
     public static Piece createBlank() {
-        return new Piece(NO_PIECE, Color.NOCOLOR.color, PieceSymbol.NO_PIECE);
+        return new Piece(PieceSymbol.NO_PIECE.getName(), Color.NOCOLOR.color, PieceSymbol.NO_PIECE);
+    }
+
+    private static Piece creatWhite(PieceSymbol pieceSymbol) {
+        return new Piece(pieceSymbol.getName(), Color.WHITE.color, pieceSymbol);
+    }
+
+    private static Piece createBlack(PieceSymbol pieceSymbol) {
+        return new Piece(pieceSymbol.getName(), Color.BLACK.color, pieceSymbol);
     }
 
     public String getName() {
