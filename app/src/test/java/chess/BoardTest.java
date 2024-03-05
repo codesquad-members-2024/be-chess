@@ -1,5 +1,8 @@
-package org.codeSquad;
+package chess;
 
+import chess.Board;
+import chess.pieces.ChessPieceColor;
+import chess.pieces.Pawn;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;

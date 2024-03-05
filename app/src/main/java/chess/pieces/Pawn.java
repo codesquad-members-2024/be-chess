@@ -1,4 +1,4 @@
-package org.codeSquad;
+package chess.pieces;
 
 public class Pawn {
     private ChessPieceColor color;

@@ -1,4 +1,4 @@
-package org.codeSquad;
+package chess.pieces;
 
 import java.util.Arrays;
 
