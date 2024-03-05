@@ -15,7 +15,7 @@ class PawnTest {
         verifyPawn(BLACK);
         verifyPawn(WHITE);
     }
-    public void verifyPawn(final String color){
+    private void verifyPawn(final String color){
         Pawn pawn = new Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(color);
     }
