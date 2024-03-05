@@ -4,33 +4,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pieces.Piece.PieceSymbol;
 
 class PieceTest {
     @Test
     @DisplayName("pawn, knight, rook, bishop, queen, king 기물들의 색깔과 유니코드 심볼이 알맞게 생성되어야 한다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), Piece.WHITE_COLOR, Piece.WHITE_PAWN_SYMBOL);
-        verifyPiece(Piece.createBlackPawn(), Piece.BLACK_COLOR, Piece.BLACK_PAWN_SYMBOL);
+        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), PieceSymbol.PAWN);
+        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), PieceSymbol.KNIGHT);
+        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), PieceSymbol.ROOK);
+        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), PieceSymbol.BISHOP);
+        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), PieceSymbol.QUEEN);
+        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), PieceSymbol.KING);
 
-        verifyPiece(Piece.createWhiteRook(), Piece.WHITE_COLOR, Piece.WHITE_ROOK_SYMBOL);
-        verifyPiece(Piece.createBlackRook(), Piece.BLACK_COLOR, Piece.BLACK_ROOK_SYMBOL);
-
-        verifyPiece(Piece.createWhiteKnight(), Piece.WHITE_COLOR, Piece.WHITE_KNIGHT_SYMBOL);
-        verifyPiece(Piece.createBlackKnight(), Piece.BLACK_COLOR, Piece.BLACK_KNIGHT_SYMBOL);
-
-        verifyPiece(Piece.createWhiteBishop(), Piece.WHITE_COLOR, Piece.WHITE_BISHOP_SYMBOL);
-        verifyPiece(Piece.createBlackBishop(), Piece.BLACK_COLOR, Piece.BLACK_BISHOP_SYMBOL);
-
-        verifyPiece(Piece.createWhiteQueen(), Piece.WHITE_COLOR, Piece.WHITE_QUEEN_SYMBOL);
-        verifyPiece(Piece.createBlackQueen(), Piece.BLACK_COLOR, Piece.BLACK_QUEEN_SYMBOL);
-
-        verifyPiece(Piece.createWhiteKing(), Piece.WHITE_COLOR, Piece.WHITE_KING_SYMBOL);
-        verifyPiece(Piece.createBlackKing(), Piece.BLACK_COLOR, Piece.BLACK_KING_SYMBOL);
+        Piece blank = Piece.createBlank();
+        assertThat(blank.isWhite()).isFalse();
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(PieceSymbol.NO_PIECE).isEqualTo(blank.getPieceSymbol());
     }
 
-    private void verifyPiece(final Piece piece, final String color, final String symbol) {
-        assertThat(color).isEqualTo(piece.getColor());
-        assertThat(symbol).isEqualTo(piece.getSymbol());
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final PieceSymbol symbol) {
+        assertThat(whitePiece.isWhite()).isTrue();
+        assertThat(symbol).isEqualTo(whitePiece.getPieceSymbol());
+
+        assertThat(blackPiece.isBlack()).isTrue();
+        assertThat(symbol).isEqualTo(blackPiece.getPieceSymbol());
     }
 
     @Test
@@ -48,7 +46,7 @@ class PieceTest {
     @Test
     @DisplayName("기물에 맞는 심볼을 나타낼 수 있다.")
     public void getSymbolPerPiece() throws Exception {
-        assertThat("♙").isEqualTo(PieceSymbol.PAWN.getWhiteSymbol());
-        assertThat("♟").isEqualTo(PieceSymbol.PAWN.getBlackSymbol());
+        assertThat("♙").isEqualTo(PieceSymbol.PAWN.getSymbol());
+        assertThat("♟").isEqualTo(Piece.convertToBlackPiece(PieceSymbol.PAWN.getSymbol()));
     }
 }
