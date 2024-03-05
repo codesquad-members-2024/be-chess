@@ -1,13 +1,13 @@
-package board;
+package chess;
 
 import java.util.ArrayList;
 import java.util.List;
-import pieces.Pawn;
-import pieces.Pawn.Color;
+import chess.pieces.Pawn;
+import chess.pieces.Pawn.Color;
 
 public class Board {
 
-    private static final int MAXIMUM_PAWN_NUMBER = 8;
+    private static final int MAXIMUM_PAWN_NUMBER = 16;
     private static final int CHESS_BOARD_SIZE = 8;
     private static final int PAWN_INIT_POSITION = 1;
 
@@ -19,8 +19,7 @@ public class Board {
     }
 
     public void initialize() {
-        initializeWhitePawn();
-        initializeBlackPawn();
+
     }
 
     public void addPawn(Pawn pawn) {

@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
-import pieces.Pawn.Color;
+import chess.pieces.Pawn.Color;
 
 
 class PawnTest {

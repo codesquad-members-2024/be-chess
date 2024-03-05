@@ -1,14 +1,13 @@
-package chess.board;
+package chess;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import board.Board;
+import chess.pieces.Pawn;
+import chess.pieces.Pawn.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
-import pieces.Pawn.Color;
 
 class BoardTest {
 
@@ -40,10 +39,10 @@ class BoardTest {
     @Test
     @DisplayName("최대 폰 개수 초과 테스트")
     void exceedMaximumPawnNumber() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 16; i++) {
             board.addPawn(new Pawn());
         }
-        assertEquals(8, board.getBoardSize());
+        assertEquals(16, board.getBoardSize());
         assertEquals("최대 폰 개수를 초과하였습니다.", assertThrows(IllegalStateException.class,
             () -> board.addPawn(new Pawn())).getMessage());
     }
