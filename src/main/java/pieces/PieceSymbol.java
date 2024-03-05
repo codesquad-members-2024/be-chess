@@ -1,7 +1,7 @@
 package pieces;
 
 public enum PieceSymbol {
-    NO_PIECE(" "),
+    NO_PIECE("•"),
     WHITE_PAWN("♙"),
     BLACK_PAWN("♟"),
     WHITE_ROOK("♖"),
