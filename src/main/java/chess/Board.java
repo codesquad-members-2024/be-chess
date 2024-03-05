@@ -4,20 +4,18 @@ import static utils.StringUtils.NEWLINE;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
 import pieces.Piece.Color;
-import pieces.Piece.PieceSymbol;
 
 public class Board {
     private List<Piece> pieces;
-    private Piece[][] board;
+    private List<Rank> board;
 
     public Board() {
         pieces = new ArrayList<>();
-        board = new Piece[8][8];
+        board = new ArrayList<>();
     }
 
     public void add(Piece piece) {
@@ -25,18 +23,27 @@ public class Board {
     }
 
     public void initialize() {
-        initializeExceptPawns(Color.WHITE.getColor(), 7);
-        initializePawns(Color.WHITE.getColor(), 6);
-        initializePawns(Color.BLACK.getColor(), 1);
-        initializeExceptPawns(Color.BLACK.getColor(), 0);
+        initializeExceptPawns(Color.BLACK.getColor());
+        initializePawns(Color.BLACK.getColor());
+        initializeBlank();
+        initializeBlank();
+        initializeBlank();
+        initializeBlank();
+        initializePawns(Color.WHITE.getColor());
+        initializeExceptPawns(Color.WHITE.getColor());
     }
 
-    private void initializePawns(String color, int row) {
-        IntStream.range(0, 8).forEach(col -> {
-            Piece piece = generatePawn(color);
-            add(piece);
-            board[row][col] = piece;
-        });
+    private void initializeBlank() {
+        List<Piece> blanks = new ArrayList<>();
+        IntStream.range(0, 8).forEach(i -> blanks.add(Piece.createBlank()));
+        board.add(new Rank(blanks));
+    }
+
+    private void initializePawns(String color) {
+        List<Piece> pawns = new ArrayList<>();
+        IntStream.range(0, 8).forEach(i -> pawns.add(generatePawn(color)));
+        pieces.addAll(pawns);
+        board.add(new Rank(pawns));
     }
 
     private Piece generatePawn(String color) {
@@ -46,36 +53,34 @@ public class Board {
         return Piece.createBlackPawn();
     }
 
-    private void initializeExceptPawns(String color, int row) {
-        Piece[] piecesExceptPawns = generatePiecesExceptPawns(color);
-        IntStream.range(0, 8).forEach(col -> {
-            add(piecesExceptPawns[col]);
-            board[row][col] = piecesExceptPawns[col];
-        });
+    private void initializeExceptPawns(String color) {
+        List<Piece> piecesExceptPawns = generatePiecesExceptPawns(color);
+        pieces.addAll(piecesExceptPawns);
+        board.add(new Rank(piecesExceptPawns));
     }
 
-    private Piece[] generatePiecesExceptPawns(String color) {
-        Piece[] result = new Piece[8];
+    private ArrayList<Piece> generatePiecesExceptPawns(String color) {
+        ArrayList<Piece> piecesExceptPawns = new ArrayList<>();
         if (color.equals(Color.WHITE.getColor())) {
-            result[0] = Piece.createWhiteRook();
-            result[1] = Piece.createWhiteKnight();
-            result[2] = Piece.createWhiteBishop();
-            result[3] = Piece.createWhiteQueen();
-            result[4] = Piece.createWhiteKing();
-            result[5] = Piece.createWhiteBishop();
-            result[6] = Piece.createWhiteKnight();
-            result[7] = Piece.createWhiteRook();
+            piecesExceptPawns.add(Piece.createWhiteRook());
+            piecesExceptPawns.add(Piece.createWhiteKnight());
+            piecesExceptPawns.add(Piece.createWhiteBishop());
+            piecesExceptPawns.add(Piece.createWhiteQueen());
+            piecesExceptPawns.add(Piece.createWhiteKing());
+            piecesExceptPawns.add(Piece.createWhiteBishop());
+            piecesExceptPawns.add(Piece.createWhiteKnight());
+            piecesExceptPawns.add(Piece.createWhiteRook());
         } else if (color.equals(Color.BLACK.getColor())) {
-            result[0] = Piece.createBlackRook();
-            result[1] = Piece.createBlackKnight();
-            result[2] = Piece.createBlackBishop();
-            result[3] = Piece.createBlackQueen();
-            result[4] = Piece.createBlackKing();
-            result[5] = Piece.createBlackBishop();
-            result[6] = Piece.createBlackKnight();
-            result[7] = Piece.createBlackRook();
+            piecesExceptPawns.add(Piece.createBlackRook());
+            piecesExceptPawns.add(Piece.createBlackKnight());
+            piecesExceptPawns.add(Piece.createBlackBishop());
+            piecesExceptPawns.add(Piece.createBlackQueen());
+            piecesExceptPawns.add(Piece.createBlackKing());
+            piecesExceptPawns.add(Piece.createBlackBishop());
+            piecesExceptPawns.add(Piece.createBlackKnight());
+            piecesExceptPawns.add(Piece.createBlackRook());
         }
-        return result;
+        return piecesExceptPawns;
     }
 
     public int pieceCount() {
@@ -85,19 +90,17 @@ public class Board {
     public String showBoard() {
         return IntStream.range(0, 8)
                 .mapToObj(row -> IntStream.range(0, 8)
-                        .mapToObj(col -> getSymbol(board[row][col]))
+                        .mapToObj(col -> getSymbol(board.get(row).getPiece(col)))
                         .collect(Collectors.joining()))
                 .collect(Collectors.joining(NEWLINE)).concat(NEWLINE);
     }
 
     private String getSymbol(Piece piece) {
-        if (Objects.isNull(piece)) {
-            return PieceSymbol.NO_PIECE.getSymbol();
-        }
-
         if (piece.isWhite()) {
             return piece.getPieceSymbol().getSymbol();
+        } else if (piece.isBlack()) {
+            return Piece.convertToBlackPiece(piece.getPieceSymbol().getSymbol());
         }
-        return Piece.convertToBlackPiece(piece.getPieceSymbol().getSymbol());
+        return piece.getPieceSymbol().getSymbol();
     }
 }
