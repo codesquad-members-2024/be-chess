@@ -9,17 +9,11 @@ public class Game {
     public static void main(String[] args) {
         Board board = new Board();
         board.initialize();
-        while (true) {
-            String command = readCommand();
-            if (command.equals("end")) {
-                break;
-            }
-            if (command.equals("start")) {
-                String print = board.print();
-                System.out.println(print);
-            }
+        String command = readCommand();
+        while (!command.equals("end")) {
+            String print = board.print();
+            System.out.println(print);
         }
-
     }
 
     public static String readCommand() {

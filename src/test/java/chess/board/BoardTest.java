@@ -22,7 +22,9 @@ class BoardTest {
 
     @Test
     @DisplayName("폰을 추가하면 보드의 사이즈가 증가하고 추가한 순서대로 폰을 찾을 수 있다.")
-    public void create() {
+    void create() {
+        assertThat(board.size()).isEqualTo(0);
+
         board.add(white);
         assertThat(board.size()).isEqualTo(1);
 
@@ -35,7 +37,7 @@ class BoardTest {
 
     @Test
     @DisplayName("보드를 초기화하면 흑색폰과 흰색폰을 각각 8개씩 생성한다.")
-    public void initialize() {
+    void initialize() {
         board.initialize();
         assertEquals("pppppppp", board.getPawnsResult(Pawn.WHITE_COLOR));
         assertEquals("PPPPPPPP", board.getPawnsResult(Pawn.BLACK_COLOR));

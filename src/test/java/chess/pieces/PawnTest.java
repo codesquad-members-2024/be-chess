@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class PawnTest {
     @Test
     @DisplayName("폰을 기본 생성자로 생성하면 하얀색이다.")
-    public void create_기본생성자() {
+    void create_basic() {
         Pawn pawn = new Pawn();
         assertEquals(Pawn.WHITE_COLOR, pawn.getColor());
         assertEquals(Pawn.WHITE_REPRESENTATION, pawn.getRepresentation());
@@ -17,7 +17,7 @@ class PawnTest {
 
     @Test
     @DisplayName("흰색 폰이 생성되어야 한다")
-    public void create() {
+    void create() {
         verifyPawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
         verifyPawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
     }
