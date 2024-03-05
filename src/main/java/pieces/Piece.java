@@ -91,4 +91,12 @@ public class Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    public boolean isWhite() {
+        return color.equals(WHITE_COLOR);
+    }
+
+    public boolean isBlack() {
+        return color.equals(BLACK_COLOR);
+    }
 }
