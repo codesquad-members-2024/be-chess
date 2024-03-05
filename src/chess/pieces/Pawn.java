@@ -5,8 +5,8 @@ import src.chess.Colors;
 public class Pawn {
     private final Colors color;
 
-    public Pawn(String color) {
-        this.color = Colors.valueOf(color.toUpperCase());
+    public Pawn(Colors color) {
+        this.color = color;
     }
 
     public Pawn() {
