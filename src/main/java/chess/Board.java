@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
 import pieces.Piece.Color;
+import pieces.Piece.PieceSymbol;
 
 public class Board {
     private List<Piece> pieces;
@@ -102,5 +103,12 @@ public class Board {
             return Piece.convertToBlackPiece(piece.getPieceSymbol().getSymbol());
         }
         return piece.getPieceSymbol().getSymbol();
+    }
+
+    public int getPieceCount(Color color, PieceSymbol pieceSymbol) {
+        return (int) board.stream().flatMap(rank -> rank.getPieces().stream())
+                .filter(piece -> piece.getColor().equals(color.getColor()) &&
+                        piece.getPieceSymbol().equals(pieceSymbol))
+                .count();
     }
 }
