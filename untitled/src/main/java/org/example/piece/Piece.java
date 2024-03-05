@@ -1,4 +1,4 @@
-package org.example.chess;
+package org.example.piece;
 
 public class Piece {
 }
