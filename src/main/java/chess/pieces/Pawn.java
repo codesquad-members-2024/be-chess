@@ -16,4 +16,8 @@ public class Pawn {
     public Color getColor() {
         return color;
     }
+
+    public String getRepresentation() {
+        return PieceShape.find(this).getUnicode();
+    }
 }
