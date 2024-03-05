@@ -8,8 +8,8 @@ class PawnTest {
     @Test
     @DisplayName("흰색과 검정색 폰이 생성되어야 한다")
     public void create() {
-        verifyPawn("white");
-        verifyPawn("black");
+        verifyPawn(Pawn.WHITE);
+        verifyPawn(Pawn.BLACK);
     }
 
     void verifyPawn(final String color){
@@ -21,6 +21,6 @@ class PawnTest {
     @DisplayName("색상을 입력하지 않으면 흰색 폰이 생성되어야 한다")
     public void createWhitePawn() throws Exception{
         Pawn pawn = new Pawn();
-        assertEquals("white", pawn.getColor());
+        assertEquals(Pawn.WHITE, pawn.getColor());
     }
 }
