@@ -7,7 +7,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
-import pieces.PieceSymbol;
+import pieces.Piece.Color;
+import pieces.Piece.PieceSymbol;
 
 public class Board {
     private ArrayList<Piece> pieces;
@@ -23,10 +24,10 @@ public class Board {
     }
 
     public void initialize() {
-        initializeExceptPawns(Piece.WHITE_COLOR, 7);
-        initializePawns(Piece.WHITE_COLOR, 6);
-        initializePawns(Piece.BLACK_COLOR, 1);
-        initializeExceptPawns(Piece.BLACK_COLOR, 0);
+        initializeExceptPawns(Color.WHITE.getColor(), 7);
+        initializePawns(Color.WHITE.getColor(), 6);
+        initializePawns(Color.BLACK.getColor(), 1);
+        initializeExceptPawns(Color.BLACK.getColor(), 0);
     }
 
     private void initializePawns(String color, int row) {
@@ -38,7 +39,7 @@ public class Board {
     }
 
     private Piece generatePawn(String color) {
-        if (color.equals(Piece.WHITE_COLOR)) {
+        if (color.equals(Color.WHITE.getColor())) {
             return Piece.createWhitePawn();
         }
         return Piece.createBlackPawn();
@@ -54,7 +55,7 @@ public class Board {
 
     private Piece[] generatePiecesExceptPawns(String color) {
         Piece[] result = new Piece[8];
-        if (color.equals(Piece.WHITE_COLOR)) {
+        if (color.equals(Color.WHITE.getColor())) {
             result[0] = Piece.createWhiteRook();
             result[1] = Piece.createWhiteKnight();
             result[2] = Piece.createWhiteBishop();
@@ -63,7 +64,7 @@ public class Board {
             result[5] = Piece.createWhiteBishop();
             result[6] = Piece.createWhiteKnight();
             result[7] = Piece.createWhiteRook();
-        } else if (color.equals(Piece.BLACK_COLOR)) {
+        } else if (color.equals(Color.BLACK.getColor())) {
             result[0] = Piece.createBlackRook();
             result[1] = Piece.createBlackKnight();
             result[2] = Piece.createBlackBishop();
@@ -90,8 +91,12 @@ public class Board {
 
     private String getSymbol(Piece piece) {
         if (Objects.isNull(piece)) {
-            return PieceSymbol.NO_PIECE.getWhiteSymbol();
+            return PieceSymbol.NO_PIECE.getSymbol();
         }
-        return piece.getSymbol();
+
+        if (piece.isWhite()) {
+            return piece.getPieceSymbol().getSymbol();
+        }
+        return Piece.convertToBlackPiece(piece.getPieceSymbol().getSymbol());
     }
 }
