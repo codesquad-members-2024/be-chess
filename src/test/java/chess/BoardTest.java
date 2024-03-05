@@ -20,7 +20,7 @@ class BoardTest {
     public void create() throws Exception {
         board.initialize();
         assertEquals(32, board.pieceCount());
-        String blankRank = appendNewLine("        ");
+        String blankRank = appendNewLine("••••••••");
         assertEquals(
                 appendNewLine("♜♞♝♛♚♝♞♜") +
                         appendNewLine("♟♟♟♟♟♟♟♟") +
