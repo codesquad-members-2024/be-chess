@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
+import pieces.Piece;
 import pieces.PieceSymbol;
 
 public class BoardTest {
@@ -19,12 +19,12 @@ public class BoardTest {
     @Test
     @DisplayName("추가한 Pawn을 정상적으로 가져야 한다.")
     public void create() throws Exception {
-        Pawn white = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL);
+        Piece white = new Piece(Piece.WHITE_COLOR, Piece.WHITE_SYMBOL);
         board.add(white);
         assertEquals(1, board.size());
         assertEquals(white, board.findPawn(0));
 
-        Pawn black = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL);
+        Piece black = new Piece(Piece.BLACK_COLOR, Piece.BLACK_SYMBOL);
         board.add(black);
         assertEquals(2, board.size());
         assertEquals(black, board.findPawn(1));
