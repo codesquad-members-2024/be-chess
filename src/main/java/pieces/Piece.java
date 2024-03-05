@@ -138,4 +138,14 @@ public class Piece {
         char blackPieceChar = (char) (whitePieceChar + 6);
         return String.valueOf(blackPieceChar);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) object;
+        return this.color.equals(piece.color) &&
+                this.pieceSymbol.equals(piece.pieceSymbol);
+    }
 }
