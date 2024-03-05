@@ -1,6 +1,6 @@
 package chess;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static utils.StringUtils.appendNewLine;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,14 @@ class BoardTest {
     @DisplayName("추가한 Pawn을 정상적으로 가져야 한다.")
     public void create() throws Exception {
         board.initialize();
-        assertEquals(32, board.pieceCount());
+        assertThat(32).isEqualTo(board.pieceCount());
         String blankRank = appendNewLine("••••••••");
-        assertEquals(
+        assertThat(
                 appendNewLine("♜♞♝♛♚♝♞♜") +
                         appendNewLine("♟♟♟♟♟♟♟♟") +
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("♙♙♙♙♙♙♙♙") +
-                        appendNewLine("♖♘♗♕♔♗♘♖"),
-                board.showBoard());
+                        appendNewLine("♖♘♗♕♔♗♘♖"))
+                .isEqualTo(board.showBoard());
     }
 }
