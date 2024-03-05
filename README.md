@@ -1,10 +1,10 @@
 # be-chess
 ## 구현 목록
-**Pawn**
+**chess.pieces.Pawn**
 - 가장 기본 말인 폰 생성 클래스
 - 폰을 생성할 때 어느 팀의 말인지 구분하기 위해 white, black 으로 생성할 수 있어야 한다.
 
-**PawnTest**
+**chess.pieces.PawnTest**
 - white , black 말이 잘 생성되는지 확인하는 테스트 코드
 
 ## 배운점 기록
