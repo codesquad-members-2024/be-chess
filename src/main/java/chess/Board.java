@@ -3,54 +3,54 @@ package chess;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import pieces.Pawn;
+import pieces.Piece;
 
 public class Board {
-    private ArrayList<Pawn> pawns;
-    private Pawn[][] board;
+    private ArrayList<Piece> pieces;
+    private Piece[][] board;
 
     public Board() {
-        pawns = new ArrayList<>();
-        board = new Pawn[8][8];
+        pieces = new ArrayList<>();
+        board = new Piece[8][8];
     }
 
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+    public void add(Piece piece) {
+        pieces.add(piece);
     }
 
     public int size() {
-        return pawns.size();
+        return pieces.size();
     }
 
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
+    public Piece findPawn(int index) {
+        return pieces.get(index);
     }
 
     public void initialize() {
-        initializePawns(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL, 6);
-        initializePawns(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL, 1);
+        initializePawns(Piece.WHITE_COLOR, Piece.WHITE_SYMBOL, 6);
+        initializePawns(Piece.BLACK_COLOR, Piece.BLACK_SYMBOL, 1);
     }
 
     private void initializePawns(String color, String symbol, int index) {
         IntStream.range(0, 8).forEach(i -> {
-            Pawn pawn = new Pawn(color, symbol);
-            pawns.add(pawn);
-            board[index][i] = pawn;
+            Piece piece = new Piece(color, symbol);
+            pieces.add(piece);
+            board[index][i] = piece;
         });
     }
 
     public String getWhitePawnsResult() {
-        return getPawnsResult(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL);
+        return getPawnsResult(Piece.WHITE_COLOR, Piece.WHITE_SYMBOL);
     }
 
     public String getBlackPawnsResult() {
-        return getPawnsResult(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL);
+        return getPawnsResult(Piece.BLACK_COLOR, Piece.BLACK_SYMBOL);
     }
 
     private String getPawnsResult(String color, String symbol) {
-        return pawns.stream()
-                .filter(pawn -> pawn.getColor().equals(color) && pawn.getSymbol().equals(symbol))
-                .map(Pawn::getSymbol)
+        return pieces.stream()
+                .filter(piece -> piece.getColor().equals(color) && piece.getSymbol().equals(symbol))
+                .map(Piece::getSymbol)
                 .reduce(new StringBuilder(), StringBuilder::append, StringBuilder::append)
                 .toString();
     }
