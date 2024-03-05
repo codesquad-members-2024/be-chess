@@ -16,4 +16,11 @@ class PawnTest {
         Pawn pawn = new Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(color);
     }
+
+    @Test
+    @DisplayName("색상을 입력하지 않으면 흰색 폰이 생성되어야 한다")
+    public void createWhitePawn() throws Exception{
+        Pawn pawn = new Pawn();
+        assertEquals("white", pawn.getColor());
+    }
 }
