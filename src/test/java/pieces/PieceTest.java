@@ -44,4 +44,11 @@ class PieceTest {
         assertThat(blackPiece.isBlack()).isTrue();
         assertThat(blackPiece.isWhite()).isFalse();
     }
+
+    @Test
+    @DisplayName("기물에 맞는 심볼을 나타낼 수 있다.")
+    public void getSymbolPerPiece() throws Exception {
+        assertThat("♙").isEqualTo(PieceSymbol.WHITE_PAWN.getSymbol());
+        assertThat("♟").isEqualTo(PieceSymbol.BLACK_PAWN.getSymbol());
+    }
 }
