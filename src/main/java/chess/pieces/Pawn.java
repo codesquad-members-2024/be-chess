@@ -9,7 +9,7 @@ public class Pawn {
 
     public Pawn(Color color) {
         this.color = color;
-        this.represent = color.equals(Color.WHITE) ? 'p' : 'P';
+        this.represent = color.equals(Color.WHITE) ? '♟' : '♙';
     }
 
     public Pawn() {
