@@ -1,11 +1,9 @@
 package chess;
 
+import chess.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,14 +18,12 @@ class BoardTest {
     @Test
     @DisplayName("Pawn 추가 시 갯수 및 추가한 객체 확인")
     void create() throws Exception {
-        List<String> colors = List.of(Pawn.WHITE, Pawn.BLACK);
-        for (int order=1; order<=colors.size(); order++) {
-            verifyBoard(colors.get(order), order);
-        }
+        verifyBoard(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION, 1);
+        verifyBoard(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION, 2);
     }
 
-    void verifyBoard(final String color, int order) {
-        Pawn pawn = new Pawn(color);
+    void verifyBoard(final String color, final String representation, int order) {
+        Pawn pawn = new Pawn(color, representation);
         board.add(pawn);
         assertEquals(order, board.size());
         assertEquals(pawn, board.findPawn(order-1));
