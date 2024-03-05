@@ -1,4 +1,4 @@
-package units;
+package pieces;
 
 public class Pawn {
 
