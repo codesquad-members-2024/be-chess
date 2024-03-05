@@ -3,21 +3,21 @@ package chess.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
     Board board;
-    Pawn white;
-    Pawn black;
+    Piece white;
+    Piece black;
 
     @BeforeEach
     void setUp() {
         board = new Board();
-        white = new Pawn(Pawn.WHITE_COLOR);
-        black = new Pawn(Pawn.BLACK_COLOR);
+        white = new Piece(Piece.WHITE_COLOR);
+        black = new Piece(Piece.BLACK_COLOR);
     }
 
     @Test
@@ -39,8 +39,8 @@ class BoardTest {
     @DisplayName("보드를 초기화하면 흑색폰과 흰색폰을 각각 8개씩 생성한다.")
     void initialize() {
         board.initialize();
-        assertEquals("pppppppp", board.getPawnsResult(Pawn.WHITE_COLOR));
-        assertEquals("PPPPPPPP", board.getPawnsResult(Pawn.BLACK_COLOR));
+        assertEquals("pppppppp", board.getPawnsResult(Piece.WHITE_COLOR));
+        assertEquals("PPPPPPPP", board.getPawnsResult(Piece.BLACK_COLOR));
     }
 
     @Test

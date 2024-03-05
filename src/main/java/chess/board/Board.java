@@ -1,43 +1,43 @@
 package chess.board;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Board {
-    private final List<Pawn> allPawns = new ArrayList<>();
-    private final List<Pawn> whitePawns = new ArrayList<>();
-    private final List<Pawn> blackPawns = new ArrayList<>();
+    private final List<Piece> allPieces = new ArrayList<>();
+    private final List<Piece> whitePieces = new ArrayList<>();
+    private final List<Piece> blackPieces = new ArrayList<>();
 
 
     public void initialize() {
         for (int i = 0; i < 8; i++) {
-            add(new Pawn());
-            add(new Pawn(Pawn.BLACK_COLOR));
+            add(new Piece());
+            add(new Piece(Piece.BLACK_COLOR));
         }
     }
 
-    public void add(Pawn pawn) {
-        allPawns.add(pawn);
-        if (pawn.getColor().equals(Pawn.WHITE_COLOR)) {
-            whitePawns.add(pawn);
+    public void add(Piece piece) {
+        allPieces.add(piece);
+        if (piece.getColor().equals(Piece.WHITE_COLOR)) {
+            whitePieces.add(piece);
             return;
         }
-        blackPawns.add(pawn);
+        blackPieces.add(piece);
     }
 
     public int size() {
-        return allPawns.size();
+        return allPieces.size();
     }
 
-    public Pawn findPawn(int idx) {
-        return allPawns.get(idx);
+    public Piece findPawn(int idx) {
+        return allPieces.get(idx);
     }
 
     public String getPawnsResult(String color) {
-        return (color.equals(Pawn.WHITE_COLOR) ? whitePawns : blackPawns).stream()
-                .map(pawn -> String.valueOf(pawn.getRepresentation()))
+        return (color.equals(Piece.WHITE_COLOR) ? whitePieces : blackPieces).stream()
+                .map(piece -> String.valueOf(piece.getRepresentation()))
                 .collect(Collectors.joining());
     }
 
@@ -46,11 +46,11 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 1) {
-                    sb.append(getPawnsResult(Pawn.BLACK_COLOR));
+                    sb.append(getPawnsResult(Piece.BLACK_COLOR));
                     break;
                 }
                 if (i == 6) {
-                    sb.append(getPawnsResult(Pawn.WHITE_COLOR));
+                    sb.append(getPawnsResult(Piece.WHITE_COLOR));
                     break;
                 }
                 sb.append(".");

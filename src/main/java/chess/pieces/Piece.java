@@ -1,17 +1,17 @@
 package chess.pieces;
 
-public class Pawn {
+public class Piece {
     public static final String WHITE_COLOR = "white";
     public static final String BLACK_COLOR = "black";
     public static final char WHITE_REPRESENTATION = 'p';
     public static final char BLACK_REPRESENTATION = 'P';
     private final String color;
 
-    public Pawn() {
+    public Piece() {
         this.color = WHITE_COLOR;
     }
 
-    public Pawn(String color) {
+    public Piece(String color) {
         this.color = color;
     }
 
@@ -25,5 +25,5 @@ public class Pawn {
         }
         return BLACK_REPRESENTATION;
     }
-    
+
 }
