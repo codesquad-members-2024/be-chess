@@ -1,5 +1,7 @@
 package chess;
 
+import static utils.StringUtils.NEWLINE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,7 +86,7 @@ public class Board {
                 .mapToObj(row -> IntStream.range(0, 8)
                         .mapToObj(col -> getSymbol(board[row][col]))
                         .collect(Collectors.joining()))
-                .collect(Collectors.joining("\n")).concat("\n");
+                .collect(Collectors.joining(NEWLINE)).concat(NEWLINE);
     }
 
     private String getSymbol(Piece piece) {
