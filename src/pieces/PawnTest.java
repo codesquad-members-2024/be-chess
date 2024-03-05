@@ -2,7 +2,8 @@ package pieces;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,8 +12,10 @@ class PawnTest {
     @Test
     @DisplayName("지정된 색상의 폰이 생성되어야 한다.")
     void create() {
-        verifyPawn(Pawn.WHITE);
-        verifyPawn(Pawn.BLACK);
+        List<String> colors = List.of(Pawn.WHITE, Pawn.BLACK);
+        for (String color : colors) {
+            verifyPawn(color);
+        }
     }
 
     @Test
