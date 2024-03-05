@@ -65,4 +65,15 @@ class BoardTest {
                     addMethod.invoke(board, Integer.parseInt(number));
                 }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("흰색 폰 8개, 검정색 폰 8개로 초기화 할 수 있다")
+    @Test
+    void initialize() {
+        // given & when
+        board.initialize();
+
+        // then
+        assertEquals("♙♙♙♙♙♙♙♙", board.getWhitePawnsResult());
+        assertEquals("♟♟♟♟♟♟♟♟", board.getBlackPawnsResult());
+    }
 }
