@@ -1,5 +1,8 @@
-import static org.assertj.core.api.Assertions.*;
+package src.test.pieces;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.*;
+import src.chess.pieces.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

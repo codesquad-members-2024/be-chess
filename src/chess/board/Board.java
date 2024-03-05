@@ -1,3 +1,6 @@
+package src.chess.board;
+
+import src.chess.pieces.Pawn;
 import java.util.ArrayList;
 
 public class Board {
