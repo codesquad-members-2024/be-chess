@@ -1,27 +1,27 @@
 package pieces;
 
 public enum PieceSymbol {
-    NO_PIECE("•"),
-    WHITE_PAWN("♙"),
-    BLACK_PAWN("♟"),
-    WHITE_ROOK("♖"),
-    BLACK_ROOK("♜"),
-    WHITE_KNIGHT("♘"),
-    BLACK_KNIGHT("♞"),
-    WHITE_BISHOP("♗"),
-    BLACK_BISHOP("♝"),
-    WHITE_QUEEN("♕"),
-    BLACK_QUEEN("♛"),
-    WHITE_KING("♔"),
-    BLACK_KING("♚");
+    NO_PIECE("•", "•"),
+    PAWN("♙", "♟"),
+    ROOK("♖", "♜"),
+    KNIGHT("♘", "♞"),
+    BISHOP("♗", "♝"),
+    QUEEN("♕", "♛"),
+    KING("♔", "♚");
 
-    private final String symbol;
+    private final String whiteSymbol;
+    private final String blackSymbol;
 
-    PieceSymbol(String symbol) {
-        this.symbol = symbol;
+    PieceSymbol(String whiteSymbol, String blackSymbol) {
+        this.whiteSymbol = whiteSymbol;
+        this.blackSymbol = blackSymbol;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getWhiteSymbol() {
+        return whiteSymbol;
+    }
+
+    public String getBlackSymbol() {
+        return blackSymbol;
     }
 }

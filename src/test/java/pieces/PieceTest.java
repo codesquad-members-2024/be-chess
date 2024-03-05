@@ -48,7 +48,7 @@ class PieceTest {
     @Test
     @DisplayName("기물에 맞는 심볼을 나타낼 수 있다.")
     public void getSymbolPerPiece() throws Exception {
-        assertThat("♙").isEqualTo(PieceSymbol.WHITE_PAWN.getSymbol());
-        assertThat("♟").isEqualTo(PieceSymbol.BLACK_PAWN.getSymbol());
+        assertThat("♙").isEqualTo(PieceSymbol.PAWN.getWhiteSymbol());
+        assertThat("♟").isEqualTo(PieceSymbol.PAWN.getBlackSymbol());
     }
 }

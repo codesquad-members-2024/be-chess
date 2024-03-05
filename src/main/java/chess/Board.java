@@ -90,7 +90,7 @@ public class Board {
 
     private String getSymbol(Piece piece) {
         if (Objects.isNull(piece)) {
-            return PieceSymbol.NO_PIECE.getSymbol();
+            return PieceSymbol.NO_PIECE.getWhiteSymbol();
         }
         return piece.getSymbol();
     }
