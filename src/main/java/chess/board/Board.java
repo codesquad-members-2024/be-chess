@@ -86,7 +86,7 @@ public class Board {
         return sb.toString();
     }
 
-    public Piece findPiece(String a8) {
-        return null;
+    public Piece findPiece(Position position) {
+        return pieces[position.getYPos()][position.getXPos()];
     }
 }
