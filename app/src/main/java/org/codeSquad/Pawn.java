@@ -1,13 +1,13 @@
 package org.codeSquad;
 
 public class Pawn {
-    private String color;
+    private ChessPieceColor color;
 
     public Pawn(String color){
-        this.color = color;
+        this.color = ChessPieceColor.findMatchingColor(color);
     }
 
     public String getColor() {
-        return color;
+        return color.getColorName();
     }
 }
