@@ -6,6 +6,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
+import java.util.List;
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ public class BoardTest {
     void create() {
         board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);
+
         String blankRank = appendNewLine("........");
         assertThat(board.showBoard()).isEqualTo(
                 appendNewLine("RNBQKBNR") +
@@ -64,5 +67,66 @@ public class BoardTest {
         board.move(position, piece);
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("색깔별로 점수를 계산할 수 있다.")
+    void calculatePoint() {
+        board.initializeEmpty();
+        addPieces();
+
+        assertThat(board.calculatePoint(Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
+        assertThat(board.calculatePoint(Color.WHITE)).isCloseTo(7.5, Offset.offset(0.01));
+    }
+
+
+    @Test
+    @DisplayName("보드 위의 Piece를 점수의 내림차순으로 정렬할 수 있다.")
+    void getDescendingPieces() {
+        board.initializeEmpty();
+        addPieces();
+        List<Piece> expect = List.of(Piece.createBlack(Type.QUEEN), Piece.createBlack(Type.ROOK),
+                Piece.createBlack(Type.PAWN)
+                , Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN), Piece.createBlack(Type.KING)
+                , Piece.createWhite(Type.ROOK), Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN),
+                Piece.createWhite(Type.PAWN)
+                , Piece.createWhite(Type.PAWN), Piece.createWhite(Type.KING));
+        assertThat(board.getDescendingPieces()).isEqualTo(expect);
+    }
+
+    @Test()
+    @DisplayName("보드 위의 Piece를 점수의 오름차순으로 정렬할 수 있다.")
+    void getAscendingPieces() {
+        board.initializeEmpty();
+        addPieces();
+        List<Piece> expect = List.of(Piece.createBlack(Type.KING)
+                , Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN)
+                , Piece.createBlack(Type.ROOK), Piece.createBlack(Type.QUEEN)
+                , Piece.createWhite(Type.KING)
+                , Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN),
+                Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN), Piece.createWhite(Type.ROOK));
+
+        assertThat(board.getAscendingPieces()).isEqualTo(expect);
+    }
+
+
+    private void addPieces() {
+        addPiece("b6", Piece.createBlack(Type.PAWN));
+        addPiece("e6", Piece.createBlack(Type.QUEEN));
+        addPiece("b8", Piece.createBlack(Type.KING));
+        addPiece("c8", Piece.createBlack(Type.ROOK));
+        addPiece("b7", Piece.createBlack(Type.PAWN)); // 같은 컬럼에 폰 추가
+        addPiece("b5", Piece.createBlack(Type.PAWN)); // 같은 컬럼에 폰 추가
+
+        addPiece("f2", Piece.createWhite(Type.PAWN));
+        addPiece("g2", Piece.createWhite(Type.PAWN));
+        addPiece("e1", Piece.createWhite(Type.ROOK));
+        addPiece("f1", Piece.createWhite(Type.KING));
+        addPiece("f3", Piece.createWhite(Type.PAWN)); // 같은 컬럼에 폰 추가
+        addPiece("f4", Piece.createWhite(Type.PAWN)); // 같은 컬럼에 폰 추가
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(new Position(position), piece);
     }
 }

@@ -7,7 +7,10 @@ import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int COLUMN_AND_ROW_SIZE = 8;
@@ -100,5 +103,69 @@ public class Board {
 
     public void move(Position position, Piece piece) {
         pieces[position.getYPos()][position.getXPos()] = piece;
+    }
+
+    public double calculatePoint(Color color) {
+        double sum = 0;
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            sum = addSum(color, i, sum);
+        }
+        return sum;
+    }
+
+    private double addSum(Color color, int i, double sum) {
+        for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+            Piece target = pieces[i][j];
+            if (target.getColor() != color) {
+                continue;
+            }
+            if (!target.isPawn()) {
+                sum += target.getDefaultPoint();
+                continue;
+            }
+            if (hasSameColumnPawn(target, i, j)) {
+                sum += target.getDefaultPoint() / 2;
+                continue;
+            }
+            sum += target.getDefaultPoint();
+        }
+        return sum;
+    }
+
+    private boolean hasSameColumnPawn(Piece target, int row, int column) {
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            if (i == row) {
+                continue;
+            }
+            Piece other = pieces[i][column];
+            if (other.isPawn() && target.getColor() == other.getColor()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Piece> getDescendingPieces() {
+        List<Piece> descendingPieces = new ArrayList<>();
+        descendingPieces.addAll(
+                getPiecesPerColor(Piece::isBlack, Comparator.comparing(Piece::getDefaultPoint).reversed()));
+        descendingPieces.addAll(
+                getPiecesPerColor(Piece::isWhite, Comparator.comparing(Piece::getDefaultPoint).reversed()));
+        return descendingPieces;
+    }
+
+    public List<Piece> getAscendingPieces() {
+        List<Piece> ascendingPieces = new ArrayList<>();
+        ascendingPieces.addAll(getPiecesPerColor(Piece::isBlack, Comparator.comparing(Piece::getDefaultPoint)));
+        ascendingPieces.addAll(getPiecesPerColor(Piece::isWhite, Comparator.comparing(Piece::getDefaultPoint)));
+        return ascendingPieces;
+    }
+
+    private List<Piece> getPiecesPerColor(Predicate<Piece> isColor, Comparator<Piece> comparator) {
+        return Arrays.stream(pieces)
+                .flatMap(Arrays::stream)
+                .filter(isColor)
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 }
