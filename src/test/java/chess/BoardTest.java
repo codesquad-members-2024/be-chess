@@ -4,6 +4,7 @@ import chess.Board;
 import chess.enums.Color;
 import chess.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +19,6 @@ public class BoardTest {
 
     @Test
     void create() throws Exception {
-
         verifyBoard(new Pawn(Color.WHITE), Color.WHITE, 1);
         verifyBoard(new Pawn(Color.BLACK), Color.BLACK, 2);
 
