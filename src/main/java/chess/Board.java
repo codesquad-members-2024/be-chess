@@ -7,11 +7,11 @@ import pieces.Pawn;
 
 public class Board {
     private ArrayList<Pawn> pawns;
-    private Pawn[][] pieces;
+    private Pawn[][] board;
 
     public Board() {
         pawns = new ArrayList<>();
-        pieces = new Pawn[8][8];
+        board = new Pawn[8][8];
     }
 
     public void add(Pawn pawn) {
@@ -35,7 +35,7 @@ public class Board {
         IntStream.range(0, 8).forEach(i -> {
             Pawn pawn = new Pawn(color, symbol);
             pawns.add(pawn);
-            pieces[index][i] = pawn;
+            board[index][i] = pawn;
         });
     }
 
@@ -58,7 +58,7 @@ public class Board {
     public String print() {
         return IntStream.range(0, 8)
                 .mapToObj(row -> IntStream.range(0, 8)
-                        .mapToObj(col -> pieces[row][col] == null ? " " : pieces[row][col].getSymbol())
+                        .mapToObj(col -> board[row][col] == null ? " " : board[row][col].getSymbol())
                         .collect(Collectors.joining()))
                 .collect(Collectors.joining("\n"));
     }
