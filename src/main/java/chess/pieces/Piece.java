@@ -15,6 +15,14 @@ public class Piece {
         return new Piece(name, color, Representation.of(name, color));
     }
 
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
     public Name getName() {
         return name;
     }
