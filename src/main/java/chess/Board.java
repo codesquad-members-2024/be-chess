@@ -42,7 +42,7 @@ public class Board {
 
         for(int i = 0; i < BOARD_WIDTH; i++) {
             addBlackPawn(new Pawn(PieceColor.BLACK, Representation.P));
-            board[BLACK_PAWN_LINE][i] = new Pawn(PieceColor.BLACK, Representation.p);
+            board[BLACK_PAWN_LINE][i] = new Pawn(PieceColor.BLACK, Representation.P);
         }
     }
 
