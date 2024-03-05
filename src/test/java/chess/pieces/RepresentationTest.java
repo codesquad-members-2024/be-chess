@@ -12,5 +12,6 @@ class RepresentationTest {
     void of() {
         Representation representation = Representation.of(Name.BISHOP, Color.BLACK);
         assertThat(representation).isEqualTo(Representation.BLACK_BISHOP);
+        assertThat(representation.getValue()).isEqualTo("B");
     }
 }

@@ -1,6 +1,7 @@
 package chess.pieces;
 
-import chess.utils.ErrorMessage;
+import static chess.utils.ErrorMessage.NOT_FOUND_REPRESENTATION;
+
 import java.util.Arrays;
 
 public enum Representation {
@@ -25,6 +26,6 @@ public enum Representation {
                 .filter(representation -> representation.name().contains(name.name())
                         && representation.name().contains(color.name()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_REPRESENTATION.getValue()));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_REPRESENTATION.getValue()));
     }
 }
