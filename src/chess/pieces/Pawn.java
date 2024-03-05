@@ -1,19 +1,19 @@
 package src.chess.pieces;
 
+import src.chess.Colors;
+
 public class Pawn {
-    private static final String BLACK_COLOR = "black";
-    private static final String WHITE_COLOR = "white";
-    private final String color;
+    private final Colors color;
 
     public Pawn(String color) {
-        this.color = color;
+        this.color = Colors.valueOf(color.toUpperCase());
     }
 
     public Pawn() {
-        this.color = WHITE_COLOR;
+        this.color = Colors.WHITE;
     }
 
     public String getColor() {
-        return color;
+        return color.getColorName();
     }
 }
