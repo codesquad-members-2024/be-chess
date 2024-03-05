@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.IntStream;
+import static utils.StringUtils.appendNewLine;
 
 public class Board {
     private final int MIN_RANK = 1;
@@ -37,7 +38,8 @@ public class Board {
     }
 
     public void print() {
-        IntStream.rangeClosed(MIN_RANK,MAX_RANK).forEach(rank -> System.out.println(getRankResult(rank)));
+        IntStream.rangeClosed(MIN_RANK,MAX_RANK)
+                .forEach(rank -> System.out.print(appendNewLine(getRankResult(rank))));
     }
 
     public String getWhitePawnsResult() {
