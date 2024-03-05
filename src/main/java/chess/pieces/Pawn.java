@@ -23,7 +23,7 @@ public class Pawn {
         }
     }
 
-    public String getColor() {
-        return color;
+    public boolean verifyPawn(final String color) {
+        return this.color.equals(color);
     }
 }
