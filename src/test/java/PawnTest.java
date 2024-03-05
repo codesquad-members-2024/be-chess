@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals; // JUnit 5의 assertEquals를 임포트
 
 public class PawnTest {
 
@@ -8,6 +9,12 @@ public class PawnTest {
     public void create() {
         verifyPawn(Pawn.COLOR_WHITE);
         verifyPawn(Pawn.COLOR_BLACK);
+    }
+
+    @Test
+    public void create_기본생성자() throws Exception {
+        Pawn pawn = new Pawn();
+        assertEquals(Pawn.COLOR_WHITE, pawn.getColor());
     }
 
     private void verifyPawn(String color) {
