@@ -1,7 +1,9 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BoardTest {
     @Test
+    @DisplayName("보드 생성")
     public void create() {
         Board board = new Board();
 
@@ -13,6 +15,6 @@ public class BoardTest {
         Pawn black = new Pawn(Pawn.BLACK_COLOR);
         board.add(black);
         assertEquals(2,board.size());
-        assertEquals(white,board.findPawn(1));
+        assertEquals(black,board.findPawn(1));
     }
 }
