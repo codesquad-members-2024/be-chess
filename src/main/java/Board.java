@@ -1,49 +1,58 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
-    ArrayList<Pawn> pawns;
+    Object[][] chessPan;
 
     public Board() {
-        pawns = new ArrayList<Pawn>();
+        chessPan = new Object[8][8];
+        for (int i = 0; i < 8; i++) {
+            Arrays.fill(chessPan[i], '•');
+        }
+        initialize();
     }
 
     void initialize() {
         // 검은색 폰과 흰색 폰을 각각 8개씩 가지도록 초기화
         for (int i = 0; i < 8; i++) {
-            pawns.add(new Pawn("white"));
-            pawns.add(new Pawn("black"));
+            chessPan[1][i] = new Pawn("white").getRepresentation();
+            chessPan[6][i] = new Pawn("black").getRepresentation();
         }
     }
 
-    void print() {
+    public void print() {
+        // 현재 체스판의 결과를 출력
         StringBuilder sb = new StringBuilder();
-
-    }
-
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+        for (int i = 0; i < 8; i++) {
+            StringBuilder row = new StringBuilder();
+            for (int j = 0; j < 8; j++) {
+                row.append(chessPan[i][j]);
+            }
+            row.append("\n");
+            sb.append(row);
+        }
+        System.out.println(sb);
     }
 
     public String getWhitePawnsResult() {
         StringBuilder sb = new StringBuilder();
-        pawns.stream().filter(pawn -> pawn.getColor().equals(Pawn.WHITE_COLOR))
-                .forEach(pawn -> sb.append(pawn.getRepresentation()));
+
         return sb.toString();
     }
 
     public String getBlackPawnsResult() {
         StringBuilder sb = new StringBuilder();
-        pawns.stream().filter(pawn -> pawn.getColor().equals(Pawn.BLACK_COLOR))
-                .forEach(pawn -> sb.append(pawn.getRepresentation()));
+
         return sb.toString();
     }
 
-    public int size() {
-        return pawns.size();
-    }
+//    public void add(Pawn pawn) {
+//    }
 
-    public Pawn findPawn(int i) {
-        return pawns.get(i);
-    }
+//    public int size() {
+//        return pawns.size();
+//    }
 
+//    public Pawn findPawn(int i) {
+//        return pawns.get(i);
+//    }
 }

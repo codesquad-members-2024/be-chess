@@ -20,4 +20,4 @@
     - print()를 추가해 현재 체스판의 결과를 출력한다.
     - 체스판은 8*8로 구성되어 있음
     - 검은색 Pawn은 대문자 P, 흰색 Pawn은 소문자 p로 표시
-- BoardTest:
+- BoardTest: initialize()로 흰색말 8개, 검정말 8개가 생성됐는지

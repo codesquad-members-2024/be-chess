@@ -1,35 +1,17 @@
-public class Pawn {
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    public static final char WHITE_REPRESENTATION = 'p';
-    public static final char BLACK_REPRESENTATION = 'P';
-    private final String color;
-    private char representation;
+public class Pawn extends Piece {
 
     public Pawn() {
-        this.color = WHITE_COLOR;
-        this.representation = WHITE_REPRESENTATION;
+        super();
     }
 
     public Pawn(final String color) {
-        this.color = color;
-        if (color.equals(WHITE_COLOR)) {
-            this.representation = WHITE_REPRESENTATION;
-        } else if (color.equals(BLACK_COLOR)) {
-            this.representation = BLACK_REPRESENTATION;
-        }
+        super(color);
     }
 
     public Pawn(String color, final char representation) {
-        this.color = color;
-        this.representation = representation;
+        super(color, representation);
     }
 
-    public String getColor() {
-        return color;
-    }
+    // 행마법 지정
 
-    public char getRepresentation() {
-        return representation;
-    }
 }
