@@ -13,6 +13,7 @@ public class Board <T extends Pawn> {
         this.pieces.add((T) new Pawn(color1));
         this.pieces.add((T) new Pawn(color2));
     };
+    private static final String BLANK_PIECES = ".".repeat(INIT_PAWN_COUNT);
     private List<T> pieces = new ArrayList<>();
 
     public T findPawn(int index) {
@@ -51,5 +52,20 @@ public class Board <T extends Pawn> {
                 .forEach(piece -> builder.append(piece.getRepresentation()));
 
         return builder.toString();
+    }
+
+    public void print() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(BLANK_PIECES + "\n");
+        builder.append(getBlackPawnsResult() + "\n");
+        builder.append(BLANK_PIECES + "\n");
+        builder.append(BLANK_PIECES + "\n");
+        builder.append(BLANK_PIECES + "\n");
+        builder.append(BLANK_PIECES + "\n");
+        builder.append(getWhitePawnsResult() + "\n");
+        builder.append(BLANK_PIECES + "\n");
+
+        System.out.println(builder);
     }
 }
