@@ -29,4 +29,12 @@ public class BoardTest {
         assertEquals(size, board.size());
         assertEquals(pawn, board.findPawn(size - 1));
     }
+
+    @Test
+    public void initialize() throws Exception {
+        Board board = new Board();
+        board.initialize();
+        assertEquals(String.valueOf(Pawn.WHITE_REPRESENT).repeat(8), board.getWhitePawnsResult());
+        assertEquals(String.valueOf(Pawn.BLACK_REPRESENT).repeat(8), board.getBlackPawnsResult());
+    }
 }

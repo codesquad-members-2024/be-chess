@@ -7,17 +7,21 @@ import java.util.Scanner;
 public class Game {
 
     public void run() {
-        try {
-            Order start = userInput();
-            if (start.equals(Order.START)) {
-                Board board = new Board();
-                board.initialize();
-                board.print();
-            } else {
-                return;
+        Order nowOrder = Order.START;
+
+        while (nowOrder.equals(Order.START)) {
+            try {
+                nowOrder = userInput();
+                if (nowOrder.equals(Order.START)) {
+                    Board board = new Board();
+                    board.initialize();
+                    board.print();
+                } else {
+                    break;
+                }
+            } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
             }
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
         }
 
     }

@@ -29,17 +29,28 @@ public class Board {
     }
 
     public void print() {
+        StringBuilder sb = new StringBuilder();
+        String dots = "........";
         for (int i = 0; i < 8; i++) {
-            if (i == 1) {
-                for (int j = 0; j < 8; j++) {
-                    System.out.print(pawns.get(j).getRepresent());
-                }
-            } else if (i == 6) {
-                for (int j = 0; j < 8; j++) {
-                    System.out.print(pawns.get(j + 8).getRepresent());
-                }
-            } else System.out.print("........");
-            System.out.println();
+            if (i == 1) sb.append(getBlackPawnsResult());
+            else if (i == 6) sb.append(getWhitePawnsResult());
+            else sb.append(dots);
+            sb.append("\n");
         }
+
+        System.out.println(sb);
     }
+
+    public String getBlackPawnsResult() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) sb.append(pawns.get(i).getRepresent());
+        return sb.toString();
+    }
+
+    public String getWhitePawnsResult() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) sb.append(pawns.get(i + 8).getRepresent());
+        return sb.toString();
+    }
+
 }
