@@ -48,6 +48,10 @@ public class Piece {
         return color;
     }
 
+    public boolean isBlack(){ return color==Color.BLACK;}
+    public boolean isWhite(){ return color==Color.WHITE;}
+
+
     public String getRepresentation() {
         return this.representation;
     }

@@ -21,6 +21,15 @@ public class PieceTest {
         assertEquals(color, piece.getColor());
         assertEquals(representation, piece.getRepresentation());
     }
+
+    @Test
+    @DisplayName("기물의 색상을 구분할 수 있어야 함")
+    void isThatColor(){
+        Piece whitePawn = Piece.createWhitePawn();
+        assertThat(whitePawn.isWhite());
+        Piece blackPawn = Piece.createBlackPawn();
+        assertThat(blackPawn.isBlack());
+    }
 }
 
 
