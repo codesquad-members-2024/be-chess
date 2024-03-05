@@ -1,29 +1,29 @@
 package chess.pieces;
 
 public class Piece {
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    public static final char WHITE_REPRESENTATION = 'p';
-    public static final char BLACK_REPRESENTATION = 'P';
-    private final String color;
+    private final Name name;
+    private final Color color;
+    private final Representation representation;
 
-    public Piece() {
-        this.color = WHITE_COLOR;
-    }
-
-    public Piece(String color) {
+    private Piece(Name name, Color color, Representation representation) {
+        this.name = name;
         this.color = color;
+        this.representation = representation;
     }
 
-    public String getColor() {
+    public static Piece createPiece(Name name, Color color) {
+        return new Piece(name, color, Representation.of(name, color));
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Color getColor() {
         return color;
     }
 
-    public char getRepresentation() {
-        if (color.equals(WHITE_COLOR)) {
-            return WHITE_REPRESENTATION;
-        }
-        return BLACK_REPRESENTATION;
+    public Representation getRepresentation() {
+        return representation;
     }
-
 }
