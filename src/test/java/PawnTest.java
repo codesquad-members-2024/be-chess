@@ -7,8 +7,8 @@ public class PawnTest {
     @Test
     @DisplayName("입력한 색의 폰이 생성되어야 한다")
     public void create() {
-        verifyPawn("white");
-        verifyPawn("black");
+        verifyPawn(Pawn.WHITE);
+        verifyPawn(Pawn.BLACK);
     }
     void verifyPawn(final String color) {
         Pawn pawn = new Pawn(color);
@@ -18,7 +18,7 @@ public class PawnTest {
     @Test
     public void createDefaultConstructor() throws Exception {
         Pawn pawn = new Pawn();
-        assertEquals("white", pawn.getColor());
+        assertEquals(Pawn.WHITE, pawn.getColor());
     }
 
 }
