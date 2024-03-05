@@ -1,21 +1,20 @@
 package pieces;
 
 public class Pawn {
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    private String teamColor;
-    public Pawn(String teamColor){
-        if (rightColor(teamColor)) {
-            this.teamColor = teamColor;
-        }
+    private final PieceColor teamColor;
+    private final Representation pieceRepresent;
+    public Pawn(PieceColor color, Representation representation){
+        this.teamColor = color;
+        this.pieceRepresent = representation;
     }
     public Pawn(){
-        this.teamColor = "white";
+        this.teamColor = PieceColor.WHITE;
+        this.pieceRepresent = Representation.P;
     }
-    public String getColor(){
+    public PieceColor getColor(){
         return teamColor;
     }
-    private boolean rightColor(String teamColor){
-        return teamColor.equals(WHITE_COLOR)||teamColor.equals(BLACK_COLOR);
+    public Representation getRepresentation(){
+        return pieceRepresent;
     }
 }
