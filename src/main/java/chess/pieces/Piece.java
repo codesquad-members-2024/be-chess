@@ -15,9 +15,6 @@ public class Piece {
         return new Piece(name, color, Representation.of(name, color));
     }
 
-    public Name getName() {
-        return name;
-    }
 
     public Color getColor() {
         return color;
