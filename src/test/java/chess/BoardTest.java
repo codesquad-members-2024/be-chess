@@ -37,4 +37,22 @@ public class BoardTest {
         assertEquals("pppppppp", board.getWhitePawnsResult());
         assertEquals("PPPPPPPP", board.getBlackPawnsResult());
     }
+
+    @Test
+    @DisplayName("보드 초기화 후 출력이 initBoard와 일치해야한다")
+    void initBoard() {
+        String initBoard =
+                "........\n" +
+                "PPPPPPPP\n" +
+                "........\n" +
+                "........\n" +
+                "........\n" +
+                "........\n" +
+                "pppppppp\n" +
+                "........";
+        board.initialize();
+        String print = board.print();
+        System.out.println(print);
+        assertEquals(initBoard, print);
+    }
 }
