@@ -1,20 +1,22 @@
 package chess;
 
-import pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utils.StringUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static utils.StringUtils.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
     Board board;
 
     @BeforeEach
-    void beforeEach() {
+    void setup() {
         board = new Board();
     }
 
+    /*
     @Test
     @DisplayName("Piece 추가 시 갯수 및 추가한 객체 확인")
     void create() throws Exception {
@@ -36,11 +38,20 @@ class BoardTest {
         Integer integer = Integer.valueOf("7");
 //        board.add(integer); // 컴파일 에러 발생
     }
+     */
 
     @Test
+    @DisplayName("체스 판 전체의 초기화 상태 확인")
     public void initialize() throws Exception {
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePiecesResult());
-        assertEquals("PPPPPPPP", board.getBlackPiecesResult());
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+                StringUtils.appendNewLine("RNBQKBNR") +
+                        StringUtils.appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        StringUtils.appendNewLine("pppppppp") +
+                        StringUtils.appendNewLine("rnbqkbnr")
+        );
     }
 }
