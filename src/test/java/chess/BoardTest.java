@@ -1,5 +1,6 @@
 package chess;
 
+import static chess.utils.StringUtils.appendNewLine;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Piece;
@@ -16,19 +17,14 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("흰색,검은색 pawn을 추가하고 보드에서 찾을 수 있다")
+    @DisplayName("전체 보드의 출력 결과를 확인한다.")
     public void create() throws Exception {
-        Piece white = Piece.createWhitePawn();
-        board.add(white);
-
-        assertThat(1).isEqualTo(board.size());
-        assertThat(board.findWhitePawn(0)).isEqualTo(white);
-
-        Piece black = Piece.createBlackPawn();
-        board.add(black);
-
-        assertThat(2).isEqualTo(board.size());
-        assertThat(board.findBlackPawn(0)).isEqualTo(black);
+        board.initialize();
+        assertThat(board.getPieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+                appendNewLine("RNBQKBNR") + appendNewLine("PPPPPPPP") + blankRank + blankRank + blankRank + blankRank
+                        + appendNewLine("pppppppp") + appendNewLine("rnbqkbnr"));
     }
 
     @Test

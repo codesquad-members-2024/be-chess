@@ -65,10 +65,6 @@ public class Board {
         pieceCount++;
     }
 
-    public int size() {
-        return pieceCount;
-    }
-
     public Piece findWhitePawn(int i) {
         return whitePawns.get(i);
     }
@@ -91,5 +87,15 @@ public class Board {
 
     public ArrayList<Piece> getBlackPawns() {
         return blackPawns;
+    }
+
+    public int getPieceCount() {
+        return pieceCount;
+    }
+
+    public String showBoard() {
+        StringBuilder sb = new StringBuilder();
+
+        return sb.toString();
     }
 }
