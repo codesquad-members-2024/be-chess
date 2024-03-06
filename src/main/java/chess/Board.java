@@ -60,6 +60,7 @@ public class Board {
         for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
             sb.append(piecePositions[CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION][i].getSymbol());
         }
+        sb.append('\n');
         return sb.toString();
     }
 
@@ -67,6 +68,26 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
             sb.append(piecePositions[PAWN_INIT_POSITION][i].getSymbol());
+        }
+        sb.append('\n');
+        return sb.toString();
+    }
+
+    private String getBlankResult() {
+        return "........\n";
+    }
+
+
+    public String getChessBoard() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
+            if (i == PAWN_INIT_POSITION) {
+                sb.append(getBlackPawnResult());
+            } else if (i == CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION) {
+                sb.append(getWhitePawnResult());
+            } else {
+                sb.append(getBlankResult());
+            }
         }
         return sb.toString();
     }
