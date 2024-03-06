@@ -7,18 +7,16 @@ public class Piece {
     public static final String WHITE_REPRESENTATION = "p";
     public static final String BLACK_REPRESENTATION = "P";
     public static final String EMPTY_REPRESENTATION = ".";
+    private enum Name {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING}
 
+    private final Name name;
     private final String color;
     private final String representation;
 
-    public Piece(String color, String representation) {
+    public Piece(Name name, String color, String representation) {
+        this.name = name;
         this.color = color;
         this.representation = representation;
-    }
-
-    public Piece() {
-        this.color = WHITE_COLOR;
-        this.representation = WHITE_REPRESENTATION;
     }
 
     public String getColor() {
