@@ -47,21 +47,6 @@ class BoardTest {
             () -> board.addPawn(new Pawn())).getMessage());
     }
 
-//    @Test
-//    @DisplayName("하얀색 Pawn에 정상적인 symbol값이 할당되었는지 테스트")
-//    void testInitializeWhitePawn() {
-//        board.initialize();
-//        assertEquals("pppppppp\n", board.getWhitePawnResult());
-//
-//    }
-//
-//    @Test
-//    @DisplayName("검은색 Pawn에 정상적인 symbol값이 할당되었는지 테스트 ")
-//    void testInitializeBlackPawn() {
-//        board.initialize();
-//        assertEquals("PPPPPPPP\n", board.getBlackPawnResult());
-//    }
-
     @Test
     @DisplayName("전체 체스판이 제대로 출력되는지 테스트")
     void testPrintChessBoard() {
