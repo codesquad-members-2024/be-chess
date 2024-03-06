@@ -60,7 +60,8 @@ public class BoardTest {
     }
 
     @Test
-    void move() throws Exception {
+    @DisplayName("지정한 위치에 지정한 기물을 추가할 수 있어야 한다")
+    void addPieceAt() throws Exception {
         board.initEmpty();
 
         String position = "b5";
@@ -126,4 +127,17 @@ public class BoardTest {
 
         assertThat(board.sortPieces()).isEqualTo(result);
     }
+
+    @Test
+    @DisplayName("보드의 기물을 움직였을 때 , 시작 칸은 비워지고 , 도착 칸에 움직인 기물이 놓여져야 한다")
+    public void move() throws Exception {
+        board.init();
+
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.movePieceAt(sourcePosition, targetPosition);
+        assertThat(board.findPiece(sourcePosition).getType()).isEqualTo(Piece.Type.BLANK);
+        assertThat(board.findPiece(targetPosition)).isEqualTo(Piece.createWhitePawn());
+    }
 }
+

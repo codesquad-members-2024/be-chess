@@ -172,4 +172,10 @@ public class Board {
                 .sorted(Comparator.comparing(p -> p.getType().getScore(), Comparator.reverseOrder())) // 기본 : 오름차순
                 .toList();
     }
+
+    public void movePieceAt(String sourcePosition, String targetPosition) {
+        Piece start = findPiece(sourcePosition);
+        addPieceAt(sourcePosition , Piece.createBlank());
+        addPieceAt(targetPosition, start);
+    }
 }
