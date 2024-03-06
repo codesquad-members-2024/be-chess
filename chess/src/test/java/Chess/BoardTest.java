@@ -12,6 +12,7 @@ public class BoardTest {
     public void setupBoard() {
         this.board = new Board();
     }
+
     @Test
     public void testPawnAddition() throws Exception {
         addAndTestPawn(Pawn.WHITE_COLOR);
@@ -24,5 +25,20 @@ public class BoardTest {
         board.addPawn(pawn);
         assertEquals(initialSize + 1, board.getPawnsSize());
         assertEquals(pawn, board.findPawn(initialSize));
+    }
+
+    @Test
+    public void initialize() throws Exception {
+        board.initialize();
+        String expectedBoard =
+                "........\n" +
+                        "♟♟♟♟♟♟♟♟\n" +
+                        "........\n" +
+                        "........\n" +
+                        "........\n" +
+                        "........\n" +
+                        "♟♟♟♟♟♟♟♟\n" +
+                        "........\n";
+        assertEquals(expectedBoard, board.getBoardPrint());
     }
 }
