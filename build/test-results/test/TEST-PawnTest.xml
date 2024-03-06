@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="PawnTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-04T09:43:37" hostname="isuhyeons-MacBook-Pro.local" time="0.025">
-  <properties/>
-  <testcase name="흰색과 검정색 폰이 생성되어야 한다" classname="PawnTest" time="0.025"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
