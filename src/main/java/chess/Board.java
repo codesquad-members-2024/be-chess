@@ -48,4 +48,20 @@ public class Board {
     public int whitePawnSize() {
         return whitePawns.size();
     }
+
+    private String getPawnResult(ArrayList<Pawn> pawns) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            sb.append(pawns.get(i).getRepresentation());
+        }
+        return sb.toString();
+    }
+
+    public String getWhitePawnsResult() {
+        return getPawnResult(whitePawns);
+    }
+
+    public String getBlackPawnsResult() {
+        return getPawnResult(blackPawns);
+    }
 }
