@@ -1,59 +1,30 @@
 package chess.board;
 
+import static chess.utils.StringUtils.appendNewLine;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardTest {
-    Board board;
-    Pawn white;
-    Pawn black;
+public class BoardTest {
+    private Board board;
 
     @BeforeEach
-    void setUp() {
+    public void setup() {
         board = new Board();
-        white = new Pawn(Pawn.WHITE_COLOR);
-        black = new Pawn(Pawn.BLACK_COLOR);
     }
 
     @Test
-    @DisplayName("폰을 추가하면 보드의 사이즈가 증가하고 추가한 순서대로 폰을 찾을 수 있다.")
-    public void create() {
-        board.add(white);
-        assertThat(board.size()).isEqualTo(1);
-
-        board.add(black);
-        assertThat(board.size()).isEqualTo(2);
-
-        assertThat(board.findPawn(0)).isEqualTo(white);
-        assertThat(board.findPawn(1)).isEqualTo(black);
-    }
-
-    @Test
-    @DisplayName("보드를 초기화하면 흑색폰과 흰색폰을 각각 8개씩 생성한다.")
-    public void initialize() {
+    void create() {
         board.initialize();
-        assertEquals("pppppppp", board.getPawnsResult(Pawn.WHITE_COLOR));
-        assertEquals("PPPPPPPP", board.getPawnsResult(Pawn.BLACK_COLOR));
-    }
-
-    @Test
-    @DisplayName("보드는 현재의 보드 상태를 반환할 수 있다.")
-    void print() {
-        board.initialize();
-        assertThat(board.print()).isEqualTo("""
-                ........
-                PPPPPPPP
-                ........
-                ........
-                ........
-                ........
-                pppppppp
-                ........
-                """);
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr")
+        );
     }
 }

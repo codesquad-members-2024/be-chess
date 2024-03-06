@@ -1,62 +1,79 @@
 package chess.board;
 
-import chess.pieces.Pawn;
+import static chess.utils.StringUtils.appendNewLine;
+
+import chess.pieces.Color;
+import chess.pieces.Name;
+import chess.pieces.Piece;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class Board {
-    private final List<Pawn> allPawns = new ArrayList<>();
-    private final List<Pawn> whitePawns = new ArrayList<>();
-    private final List<Pawn> blackPawns = new ArrayList<>();
+    public static final int COLUMN_AND_ROW_SIZE = 8;
+    private static final int BLACK_INITIAL_OTHERS_ROW = 0;
+    private static final int BLACK_INITIAL_PAWNS_ROW = 1;
+    private static final int WHITE_INITIAL_OTHERS_ROW = 7;
+    private static final int WHITE_INITIAL_PAWNS_ROW = 6;
 
+    public static final String EMPTY_SPACE = ".";
+    public static final String EMPTY_STRING = "";
+    private final Piece[][] pieces = new Piece[COLUMN_AND_ROW_SIZE][COLUMN_AND_ROW_SIZE];
 
     public void initialize() {
-        for (int i = 0; i < 8; i++) {
-            add(new Pawn());
-            add(new Pawn(Pawn.BLACK_COLOR));
+        List<Name> otherNames = makeOtherNames();
+
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            pieces[BLACK_INITIAL_OTHERS_ROW][i] = Piece.createPiece(otherNames.get(i), Color.BLACK);
+        }
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            pieces[BLACK_INITIAL_PAWNS_ROW][i] = Piece.createPiece(Name.PAWN, Color.BLACK);
+        }
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            pieces[WHITE_INITIAL_OTHERS_ROW][i] = Piece.createPiece(otherNames.get(i), Color.WHITE);
+        }
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            pieces[WHITE_INITIAL_PAWNS_ROW][i] = Piece.createPiece(Name.PAWN, Color.WHITE);
         }
     }
 
-    public void add(Pawn pawn) {
-        allPawns.add(pawn);
-        if (pawn.getColor().equals(Pawn.WHITE_COLOR)) {
-            whitePawns.add(pawn);
-            return;
-        }
-        blackPawns.add(pawn);
+    private List<Name> makeOtherNames() {
+        List<Name> otherNames = new ArrayList<>();
+        otherNames.add(Name.ROOK);
+        otherNames.add(Name.KNIGHT);
+        otherNames.add(Name.BISHOP);
+        otherNames.add(Name.QUEEN);
+        otherNames.add(Name.KING);
+        otherNames.add(Name.BISHOP);
+        otherNames.add(Name.KNIGHT);
+        otherNames.add(Name.ROOK);
+        return otherNames;
     }
 
-    public int size() {
-        return allPawns.size();
+    public int pieceCount() {
+        return (int) Arrays.stream(pieces)
+                .flatMap(Arrays::stream)
+                .filter(Objects::nonNull)
+                .count();
     }
 
-    public Pawn findPawn(int idx) {
-        return allPawns.get(idx);
-    }
-
-    public String getPawnsResult(String color) {
-        return (color.equals(Pawn.WHITE_COLOR) ? whitePawns : blackPawns).stream()
-                .map(pawn -> String.valueOf(pawn.getRepresentation()))
-                .collect(Collectors.joining());
-    }
-
-    public String print() {
+    public String showBoard() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (i == 1) {
-                    sb.append(getPawnsResult(Pawn.BLACK_COLOR));
-                    break;
-                }
-                if (i == 6) {
-                    sb.append(getPawnsResult(Pawn.WHITE_COLOR));
-                    break;
-                }
-                sb.append(".");
-            }
-            sb.append("\n");
+        for (Piece[] pieceArray : pieces) {
+            appendRow(pieceArray, sb);
         }
         return sb.toString();
+    }
+
+    private void appendRow(Piece[] pieceArray, StringBuilder sb) {
+        for (Piece piece : pieceArray) {
+            if (piece == null) {
+                sb.append(EMPTY_SPACE);
+                continue;
+            }
+            sb.append(piece.getRepresentation().getValue());
+        }
+        sb.append(appendNewLine(EMPTY_STRING));
     }
 }
