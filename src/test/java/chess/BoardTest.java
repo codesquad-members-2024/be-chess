@@ -2,11 +2,11 @@ package chess;
 import org.junit.jupiter.api.*;
 import pieces.Pawn;
 
-import static org.junit.jupiter.api.Assertions.assertEquals; // JUnit 5의 assertEquals를 임포트
+import static org.assertj.core.api.Assertions.assertThat; // AssertJ의 assertThat 임포트
 
 public class BoardTest {
 
-    Board board;
+    public Board board;
 
     @BeforeEach
     public void initialize() {
@@ -17,12 +17,12 @@ public class BoardTest {
     public void create() throws Exception {
         Pawn white = new Pawn(Pawn.COLOR_WHITE);
         board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findPawn(0));
+        assertThat(board.size()).isEqualTo(1);
+        assertThat(board.findPawn(0)).isEqualTo(white);
 
         Pawn black = new Pawn(Pawn.COLOR_BLACK);
         board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findPawn(1));
+        assertThat(board.size()).isEqualTo(2);
+        assertThat(board.findPawn(1)).isEqualTo(black);
     }
 }
