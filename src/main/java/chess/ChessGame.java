@@ -6,8 +6,6 @@ public class ChessGame {
 
     private static final String INPUT_COMMAND_MESSAGE = "커맨드를 입력해주세요.";
 
-    private static String inputCommand;
-
     public static void main(String[] args) {
         playChessGame();
     }
@@ -16,23 +14,24 @@ public class ChessGame {
         System.out.println(INPUT_COMMAND_MESSAGE);
         Board board = new Board();
         board.initialize();
-        inputCommand = getCommandInput();
-        System.out.println(inputCommand);
-        if (inputCommand.equals("start")) {
-            while (!inputCommand.equals("end")) {
+
+        Scanner scanner = new Scanner(System.in);
+        String inputCommand;
+
+        if (getCommand().equals("start")) {
+            do {
                 printResult(board.getChessBoardResult());
-                inputCommand = getCommandInput();
-            }
+                inputCommand = getCommand();
+            } while (!inputCommand.equals("end"));
         }
     }
 
-    private static String getCommandInput() {
+    private static String getCommand() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     private static void printResult(String result) {
         System.out.println(result);
     }
-
 }
