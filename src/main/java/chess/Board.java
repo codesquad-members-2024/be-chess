@@ -87,4 +87,19 @@ public class Board {
 
         return result;
     }
+
+    public List<Piece> sortPieceByScore(Color color, boolean reverse) {
+
+        List<Piece> toReturn = chessBoard.values()
+                .stream()
+                .filter(piece -> piece.getColor().equals(color))
+                .sorted((Piece piece1, Piece piece2) -> (int) (piece1.getType().getScore() - piece2.getType().getScore()))
+                .toList();
+        if (reverse) {
+            toReturn = new ArrayList<>(toReturn);
+            Collections.reverse(toReturn);
+        }
+
+        return toReturn;
+    }
 }
