@@ -8,9 +8,11 @@ import java.util.List;
 public class Board {
 
     private final List<Pawn> pawns;
+    private final List<List<String>> board;
 
     public Board() {
         this.pawns = new ArrayList<>();
+        this.board = new ArrayList<>();
     }
 
     public void addPawn(Pawn pawn) {
@@ -23,5 +25,38 @@ public class Board {
 
     public Pawn findPawn(int index) {
         return pawns.get(index);
+    }
+
+    public void initialize() {
+        List<String> basicLine = getBasicLine();
+        for (int i = 0; i < 8; i++) {
+            board.add(basicLine);
+        }
+        board.set(1, getWhitePawns());
+        board.set(6, getBlackPawns());
+    }
+
+    private List<String> getBasicLine() {
+        List<String> basic = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            basic.add("-");
+        }
+        return basic;
+    }
+
+    private List<String> getWhitePawns() {
+        List<String> whitePawns = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            whitePawns.add(Pawn.WHITE_REPRESENTATION);
+        }
+        return whitePawns;
+    }
+
+    private List<String> getBlackPawns() {
+        List<String> blackPawns = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            blackPawns.add(Pawn.BLACK_REPRESENTATION);
+        }
+        return blackPawns;
     }
 }
