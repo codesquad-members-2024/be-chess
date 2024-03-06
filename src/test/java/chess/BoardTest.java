@@ -108,4 +108,15 @@ class BoardTest {
     private void addPiece(String position, Piece piece) {
         board.move(position, piece);
     }
+
+    @Test
+    @DisplayName("기물의 점수가 높은 순으로 정렬할 수 있다.")
+    public void sortPieces() {
+        board.initialize();
+
+        assertThat(String.join("", board.sortPieces(Color.WHITE))).isEqualTo("♕♖♖♗♗♘♘♙♙♙♙♙♙♙♙♔");
+        assertThat(String.join("", board.sortPieces(Color.BLACK))).isEqualTo("♕♖♖♗♗♘♘♙♙♙♙♙♙♙♙♔");
+        assertThat(String.join("", board.sortPiecesReversed(Color.WHITE))).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
+        assertThat(String.join("", board.sortPiecesReversed(Color.BLACK))).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
+    }
 }
