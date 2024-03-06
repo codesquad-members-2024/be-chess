@@ -5,6 +5,7 @@ import pieces.Piece;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static utils.StringUtils.*;
 
@@ -38,11 +39,15 @@ public class Board {
     }
 
     public String showBoard() {
-        StringBuilder stringBuilder = new StringBuilder();
-        pieces.stream().sorted((list1, list2) -> -1)
-                .map(this::getLineRepresentation)
-                .forEach(string -> stringBuilder.append(appendNewLine(string)));
-        return stringBuilder.toString();
+        return pieces.stream().sorted((list1, list2) -> -1)
+                .map(line -> appendNewLine(getLineRepresentation(line)))
+                .collect(Collectors.joining());
+    }
+
+    private String getLineRepresentation(List<Piece> lineOfPieces) {
+        return lineOfPieces.stream()
+                .map(Piece::getRepresentation)
+                .collect(Collectors.joining());
     }
 
     private List<Piece> getWhiteEdgeLine() {
@@ -81,11 +86,5 @@ public class Board {
 
     private List<Piece> getEmptyLine() {
         return new ArrayList<>(Collections.nCopies(SIZE, Piece.createEmptyPiece()));
-    }
-
-    private String getLineRepresentation(List<Piece> lineOfPieces) {
-        StringBuilder stringBuilder = new StringBuilder();
-        lineOfPieces.stream().map(Piece::getRepresentation).forEach(stringBuilder::append);
-        return stringBuilder.toString();
     }
 }
