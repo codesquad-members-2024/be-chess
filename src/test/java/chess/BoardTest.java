@@ -51,7 +51,7 @@ class BoardTest {
     @DisplayName("하얀색 Pawn에 정상적인 symbol값이 할당되었는지 테스트")
     void testInitializeWhitePawn() {
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnResult());
+        assertEquals("pppppppp\n", board.getWhitePawnResult());
 
     }
 
@@ -59,7 +59,21 @@ class BoardTest {
     @DisplayName("검은색 Pawn에 정상적인 symbol값이 할당되었는지 테스트 ")
     void testInitializeBlackPawn() {
         board.initialize();
-        assertEquals("PPPPPPPP", board.getBlackPawnResult());
+        assertEquals("PPPPPPPP\n", board.getBlackPawnResult());
+    }
+
+    @Test
+    @DisplayName("전체 체스판이 제대로 출력되는지 테스트")
+    void testPrintChessBoard() {
+        board.initialize();
+        assertEquals("........\n"
+            + "PPPPPPPP\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "pppppppp\n"
+            + "........\n", board.getChessBoard());
     }
 
 }
