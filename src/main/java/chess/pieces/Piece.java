@@ -12,6 +12,11 @@ public class Piece {
     private Piece(String name, String color) {
         this.name = name;
         this.color = color;
+        if (color.equals(WHITE_COLOR)) {
+            this.representation = WHITE_REPRESENTATION;
+        } else if (color.equals(BLACK_COLOR)) {
+            this.representation = BLACK_REPRESENTATION;
+        }
     }
 
     // 정적 팩토리 메서드
@@ -19,12 +24,12 @@ public class Piece {
         return new Piece(name, color);
     }
 
-    public static Piece creaeteWhitePawn() {
-        return new Piece("white", "pawn");
+    public static Piece createWhitePawn() {
+        return new Piece("pawn", "white");
     }
 
-    public static Piece creaeteBlackPawn() {
-        return new Piece("black", "pawn");
+    public static Piece createBlackPawn() {
+        return new Piece("pawn","black");
     }
 
     public Piece(final String color) {

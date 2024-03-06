@@ -32,8 +32,8 @@ public class Board {
 
     void initialize() {
         for (int i = 0; i < 8; i++) {
-            whitePawns.add(Piece.creaeteWhitePawn());
-            blackPawns.add(Piece.creaeteBlackPawn());
+            whitePawns.add(Piece.createWhitePawn());
+            blackPawns.add(Piece.createBlackPawn());
         }
     }
 
@@ -52,7 +52,7 @@ public class Board {
 
     public String getPieceResult(ArrayList<Piece> pieces) {
         StringBuilder sb = new StringBuilder();
-        pieces.stream().map(Object::toString).forEach(sb::append);
+        pieces.stream().map(Piece::getRepresentation).forEach(sb::append);
         return sb.toString();
     }
 
