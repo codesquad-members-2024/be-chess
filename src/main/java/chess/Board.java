@@ -84,6 +84,10 @@ public class Board {
         return piecesExceptPawns;
     }
 
+    public void initializeEmpty() {
+
+    }
+
     public int pieceCount() {
         return pieces.size();
     }
@@ -117,5 +121,9 @@ public class Board {
         int col = position.charAt(0) - 'a';
 
         return board.get(row).getPiece(col);
+    }
+
+    public void move(String position, Piece piece) {
+        
     }
 }

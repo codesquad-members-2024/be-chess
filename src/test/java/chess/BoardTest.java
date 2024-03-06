@@ -60,4 +60,17 @@ class BoardTest {
         assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("a1"));
         assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("h1"));
     }
+
+    @Test
+    @DisplayName("체스 판의 임의의 위치에 기물을 추가할 수 있다.")
+    public void move() throws Exception {
+        board.initializeEmpty();
+
+        String position = "b5";
+        Piece piece = Piece.createBlackRook();
+        board.move(position, piece);
+
+        assertThat(piece).isEqualTo(board.findPiece(position));
+        System.out.println(board.showBoard());
+    }
 }
