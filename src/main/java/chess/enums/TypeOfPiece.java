@@ -1,5 +1,10 @@
 package chess.enums;
 
 public enum TypeOfPiece {
-    KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
+    KING,
+    QUEEN,
+    ROOK,
+    BISHOP,
+    KNIGHT,
+    PAWN
 }

@@ -24,14 +24,14 @@ public class BoardTest {
     @DisplayName("보드 안의 기물이 제대로 초기화되어야 한다")
     public void create() throws Exception {
         board.initialize();
-        assertEquals(32, board.pieceCount());
+        assertThat(32).isEqualTo(board.pieceCount());
         String blankRank = appendNewLine("........");
-        assertEquals(
-                appendNewLine("RNBQKBNR") +
-                appendNewLine("PPPPPPPP") +
+        assertThat(
+                appendNewLine("♖♘♗♕♔♗♘♖") +
+                appendNewLine("♙♙♙♙♙♙♙♙") +
                 blankRank + blankRank + blankRank + blankRank +
-                appendNewLine("pppppppp") +
-                appendNewLine("rnbqkbnr"),
-                board.showBoard());
+                appendNewLine("♟♟♟♟♟♟♟♟") +
+                appendNewLine("♜♞♝♛♚♝♞♜"))
+                .isEqualTo(board.showBoard());
     }
 }
