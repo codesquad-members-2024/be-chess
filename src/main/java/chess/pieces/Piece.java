@@ -5,56 +5,16 @@ import chess.enums.TypeOfPiece;
 
 public class Piece {
 
-    public static Piece createBlackQueen() {
-        return new Piece(Color.BLACK, TypeOfPiece.QUEEN, (char)(TypeOfPiece.QUEEN.getRepresent() + 6));
+    public static Piece createWhite(TypeOfPiece type) {
+        return new Piece(Color.WHITE, type, type.getRepresent());
     }
 
-    public static Piece createWhiteQueen() {
-        return new Piece(Color.WHITE, TypeOfPiece.QUEEN, TypeOfPiece.QUEEN.getRepresent());
+    public static Piece createBlack(TypeOfPiece type) {
+        return new Piece(Color.BLACK, type, (char) (type.getRepresent() + 6));
     }
 
-    public static Piece createBlackKing() {
-        return new Piece(Color.BLACK, TypeOfPiece.KING, (char)(TypeOfPiece.KING.getRepresent() + 6));
-    }
-
-    public static Piece createWhiteKing() {
-        return new Piece(Color.WHITE, TypeOfPiece.KING, TypeOfPiece.KING.getRepresent());
-    }
-
-    public static Piece createBlackRook() {
-        return new Piece(Color.BLACK, TypeOfPiece.ROOK, (char)(TypeOfPiece.ROOK.getRepresent() + 6));
-    }
-
-    public static Piece createWhiteRook() {
-        return new Piece(Color.WHITE, TypeOfPiece.ROOK, TypeOfPiece.ROOK.getRepresent());
-    }
-
-    public static Piece createBlackPawn() {
-        return new Piece(Color.BLACK, TypeOfPiece.PAWN, (char)(TypeOfPiece.PAWN.getRepresent() + 6));
-    }
-
-    public static Piece createWhitePawn() {
-        return new Piece(Color.WHITE, TypeOfPiece.PAWN, TypeOfPiece.PAWN.getRepresent());
-    }
-
-    public static Piece createBlackBishop() {
-        return new Piece(Color.BLACK, TypeOfPiece.BISHOP, (char)(TypeOfPiece.BISHOP.getRepresent() + 6));
-    }
-
-    public static Piece createWhiteBishop() {
-        return new Piece(Color.WHITE, TypeOfPiece.BISHOP, TypeOfPiece.BISHOP.getRepresent());
-    }
-
-    public static Piece createBlackKnight() {
-        return new Piece(Color.BLACK, TypeOfPiece.KNIGHT, (char)(TypeOfPiece.KNIGHT.getRepresent() + 6));
-    }
-
-    public static Piece createWhiteKnight() {
-        return new Piece(Color.WHITE, TypeOfPiece.KNIGHT, TypeOfPiece.KNIGHT.getRepresent());
-    }
-
-    public static Piece createBlank() {
-        return new Piece(Color.NO_COLOR, TypeOfPiece.NO_PIECE, TypeOfPiece.NO_PIECE.getRepresent());
+    public static Piece createBlank(TypeOfPiece type) {
+        return new Piece(Color.NO_COLOR, type, TypeOfPiece.NO_PIECE.getRepresent());
     }
 
     private final Color color;
