@@ -66,9 +66,9 @@ class ChessGameTest {
         addPiece("e1", Piece.createWhiteRook());
         addPiece("f1", Piece.createWhiteKing());
 
+        System.out.println(board.showBoard());
+
         assertThat(game.calculatePoint(Piece.Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
         assertThat(game.calculatePoint(Piece.Color.WHITE)).isCloseTo(7.0, Offset.offset(0.01));
-
-        System.out.println(board.showBoard());
     }
 }

@@ -86,6 +86,8 @@ public class BoardTest {
     @Test
     @DisplayName("보드의 기물들을 정렬했을 때 점수가 높은 순서 , 검은색 -> 흰색 순서로 정렬 되어야 한다")
     void sortPieces(){
+        board.initEmpty();
+
         addPiece("b6", Piece.createBlackPawn());
         addPiece("e6", Piece.createBlackQueen());
         addPiece("f2", Piece.createWhitePawn());

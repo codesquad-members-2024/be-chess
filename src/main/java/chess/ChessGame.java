@@ -29,17 +29,17 @@ public class ChessGame {
     }
 
     private int countOverPawn(Piece.Color color) {
-        int result = 0;
-        for (int i = MIN_FILE; i <= MAX_FILE; i++) {
+        int overPawn = 0;
+        for (int file = MIN_FILE; file<=MAX_FILE; file++) {
             int cnt = 0;
-            for (int j = MIN_RANK; j<=MAX_RANK; j++) {
-                Piece piece = gameBoard.findPiece(new int[]{j-1,i-1});
+            for (int rank = MIN_RANK; rank <= MAX_RANK; rank++) {
+                Piece piece = gameBoard.findPiece(new int[]{MAX_RANK - rank , file}); // 포지션 클래스를 만들고 makePosition 으로 통일할까 고민
                 if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
                     cnt++;
                 }
             }
-            result += cnt > 1 ? cnt : 0; // 점수 빼야 하는 기물 수
+            overPawn += cnt > 1 ? cnt : 0; // 점수 빼야 하는 기물 수
         }
-        return result;
+        return overPawn;
     }
 }
