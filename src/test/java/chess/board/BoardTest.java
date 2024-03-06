@@ -6,6 +6,7 @@ import static chess.utils.StringUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.pieces.CreateCommand;
 import chess.pieces.Piece;
 import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,23 +37,23 @@ class BoardTest {
         assertEquals(1, board.pieceCount());
     }
 
-    @DisplayName("체스판은 특정 기물의 위치를 알 수 있다")
+    @DisplayName("체스판에 첫번째로 추가된 흰색 폰은 0번째에 위치한다.")
     @Test
     void findPawn() {
         // given
-        Piece white = createWhitePawn();
-        Piece black = createBlackPawn();
-        board.add(white);
-        board.add(black);
+        Piece whitePawn = createWhitePawn();
+        Piece blackPawn = createBlackPawn();
+        board.add(whitePawn);
+        board.add(blackPawn);
 
         // when
-        Piece firstFindPiece = board.findPawn(0);
-        Piece secondFindPiece = board.findPawn(1);
+        Piece firstFindPiece = board.findPiece(0);
+        Piece secondFindPiece = board.findPiece(1);
 
         // then
         assertAll(
-                () -> assertEquals(white, firstFindPiece),
-                () -> assertEquals(black, secondFindPiece)
+                () -> assertEquals(whitePawn, firstFindPiece),
+                () -> assertEquals(blackPawn, secondFindPiece)
         );
     }
 
@@ -91,7 +92,7 @@ class BoardTest {
 
         // then
         assertThat(blackMajorPieces).isEqualTo("♜♞♝♛♚♝♞♜");
-        assertThat(whiteMajorPieces).isEqualTo("♖♘♗♔♕♗♘♖");
+        assertThat(whiteMajorPieces).isEqualTo("♖♘♗♕♔♗♘♖");
     }
 
     @DisplayName("체스판을 초기화하면 전체 기물이 준비된다")
@@ -108,8 +109,40 @@ class BoardTest {
                         appendNewLine("♟♟♟♟♟♟♟♟") +
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("♙♙♙♙♙♙♙♙") +
-                        appendNewLine("♖♘♗♔♕♗♘♖"),
+                        appendNewLine("♖♘♗♕♔♗♘♖"),
                 board.showBoard()
+        );
+    }
+
+    @DisplayName("체스판에 먼저 추가되는 기물은 출력할 때 좌측 첫번째에 위치한다")
+    @Test
+    void initialize_first_in_first_out() {
+        // given
+        board.add(CreateCommand.create(BLACK, ALLOWED_KING_NAME));
+        board.add(CreateCommand.create(BLACK, ALLOWED_ROOK_NAME));
+        board.add(CreateCommand.create(BLACK, ALLOWED_KNIGHT_NAME));
+        board.add(CreateCommand.create(BLACK, ALLOWED_PAWN_NAME));
+
+        board.add(CreateCommand.create(WHITE, ALLOWED_KING_NAME));
+        board.add(CreateCommand.create(WHITE, ALLOWED_ROOK_NAME));
+        board.add(CreateCommand.create(WHITE, ALLOWED_KNIGHT_NAME));
+        board.add(CreateCommand.create(WHITE, ALLOWED_PAWN_NAME));
+
+        // when
+        Piece firstInPiece = board.findPiece(0);
+        Piece lastInPiece = board.findPiece(7);
+
+        // then
+        assertAll(
+                "체스판에 먼저 들어간 기물은 검정색 킹이다",
+                () -> assertThat(firstInPiece.getName()).isEqualTo(ALLOWED_KING_NAME),
+                () -> assertThat(firstInPiece.getColor()).isEqualTo(BLACK)
+        );
+
+        assertAll(
+                "체스판에 마지막으로 들어간 기물은 흰색 폰이다",
+                () -> assertThat(lastInPiece.getName()).isEqualTo(ALLOWED_PAWN_NAME),
+                () -> assertThat(lastInPiece.getColor()).isEqualTo(WHITE)
         );
     }
 }
