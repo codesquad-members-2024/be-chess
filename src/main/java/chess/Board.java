@@ -113,10 +113,9 @@ public class Board {
     }
 
     public String showBoard() {
-        return IntStream.range(0, 8)
-                .mapToObj(row -> IntStream.range(0, 8)
-                        .mapToObj(col -> getSymbol(board.get(row).getPiece(col)))
-                        .collect(Collectors.joining()))
+        return board.stream()
+                .map(rank -> rank.getPieces().stream().map(this::getSymbol)
+                        .collect(Collectors.joining("")))
                 .collect(Collectors.joining(NEWLINE)).concat(NEWLINE);
     }
 
