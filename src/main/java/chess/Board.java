@@ -3,11 +3,14 @@ package chess;
 import static utils.StringUtils.NEWLINE;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
@@ -166,5 +169,30 @@ public class Board {
         return board.stream().anyMatch(rank -> rank.getPieces().stream()
                 .filter(piece -> piece.equalsPawn(color) && !cols.add(rank.getPieces().indexOf(piece)))
                 .isParallel());
+    }
+
+    public List<String> sortPieces(Color color) {
+        Stream<Piece> piecesStream = color.equals(Color.WHITE) ? whitePieces.stream() : blackPieces.stream();
+        List<String> copyPieces = new ArrayList<>(sortPiecesInternal(piecesStream));
+        Collections.reverse(copyPieces);
+        return copyPieces;
+    }
+
+    public List<String> sortPiecesReversed(Color color) {
+        Stream<Piece> piecesStream = color.equals(Color.WHITE) ? whitePieces.stream() : blackPieces.stream();
+        return sortPiecesInternal(piecesStream);
+    }
+
+    private List<String> sortPiecesInternal(Stream<Piece> piecesStream) {
+        return piecesStream.sorted(new PieceComparator())
+                .map(piece -> piece.getPieceSymbol().getSymbol())
+                .collect(Collectors.toList());
+    }
+}
+
+class PieceComparator implements Comparator<Piece> {
+    @Override
+    public int compare(Piece piece1, Piece piece2) {
+        return Double.compare(piece1.getPieceSymbol().getDefaultPoint(), piece2.getPieceSymbol().getDefaultPoint());
     }
 }
