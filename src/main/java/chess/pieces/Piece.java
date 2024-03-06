@@ -5,12 +5,14 @@ import chess.enums.TypeOfPiece;
 
 public class Piece {
 
+    private static final int UNICODE_DIFF = 6;
+
     public static Piece createWhite(TypeOfPiece type) {
         return new Piece(Color.WHITE, type, type.getRepresent());
     }
 
     public static Piece createBlack(TypeOfPiece type) {
-        return new Piece(Color.BLACK, type, (char) (type.getRepresent() + 6));
+        return new Piece(Color.BLACK, type, (char) (type.getRepresent() - UNICODE_DIFF));
     }
 
     public static Piece createBlank(TypeOfPiece type) {
