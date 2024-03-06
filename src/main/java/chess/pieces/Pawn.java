@@ -1,19 +1,37 @@
 package chess.pieces;
 
-public class Pawn extends Piece {
+public class Pawn {
+    public static final String WHITE_COLOR = "white";
+    public static final String BLACK_COLOR = "black";
+    public static final char WHITE_REPRESENTATION = 'p';
+    public static final char BLACK_REPRESENTATION = 'P';
+    public String color;
+    public char representation;
 
     public Pawn() {
-        super();
+        this.color = WHITE_COLOR;
+        this.representation = WHITE_REPRESENTATION;
     }
 
     public Pawn(final String color) {
-        super(color);
+        this.color = color;
+        if (color.equals(WHITE_COLOR)) {
+            this.representation = WHITE_REPRESENTATION;
+        } else if (color.equals(BLACK_COLOR)) {
+            this.representation = BLACK_REPRESENTATION;
+        }
     }
 
-    public Pawn(String color, final char representation) {
-        super(color, representation);
+    public Pawn(final String color, final char representation) {
+        this.color = color;
+        this.representation = representation;
     }
 
-    // 행마법 지정
+    public String getColor() {
+        return color;
+    }
 
+    public char getRepresentation() {
+        return representation;
+    }
 }
