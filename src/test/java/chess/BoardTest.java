@@ -1,6 +1,5 @@
 package chess;
 
-import chess.Board;
 import chess.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +16,7 @@ class BoardTest {
         board = new Board();
     }
 
-    private void verifyBoard(Pawn pawn, int expectedSize) {
+    private void addAndValidateBoard(Pawn pawn, int expectedSize) {
         board.add(pawn);
         assertEquals(expectedSize, board.size());
         assertEquals(pawn, board.findPawn(expectedSize - 1));
@@ -27,9 +26,9 @@ class BoardTest {
     @DisplayName("추가한 폰의 개수와 존재를 검증한다")
     public void create() throws Exception {
         Pawn white = new Pawn(Pawn.WHITE);
-        verifyBoard(white, 1);
+        addAndValidateBoard(white, 1);
 
         Pawn black = new Pawn(Pawn.BLACK);
-        verifyBoard(black, 2);
+        addAndValidateBoard(black, 2);
     }
 }
