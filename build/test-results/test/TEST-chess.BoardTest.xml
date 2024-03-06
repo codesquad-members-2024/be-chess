@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="chess.BoardTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-05T07:25:06" hostname="ojuyeong-ui-MacBookAir.local" time="0.018">
+  <properties/>
+  <testcase name="보드 생성 후 폰을 색상별로 추가한다" classname="chess.BoardTest" time="0.014"/>
+  <testcase name="보드 리스트의 처음 초기값이 0인지 확인한다" classname="chess.BoardTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
