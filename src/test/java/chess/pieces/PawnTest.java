@@ -1,9 +1,14 @@
+package chess.pieces;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
     @Test
+    @DisplayName("매개변수가 없는 기본 생성자로 pawn을 생성할 수 있다")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
         assertEquals(Pawn.WHITE_COLOR, pawn.getColor());
@@ -11,6 +16,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("color와 representation을 지정한 생성자로 pawn을 생성할 수 있다")
     public void create() {
         verifyPawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
         verifyPawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
@@ -22,11 +28,4 @@ class PawnTest {
         assertEquals(representation, pawn.getRepresentation());
     }
 
-//    @DisplayName("색상에 맞는 폰이 생성되어야 한다")
-//    @ParameterizedTest(name = "색상: {0}")
-//    @ValueSource(strings = {"white", "black"})
-//    public void create(String color) {
-//        Pawn pawn = new Pawn(color);
-//        assertThat(pawn.getColor()).isEqualTo(color);
-//    }
 }
