@@ -1,3 +1,5 @@
+package pieces;
+
 public class Pawn {
 //    private String color;
     public static final String WHITE_COLOR = "white";
