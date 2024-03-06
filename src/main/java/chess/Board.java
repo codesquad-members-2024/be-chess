@@ -33,6 +33,15 @@ public class Board {
         }
     }
 
+    public void print(){
+
+    }
+
+//    public String makeChessboardStr(){
+//        StringBuilder stringBuilder = new StringBuilder(); // chessboard 상태 출력 위해
+//
+//    }
+
     public void add(Pawn pawn) {
         pawns.add(pawn);
     }
