@@ -13,18 +13,18 @@ public class PieceTest {
     @Test
     @DisplayName("모든 기물이 제대로 생성되어야 한다")
     void createPiece() {
-        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), TypeOfPiece.BISHOP);
-        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), TypeOfPiece.KING);
-        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), TypeOfPiece.ROOK);
-        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), TypeOfPiece.KNIGHT);
-        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), TypeOfPiece.QUEEN);
-        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), TypeOfPiece.PAWN);
+        verifyPiece(Piece.createWhite(TypeOfPiece.BISHOP), Piece.createBlack(TypeOfPiece.BISHOP), TypeOfPiece.BISHOP);
+        verifyPiece(Piece.createWhite(TypeOfPiece.KING), Piece.createBlack(TypeOfPiece.KING), TypeOfPiece.KING);
+        verifyPiece(Piece.createWhite(TypeOfPiece.ROOK), Piece.createBlack(TypeOfPiece.ROOK), TypeOfPiece.ROOK);
+        verifyPiece(Piece.createWhite(TypeOfPiece.KNIGHT), Piece.createBlack(TypeOfPiece.KNIGHT), TypeOfPiece.KNIGHT);
+        verifyPiece(Piece.createWhite(TypeOfPiece.QUEEN), Piece.createBlack(TypeOfPiece.QUEEN), TypeOfPiece.QUEEN);
+        verifyPiece(Piece.createWhite(TypeOfPiece.PAWN), Piece.createBlack(TypeOfPiece.PAWN), TypeOfPiece.PAWN);
     }
 
     @Test
     @DisplayName("빈칸이 잘 생성되었는지 검증한다")
     void createBlank() {
-        Piece blank = Piece.createBlank();
+        Piece blank = Piece.createBlank(TypeOfPiece.NO_PIECE);
         assertThat(blank.isBlack()).isFalse();
         assertThat(blank.isWhite()).isFalse();
         assertThat(blank.isBlank()).isTrue();
@@ -38,28 +38,6 @@ public class PieceTest {
 
         assertThat(white.getType()).isEqualTo(type);
         assertThat(black.getType()).isEqualTo(type);
-    }
-
-    @Test
-    @DisplayName("기물의 색을 검증한다")
-    void validateColor() {
-        valWhite(Piece.createWhiteQueen());
-        valBlack(Piece.createBlackQueen());
-
-        valWhite(Piece.createWhiteKing());
-        valBlack(Piece.createBlackKing());
-
-        valWhite(Piece.createWhiteRook());
-        valBlack(Piece.createBlackRook());
-
-        valBlack(Piece.createBlackKnight());
-        valWhite(Piece.createWhiteKnight());
-
-        valWhite(Piece.createWhiteBishop());
-        valBlack(Piece.createBlackBishop());
-
-        valWhite(Piece.createWhitePawn());
-        valBlack(Piece.createBlackPawn());
     }
 
     void valWhite(Piece piece) {
