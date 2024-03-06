@@ -4,13 +4,13 @@ import static chess.utils.ErrorMessage.NOT_FOUND_COMMAND;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum MainCommand {
     START,
     END;
 
-    public static Command of(String input) {
+    public static MainCommand of(String input) {
         return Arrays.stream(values())
-                .filter(command -> command.name().equals(input.toUpperCase()))
+                .filter(mainCommand -> mainCommand.name().equals(input.toUpperCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND.getValue()));
     }

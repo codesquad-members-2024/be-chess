@@ -1,7 +1,7 @@
 package chess;
 
 import chess.board.Board;
-import chess.utils.Command;
+import chess.utils.MainCommand;
 import java.util.Scanner;
 
 public class Game {
@@ -12,13 +12,13 @@ public class Game {
         Board board = new Board();
         board.initialize();
 
-        while (Command.of(readCommand()) != Command.END) {
+        while (MainCommand.of(readMenuCommand()) != MainCommand.END) {
             String showBoard = board.showBoard();
             System.out.println(showBoard);
         }
     }
 
-    public static String readCommand() {
+    public static String readMenuCommand() {
         System.out.println(ASK_MAIN_COMMAND);
         return sc.nextLine();
     }
