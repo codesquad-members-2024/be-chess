@@ -3,8 +3,6 @@ package chess;
 import chess.board.Board;
 import chess.board.Position;
 import chess.game.Game;
-import chess.utils.ErrorMessage;
-import chess.utils.MainCommand;
 import chess.view.View;
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -14,6 +12,9 @@ import java.util.regex.Pattern;
 public class Main {
     private static final String ASK_MAIN_COMMAND = "> 메인 명령어를 입력해주세요.";
     private static final String ASK_MOVE_COMMAND = "> 이동 명령어를 입력해주세요.";
+    private static final String NOT_FOUND_COMMAND = "일치하는 커맨드를 찾을 수 없습니다.";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(
             "^move\\s+([a-zA-Z][0-9])\\s+([a-zA-Z][0-9])\\s*$", Pattern.CASE_INSENSITIVE);
 
@@ -24,9 +25,9 @@ public class Main {
         Board board = new Board();
         Game game = new Game(board);
         board.initialize();
-        MainCommand mainCommand = getOrRetry(() -> MainCommand.of(readMenuCommand()));
+        String menuCommand = getOrRetry(Main::readMenuCommand);
 
-        while (mainCommand != MainCommand.END) {
+        while (menuCommand.equals(START_COMMAND)) {
             print(view.showBoard(board));
             runOrRetry(() -> move(game));
         }
@@ -34,7 +35,11 @@ public class Main {
 
     private static String readMenuCommand() {
         System.out.println(ASK_MAIN_COMMAND);
-        return sc.nextLine();
+        String menuCommand = sc.nextLine().toLowerCase();
+        if (!menuCommand.equals(START_COMMAND) && !menuCommand.equals(END_COMMAND)) {
+            throw new IllegalArgumentException(NOT_FOUND_COMMAND);
+        }
+        return menuCommand;
     }
 
     private static void print(String target) {
@@ -46,7 +51,7 @@ public class Main {
         String moveCommand = sc.nextLine();
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(moveCommand);
         if (!matcher.find()) {
-            throw new IllegalArgumentException(ErrorMessage.NOT_FOUND_COMMAND.getValue());
+            throw new IllegalArgumentException(NOT_FOUND_COMMAND);
         }
         Position source = new Position(matcher.group(1));
         Position target = new Position(matcher.group(2));

@@ -6,22 +6,25 @@ import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final int COLUMN_AND_ROW_SIZE = 8;
+    public static final int RANK_AND_FILE_SIZE = 8;
     private static final int BLACK_INITIAL_OTHERS_ROW = 0;
     private static final int BLACK_INITIAL_PAWNS_ROW = 1;
     private static final int WHITE_INITIAL_PAWNS_ROW = 6;
     private static final int WHITE_INITIAL_OTHERS_ROW = 7;
+    public static final int DUPLICATED_VALUE = 2;
 
-    private final List<Rank> ranks = new ArrayList<>(COLUMN_AND_ROW_SIZE);
+    private final List<Rank> ranks = new ArrayList<>(RANK_AND_FILE_SIZE);
 
     public void initialize() {
-        List<Type> otherTypes = makeOtherNames();
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+        List<Type> otherTypes = makeOtherTypes();
+        for (int i = 0; i < RANK_AND_FILE_SIZE; i++) {
             Rank rank = new Rank();
             fillRank(rank, i, otherTypes);
             ranks.add(rank);
@@ -29,7 +32,7 @@ public class Board {
     }
 
     private void fillRank(Rank rank, int i, List<Type> otherTypes) {
-        for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+        for (int j = 0; j < RANK_AND_FILE_SIZE; j++) {
             if (i == BLACK_INITIAL_OTHERS_ROW) {
                 rank.add(Piece.createBlack(otherTypes.get(j)));
                 continue;
@@ -50,23 +53,15 @@ public class Board {
         }
     }
 
-    private List<Type> makeOtherNames() {
-        List<Type> otherTypes = new ArrayList<>();
-        otherTypes.add(Type.ROOK);
-        otherTypes.add(Type.KNIGHT);
-        otherTypes.add(Type.BISHOP);
-        otherTypes.add(Type.QUEEN);
-        otherTypes.add(Type.KING);
-        otherTypes.add(Type.BISHOP);
-        otherTypes.add(Type.KNIGHT);
-        otherTypes.add(Type.ROOK);
-        return otherTypes;
+    private List<Type> makeOtherTypes() {
+        return List.of(Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN, Type.KING, Type.BISHOP,
+                Type.KNIGHT, Type.ROOK);
     }
 
     public void initializeEmpty() {
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+        for (int i = 0; i < RANK_AND_FILE_SIZE; i++) {
             Rank rank = new Rank();
-            for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+            for (int j = 0; j < RANK_AND_FILE_SIZE; j++) {
                 rank.add(Piece.createBlank());
             }
             ranks.add(rank);
@@ -89,14 +84,28 @@ public class Board {
         ranks.get(position.getYPos()).set(position.getXPos(), piece);
     }
 
-    public Piece findPiece(int yPos, int xPos) {
-        return ranks.get(yPos).find(xPos);
-    }
-
     public Piece findPiece(Position position) {
         return ranks.get(position.getYPos()).find(position.getXPos());
     }
 
+    public Double sumDefaultPoints(Color color) {
+        return ranks.stream()
+                .mapToDouble(rank -> rank.sumDefaultPoint(color))
+                .sum();
+    }
+
+    public int countDuplicatedPawn(Color color) {
+        Map<Integer, Integer> count = new HashMap<>();
+        ranks.forEach(rank -> rank.countDuplicatedPawn(color, count));
+        int sum = 0;
+        for (int idx : count.keySet()) {
+            int countPerFile = count.get(idx);
+            if (countPerFile >= DUPLICATED_VALUE) {
+                sum += countPerFile;
+            }
+        }
+        return sum;
+    }
 
     public List<Piece> getDescendingPieces() {
         List<Piece> descendingPieces = new ArrayList<>();
