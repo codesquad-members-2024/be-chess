@@ -1,5 +1,6 @@
 package chess;
 
+import pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,27 +15,24 @@ class BoardTest {
         board = new Board();
     }
 
-    /*
     @Test
-    @DisplayName("Pawn 추가 시 갯수 및 추가한 객체 확인")
+    @DisplayName("Piece 추가 시 갯수 및 추가한 객체 확인")
     void create() throws Exception {
-        verifyBoard(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION, 1);
-        verifyBoard(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION, 2);
+        verifyBoard(Piece.WHITE_COLOR, Piece.WHITE_REPRESENTATION, 1);
+        verifyBoard(Piece.BLACK_COLOR, Piece.BLACK_REPRESENTATION, 2);
     }
 
 
     void verifyBoard(final String color, final String representation, int order) {
-        Pawn pawn = new Pawn(color, representation);
-        board.add(pawn);
+        Piece piece = new Piece(color, representation);
+        board.add(piece);
         assertEquals(order, board.size());
-        assertEquals(pawn, board.findPawn(order-1));
+        assertEquals(piece, board.findPiece(order-1));
     }
 
-     */
-
     @Test
-    @DisplayName("Pawn 이외의 다른 객체를 추가하면 컴파일 에러가 발생한다.")
-    void addNotPawnObject() {
+    @DisplayName("Piece 이외의 다른 객체를 추가하면 컴파일 에러가 발생한다.")
+    void addNotPieceObject() {
         Integer integer = Integer.valueOf("7");
 //        board.add(integer); // 컴파일 에러 발생
     }
@@ -42,7 +40,7 @@ class BoardTest {
     @Test
     public void initialize() throws Exception {
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        assertEquals("pppppppp", board.getWhitePiecesResult());
+        assertEquals("PPPPPPPP", board.getBlackPiecesResult());
     }
 }

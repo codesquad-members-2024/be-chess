@@ -1,6 +1,6 @@
 package chess;
 
-import chess.pieces.Pawn;
+import pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,80 +8,78 @@ import java.util.List;
 
 public class Board {
     private static final int SIZE = 8;
-    private static final int WHITE_PAWNS_LINE = 1;
-    private static final int BLACK_PAWNS_LINE = 6;
+    private static final int WHITE_PIECES_LINE = 1;
+    private static final int BLACK_PIECES_LINE = 6;
 
-    private final List<List<Pawn>> pawns;
+    private final List<List<Piece>> pieces;
 
     public Board() {
-        this.pawns = new ArrayList<>();
+        this.pieces = new ArrayList<>();
     }
 
     public void initialize() {
         for (int line=0; line<SIZE; line++) {
-            pawns.add(line, getInitialPawns(line));
+            pieces.add(line, getInitialPieces(line));
         }
     }
 
     public void print() {
         StringBuilder stringBuilder = new StringBuilder();
-        pawns.stream().sorted((list1, list2) -> -1)
-                .map(this::getPawnsOfLineString)
+        pieces.stream().sorted((list1, list2) -> -1)
+                .map(this::getPiecesOfLineString)
                 .forEach(string -> stringBuilder.append(string).append("\n"));
         System.out.println(stringBuilder);
     }
 
 
-    public String getWhitePawnsResult() {
-        return getPawnsOfLineString(pawns.get(WHITE_PAWNS_LINE));
+    public String getWhitePiecesResult() {
+        return getPiecesOfLineString(pieces.get(WHITE_PIECES_LINE));
     }
 
-    public String getBlackPawnsResult() {
-        return getPawnsOfLineString(pawns.get(BLACK_PAWNS_LINE));
+    public String getBlackPiecesResult() {
+        return getPiecesOfLineString(pieces.get(BLACK_PIECES_LINE));
     }
 
-    private List<Pawn> getInitialPawns(int line) {
-        if (line==WHITE_PAWNS_LINE) {
-            return getNewWhitePawns();
+    private List<Piece> getInitialPieces(int line) {
+        if (line==WHITE_PIECES_LINE) {
+            return getNewWhitePieces();
         }
-        if (line==BLACK_PAWNS_LINE) {
-            return getNewBlackPawns();
+        if (line==BLACK_PIECES_LINE) {
+            return getNewBlackPieces();
         }
-        return getEmptyPawns();
+        return getEmptyPieces();
     }
 
-    private String getPawnsOfLineString(List<Pawn> pawnsOfLine) {
+    private String getPiecesOfLineString(List<Piece> piecesOfLine) {
         StringBuilder stringBuilder = new StringBuilder();
-        pawnsOfLine.stream().map(Pawn::getRepresentation).forEach(stringBuilder::append);
+        piecesOfLine.stream().map(Piece::getRepresentation).forEach(stringBuilder::append);
         return stringBuilder.toString();
     }
 
-    private List<Pawn> getNewWhitePawns() {
-        Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
-        return new ArrayList<>(Collections.nCopies(SIZE, whitePawn));
+    private List<Piece> getNewWhitePieces() {
+        Piece whitePiece = new Piece(Piece.WHITE_COLOR, Piece.WHITE_REPRESENTATION);
+        return new ArrayList<>(Collections.nCopies(SIZE, whitePiece));
     }
 
-    private List<Pawn> getNewBlackPawns() {
-        Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
-        return new ArrayList<>(Collections.nCopies(SIZE, blackPawn));
+    private List<Piece> getNewBlackPieces() {
+        Piece blackPiece = new Piece(Piece.BLACK_COLOR, Piece.BLACK_REPRESENTATION);
+        return new ArrayList<>(Collections.nCopies(SIZE, blackPiece));
     }
 
-    private List<Pawn> getEmptyPawns() {
-        Pawn emptyPawn = new Pawn(Pawn.EMPTY, Pawn.EMPTY_REPRESENTATION);
-        return new ArrayList<>(Collections.nCopies(SIZE, emptyPawn));
+    private List<Piece> getEmptyPieces() {
+        Piece emptyPiece = new Piece(Piece.EMPTY, Piece.EMPTY_REPRESENTATION);
+        return new ArrayList<>(Collections.nCopies(SIZE, emptyPiece));
     }
 
-/*
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+    public void add(Piece piece) {
+        pieces.add(piece);
     }
 
     public int size() {
-        return pawns.size();
+        return pieces.size();
     }
 
-    public Pawn findPawn(int order) {
-        return pawns.get(order);
+    public Piece findPiece(int order) {
+        return pieces.get(order);
     }
- */
 }
