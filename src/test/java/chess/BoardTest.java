@@ -18,13 +18,13 @@ public class BoardTest {
     @Test
     @DisplayName("흰색,검은색 pawn을 추가하고 보드에서 찾을 수 있다")
     public void create() throws Exception {
-        Piece white = new Piece(Piece.WHITE_COLOR);
+        Piece white = Piece.createWhitePawn();
         board.add(white);
 
         assertThat(1).isEqualTo(board.size());
         assertThat(board.findWhitePawn(0)).isEqualTo(white);
 
-        Piece black = new Piece(Piece.BLACK_COLOR);
+        Piece black = Piece.createBlackPawn();
         board.add(black);
 
         assertThat(2).isEqualTo(board.size());
