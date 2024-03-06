@@ -2,9 +2,8 @@ package chess;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
+import pieces.Piece;
 import pieces.PieceColor;
-import pieces.Representation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,19 +14,19 @@ class BoardTest {
     void create() throws Exception {
         board = new Board();
 
-        Pawn white = new Pawn(PieceColor.WHITE, Representation.P);
+        Piece white = Piece.createWhitePawn();
         testAddPawn(white,1,0);
 
-        Pawn black = new Pawn(PieceColor.BLACK, Representation.p);
+        Piece black = Piece.createBlackPawn();
         testAddPawn(black,2,0);
     }
-    void testAddPawn(Pawn pawn, int pawnNumber, int indexNumber){
-        if (pawn.getColor().equals(PieceColor.WHITE)){
-            board.addWhitePawn(pawn);
-            assertEquals(pawn, board.findWhitePawn(indexNumber));
-        }else if (pawn.getColor().equals(PieceColor.BLACK)){
-            board.addBlackPawn(pawn);
-            assertEquals(pawn, board.findBlackPawn(indexNumber));
+    void testAddPawn(Piece piece, int pawnNumber, int indexNumber){
+        if (piece.getColor().equals(PieceColor.WHITE)){
+            board.addWhitePawn(piece);
+            assertEquals(piece, board.findWhitePawn(indexNumber));
+        }else if (piece.getColor().equals(PieceColor.BLACK)){
+            board.addBlackPawn(piece);
+            assertEquals(piece, board.findBlackPawn(indexNumber));
         }
         assertEquals(pawnNumber, board.totalSize());
     }
