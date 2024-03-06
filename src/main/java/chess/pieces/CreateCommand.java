@@ -14,6 +14,7 @@ public enum CreateCommand {
     ROOK(color -> color.equals(WHITE) ? createWhiteRook() : createBlackRook()),
     QUEEN(color -> color.equals(WHITE) ? createWhiteQueen() : createBlackQueen()),
     KING(color -> color.equals(WHITE) ? createWhiteKing() : createBlackKing()),
+    NO_PIECE(noUsedColor -> createBlank()),
     ;
 
     private final Function<Color, Piece> createByColor;
@@ -22,9 +23,9 @@ public enum CreateCommand {
         this.createByColor = createByColor;
     }
 
-    public static Piece create(Color color, String requestName) {
+    public static Piece create(Color color, Type type) {
         return Arrays.stream(CreateCommand.values())
-                .filter(targetName -> isAllowedName(requestName, targetName))
+                .filter(command -> command.name().equals(type.name()))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new)
                 .createByColor.apply(color);
