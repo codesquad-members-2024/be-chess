@@ -84,4 +84,8 @@ public class Piece {
         return this.color.equals(Color.BLACK);
     }
 
+    public boolean isBlank() {
+        return this.type.equals(TypeOfPiece.NO_PIECE);
+    }
+
 }

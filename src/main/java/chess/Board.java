@@ -23,7 +23,7 @@ public class Board {
 
     public int pieceCount() {
         return (int)chessBoard.values().stream()
-                                    .filter(Objects::nonNull)
+                                    .filter(piece -> !piece.isBlank())
                                     .count();
     }
 
@@ -40,7 +40,7 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         Arrays.stream(Position.values())
                 .filter(position -> position.name().contains(String.valueOf(row)))
-                .forEach(position -> sb.append(chessBoard.get(position) == null ? '.' : chessBoard.get(position).getRepresent()));
+                .forEach(position -> sb.append(chessBoard.get(position).getRepresent()));
         return sb.toString();
     }
 }

@@ -31,8 +31,18 @@ public class PieceTest {
         verifyPiece(Piece.createWhitePawn(), Color.WHITE, TypeOfPiece.WHITE_PAWN.getRepresent());
         verifyPiece(Piece.createBlackPawn(), Color.BLACK, TypeOfPiece.BLACK_PAWN.getRepresent());
 
-        verifyPiece(Piece.createBlank(), Color.NO_COLOR, TypeOfPiece.NO_PIECE.getRepresent());
     }
+
+    @Test
+    @DisplayName("빈칸이 잘 생성되었는지 검증한다")
+    void createBlank() {
+        Piece blank = Piece.createBlank();
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(blank.isWhite()).isFalse();
+        assertThat(blank.isBlank()).isTrue();
+        assertThat(blank.getColor()).isEqualTo(Color.NO_COLOR);
+    }
+
 
     void verifyPiece(Piece piece, Color color, char represent) {
         assertThat(piece.getColor()).isEqualTo(color);
