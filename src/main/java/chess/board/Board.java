@@ -16,7 +16,7 @@ public class Board <T extends Piece> {
     private static final String BLANK_PIECES = ".".repeat(INIT_PAWN_COUNT);
     private List<T> pieces = new ArrayList<>();
 
-    public T findPawn(int index) {
+    public T findPiece(int index) {
         return pieces.get(index);
     }
 
