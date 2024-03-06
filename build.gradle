@@ -18,3 +18,7 @@ dependencies {
 tasks {
     // 커스텀 태스크 정의 등
 }
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
