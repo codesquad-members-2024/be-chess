@@ -2,6 +2,7 @@ package chess.pieces;
 
 import static chess.common.Color.*;
 import static chess.pieces.Piece.*;
+import static chess.pieces.Piece.Type.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,14 +54,13 @@ class PieceTest {
     @DisplayName("팩토리 메서드로 흰색 폰과 검정색 폰을 올바르게 생성할 수 있다")
     @Test
     void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), WHITE, PieceShape.PAWN_WHITE);
-        verifyPiece(Piece.createBlackPawn(), BLACK, PieceShape.PAWN_BLACK);
-
+        verifyPiece(Piece.createWhitePawn(), WHITE, PAWN.whiteRepresentation);
+        verifyPiece(Piece.createBlackPawn(), BLACK, PAWN.blackRepresentation);
     }
 
-    private void verifyPiece(final Piece piece, final Color color, final PieceShape pieceShape) {
+    private void verifyPiece(final Piece piece, final Color color, final String representation) {
         assertEquals(color, piece.getColor());
-        assertEquals(pieceShape.getUnicode(), piece.getRepresentation());
+        assertEquals(representation, piece.getRepresentation());
     }
 
     @DisplayName("기물은 자신이 흰색인지 검은색인지 알 수 있다")

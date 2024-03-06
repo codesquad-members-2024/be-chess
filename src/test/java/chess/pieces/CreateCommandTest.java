@@ -1,8 +1,7 @@
 package chess.pieces;
 
 import static chess.common.Color.*;
-import static chess.pieces.Piece.*;
-import static chess.pieces.CreateCommand.*;
+import static chess.pieces.CreateCommand.create;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +13,8 @@ class CreateCommandTest {
     @DisplayName("허용된 기물의 이름으로 기물을 생성할 수 있다")
     @ParameterizedTest(name = "입력 이름: {0}")
     @ValueSource(strings = {
-            ALLOWED_PAWN_NAME, ALLOWED_KNIGHT_NAME, ALLOWED_BISHOP_NAME,
-            ALLOWED_ROOK_NAME, ALLOWED_QUEEN_NAME, ALLOWED_KING_NAME
+            "pawn", "knight", "bishop",
+            "rook", "queen", "king"
     })
     void create_success(String allowedName) {
         // given & when
