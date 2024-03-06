@@ -17,13 +17,17 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("생성된 화이트와 블랙 폰이 각 폰 리스트에 저장되어야 한다")
-    void create() throws Exception {
+    @DisplayName("흰색 폰이 생성되어야한다")
+    void createWhitePawn() throws Exception {
         Pawn white = new Pawn(PawnColor.WHITE);
         board.whitePawnAdd(white);
         assertEquals(1, board.whitePawnSize());
         assertEquals(white, board.findWhitePawn(0));
+    }
 
+    @Test
+    @DisplayName("검은색 폰이 생성되어야한다")
+    void createBlackPawn() throws Exception {
         Pawn black = new Pawn(PawnColor.BLACK);
         board.blackPawnAdd(black);
         assertEquals(1, board.blackPawnSize());
@@ -31,7 +35,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("보드 초기화 시 화이트폰과 블랙 폰이 리스트에 저장되어야한다")
+    @DisplayName("보드 초기화 시 흰색, 검정색 폰이 생성되어야한다")
     void initialize() throws Exception {
         board.initialize();
         assertEquals("pppppppp", board.getWhitePawnsResult());
@@ -39,7 +43,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("보드 초기화 후 출력이 initBoard와 일치해야한다")
+    @DisplayName("보드 초기화 후 출력이 initBoard 와 일치해야한다")
     void initBoard() {
         String initBoard =
                 "........\n" +
