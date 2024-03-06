@@ -36,7 +36,7 @@ public class ChessHelp {
     static int[] getRankFile(String position) {
         char file = position.charAt(0);
         int rank = MAX_RANK - Integer.parseInt(position.substring(1));
-        int fileInt = file - 'a'; // a 면 0 h면 8
+        int fileInt = file - 'a' + MIN_FILE;
 
         return new int[]{rank, fileInt};
     }
