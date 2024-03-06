@@ -49,12 +49,10 @@ public class Piece {
         }
     }
 
-    private final String name;
-    private final String color;
+    private final Color color;
     private final PieceSymbol pieceSymbol;
 
-    private Piece(String name, String color, PieceSymbol pieceSymbol) {
-        this.name = name;
+    private Piece(Color color, PieceSymbol pieceSymbol) {
         this.color = color;
         this.pieceSymbol = pieceSymbol;
     }
@@ -108,22 +106,18 @@ public class Piece {
     }
 
     public static Piece createBlank() {
-        return new Piece(PieceSymbol.NO_PIECE.getName(), Color.NOCOLOR.color, PieceSymbol.NO_PIECE);
+        return new Piece(Color.NOCOLOR, PieceSymbol.NO_PIECE);
     }
 
     private static Piece creatWhite(PieceSymbol pieceSymbol) {
-        return new Piece(pieceSymbol.getName(), Color.WHITE.color, pieceSymbol);
+        return new Piece(Color.WHITE, pieceSymbol);
     }
 
     private static Piece createBlack(PieceSymbol pieceSymbol) {
-        return new Piece(pieceSymbol.getName(), Color.BLACK.color, pieceSymbol);
+        return new Piece(Color.BLACK, pieceSymbol);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -132,11 +126,15 @@ public class Piece {
     }
 
     public boolean isWhite() {
-        return color.equals(Color.WHITE.color);
+        return color.equals(Color.WHITE);
     }
 
     public boolean isBlack() {
-        return color.equals(Color.BLACK.color);
+        return color.equals(Color.BLACK);
+    }
+
+    public boolean matchColor(Color color) {
+        return this.color.equals(color);
     }
 
     public static String convertToBlackPiece(String whitePiece) {
@@ -153,5 +151,13 @@ public class Piece {
         Piece piece = (Piece) object;
         return this.color.equals(piece.color) &&
                 this.pieceSymbol.equals(piece.pieceSymbol);
+    }
+
+    public boolean equalsPawn(Color color) {
+        return this.color.equals(color) && this.pieceSymbol.equals(PieceSymbol.PAWN);
+    }
+
+    public boolean equalsPiece(Color color, PieceSymbol pieceSymbol) {
+        return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 }
