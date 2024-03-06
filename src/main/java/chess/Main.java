@@ -49,7 +49,7 @@ public class Main {
         Position source = new Position(matcher.group(1));
         Position target = new Position(matcher.group(2));
 
-        board.move(source, target);
+//        board.move(source, target);
     }
 
     private static <T> T getOrRetry(Supplier<T> supplier) {

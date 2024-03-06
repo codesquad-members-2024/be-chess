@@ -6,7 +6,6 @@ import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
 import java.util.List;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,6 @@ public class BoardTest {
         assertThat(board.pieceCount()).isEqualTo(0);
         board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);
-
     }
 
     @Test
@@ -48,29 +46,6 @@ public class BoardTest {
         assertThat(board.findPiece(new Position("h1"))).isEqualTo(Piece.createWhite(Type.ROOK));
 
         assertThat(board.findPiece(new Position("e1"))).isEqualTo(Piece.createWhite(Type.KING));
-    }
-
-    @Test
-    @DisplayName("원하는 위치로 피스를 이동시킬 수 있다.")
-    public void move() {
-        board.initialize();
-
-        Position source = new Position("b2");
-        Position target = new Position("b3");
-
-        board.move(source, target);
-        assertThat(board.findPiece(source)).isEqualTo(Piece.createBlank(source)); // 위치 정보까지 동일해야 동일한 객체
-        assertThat(board.findPiece(target)).isEqualTo(Piece.createWhite(Type.PAWN, target));
-    }
-
-    @Test
-    @DisplayName("색깔별로 점수를 계산할 수 있다.")
-    void calculatePoint() {
-        board.initializeEmpty();
-        addPieces();
-
-        assertThat(board.calculatePoint(Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
-        assertThat(board.calculatePoint(Color.WHITE)).isCloseTo(7.5, Offset.offset(0.01));
     }
 
 
@@ -121,6 +96,6 @@ public class BoardTest {
     }
 
     private void addPiece(String position, Piece piece) {
-        board.move(new Position(position), piece);
+        board.addPiece(new Position(position), piece);
     }
 }

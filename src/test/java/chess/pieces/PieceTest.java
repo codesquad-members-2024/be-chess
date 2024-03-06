@@ -1,9 +1,6 @@
 package chess.pieces;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
@@ -22,18 +19,18 @@ class PieceTest {
         verifyPiece(Piece.createWhite(Type.KING), Piece.createBlack(Type.KING), Type.KING);
 
         Piece blank = Piece.createBlank();
-        assertFalse(blank.isWhite());
-        assertFalse(blank.isBlack());
-        assertEquals(Type.NO_PIECE, blank.getType());
-        assertEquals(Color.NO_COLOR, blank.getColor());
+        assertThat(blank.isWhite()).isFalse();
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(blank.getType()).isEqualTo(Type.NO_PIECE);
+        assertThat(blank.getColor()).isEqualTo(Color.NO_COLOR);
     }
 
     private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Type type) {
-        assertTrue(whitePiece.isWhite());
-        assertEquals(type, whitePiece.getType());
+        assertThat(whitePiece.isWhite()).isTrue();
+        assertThat(whitePiece.getType()).isEqualTo(type);
 
-        assertTrue(blackPiece.isBlack());
-        assertEquals(type, blackPiece.getType());
+        assertThat(blackPiece.isBlack()).isTrue();
+        assertThat(blackPiece.getType()).isEqualTo(type);
     }
 
     @Test
@@ -42,9 +39,9 @@ class PieceTest {
         Piece black = Piece.createBlack(Type.PAWN);
         Piece white = Piece.createWhite(Type.PAWN);
 
-        assertTrue(black.isBlack());
-        assertFalse(black.isWhite());
-        assertTrue(white.isWhite());
+        assertThat(black.isBlack()).isTrue();
+        assertThat(black.isWhite()).isFalse();
+        assertThat(white.isWhite()).isTrue();
     }
 
     @Test

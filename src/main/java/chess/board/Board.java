@@ -4,7 +4,7 @@ import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,42 +17,36 @@ public class Board {
     private static final int WHITE_INITIAL_PAWNS_ROW = 6;
     private static final int WHITE_INITIAL_OTHERS_ROW = 7;
 
-    private final Piece[][] pieces = new Piece[COLUMN_AND_ROW_SIZE][COLUMN_AND_ROW_SIZE];
+    private final List<Rank> ranks = new ArrayList<>(COLUMN_AND_ROW_SIZE);
 
     public void initialize() {
         List<Type> otherTypes = makeOtherNames();
         for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            fillRank(i, otherTypes);
+            Rank rank = new Rank();
+            fillRank(rank, i, otherTypes);
+            ranks.add(rank);
         }
     }
 
-    public void initializeEmpty() {
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
-                pieces[i][j] = Piece.createBlank();
-            }
-        }
-    }
-
-    private void fillRank(int i, List<Type> otherTypes) {
+    private void fillRank(Rank rank, int i, List<Type> otherTypes) {
         for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
             if (i == BLACK_INITIAL_OTHERS_ROW) {
-                pieces[i][j] = Piece.createBlack(otherTypes.get(j));
+                rank.add(Piece.createBlack(otherTypes.get(j)));
                 continue;
             }
             if (i == BLACK_INITIAL_PAWNS_ROW) {
-                pieces[i][j] = Piece.createBlack(Type.PAWN);
+                rank.add(Piece.createBlack(Type.PAWN));
                 continue;
             }
             if (i == WHITE_INITIAL_PAWNS_ROW) {
-                pieces[i][j] = Piece.createWhite(Type.PAWN);
+                rank.add(Piece.createWhite(Type.PAWN));
                 continue;
             }
             if (i == WHITE_INITIAL_OTHERS_ROW) {
-                pieces[i][j] = Piece.createWhite(otherTypes.get(j));
+                rank.add(Piece.createWhite(otherTypes.get(j)));
                 continue;
             }
-            pieces[i][j] = Piece.createBlank();
+            rank.add(Piece.createBlank());
         }
     }
 
@@ -69,73 +63,40 @@ public class Board {
         return otherTypes;
     }
 
+    public void initializeEmpty() {
+        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
+            Rank rank = new Rank();
+            for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
+                rank.add(Piece.createBlank());
+            }
+            ranks.add(rank);
+        }
+    }
+
     public int pieceCount() {
-        return (int) Arrays.stream(pieces)
-                .flatMap(Arrays::stream)
-                .filter(piece -> !piece.isBlank())
-                .count();
+        return ranks.stream()
+                .mapToInt(Rank::count)
+                .sum();
     }
 
     public int pieceCount(Type type, Color color) {
-        return (int) Arrays.stream(pieces)
-                .flatMap(Arrays::stream)
-                .filter(piece -> piece.getType() == type && piece.getColor() == color)
-                .count();
+        return ranks.stream()
+                .mapToInt(rank -> rank.count(type, color))
+                .sum();
+    }
+
+    public void addPiece(Position position, Piece piece) {
+        ranks.get(position.getYPos()).set(position.getXPos(), piece);
+    }
+
+    public Piece findPiece(int yPos, int xPos) {
+        return ranks.get(yPos).find(xPos);
     }
 
     public Piece findPiece(Position position) {
-        return pieces[position.getYPos()][position.getXPos()];
+        return ranks.get(position.getYPos()).find(position.getXPos());
     }
 
-    public void move(Position position, Piece piece) {
-        pieces[position.getYPos()][position.getXPos()] = piece;
-    }
-
-    public void move(Position source, Position target) {
-        Piece piece = pieces[source.getYPos()][source.getXPos()];
-        pieces[target.getYPos()][target.getXPos()] = piece.changePosition(target);
-        pieces[source.getYPos()][source.getXPos()] = Piece.createBlank(source);
-    }
-
-    public double calculatePoint(Color color) {
-        double sum = 0;
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            sum = addSum(color, i, sum);
-        }
-        return sum;
-    }
-
-    private double addSum(Color color, int i, double sum) {
-        for (int j = 0; j < COLUMN_AND_ROW_SIZE; j++) {
-            Piece target = pieces[i][j];
-            if (target.getColor() != color) {
-                continue;
-            }
-            if (!target.isPawn()) {
-                sum += target.getDefaultPoint();
-                continue;
-            }
-            if (hasSameColumnPawn(target, i, j)) {
-                sum += target.getDefaultPoint() / 2;
-                continue;
-            }
-            sum += target.getDefaultPoint();
-        }
-        return sum;
-    }
-
-    private boolean hasSameColumnPawn(Piece target, int row, int column) {
-        for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
-            if (i == row) {
-                continue;
-            }
-            Piece other = pieces[i][column];
-            if (other.isPawn() && target.getColor() == other.getColor()) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public List<Piece> getDescendingPieces() {
         List<Piece> descendingPieces = new ArrayList<>();
@@ -154,14 +115,14 @@ public class Board {
     }
 
     private List<Piece> getPiecesPerColor(Predicate<Piece> isColor, Comparator<Piece> comparator) {
-        return Arrays.stream(pieces)
-                .flatMap(Arrays::stream)
-                .filter(isColor)
+        return ranks.stream()
+                .map(rank -> rank.findPieces(isColor))
+                .flatMap(Collection::stream)
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
-    public Piece[][] getPieces() {
-        return pieces;
+    public List<Rank> getRanks() {
+        return ranks;
     }
 }
