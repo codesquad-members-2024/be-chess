@@ -1,5 +1,7 @@
 package chess.board;
 
+import java.util.Objects;
+
 public class Position {
     private final int yPos;
     private final int xPos;
@@ -15,5 +17,22 @@ public class Position {
 
     public int getXPos() {
         return xPos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position position = (Position) o;
+        return yPos == position.yPos && xPos == position.xPos;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(yPos, xPos);
     }
 }

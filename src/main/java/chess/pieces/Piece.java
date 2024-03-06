@@ -1,26 +1,46 @@
 package chess.pieces;
 
+import chess.board.Position;
 import java.util.Objects;
 
 public class Piece {
     private final Type type;
     private final Color color;
+    private Position position;
 
     private Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
     }
 
+    private Piece(Type type, Color color, Position position) {
+        this.type = type;
+        this.color = color;
+        this.position = position;
+    }
+
     public static Piece createWhite(Type type) {
         return new Piece(type, Color.WHITE);
+    }
+
+    public static Piece createWhite(Type type, Position position) {
+        return new Piece(type, Color.WHITE, position);
     }
 
     public static Piece createBlack(Type type) {
         return new Piece(type, Color.BLACK);
     }
 
+    public static Piece createBlack(Type type, Position position) {
+        return new Piece(type, Color.BLACK, position);
+    }
+
     public static Piece createBlank() {
         return new Piece(Type.NO_PIECE, Color.NO_COLOR);
+    }
+
+    public static Piece createBlank(Position position) {
+        return new Piece(Type.NO_PIECE, Color.NO_COLOR, position);
     }
 
     public char getRepresentation() {
@@ -50,6 +70,10 @@ public class Piece {
         return type.getDefaultPoint();
     }
 
+    public Piece changePosition(Position position) {
+        return new Piece(this.type, this.color, position);
+    }
+
     public Type getType() {
         return type;
     }
@@ -63,6 +87,7 @@ public class Piece {
         return "Piece{" +
                 "type=" + type +
                 ", color=" + color +
+                ", position=" + position +
                 '}';
     }
 
@@ -75,12 +100,12 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return type == piece.type && color == piece.color;
+        return type == piece.type && color == piece.color && Objects.equals(position, piece.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, color);
+        return Objects.hash(type, color, position);
     }
 
     public enum Type {

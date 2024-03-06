@@ -58,15 +58,16 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("원하는 위치에 피스를 놓을 수 있다.")
+    @DisplayName("원하는 위치로 피스를 이동시킬 수 있다.")
     public void move() {
-        board.initializeEmpty();
+        board.initialize();
 
-        Position position = new Position("b5");
-        Piece piece = Piece.createBlack(Type.ROOK);
-        board.move(position, piece);
+        Position source = new Position("b2");
+        Position target = new Position("b3");
 
-        assertThat(board.findPiece(position)).isEqualTo(piece);
+        board.move(source, target);
+        assertThat(board.findPiece(source)).isEqualTo(Piece.createBlank(source)); // 위치 정보까지 동일해야 동일한 객체
+        assertThat(board.findPiece(target)).isEqualTo(Piece.createWhite(Type.PAWN, target));
     }
 
     @Test

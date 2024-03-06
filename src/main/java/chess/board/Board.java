@@ -105,6 +105,12 @@ public class Board {
         pieces[position.getYPos()][position.getXPos()] = piece;
     }
 
+    public void move(Position source, Position target) {
+        Piece piece = pieces[source.getYPos()][source.getXPos()];
+        pieces[target.getYPos()][target.getXPos()] = piece.changePosition(target);
+        pieces[source.getYPos()][source.getXPos()] = Piece.createBlank(source);
+    }
+
     public double calculatePoint(Color color) {
         double sum = 0;
         for (int i = 0; i < COLUMN_AND_ROW_SIZE; i++) {
@@ -168,4 +174,5 @@ public class Board {
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
+
 }
