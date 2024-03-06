@@ -8,20 +8,21 @@ import java.util.List;
 
 public class Board {
 
-    private final Pawn[][] board = new Pawn[8][8];
+    private static final int BOARD_SIZE = 8;
+    private final Pawn[][] board = new Pawn[BOARD_SIZE][BOARD_SIZE];
     private final ArrayList<Pawn> whitePawns = new ArrayList<>();
     private final ArrayList<Pawn> blackPawns = new ArrayList<>();
 
 
     public void initialize() {
-        for(int i=0; i<8; i++) {
+        for(int i=0; i<BOARD_SIZE; i++) {
             blackPawnAdd(new Pawn(PawnColor.BLACK));
             whitePawnAdd(new Pawn(PawnColor.WHITE));
         }
 
-        for(int i=0; i<8; i++) {
-            board[1][i] = blackPawns.get(i);
-            board[6][i] = whitePawns.get(i);
+        for(int i=0; i<BOARD_SIZE; i++) {
+            board[BOARD_SIZE-7][i] = blackPawns.get(i);
+            board[BOARD_SIZE-2][i] = whitePawns.get(i);
         }
     }
 
@@ -51,7 +52,7 @@ public class Board {
 
     private String getPawnResult(ArrayList<Pawn> pawns) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
             sb.append(pawns.get(i).getRepresentation());
         }
         return sb.toString();
@@ -67,15 +68,15 @@ public class Board {
 
     public String print() {
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<8; i++) {
-            for(int j=0; j<8; j++) {
+        for(int i=0; i<BOARD_SIZE; i++) {
+            for(int j=0; j<BOARD_SIZE; j++) {
                 if(board[i][j] == null){
                     sb.append(".");
                 } else {
                     sb.append(board[i][j].getRepresentation());
                 }
             }
-            if(i<7) {
+            if(i<BOARD_SIZE-1) {
                 sb.append("\n");
             }
         }
