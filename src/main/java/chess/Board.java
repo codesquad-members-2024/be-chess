@@ -17,6 +17,12 @@ import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class Board {
+    public static final int EMPTY_CAPACITY = 0;
+    public static final int BLANK_CAPACITY = 4;
+    public static final int RANK_CAPACITY = 8;
+    public static final double DIVIDE_IN_HALF = 2.0;
+    public static final String LIST_TO_STRING_DELIMITER = "";
+
     private final List<Piece> whitePieces;
     private final List<Piece> blackPieces;
     private final List<Rank> board;
@@ -24,7 +30,7 @@ public class Board {
     public Board() {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
-        board = new ArrayList<>(8);
+        board = new ArrayList<>(RANK_CAPACITY);
     }
 
     public void addPiece(Color color, Piece piece) {
@@ -46,20 +52,20 @@ public class Board {
     public void initialize() {
         initializeExceptPawns(Color.BLACK);
         initializePawns(Color.BLACK);
-        IntStream.range(0, 4).forEach(i -> initializeBlank());
+        IntStream.range(EMPTY_CAPACITY, BLANK_CAPACITY).forEach(i -> initializeBlank());
         initializePawns(Color.WHITE);
         initializeExceptPawns(Color.WHITE);
     }
 
     private void initializeBlank() {
         List<Piece> blanks = new ArrayList<>();
-        IntStream.range(0, 8).forEach(i -> blanks.add(Piece.createBlank()));
+        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> blanks.add(Piece.createBlank()));
         board.add(new Rank(blanks));
     }
 
     private void initializePawns(Color color) {
         List<Piece> pawns = new ArrayList<>();
-        IntStream.range(0, 8).forEach(i -> pawns.add(generatePawn(color)));
+        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> pawns.add(generatePawn(color)));
         addPieces(color, pawns);
         board.add(new Rank(pawns));
     }
@@ -105,7 +111,7 @@ public class Board {
         whitePieces.clear();
         blackPieces.clear();
         board.clear();
-        IntStream.range(0, 8).forEach(i -> initializeBlank());
+        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> initializeBlank());
     }
 
     public int pieceCount() {
@@ -115,7 +121,7 @@ public class Board {
     public String showBoard() {
         return board.stream()
                 .map(rank -> rank.getPieces().stream().map(this::getSymbol)
-                        .collect(Collectors.joining("")))
+                        .collect(Collectors.joining(LIST_TO_STRING_DELIMITER)))
                 .collect(Collectors.joining(NEWLINE)).concat(NEWLINE);
     }
 
@@ -157,7 +163,7 @@ public class Board {
     private double getPawnPoint(Color color, Piece piece) {
         double defaultPoint = piece.getPieceSymbol().getDefaultPoint();
         if (hasSameVerticalPawns(color) && piece.equalsPawn(color)) {
-            return defaultPoint / 2.0;
+            return defaultPoint / DIVIDE_IN_HALF;
         }
         return defaultPoint;
     }

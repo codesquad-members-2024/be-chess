@@ -49,6 +49,10 @@ public class Piece {
         }
     }
 
+    public static final int UNICODE_TO_CHAR = 0;
+    public static final int UNICODE_VALUE_DIFFERENCE = 6;
+
+
     private final Color color;
     private final PieceSymbol pieceSymbol;
 
@@ -138,8 +142,8 @@ public class Piece {
     }
 
     public static String convertToBlackPiece(String whitePiece) {
-        char whitePieceChar = whitePiece.charAt(0);
-        char blackPieceChar = (char) (whitePieceChar + 6);
+        char whitePieceChar = whitePiece.charAt(UNICODE_TO_CHAR);
+        char blackPieceChar = (char) (whitePieceChar + UNICODE_VALUE_DIFFERENCE);
         return String.valueOf(blackPieceChar);
     }
 
