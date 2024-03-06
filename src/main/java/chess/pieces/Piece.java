@@ -54,4 +54,13 @@ public class Piece {
         return this.type.equals(TypeOfPiece.NO_PIECE);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Piece) {
+            Piece piece = (Piece) obj;
+            return piece.getType().equals(this.type) && piece.getColor().equals(this.color);
+        }
+
+        return false;
+    }
 }

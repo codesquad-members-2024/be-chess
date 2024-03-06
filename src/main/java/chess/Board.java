@@ -50,4 +50,8 @@ public class Board {
                                 .filter(piece -> piece.getColor().equals(color) && piece.getType().equals(type))
                                 .count();
     }
+
+    public Piece findPiece(String index) {
+        return chessBoard.get(Position.valueOf(index.toUpperCase()));
+    }
 }
