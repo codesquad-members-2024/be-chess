@@ -14,16 +14,22 @@ import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class Board {
-    private final List<Piece> pieces;
+    private final List<Piece> whitePieces;
+    private final List<Piece> blackPieces;
     private final List<Rank> board;
 
     public Board() {
-        pieces = new ArrayList<>();
+        whitePieces = new ArrayList<>();
+        blackPieces = new ArrayList<>();
         board = new ArrayList<>(8);
     }
 
-    public void add(Piece piece) {
-        pieces.add(piece);
+    public void addPieces(Color color, List<Piece> piece) {
+        if (color.equals(Color.WHITE)) {
+            whitePieces.addAll(piece);
+            return;
+        }
+        blackPieces.addAll(piece);
     }
 
     public void initialize() {
@@ -43,7 +49,7 @@ public class Board {
     private void initializePawns(Color color) {
         List<Piece> pawns = new ArrayList<>();
         IntStream.range(0, 8).forEach(i -> pawns.add(generatePawn(color)));
-        pieces.addAll(pawns);
+        addPieces(color, pawns);
         board.add(new Rank(pawns));
     }
 
@@ -56,7 +62,7 @@ public class Board {
 
     private void initializeExceptPawns(Color color) {
         List<Piece> piecesExceptPawns = generatePiecesExceptPawns(color);
-        pieces.addAll(piecesExceptPawns);
+        addPieces(color, piecesExceptPawns);
         board.add(new Rank(piecesExceptPawns));
     }
 
@@ -85,13 +91,14 @@ public class Board {
     }
 
     public void initializeEmpty() {
-        pieces.clear();
+        whitePieces.clear();
+        blackPieces.clear();
         board.clear();
         IntStream.range(0, 8).forEach(i -> initializeBlank());
     }
 
     public int pieceCount() {
-        return pieces.size();
+        return whitePieces.size() + blackPieces.size();
     }
 
     public String showBoard() {
@@ -124,7 +131,8 @@ public class Board {
 
     public void move(String position, Piece piece) {
         Position pos = new Position(position);
-        pieces.remove(piece);
+        whitePieces.remove(piece);
+        blackPieces.remove(piece);
         board.get(pos.getRow()).getPieces().set(pos.getCol(), piece);
     }
 
