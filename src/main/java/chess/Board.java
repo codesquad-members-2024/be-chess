@@ -1,6 +1,8 @@
 package chess;
 
+import chess.enums.Color;
 import chess.enums.Position;
+import chess.enums.TypeOfPiece;
 import chess.pieces.Piece;
 
 import static chess.utils.StringUtils.appendNewLine;
@@ -43,5 +45,9 @@ public class Board {
         return sb.toString();
     }
 
-
+    public int numberOfSpecificPiece(TypeOfPiece type, Color color) {
+        return (int)chessBoard.values().stream()
+                                .filter(piece -> piece.getColor().equals(color) && piece.getType().equals(type))
+                                .count();
+    }
 }
