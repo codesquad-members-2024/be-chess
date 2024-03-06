@@ -33,7 +33,7 @@ class BoardTest {
         Pawn black = new Pawn(Pawn.BLACK, Pawn.BLACK_REPRESENTATION);
         board.addBlackPawn(black);
         assertEquals(2, board.size());
-        assertEquals(black, board.findWhitePawn(1));
+        assertEquals(black, board.findBalckPawn(0));
     }
 
     @Test

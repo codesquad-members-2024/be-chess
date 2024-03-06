@@ -9,6 +9,7 @@ public class Board {
     List<Pawn> whitePawns = new ArrayList<>();
     List<Pawn> blackPawns = new ArrayList<>();
     public static final int DEFAULT_PAWN_COUNT = 8;
+    public static final String CHESS_BOARD = "........";
 
     public void addWhitePawn(Pawn pawn) {
         whitePawns.add(pawn);
@@ -54,5 +55,18 @@ public class Board {
             sb.append(pawn.getRepresentation());
         }
         return sb.toString();
+    }
+
+    public void print(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(CHESS_BOARD + "\n");
+        sb.append(getBlackPawnResult() + "\n");
+        sb.append(CHESS_BOARD + "\n");
+        sb.append(CHESS_BOARD + "\n");
+        sb.append(CHESS_BOARD + "\n");
+        sb.append(CHESS_BOARD + "\n");
+        sb.append(getWhitePawnResult() + "\n");
+        sb.append(CHESS_BOARD + "\n");
+        System.out.println(sb.toString());
     }
 }
