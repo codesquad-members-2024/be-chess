@@ -28,4 +28,14 @@ public class Board {
     public int size(){
         return whitePawns.size() + blackPawns.size();
     }
+
+    public void initialize(){
+        for (int i = 0; i < 8; i++) {
+            addWhitePawn(new Pawn(Pawn.WHITE, Pawn.WHITE_REPRESENTATION));
+        }
+
+        for (int i = 0; i < 8; i++) {
+            addBlackPawn(new Pawn(Pawn.BLACK, Pawn.BLACK_REPRESENTATION));
+        }
+    }
 }
