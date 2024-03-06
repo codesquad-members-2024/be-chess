@@ -3,7 +3,6 @@ package chess;
 import static chess.utils.StringUtils.appendNewLine;
 
 import chess.pieces.Piece;
-import chess.utils.StringUtils;
 import java.util.ArrayList;
 
 public class Board {
@@ -63,6 +62,7 @@ public class Board {
         } else if (piece.getColor().equals(Piece.BLACK_COLOR)) {
             blackPawns.add(piece);
         }
+        pieceCount++;
     }
 
     public int size() {
@@ -77,4 +77,19 @@ public class Board {
         return blackPawns.get(i);
     }
 
+    public ArrayList<Piece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    public ArrayList<Piece> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public ArrayList<Piece> getWhitePawns() {
+        return whitePawns;
+    }
+
+    public ArrayList<Piece> getBlackPawns() {
+        return blackPawns;
+    }
 }

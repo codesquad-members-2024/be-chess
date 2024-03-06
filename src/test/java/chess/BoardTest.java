@@ -33,8 +33,9 @@ public class BoardTest {
     @DisplayName("흰색 pawn열의 결과와 검은색 pawn열의 결과를 검증한다")
     public void initialize() throws Exception {
         Board board = new Board();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        board.start();
+        assertEquals("pppppppp", board.getPieceResult(board.getWhitePawns()));
+        assertEquals("PPPPPPPP", board.getPieceResult(board.getBlackPawns()));
     }
 
 }
