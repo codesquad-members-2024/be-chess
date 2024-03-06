@@ -4,17 +4,19 @@ import chess.board.Board;
 import chess.board.Position;
 import chess.utils.ErrorMessage;
 import chess.utils.MainCommand;
+import chess.view.View;
 import java.util.Scanner;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Game {
+public class Main {
     private static final String ASK_MAIN_COMMAND = "> 메인 명령어를 입력해주세요.";
     private static final String ASK_MOVE_COMMAND = "> 이동 명령어를 입력해주세요.";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(
             "^move\\s+([a-zA-Z][0-9])\\s+([a-zA-Z][0-9])\\s*$", Pattern.CASE_INSENSITIVE);
 
+    private static final View view = new View();
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -23,7 +25,7 @@ public class Game {
         MainCommand mainCommand = getOrRetry(() -> MainCommand.of(readMenuCommand()));
 
         while (mainCommand != MainCommand.END) {
-            print(board);
+            print(view.showBoard(board));
             runOrRetry(() -> move(board));
         }
     }
@@ -33,9 +35,8 @@ public class Game {
         return sc.nextLine();
     }
 
-    private static void print(Board board) {
-        String showBoard = board.showBoard();
-        System.out.println(showBoard);
+    private static void print(String target) {
+        System.out.println(target);
     }
 
     private static void move(Board board) {

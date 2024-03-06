@@ -1,6 +1,5 @@
 package chess.board;
 
-import static chess.utils.StringUtils.appendNewLine;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.pieces.Piece;
@@ -21,18 +20,12 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("초기화시  총 32개의 피스가 생성된다.")
     void create() {
+        assertThat(board.pieceCount()).isEqualTo(0);
         board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);
 
-        String blankRank = appendNewLine("........");
-        assertThat(board.showBoard()).isEqualTo(
-                appendNewLine("RNBQKBNR") +
-                        appendNewLine("PPPPPPPP") +
-                        blankRank + blankRank + blankRank + blankRank +
-                        appendNewLine("pppppppp") +
-                        appendNewLine("rnbqkbnr")
-        );
     }
 
     @Test

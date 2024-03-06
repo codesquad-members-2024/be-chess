@@ -1,7 +1,5 @@
 package chess.board;
 
-import static chess.utils.StringUtils.appendNewLine;
-
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
@@ -19,7 +17,6 @@ public class Board {
     private static final int WHITE_INITIAL_PAWNS_ROW = 6;
     private static final int WHITE_INITIAL_OTHERS_ROW = 7;
 
-    public static final String EMPTY_STRING = "";
     private final Piece[][] pieces = new Piece[COLUMN_AND_ROW_SIZE][COLUMN_AND_ROW_SIZE];
 
     public void initialize() {
@@ -84,17 +81,6 @@ public class Board {
                 .flatMap(Arrays::stream)
                 .filter(piece -> piece.getType() == type && piece.getColor() == color)
                 .count();
-    }
-
-    public String showBoard() {
-        StringBuilder sb = new StringBuilder();
-        for (Piece[] pieceArray : pieces) {
-            for (Piece piece : pieceArray) {
-                sb.append(piece.getRepresentation());
-            }
-            sb.append(appendNewLine(EMPTY_STRING));
-        }
-        return sb.toString();
     }
 
     public Piece findPiece(Position position) {
@@ -175,4 +161,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    public Piece[][] getPieces() {
+        return pieces;
+    }
 }
