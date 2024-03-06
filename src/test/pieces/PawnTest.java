@@ -3,8 +3,8 @@ package src.test.pieces;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.*;
 
-import src.chess.Colors;
-import src.chess.Representation;
+import src.chess.pieces.Colors;
+import src.chess.pieces.Representation;
 import src.chess.pieces.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

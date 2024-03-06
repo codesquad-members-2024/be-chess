@@ -1,8 +1,5 @@
 package src.chess.pieces;
 
-import src.chess.Colors;
-import src.chess.Representation;
-
 public class Pawn {
     private Colors color;
     private Representation representation;

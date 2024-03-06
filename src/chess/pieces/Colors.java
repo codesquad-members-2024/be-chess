@@ -1,4 +1,4 @@
-package src.chess;
+package src.chess.pieces;
 
 public enum Colors {
     WHITE("white"),

@@ -3,7 +3,7 @@ package src.test.board;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
-import src.chess.Colors;
+import src.chess.pieces.Colors;
 import src.chess.board.Board;
 import src.chess.pieces.Pawn;
 import org.junit.jupiter.api.DisplayName;

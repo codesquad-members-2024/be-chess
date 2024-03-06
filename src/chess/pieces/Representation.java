@@ -1,4 +1,6 @@
-package src.chess;
+package src.chess.pieces;
+
+import src.chess.pieces.Colors;
 
 public enum Representation {
     WHITE_PAWN("p", Colors.WHITE),

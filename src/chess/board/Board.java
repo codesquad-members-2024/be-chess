@@ -3,7 +3,7 @@ package src.chess.board;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import src.chess.Colors;
+import src.chess.pieces.Colors;
 import src.chess.pieces.Pawn;
 import java.util.ArrayList;
 
