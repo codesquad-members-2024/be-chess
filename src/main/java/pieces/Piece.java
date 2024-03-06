@@ -19,7 +19,7 @@ public class Piece {
         this.representation = representation;
     }
 
-    public Piece createWhitePawn() {
+    public static Piece createWhitePawn() {
         return new Piece(Name.PAWN, WHITE_COLOR, WHITE_REPRESENTATION);
     }
 
