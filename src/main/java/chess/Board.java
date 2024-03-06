@@ -54,4 +54,14 @@ public class Board {
     public Piece findPiece(String index) {
         return chessBoard.get(Position.valueOf(index.toUpperCase()));
     }
+
+    //Test만을 위한 메서드...??
+    public void initializeEmpty() {
+        chessBoard.keySet()
+                .forEach(position -> chessBoard.replace(position, Piece.createBlank(TypeOfPiece.NO_PIECE)));
+    }
+
+    public void move(String position, Piece piece) {
+        chessBoard.replace(Position.valueOf(position.toUpperCase()), piece);
+    }
 }
