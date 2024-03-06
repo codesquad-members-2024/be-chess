@@ -70,4 +70,8 @@ public class Board {
         }
         return result.toString();
     }
+
+    public List<List<String>> getBoard() {
+        return board;
+    }
 }
