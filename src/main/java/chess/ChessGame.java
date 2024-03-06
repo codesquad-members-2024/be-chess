@@ -15,7 +15,6 @@ public class ChessGame {
         Board board = new Board();
         board.initialize();
 
-        Scanner scanner = new Scanner(System.in);
         String inputCommand;
 
         if (getCommand().equals("start")) {
