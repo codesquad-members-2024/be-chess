@@ -59,4 +59,15 @@ public class Board {
         }
         return blackPawns;
     }
+
+    public String print() {
+        StringBuilder result = new StringBuilder();
+        for (List<String> line : board) {
+            for (String element : line) {
+                result.append(element);
+            }
+            result.append("\n");
+        }
+        return result.toString();
+    }
 }
