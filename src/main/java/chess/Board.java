@@ -15,7 +15,7 @@ public class Board {
     ArrayList<Object> blackPieces;
     ArrayList<Pawn> whitePawns;
     ArrayList<Pawn> blackPawns;
-    ArrayList<Object> blanks;
+
 
     public Board() {
 //        chessPan = new Object[8][8];
