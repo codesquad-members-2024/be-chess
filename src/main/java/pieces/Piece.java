@@ -92,4 +92,12 @@ public class Piece {
     public boolean isEmpty() {
         return name == Name.EMPTY;
     }
+
+    public boolean isWhite() {
+        return color.equals(WHITE_COLOR);
+    }
+
+    public boolean isBlack() {
+        return color.equals(BLACK_COLOR);
+    }
 }
