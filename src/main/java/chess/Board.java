@@ -25,8 +25,15 @@ public class Board {
         blackPieces = new ArrayList<Object>(); // black, piece
         whitePawns = new ArrayList<Pawn>(); // white, pawn
         blackPawns = new ArrayList<Pawn>(); // black, pawn
+    }
 
+    public void start() {
         initialize();
+        print();
+    }
+
+    public void end() {
+        System.out.println("게임 종료");
     }
 
     void initialize() {
@@ -115,5 +122,4 @@ public class Board {
     public Pawn findBlackPawn(int i) {
         return blackPawns.get(i);
     }
-
 }
