@@ -1,13 +1,13 @@
 package chess.pieces;
 
 public class Pawn {
-    private ChessPieceColor color;
+    private final Color color;
 
     public Pawn(String color){
-        this.color = ChessPieceColor.findMatchingColor(color);
+        this.color = Color.findMatchingColor(color);
     }
     public Pawn(){
-        this.color = ChessPieceColor.WHITE;
+        this.color = Color.WHITE;
     }
 
     public String getColor() {

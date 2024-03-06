@@ -33,6 +33,6 @@ public class PawnTest {
     @Test
     void create_기본생성자() throws Exception{
         Pawn pawn = new Pawn();
-        assertThat(pawn.getColor()).isEqualTo(ChessPieceColor.WHITE);
+        assertThat(pawn.getColor()).isEqualTo(Color.WHITE.getColorName());
     }
 }
