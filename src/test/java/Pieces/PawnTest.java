@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PawnTest{
 
     @Test
-    public void create_기본생성자() throws Exception {
+    public void create_기본생성자(){
         Pawn pawn = new Pawn();
         assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
     }
@@ -25,7 +25,7 @@ public class PawnTest{
         verifyPawn(Pawn.BLACK_COLOR);
     }
 
-    private void verifyPawn(boolean expectedColor) {
+    private void verifyPawn(String expectedColor) {
         Pawn pawn = new Pawn(expectedColor);
         assertThat(pawn.getColor()).isEqualTo(expectedColor);
     }
