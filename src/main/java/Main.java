@@ -11,8 +11,12 @@ public class Main {
             game.start();
         }
 
-        while(!getUserCommand().equals(END_COMMAND)) {
-
+        while(true) {
+            String userCommand = getUserCommand();
+            if (userCommand.equals(END_COMMAND)) {
+                game.end();
+            }
+            // 게임 진행
         }
     }
 

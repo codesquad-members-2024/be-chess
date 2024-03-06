@@ -11,4 +11,8 @@ public class Game {
         board.initialize();
         board.print();
     }
+
+    public void end() {
+        return;
+    }
 }
