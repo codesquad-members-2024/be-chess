@@ -12,25 +12,13 @@ public class PieceTest {
 
     @Test
     @DisplayName("모든 기물이 제대로 생성되어야 한다")
-    void create() {
-        verifyPiece(Piece.createWhiteQueen(), Color.WHITE, TypeOfPiece.WHITE_QUEEN.getRepresent());
-        verifyPiece(Piece.createBlackQueen(), Color.BLACK, TypeOfPiece.BLACK_QUEEN.getRepresent());
-
-        verifyPiece(Piece.createWhiteKing(), Color.WHITE, TypeOfPiece.WHITE_KING.getRepresent());
-        verifyPiece(Piece.createBlackKing(), Color.BLACK, TypeOfPiece.BLACK_KING.getRepresent());
-
-        verifyPiece(Piece.createWhiteRook(), Color.WHITE, TypeOfPiece.WHITE_ROOK.getRepresent());
-        verifyPiece(Piece.createBlackRook(), Color.BLACK, TypeOfPiece.BLACK_ROOK.getRepresent());
-
-        verifyPiece(Piece.createBlackKnight(), Color.BLACK, TypeOfPiece.BLACK_KNIGHT.getRepresent());
-        verifyPiece(Piece.createWhiteKnight(), Color.WHITE, TypeOfPiece.WHITE_KNIGHT.getRepresent());
-
-        verifyPiece(Piece.createWhiteBishop(), Color.WHITE, TypeOfPiece.WHITE_BISHOP.getRepresent());
-        verifyPiece(Piece.createBlackBishop(), Color.BLACK, TypeOfPiece.BLACK_BISHOP.getRepresent());
-
-        verifyPiece(Piece.createWhitePawn(), Color.WHITE, TypeOfPiece.WHITE_PAWN.getRepresent());
-        verifyPiece(Piece.createBlackPawn(), Color.BLACK, TypeOfPiece.BLACK_PAWN.getRepresent());
-
+    void createPiece() {
+        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), TypeOfPiece.BISHOP);
+        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), TypeOfPiece.KING);
+        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), TypeOfPiece.ROOK);
+        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), TypeOfPiece.KNIGHT);
+        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), TypeOfPiece.QUEEN);
+        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), TypeOfPiece.PAWN);
     }
 
     @Test
@@ -44,9 +32,12 @@ public class PieceTest {
     }
 
 
-    void verifyPiece(Piece piece, Color color, char represent) {
-        assertThat(piece.getColor()).isEqualTo(color);
-        assertThat(piece.getRepresent()).isEqualTo(represent);
+    void verifyPiece(Piece white, Piece black, TypeOfPiece type) {
+        assertThat(white.getColor()).isEqualTo(Color.WHITE);
+        assertThat(black.getColor()).isEqualTo(Color.BLACK);
+
+        assertThat(white.getType()).isEqualTo(type);
+        assertThat(black.getType()).isEqualTo(type);
     }
 
     @Test
