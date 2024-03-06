@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
+import java.util.List;
+
 import static chess.utils.StringUtils.appendNewLine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.*;
@@ -70,9 +73,50 @@ public class BoardTest {
 
     @Test
     @DisplayName("점수 계산 로직 검증")
-    public void caculcatePoint() throws Exception {
+    public void calculatePoint() throws Exception {
         board.initializeEmpty();
 
+        addAllPieces();
+
+        assertThat(board.calculatePoint(Color.BLACK)).isBetween(14.9, 15.1);
+        assertThat(board.calculatePoint(Color.WHITE)).isBetween(6.9, 7.1);
+
+        System.out.println(board.showBoard());
+    }
+
+    @Test
+    @DisplayName("기물 점수로 정렬하는 로직 검증")
+    void sortPoint() {
+        board.initializeEmpty();
+
+        addAllPieces();
+
+        //black 낮은순
+        List<Double> now = getSortResult(Color.BLACK, true);
+        assertThat(now).isSortedAccordingTo(Comparator.reverseOrder());
+
+        //black 높은순
+        now = getSortResult(Color.BLACK, false);
+        assertThat(now).isSorted();
+
+        //white 낮은순
+        now = getSortResult(Color.WHITE, true);
+        assertThat(now).isSortedAccordingTo(Comparator.reverseOrder());
+
+        //white 높은순
+        now = getSortResult(Color.WHITE, false);
+        assertThat(now).isSorted();
+    }
+
+    List<Double> getSortResult(Color color, boolean reverse) {
+        return board.sortPieceByScore(color, reverse)
+                .stream()
+                .map(piece -> piece.getType().getScore())
+                .toList();
+    }
+
+
+    void addAllPieces() {
         addPiece("b6", Piece.createBlack(TypeOfPiece.PAWN));
         addPiece("e6", Piece.createBlack(TypeOfPiece.QUEEN));
         addPiece("b8", Piece.createBlack(TypeOfPiece.KING));
@@ -82,16 +126,11 @@ public class BoardTest {
         addPiece("g2", Piece.createWhite(TypeOfPiece.PAWN));
         addPiece("e1", Piece.createWhite(TypeOfPiece.ROOK));
         addPiece("f1", Piece.createWhite(TypeOfPiece.KING));
-
-//        assertEquals(15.0, board.caculratePoint(Color.BLACK), 0.01);
-        assertThat(board.calculatePoint(Color.BLACK)).isBetween(14.9, 15.1);
-//        assertEquals(7.0, board.caculratePoint(Color.WHITE), 0.01);
-        assertThat(board.calculatePoint(Color.WHITE)).isBetween(6.9, 7.1);
-
-        System.out.println(board.showBoard());
     }
 
-    private void addPiece(String position, Piece piece) {
+    void addPiece(String position, Piece piece) {
         board.move(position, piece);
     }
+
+
 }
