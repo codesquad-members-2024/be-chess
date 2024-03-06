@@ -19,54 +19,58 @@ public class Piece {
     }
 
     public static Piece createWhitePawn() {
-        return new Piece(WHITE, PAWN.allowedName, PAWN);
+        return createPiece(WHITE, PAWN);
     }
 
     public static Piece createBlackPawn() {
-        return new Piece(BLACK, PAWN.allowedName, PAWN);
+        return createPiece(BLACK, PAWN);
     }
 
     public static Piece createWhiteKnight() {
-        return new Piece(WHITE, KNIGHT.allowedName, KNIGHT);
+        return createPiece(WHITE, KNIGHT);
     }
 
     public static Piece createBlackKnight() {
-        return new Piece(BLACK, KNIGHT.allowedName, KNIGHT);
+        return createPiece(BLACK, KNIGHT);
     }
 
     public static Piece createWhiteBishop() {
-        return new Piece(WHITE, BISHOP.allowedName, BISHOP);
+        return createPiece(WHITE, BISHOP);
     }
 
     public static Piece createBlackBishop() {
-        return new Piece(BLACK, BISHOP.allowedName, BISHOP);
+        return createPiece(BLACK, BISHOP);
     }
 
     public static Piece createWhiteRook() {
-        return new Piece(WHITE, ROOK.allowedName, ROOK);
+        return createPiece(WHITE, ROOK);
     }
 
     public static Piece createBlackRook() {
-        return new Piece(BLACK, ROOK.allowedName, ROOK);
+        return createPiece(BLACK, ROOK);
     }
 
     public static Piece createWhiteQueen() {
-        return new Piece(WHITE, QUEEN.allowedName, QUEEN);
+        return createPiece(WHITE, QUEEN);
     }
 
     public static Piece createBlackQueen() {
-        return new Piece(BLACK, QUEEN.allowedName, QUEEN);
+        return createPiece(BLACK, QUEEN);
     }
 
     public static Piece createWhiteKing() {
-        return new Piece(WHITE, KING.allowedName, KING);
+        return createPiece(WHITE, KING);
     }
 
     public static Piece createBlackKing() {
-        return new Piece(BLACK, KING.allowedName, KING);
+        return createPiece(BLACK, KING);
     }
     public static Piece createBlank() {
-        return new Piece(NO_COLOR, NO_PIECE.allowedName, NO_PIECE);
+        return createPiece(NO_COLOR, NO_PIECE);
+    }
+
+    private static Piece createPiece(Color color, Type type) {
+        return new Piece(color, type.allowedName, type);
     }
 
     public Color getColor() {
