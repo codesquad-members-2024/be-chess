@@ -1,12 +1,17 @@
-public class Pawn {
-    String color;
+public class Pawn extends Piece {
 
-    public Pawn(String color) {
-        this.color = color;
+    public Pawn() {
+        super();
     }
 
-    public String getColor() {
-        return color;
+    public Pawn(final String color) {
+        super(color);
     }
+
+    public Pawn(String color, final char representation) {
+        super(color, representation);
+    }
+
+    // 행마법 지정
 
 }
