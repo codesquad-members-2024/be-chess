@@ -23,6 +23,15 @@ public class Board {
         }
     }
 
+    public void print() {
+        StringBuilder stringBuilder = new StringBuilder();
+        pawns.stream().sorted((list1, list2) -> -1)
+                .map(this::getPawnsOfLineString)
+                .forEach(string -> stringBuilder.append(string).append("\n"));
+        System.out.println(stringBuilder);
+    }
+
+
     public String getWhitePawnsResult() {
         return getPawnsOfLineString(pawns.get(WHITE_PAWNS_LINE));
     }
