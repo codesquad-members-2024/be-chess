@@ -11,13 +11,14 @@ public class PawnTest {
     @Test
     @DisplayName("흰색 폰이 생성되어야 한다")
     void create() {
-        varifiyPawn(Color.WHITE);
-        varifiyPawn(Color.BLACK);
+        verifyPawn(Color.WHITE, Pawn.WHITE_REPRESENT);
+        verifyPawn(Color.BLACK, Pawn.BLACK_REPRESENT);
     }
 
-    void varifiyPawn(Color color) {
+    void verifyPawn(Color color, char represent) {
         Pawn pawn = new Pawn(color);
         assertThat(pawn.getColor()).isEqualTo(color);
+        assertThat(pawn.getRepresent()).isEqualTo(represent);
     }
 
     @Test
