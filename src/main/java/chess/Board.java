@@ -23,6 +23,14 @@ public class Board {
         }
     }
 
+    public String getWhitePawnsResult() {
+        return getPawnsOfLineString(pawns.get(WHITE_PAWNS_LINE));
+    }
+
+    public String getBlackPawnsResult() {
+        return getPawnsOfLineString(pawns.get(BLACK_PAWNS_LINE));
+    }
+
     private List<Pawn> getInitialPawns(int line) {
         if (line==WHITE_PAWNS_LINE) {
             return getNewWhitePawns();
@@ -31,6 +39,12 @@ public class Board {
             return getNewBlackPawns();
         }
         return getEmptyPawns();
+    }
+
+    private String getPawnsOfLineString(List<Pawn> pawnsOfLine) {
+        StringBuilder stringBuilder = new StringBuilder();
+        pawnsOfLine.stream().map(Pawn::getRepresentation).forEach(stringBuilder::append);
+        return stringBuilder.toString();
     }
 
     private List<Pawn> getNewWhitePawns() {
@@ -60,6 +74,5 @@ public class Board {
     public Pawn findPawn(int order) {
         return pawns.get(order);
     }
-
  */
 }
