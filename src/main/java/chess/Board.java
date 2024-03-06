@@ -69,4 +69,9 @@ public class Board {
         sb.append(CHESS_BOARD + "\n");
         System.out.println(sb.toString());
     }
+
+//    public static void main(String[] args) {
+//        Board board = new Board();
+//        board.print();
+//    }
 }
