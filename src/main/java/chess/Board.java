@@ -9,23 +9,24 @@ public class Board {
 
     private static final int MAXIMUM_PAWN_NUMBER = 16;
     private static final int CHESS_BOARD_SIZE = 8;
-    private static final int PAWN_INIT_POSITION = 1;
+    private static final int WHITE_PAWN_INIT_POSITION = 6;
+    private static final int BLACK_PAWN_INIT_POSITION = 1;
 
     private final List<Pawn> pieces = new ArrayList<>();
-    private Pawn[][] piecePositions = new Pawn[8][8];
+    private Pawn[][] piecePositions = new Pawn[CHESS_BOARD_SIZE][CHESS_BOARD_SIZE];
 
 
     public void initialize() {
-        initializeWhitePawn();
-        initializeBlackPawn();
+        initializePawns(Color.WHITE, WHITE_PAWN_INIT_POSITION);
+        initializePawns(Color.BLACK, BLACK_PAWN_INIT_POSITION);
     }
 
     public void addPawn(Pawn pawn) {
-        checkPawnCount();
+        validateMaximumPawnNumber();
         pieces.add(pawn);
     }
 
-    public int getBoardSize() {
+    public int getPiecesNumber() {
         return pieces.size();
     }
 
@@ -33,63 +34,42 @@ public class Board {
         return pieces.get(pawnIndex);
     }
 
-    private void checkPawnCount() {
-        if (getBoardSize() == MAXIMUM_PAWN_NUMBER) {
+    private void validateMaximumPawnNumber() {
+        if (getPiecesNumber() == MAXIMUM_PAWN_NUMBER) {
             throw new IllegalStateException("최대 폰 개수를 초과하였습니다.");
         }
     }
 
-    private void initializeBlackPawn() {
+    private void initializePawns(Color color, int pawnPosition) {
         for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
-            Pawn pawn = new Pawn(Color.BLACK);
-            pieces.add(pawn);
-            piecePositions[PAWN_INIT_POSITION][i] = pawn;
+            Pawn pawn = new Pawn(color);
+            addPawn(pawn);
+            piecePositions[pawnPosition][i] = pawn;
         }
     }
 
-    private void initializeWhitePawn() {
-        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
-            Pawn pawn = new Pawn(Color.WHITE);
-            pieces.add(pawn);
-            piecePositions[CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION][i] = pawn;
-        }
-    }
-
-    public String getWhitePawnResult() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
-            sb.append(piecePositions[CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION][i].getSymbol());
-        }
-        sb.append('\n');
-        return sb.toString();
-    }
-
-    public String getBlackPawnResult() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < MAXIMUM_PAWN_NUMBER / 2; i++) {
-            sb.append(piecePositions[PAWN_INIT_POSITION][i].getSymbol());
-        }
-        sb.append('\n');
-        return sb.toString();
-    }
-
-    private String getBlankResult() {
-        return "........\n";
-    }
-
-
-    public String getChessBoard() {
+    public String getChessBoardResult() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
-            if (i == PAWN_INIT_POSITION) {
-                sb.append(getBlackPawnResult());
-            } else if (i == CHESS_BOARD_SIZE - 1 - PAWN_INIT_POSITION) {
-                sb.append(getWhitePawnResult());
-            } else {
-                sb.append(getBlankResult());
-            }
+            sb.append(getRowResult(i));
         }
         return sb.toString();
+    }
+
+    private String getRowResult(int row) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
+            sb.append(getPieceSymbol(row, i));
+        }
+        sb.append('\n');
+        return sb.toString();
+    }
+
+    private char getPieceSymbol(int row, int col) {
+        if (piecePositions[row][col] != null) {
+            return piecePositions[row][col].getSymbol();
+        }
+        return '.';
     }
 
 }

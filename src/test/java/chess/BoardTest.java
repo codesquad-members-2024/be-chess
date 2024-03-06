@@ -24,7 +24,7 @@ class BoardTest {
     void addPawnAndCheckSize() {
         Pawn white = new Pawn(Color.WHITE);
         board.addPawn(white);
-        assertEquals(1, board.getBoardSize());
+        assertEquals(1, board.getPiecesNumber());
     }
 
     @Test
@@ -42,25 +42,25 @@ class BoardTest {
         for (int i = 0; i < 16; i++) {
             board.addPawn(new Pawn());
         }
-        assertEquals(16, board.getBoardSize());
+        assertEquals(16, board.getPiecesNumber());
         assertEquals("최대 폰 개수를 초과하였습니다.", assertThrows(IllegalStateException.class,
             () -> board.addPawn(new Pawn())).getMessage());
     }
 
-    @Test
-    @DisplayName("하얀색 Pawn에 정상적인 symbol값이 할당되었는지 테스트")
-    void testInitializeWhitePawn() {
-        board.initialize();
-        assertEquals("pppppppp\n", board.getWhitePawnResult());
-
-    }
-
-    @Test
-    @DisplayName("검은색 Pawn에 정상적인 symbol값이 할당되었는지 테스트 ")
-    void testInitializeBlackPawn() {
-        board.initialize();
-        assertEquals("PPPPPPPP\n", board.getBlackPawnResult());
-    }
+//    @Test
+//    @DisplayName("하얀색 Pawn에 정상적인 symbol값이 할당되었는지 테스트")
+//    void testInitializeWhitePawn() {
+//        board.initialize();
+//        assertEquals("pppppppp\n", board.getWhitePawnResult());
+//
+//    }
+//
+//    @Test
+//    @DisplayName("검은색 Pawn에 정상적인 symbol값이 할당되었는지 테스트 ")
+//    void testInitializeBlackPawn() {
+//        board.initialize();
+//        assertEquals("PPPPPPPP\n", board.getBlackPawnResult());
+//    }
 
     @Test
     @DisplayName("전체 체스판이 제대로 출력되는지 테스트")
@@ -73,7 +73,7 @@ class BoardTest {
             + "........\n"
             + "........\n"
             + "pppppppp\n"
-            + "........\n", board.getChessBoard());
+            + "........\n", board.getChessBoardResult());
     }
 
 }

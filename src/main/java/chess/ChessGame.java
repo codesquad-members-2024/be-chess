@@ -20,7 +20,7 @@ public class ChessGame {
         System.out.println(inputCommand);
         if (inputCommand.equals("start")) {
             while (!inputCommand.equals("end")) {
-                printResult(board.getChessBoard());
+                printResult(board.getChessBoardResult());
                 inputCommand = getCommandInput();
             }
         }
