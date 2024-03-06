@@ -9,13 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals; // JUnit 5의 asser
 public class PawnTest {
 
     @Test
-    @DisplayName("흰색/검은색 폰이 생성되어야 한다")
+    @DisplayName("흰색 또는 검은색 폰이 생성되어야 한다")
     public void create() {
         verifyPawn(Pawn.COLOR_WHITE);
         verifyPawn(Pawn.COLOR_BLACK);
     }
 
     @Test
+    @DisplayName("색이 없는 Pawn을 생성하는 경우 white Pawn을 생성해야 한다 ")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
         assertEquals(Pawn.COLOR_WHITE, pawn.getColor());
