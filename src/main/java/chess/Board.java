@@ -30,12 +30,12 @@ public class Board {
         }
     }
 
-    public Pawn findWhitePawn(final int findIndex) {
-        return whitePawns.get(findIndex);
+    public PawnColor findWhitePawn(final int findIndex) {
+        return whitePawns.get(findIndex).getColor();
     }
 
-    public Pawn findBlackPawn(final int findIndex) {
-        return blackPawns.get(findIndex);
+    public PawnColor findBlackPawn(final int findIndex) {
+        return blackPawns.get(findIndex).getColor();
     }
 
     public int blackPawnSize() {
