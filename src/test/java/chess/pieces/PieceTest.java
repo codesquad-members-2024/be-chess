@@ -2,10 +2,13 @@ package chess.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PieceTest {
+
     @Test
+    @DisplayName("Piece별로 흰색/검은색 말을 생성하는 팩토리 메서드 12개 생성 확인")
     public void create_piece() {
         verifyPiece(Piece.createWhitePawn(), Piece.WHITE_COLOR, Piece.WHITE_PAWN_REPRESENTATION);
         verifyPiece(Piece.createBlackPawn(), Piece.BLACK_COLOR, Piece.BLACK_PAWN_REPRESENTATION);
@@ -25,4 +28,5 @@ public class PieceTest {
         assertThat(piece.getColor()).isEqualTo(color);
         assertThat(piece.getRepresentation()).isEqualTo(representation);
     }
+
 }
