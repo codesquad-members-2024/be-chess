@@ -13,8 +13,6 @@ public class BoardTest {
 
     private static Board board;
 
-    @Test
-    @DisplayName("체스판을 생성한다.")
     @BeforeEach
     public void create() {
         board = new Board();
