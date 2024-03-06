@@ -3,7 +3,9 @@ package chess;
 import static utils.StringUtils.NEWLINE;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pieces.Piece;
@@ -12,8 +14,8 @@ import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class Board {
-    private List<Piece> pieces;
-    private List<Rank> board;
+    private final List<Piece> pieces;
+    private final List<Rank> board;
 
     public Board() {
         pieces = new ArrayList<>();
@@ -25,11 +27,11 @@ public class Board {
     }
 
     public void initialize() {
-        initializeExceptPawns(Color.BLACK.getColor());
-        initializePawns(Color.BLACK.getColor());
+        initializeExceptPawns(Color.BLACK);
+        initializePawns(Color.BLACK);
         IntStream.range(0, 4).forEach(i -> initializeBlank());
-        initializePawns(Color.WHITE.getColor());
-        initializeExceptPawns(Color.WHITE.getColor());
+        initializePawns(Color.WHITE);
+        initializeExceptPawns(Color.WHITE);
     }
 
     private void initializeBlank() {
@@ -38,29 +40,29 @@ public class Board {
         board.add(new Rank(blanks));
     }
 
-    private void initializePawns(String color) {
+    private void initializePawns(Color color) {
         List<Piece> pawns = new ArrayList<>();
         IntStream.range(0, 8).forEach(i -> pawns.add(generatePawn(color)));
         pieces.addAll(pawns);
         board.add(new Rank(pawns));
     }
 
-    private Piece generatePawn(String color) {
-        if (color.equals(Color.WHITE.getColor())) {
+    private Piece generatePawn(Color color) {
+        if (color.equals(Color.WHITE)) {
             return Piece.createWhitePawn();
         }
         return Piece.createBlackPawn();
     }
 
-    private void initializeExceptPawns(String color) {
+    private void initializeExceptPawns(Color color) {
         List<Piece> piecesExceptPawns = generatePiecesExceptPawns(color);
         pieces.addAll(piecesExceptPawns);
         board.add(new Rank(piecesExceptPawns));
     }
 
-    private ArrayList<Piece> generatePiecesExceptPawns(String color) {
+    private ArrayList<Piece> generatePiecesExceptPawns(Color color) {
         ArrayList<Piece> piecesExceptPawns = new ArrayList<>();
-        if (color.equals(Color.WHITE.getColor())) {
+        if (color.equals(Color.WHITE)) {
             piecesExceptPawns.add(Piece.createWhiteRook());
             piecesExceptPawns.add(Piece.createWhiteKnight());
             piecesExceptPawns.add(Piece.createWhiteBishop());
@@ -69,7 +71,7 @@ public class Board {
             piecesExceptPawns.add(Piece.createWhiteBishop());
             piecesExceptPawns.add(Piece.createWhiteKnight());
             piecesExceptPawns.add(Piece.createWhiteRook());
-        } else if (color.equals(Color.BLACK.getColor())) {
+        } else if (color.equals(Color.BLACK)) {
             piecesExceptPawns.add(Piece.createBlackRook());
             piecesExceptPawns.add(Piece.createBlackKnight());
             piecesExceptPawns.add(Piece.createBlackBishop());
@@ -111,8 +113,7 @@ public class Board {
 
     public int getPieceCount(Color color, PieceSymbol pieceSymbol) {
         return (int) board.stream().flatMap(rank -> rank.getPieces().stream())
-                .filter(piece -> piece.getColor().equals(color.getColor()) &&
-                        piece.getPieceSymbol().equals(pieceSymbol))
+                .filter(piece -> piece.equalsPiece(color, pieceSymbol))
                 .count();
     }
 
@@ -125,5 +126,29 @@ public class Board {
         Position pos = new Position(position);
         pieces.remove(piece);
         board.get(pos.getRow()).getPieces().set(pos.getCol(), piece);
+    }
+
+    public double calculatePoint(Color color) {
+        return board.stream()
+                .flatMap(rank -> rank.getPieces().stream())
+                .filter(piece -> piece.matchColor(color))
+                .mapToDouble(piece -> getPawnPoint(color, piece))
+                .sum();
+    }
+
+    private double getPawnPoint(Color color, Piece piece) {
+        double defaultPoint = piece.getPieceSymbol().getDefaultPoint();
+        if (hasSameVerticalPawns(color) && piece.equalsPawn(color)) {
+            return defaultPoint / 2.0;
+        }
+        return defaultPoint;
+    }
+
+    public boolean hasSameVerticalPawns(Color color) {
+        Set<Integer> cols = new HashSet<>();
+
+        return board.stream().anyMatch(rank -> rank.getPieces().stream()
+                .filter(piece -> piece.equalsPawn(color) && !cols.add(rank.getPieces().indexOf(piece)))
+                .isParallel());
     }
 }

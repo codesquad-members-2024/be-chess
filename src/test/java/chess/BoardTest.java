@@ -97,6 +97,8 @@ class BoardTest {
         addPiece("e1", Piece.createWhiteRook());
         addPiece("f1", Piece.createWhiteKing());
 
+        assertThat(board.hasSameVerticalPawns(Color.BLACK)).isFalse();
+        assertThat(board.hasSameVerticalPawns(Color.WHITE)).isFalse();
         assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(15.0, within(0.01));
         assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(7.0, within(0.01));
 
