@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Piece;
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static utils.StringUtils.appendNewLine;
 
 public class BoardTest {
@@ -27,8 +27,8 @@ public class BoardTest {
     public void initialize() throws Exception {
         Board board = new Board();
         board.init();
-        assertEquals("♙♙♙♙♙♙♙♙", board.getWhitePawnsResult());
-        assertEquals("♟♟♟♟♟♟♟♟", board.getBlackPawnsResult());
+        assertThat( board.getWhitePawnsResult()).isEqualTo("♙♙♙♙♙♙♙♙");
+        assertThat( board.getBlackPawnsResult()).isEqualTo("♟♟♟♟♟♟♟♟");
     }
 
     @Test
@@ -42,21 +42,21 @@ public class BoardTest {
         int size = board.size();
         Piece piece = createPiece.get();
         board.add(piece);
-        assertEquals(size + 1, board.size());
+        assertThat(board.size()).isEqualTo(size + 1);
     }
 
     @Test
+    @DisplayName("초기화된 보드의 상태가 체스 규칙* 과 일치함을 확인할 수 있어야 한다")
     void create() throws Exception {
         board.init();
-        assertEquals(32, board.size());
+        assertThat(board.size()).isEqualTo(32);
         String blankRank = appendNewLine("        ");
-        assertEquals(
+        assertThat(board.showBoard()).isEqualTo(
                 appendNewLine("♜♞♝♛♚♝♞♜") +
-                        appendNewLine("♟♟♟♟♟♟♟♟") +
-                        blankRank + blankRank + blankRank + blankRank +
-                        appendNewLine("♙♙♙♙♙♙♙♙") +
-                        appendNewLine("♖♘♗♕♔♗♘♖"),
-                board.showBoard());
+                         appendNewLine("♟♟♟♟♟♟♟♟") +
+                         blankRank + blankRank + blankRank + blankRank +
+                         appendNewLine("♙♙♙♙♙♙♙♙") +
+                         appendNewLine("♖♘♗♕♔♗♘♖"));
     }
 
     @Test
@@ -67,21 +67,23 @@ public class BoardTest {
         Piece piece = Piece.createBlackRook();
         board.addPieceAt(position, piece);
 
-        assertEquals(piece, board.findPiece(position));
+        assertThat(board.findPiece(position)).isEqualTo(piece);
         System.out.println(board.showBoard());
     }
 
     @Test
+    @DisplayName("지정한 위치의 기물을 조회할 수 있어야 한다")
     void findPiece() throws Exception {
         board.init();
 
-        assertEquals(Piece.createBlackRook(), board.findPiece("a8"));
-        assertEquals(Piece.createBlackRook(), board.findPiece("h8"));
-        assertEquals(Piece.createWhiteRook(), board.findPiece("a1"));
-        assertEquals(Piece.createWhiteRook(), board.findPiece("h1"));
+        assertThat(board.findPiece("a8")).isEqualTo(Piece.createBlackRook());
+        assertThat(board.findPiece("h8")).isEqualTo(Piece.createBlackRook());
+        assertThat(board.findPiece("a1")).isEqualTo(Piece.createWhiteRook());
+        assertThat(board.findPiece("h1")).isEqualTo(Piece.createWhiteRook());
     }
 
     @Test
+    @DisplayName("점수 규칙* 에 따라 각 색상별 기물 점수를 계산할 수 있어야 한다")
     void calculatePoint() throws Exception {
         board.initEmpty();
 
@@ -97,8 +99,8 @@ public class BoardTest {
         addPiece("e1", Piece.createWhiteRook());
         addPiece("f1", Piece.createWhiteKing());
 
-        assertEquals(15.5, board.calculatePoint(Piece.Color.BLACK), 0.01);
-        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
+        assertThat(board.calculatePoint(Piece.Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
+        assertThat(board.calculatePoint(Piece.Color.WHITE)).isCloseTo(7.0, Offset.offset(0.01));
 
         System.out.println(board.showBoard());
     }
@@ -108,7 +110,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("보드의 기물들을 정렬했을 때 점수가 높은 순서 , 검은색 -> 흰색 순서로 정렬 되어야 함")
+    @DisplayName("보드의 기물들을 정렬했을 때 점수가 높은 순서 , 검은색 -> 흰색 순서로 정렬 되어야 한다")
     void sortPieces(){
         addPiece("b6", Piece.createBlackPawn());
         addPiece("e6", Piece.createBlackQueen());

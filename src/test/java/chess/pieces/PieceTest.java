@@ -5,7 +5,6 @@ import chess.pieces.Piece.Type;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PieceTest {
 
@@ -18,12 +17,12 @@ public class PieceTest {
     }
 
     private void verifyPiece(Piece piece, final Color color, final String representation) {
-        assertEquals(color, piece.getColor());
-        assertEquals(representation, piece.getRepresentation());
+        assertThat(piece.getColor()).isEqualTo(color);
+        assertThat(piece.getRepresentation()).isEqualTo(representation);
     }
 
     @Test
-    @DisplayName("기물의 색상을 구분할 수 있어야 함")
+    @DisplayName("기물의 색상을 구분할 수 있어야 한다")
     void isThatColor(){
         Piece whitePawn = Piece.createWhitePawn();
         assertThat(whitePawn.isWhite());
