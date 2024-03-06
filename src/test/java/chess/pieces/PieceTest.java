@@ -76,4 +76,23 @@ class PieceTest {
         assertFalse(blackPawn.isWhite());
         assertFalse(whitePawn.isBlack());
     }
+
+    @DisplayName("기물이 존재하지 않는 Piece를 생성할 수 있다")
+    @Test
+    void create_no_piece() {
+        // given
+        Piece blank = createBlank();
+
+        // when & then
+        assertAll(
+                "기물이 존재하지 않는 Piece는 특별한 색상, 타입, 이름을 갖지 앉는다.",
+                () -> assertThat(blank).extracting("color").containsExactly(NO_COLOR),
+                () -> assertThat(blank).extracting("type").containsExactly(NO_PIECE),
+                () -> assertThat(blank).extracting("name").containsExactly("blank"),
+                () -> assertThat(blank.getRepresentation()).isEqualTo("."),
+                () -> assertFalse(blank.isBlack()),
+                () -> assertFalse(blank.isWhite()),
+                () -> assertFalse(blank.isPawn())
+        );
+    }
 }

@@ -94,7 +94,7 @@ public class Piece {
     }
 
     public boolean isPawn() {
-        return type.equals(PAWN);
+        return !type.equals(NO_PIECE) && type.equals(PAWN);
     }
 
     public boolean isSameColor(Color color) {
