@@ -32,8 +32,8 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             board.add(basicLine);
         }
-        board.set(1, getWhitePawns());
-        board.set(6, getBlackPawns());
+        board.set(1, getBlackPawns());
+        board.set(6, getWhitePawns());
     }
 
     private List<String> getBasicLine() {

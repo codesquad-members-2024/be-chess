@@ -47,8 +47,8 @@ public class BoardTest {
     void verifyPawnsOnTheBoardAfterInitializeBoard() {
         board.initialize();
         List<List<String>> chessBoard = board.getBoard();
-        assertThat(chessBoard.get(1)).isEqualTo(List.of("p", "p", "p", "p", "p", "p", "p", "p"));
-        assertThat(chessBoard.get(6)).isEqualTo(List.of("P", "P", "P", "P", "P", "P", "P", "P"));
+        assertThat(chessBoard.get(1)).isEqualTo(List.of("P", "P", "P", "P", "P", "P", "P", "P"));
+        assertThat(chessBoard.get(6)).isEqualTo(List.of("p", "p", "p", "p", "p", "p", "p", "p"));
     }
 
     @Test
