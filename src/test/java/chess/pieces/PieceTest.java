@@ -59,12 +59,12 @@ public class PieceTest {
     }
 
     void valWhite(Piece piece) {
-        assertThat(piece.isWhite()).isEqualTo(true);
-        assertThat(piece.isBlack()).isEqualTo(false);
+        assertThat(piece.isWhite()).isTrue();
+        assertThat(piece.isBlack()).isFalse();
     }
 
     void valBlack(Piece piece) {
-        assertThat(piece.isBlack()).isEqualTo(true);
-        assertThat(piece.isWhite()).isEqualTo(false);
+        assertThat(piece.isBlack()).isTrue();
+        assertThat(piece.isWhite()).isFalse();
     }
 }
