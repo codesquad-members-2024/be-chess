@@ -18,20 +18,22 @@ public class Piece {
     }
 
     public enum PieceSymbol {
-        NO_PIECE("no-piece", "•"),
-        PAWN("pawn", "♙"),
-        ROOK("rook", "♖"),
-        KNIGHT("knight", "♘"),
-        BISHOP("bishop", "♗"),
-        QUEEN("queen", "♕"),
-        KING("king", "♔");
+        NO_PIECE("no-piece", "•", 0.0),
+        PAWN("pawn", "♙", 1.0),
+        ROOK("rook", "♖", 5.0),
+        KNIGHT("knight", "♘", 2.5),
+        BISHOP("bishop", "♗", 3.0),
+        QUEEN("queen", "♕", 9.0),
+        KING("king", "♔", 0.0);
 
         private final String name;
         private final String symbol;
+        private final double defaultPoint;
 
-        PieceSymbol(String name, String symbol) {
+        PieceSymbol(String name, String symbol, double defaultPoint) {
             this.name = name;
             this.symbol = symbol;
+            this.defaultPoint = defaultPoint;
         }
 
         public String getSymbol() {
@@ -40,6 +42,10 @@ public class Piece {
 
         public String getName() {
             return name;
+        }
+
+        public double getDefaultPoint() {
+            return defaultPoint;
         }
     }
 
