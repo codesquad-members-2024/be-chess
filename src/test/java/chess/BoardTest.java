@@ -39,7 +39,7 @@ public class BoardTest {
     @Test
     @DisplayName("기물의 색과 종류를 받아 보드에 몇 개 있는지 확인하는 메서드 검증")
     void pieceCount() {
-        //보드 초기화 하자마자
+        //보드 초기화 하자마자는
         //검은 룩 2개
         assertThat(board.numberOfSpecificPiece(TypeOfPiece.ROOK, Color.BLACK)).isEqualTo(2);
         //하얀 폰 8개
@@ -49,10 +49,10 @@ public class BoardTest {
     @Test
     @DisplayName("좌표가 주어졌을 때 해당 위치의 기물을 가져오는지 검증")
     void findPiece() throws Exception {
-        assertEquals(Piece.createBlack(TypeOfPiece.ROOK), board.findPiece("a8"));
-        assertEquals(Piece.createBlack(TypeOfPiece.ROOK), board.findPiece("h8"));
-        assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("a1"));
-        assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("h1"));
+        assertThat(Piece.createBlack(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("a8"));
+        assertThat(Piece.createBlack(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("h8"));
+        assertThat(Piece.createWhite(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("a1"));
+        assertThat(Piece.createWhite(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("h1"));
     }
 
     @Test
@@ -64,7 +64,9 @@ public class BoardTest {
         Piece piece = Piece.createBlack(TypeOfPiece.ROOK);
         board.move(position, piece);
 
-        assertEquals(piece, board.findPiece(position));
+        assertThat(piece).isEqualTo(board.findPiece(position));
         System.out.println(board.showBoard());
     }
+
+
 }
