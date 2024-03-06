@@ -16,7 +16,7 @@ public class Board {
 
     public Board() {
         pieces = new ArrayList<>();
-        board = new ArrayList<>();
+        board = new ArrayList<>(8);
     }
 
     public void add(Piece piece) {
@@ -26,10 +26,7 @@ public class Board {
     public void initialize() {
         initializeExceptPawns(Color.BLACK.getColor());
         initializePawns(Color.BLACK.getColor());
-        initializeBlank();
-        initializeBlank();
-        initializeBlank();
-        initializeBlank();
+        IntStream.range(0, 4).forEach(i -> initializeBlank());
         initializePawns(Color.WHITE.getColor());
         initializeExceptPawns(Color.WHITE.getColor());
     }
@@ -85,7 +82,9 @@ public class Board {
     }
 
     public void initializeEmpty() {
-
+        pieces.clear();
+        board.clear();
+        IntStream.range(0, 8).forEach(i -> initializeBlank());
     }
 
     public int pieceCount() {
@@ -124,6 +123,9 @@ public class Board {
     }
 
     public void move(String position, Piece piece) {
-        
+        int row = 8 - Character.getNumericValue(position.charAt(1));
+        int col = position.charAt(0) - 'a';
+        pieces.remove(piece);
+        board.get(row).getPieces().set(col, piece);
     }
 }
