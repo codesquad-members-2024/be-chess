@@ -1,6 +1,6 @@
 package chess;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,13 +20,15 @@ public class BoardTest {
     public void create() throws Exception {
         Piece white = new Piece(Piece.WHITE_COLOR);
         board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findWhitePawn(0));
+
+        assertThat(1).isEqualTo(board.size());
+        assertThat(board.findWhitePawn(0)).isEqualTo(white);
 
         Piece black = new Piece(Piece.BLACK_COLOR);
         board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findBlackPawn(0));
+
+        assertThat(2).isEqualTo(board.size());
+        assertThat(board.findBlackPawn(0)).isEqualTo(black);
     }
 
     @Test
@@ -34,8 +36,8 @@ public class BoardTest {
     public void initialize() throws Exception {
         Board board = new Board();
         board.start();
-        assertEquals("pppppppp", board.getPieceResult(board.getWhitePawns()));
-        assertEquals("PPPPPPPP", board.getPieceResult(board.getBlackPawns()));
+        assertThat(board.getPieceResult(board.getWhitePawns())).isEqualTo("pppppppp");
+        assertThat(board.getPieceResult(board.getBlackPawns())).isEqualTo("PPPPPPPP");
     }
 
 }

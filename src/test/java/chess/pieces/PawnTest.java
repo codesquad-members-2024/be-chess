@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class PawnTest {
 
     void verifyPawn(final String name, final String color) {
         Piece pawn = Piece.of(name, color);
-        assertEquals(color, pawn.getColor());
+        assertThat(pawn.getColor()).isEqualTo(color);
     }
 
 }
