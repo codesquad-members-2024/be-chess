@@ -22,7 +22,7 @@ public abstract class Piece {
         }
     }
 
-    public Piece(String color, final char representation) {
+    public Piece(final String color, final char representation) {
         this.color = color;
         this.representation = representation;
     }
