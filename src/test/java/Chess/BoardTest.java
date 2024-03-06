@@ -32,4 +32,17 @@ public class BoardTest {
         assertThat(board.getPawnsSize()).isEqualTo(initialSize + 1);
         assertThat(board.findPawn(initialSize)).isEqualTo(pawn);
     }
+
+    @Test
+    public void initialize() throws Exception {
+        board.initialize();
+        String expectedWhitePawns = "PPPPPPPP";
+        String expectedBlackPawns = "pppppppp";
+        assertThat(board.getWhitePawnsResult()).isEqualTo(expectedWhitePawns);
+        assertThat(board.getBlackPawnsResult()).isEqualTo(expectedBlackPawns);
+    }
+
+
+
+
 }

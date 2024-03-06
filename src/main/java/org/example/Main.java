@@ -1,7 +1,25 @@
-package org.example;
+package org.example.Chess;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Board board = new Board();
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        while (true) {
+            System.out.print("Enter 'start' to start the game, 'end' to quit: ");
+            input = scanner.nextLine();
+
+            if ("start".equalsIgnoreCase(input)) {
+                board.initialize();
+                System.out.println(board.getBoardPrint());
+            } else if ("end".equalsIgnoreCase(input)) {
+                break;
+            }
+        }
+
+        scanner.close();
     }
 }
