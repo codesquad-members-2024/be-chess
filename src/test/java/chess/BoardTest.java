@@ -62,6 +62,13 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("기물이 아무 것도 없는 빈 상태의 체스판을 초기화할 수 있다.")
+    public void initializeEmpty() throws Exception {
+        board.initializeEmpty();
+        assertThat(board.getPieceCount(Color.NOCOLOR, PieceSymbol.NO_PIECE)).isEqualTo(64);
+    }
+
+    @Test
     @DisplayName("체스 판의 임의의 위치에 기물을 추가할 수 있다.")
     public void move() throws Exception {
         board.initializeEmpty();
