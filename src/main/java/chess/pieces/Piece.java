@@ -36,6 +36,10 @@ public class Piece {
         return this.representation;
     }
 
+    public boolean verifyMovePosition(int[] now , int[] destination){
+        return this.type.verifyMovePosition(now, destination);
+    };
+
     private static Piece createWhite(Type type) {
         return new Piece(Color.WHITE, type);
     }
@@ -124,7 +128,9 @@ public class Piece {
         KNIGHT(2.5, "♘") {
             @Override
             public boolean verifyMovePosition(int[] now, int[] destination) {
-                return Math.abs(Math.abs(now[0]-destination[0]) - Math.abs(now[1]-destination[1])) == 1;
+                int rankMove = Math.abs(now[0]-destination[0]);
+                int fileMove =  Math.abs(now[1]-destination[1]);
+                return rankMove+fileMove == 3 && Math.abs(rankMove-fileMove) == 1; // 2칸 1칸 이동 가능
             }
         },
         ROOK(5.0, "♖") {
