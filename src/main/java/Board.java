@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 public class Board {
+    private static final String WHITE_COLOR = "white";
+    private static final String BLACK_COLOR = "black";
     private static final int COL_NUMS = 8;
     private static final String BLANKS = "•".repeat(COL_NUMS);
     ArrayList<Pawn> whitePawns;
@@ -18,11 +20,11 @@ public class Board {
 
     void initialize() {
         // 검은색 폰과 흰색 폰을 각각 8개씩 가지도록 초기화
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < COL_NUMS; i++) {
             whitePieces.add('•');
             blackPieces.add('•');
-            whitePawns.add(new Pawn("white"));
-            blackPawns.add(new Pawn("black"));
+            whitePawns.add(new Pawn(WHITE_COLOR));
+            blackPawns.add(new Pawn(BLACK_COLOR));
         }
     }
 
