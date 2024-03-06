@@ -2,6 +2,7 @@ package chess;
 
 import chess.board.Board;
 import chess.board.Position;
+import chess.game.Game;
 import chess.utils.ErrorMessage;
 import chess.utils.MainCommand;
 import chess.view.View;
@@ -21,12 +22,13 @@ public class Main {
 
     public static void main(String[] args) {
         Board board = new Board();
+        Game game = new Game(board);
         board.initialize();
         MainCommand mainCommand = getOrRetry(() -> MainCommand.of(readMenuCommand()));
 
         while (mainCommand != MainCommand.END) {
             print(view.showBoard(board));
-            runOrRetry(() -> move(board));
+            runOrRetry(() -> move(game));
         }
     }
 
@@ -39,7 +41,7 @@ public class Main {
         System.out.println(target);
     }
 
-    private static void move(Board board) {
+    private static void move(Game game) {
         System.out.println(ASK_MOVE_COMMAND);
         String moveCommand = sc.nextLine();
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(moveCommand);
@@ -49,7 +51,7 @@ public class Main {
         Position source = new Position(matcher.group(1));
         Position target = new Position(matcher.group(2));
 
-//        board.move(source, target);
+        game.move(source, target);
     }
 
     private static <T> T getOrRetry(Supplier<T> supplier) {
