@@ -1,11 +1,11 @@
 package chess;
 
 import chess.pieces.Pawn;
+import chess.pieces.PawnColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BoardTest {
     private Board board;
@@ -17,14 +17,14 @@ public class BoardTest {
 
     @Test
     public void create() throws Exception {
-        Pawn white = new Pawn(Pawn.WHITE_COLOR);
-        board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findPawn(0));
+        Pawn white = new Pawn(PawnColor.WHITE);
+        board.whitePawnAdd(white);
+        assertEquals(1, board.whitePawnSize());
+        assertEquals(white, board.findWhitePawn(0));
 
-        Pawn black = new Pawn(Pawn.BLACK_COLOR);
-        board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findPawn(1));
+        Pawn black = new Pawn(PawnColor.BLACK);
+        board.blackPawnAdd(black);
+        assertEquals(1, board.blackPawnSize());
+        assertEquals(black, board.findBlackPawn(0));
     }
 }
