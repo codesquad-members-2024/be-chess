@@ -2,7 +2,7 @@ package chess.pieces;
 
 import chess.enums.Color;
 
-public class Pawn {
+public class Piece {
 
     public static final char WHITE_REPRESENT = '♟';
     public static final char BLACK_REPRESENT = '♙';
@@ -10,12 +10,12 @@ public class Pawn {
     private final Color color;
     private final char represent;
 
-    public Pawn(Color color) {
+    public Piece(Color color) {
         this.color = color;
         this.represent = color.equals(Color.WHITE) ? WHITE_REPRESENT : BLACK_REPRESENT;
     }
 
-    public Pawn() {
+    public Piece() {
         this(Color.WHITE);
     }
 
