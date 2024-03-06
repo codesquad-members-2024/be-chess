@@ -16,22 +16,22 @@ public class BoardTest {
 
     @BeforeEach
     @DisplayName("테스트 시작 전 보드 객체를 초기화한다")
-    public void setup() {
+    void setup() {
         board = new Board();
     }
 
     @Test
     @DisplayName("보드 안의 기물이 제대로 초기화되어야 한다")
-    public void create() throws Exception {
+    void create() throws Exception {
         board.initialize();
         assertThat(32).isEqualTo(board.pieceCount());
         String blankRank = appendNewLine("........");
         assertThat(
                 appendNewLine("♖♘♗♕♔♗♘♖") +
-                appendNewLine("♙♙♙♙♙♙♙♙") +
-                blankRank + blankRank + blankRank + blankRank +
-                appendNewLine("♟♟♟♟♟♟♟♟") +
-                appendNewLine("♜♞♝♛♚♝♞♜"))
+                        appendNewLine("♙♙♙♙♙♙♙♙") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("♟♟♟♟♟♟♟♟") +
+                        appendNewLine("♜♞♝♛♚♝♞♜"))
                 .isEqualTo(board.showBoard());
     }
 }

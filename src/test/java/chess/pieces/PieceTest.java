@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PieceTest {
 
@@ -35,4 +36,35 @@ public class PieceTest {
         assertThat(piece.getRepresent()).isEqualTo(represent);
     }
 
+    @Test
+    @DisplayName("기물의 색을 검증한다")
+    void validateColor() {
+        valWhite(Piece.createWhiteQueen());
+        valBlack(Piece.createBlackQueen());
+
+        valWhite(Piece.createWhiteKing());
+        valBlack(Piece.createBlackKing());
+
+        valWhite(Piece.createWhiteRook());
+        valBlack(Piece.createBlackRook());
+
+        valBlack(Piece.createBlackKnight());
+        valWhite(Piece.createWhiteKnight());
+
+        valWhite(Piece.createWhiteBishop());
+        valBlack(Piece.createBlackBishop());
+
+        valWhite(Piece.createWhitePawn());
+        valBlack(Piece.createBlackPawn());
+    }
+
+    void valWhite(Piece piece) {
+        assertThat(piece.isWhite()).isEqualTo(true);
+        assertThat(piece.isBlack()).isEqualTo(false);
+    }
+
+    void valBlack(Piece piece) {
+        assertThat(piece.isBlack()).isEqualTo(true);
+        assertThat(piece.isWhite()).isEqualTo(false);
+    }
 }
