@@ -12,8 +12,10 @@ public class ChessGame {
     }
 
     // 게임 로직
-    public void movePieceAt(String sourcePosition, String targetPosition) {
+    public void movePieceAt(String sourcePosition, String targetPosition) throws IllegalArgumentException{
         Piece start = gameBoard.findPiece(getRankFile(sourcePosition));
+        if(!start.getType().verifyMovePosition(getRankFile(sourcePosition), getRankFile(targetPosition))) throw new IllegalArgumentException();
+
         gameBoard.addPieceAt(getRankFile(sourcePosition) , Piece.createBlank());
         gameBoard.addPieceAt(getRankFile(targetPosition), start);
     }
@@ -30,8 +32,8 @@ public class ChessGame {
         int result = 0;
         for (int i = MIN_FILE; i <= MAX_FILE; i++) {
             int cnt = 0;
-            for (Piece[] rank : gameBoard.board) { // 보드????
-                Piece piece = rank[i-1];
+            for (int j = MIN_RANK; j<=MAX_RANK; j++) { // 보드????
+                Piece piece = gameBoard.findPiece(new int[]{j-1,i-1});
                 if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
                     cnt++;
                 }

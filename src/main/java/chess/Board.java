@@ -12,11 +12,9 @@ import static utils.StringUtils.appendNewLine;
 
 public class Board {
     private final List<Piece> pieces = new ArrayList<>();
-    final Piece[][] board = new Piece[MAX_RANK][MAX_RANK];
+    private final Piece[][] board = new Piece[MAX_RANK][MAX_RANK];
 
-    public void add(Piece piece) {
-        pieces.add(piece);
-    }
+    public void add(Piece piece) { pieces.add(piece); }
 
     public int size() {
         return pieces.size();

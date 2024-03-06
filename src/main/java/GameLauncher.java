@@ -3,7 +3,6 @@ import chess.ChessGame;
 
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GameLauncher {
@@ -32,6 +31,10 @@ public class GameLauncher {
     private static void tryMove(String positions) {
         StringTokenizer st = new StringTokenizer(positions, " ");
         st.nextToken();
-        game.movePieceAt(st.nextToken(), st.nextToken());
+        try {
+            game.movePieceAt(st.nextToken(), st.nextToken());
+        }catch (IllegalArgumentException failMove){
+            System.out.println("이동할 수 없는 위치입니다.");
+        }
     }
 }
