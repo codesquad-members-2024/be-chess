@@ -58,4 +58,20 @@ public class Board {
                 .map(Pawn::toString)
                 .collect(Collectors.joining());
     }
+
+    public void print() {
+        StringBuilder result = new StringBuilder();
+
+        for (List<Pawn> pawnList : board) {
+            for (Pawn pawn : pawnList) {
+                if (pawn == null) {
+                    result.append(".");
+                } else {
+                    result.append(pawn);
+                }
+            }
+            result.append("\n");
+        }
+        System.out.println(result);
+    }
 }
