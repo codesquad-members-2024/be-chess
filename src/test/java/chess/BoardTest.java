@@ -68,5 +68,30 @@ public class BoardTest {
         System.out.println(board.showBoard());
     }
 
+    @Test
+    @DisplayName("점수 계산 로직 검증")
+    public void caculcatePoint() throws Exception {
+        board.initializeEmpty();
 
+        addPiece("b6", Piece.createBlack(TypeOfPiece.PAWN));
+        addPiece("e6", Piece.createBlack(TypeOfPiece.QUEEN));
+        addPiece("b8", Piece.createBlack(TypeOfPiece.KING));
+        addPiece("c8", Piece.createBlack(TypeOfPiece.ROOK));
+
+        addPiece("f2", Piece.createWhite(TypeOfPiece.PAWN));
+        addPiece("g2", Piece.createWhite(TypeOfPiece.PAWN));
+        addPiece("e1", Piece.createWhite(TypeOfPiece.ROOK));
+        addPiece("f1", Piece.createWhite(TypeOfPiece.KING));
+
+//        assertEquals(15.0, board.caculratePoint(Color.BLACK), 0.01);
+        assertThat(board.calculatePoint(Color.BLACK)).isBetween(14.9, 15.1);
+//        assertEquals(7.0, board.caculratePoint(Color.WHITE), 0.01);
+        assertThat(board.calculatePoint(Color.WHITE)).isBetween(6.9, 7.1);
+
+        System.out.println(board.showBoard());
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(position, piece);
+    }
 }

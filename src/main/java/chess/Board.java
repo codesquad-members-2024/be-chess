@@ -10,7 +10,7 @@ import static chess.utils.StringUtils.appendNewLine;
 import java.util.*;
 
 public class Board {
-    private final int RANK = 8;
+    private final int RANK_CNT = 8;
 
     private final Map<Position, Piece> chessBoard = new HashMap<>();
 
@@ -30,7 +30,7 @@ public class Board {
 
     public String showBoard() {
         StringBuilder sb = new StringBuilder();
-        for (int i = RANK; i > 0; i--) {
+        for (int i = RANK_CNT; i > 0; i--) {
             sb.append(appendNewLine((getRowString(i))));
         }
 
@@ -63,5 +63,28 @@ public class Board {
 
     public void move(String position, Piece piece) {
         chessBoard.replace(Position.valueOf(position.toUpperCase()), piece);
+    }
+
+    public double calculatePoint(Color color) {
+        double result = 0.0;
+
+        for (int startFile = 'A'; startFile <= 'H'; startFile++) {
+            int pawnCnt = 0;
+            for (int nowRank = RANK_CNT; nowRank > 0; nowRank--) {
+                StringBuilder index = new StringBuilder();
+                index.append((char)startFile).append(nowRank);
+                Piece now = chessBoard.get(Position.valueOf(index.toString().toUpperCase()));
+                if (now.getColor().equals(color)) {
+                    result += now.getType().getScore();
+                    pawnCnt += now.getType().equals(TypeOfPiece.PAWN) ? 1 : 0;
+                }
+            }
+            if (pawnCnt > 1) {
+                result -= TypeOfPiece.PAWN.getScore() * pawnCnt;
+                result += pawnCnt * (TypeOfPiece.PAWN.getScore() / 2);
+            }
+        }
+
+        return result;
     }
 }
