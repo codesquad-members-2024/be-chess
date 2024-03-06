@@ -3,10 +3,9 @@ package chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import utils.StringUtils;
 
-import static utils.StringUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtils.appendNewLine;
 
 class BoardTest {
     Board board;
@@ -47,11 +46,11 @@ class BoardTest {
         assertThat(board.pieceCount()).isEqualTo(32);
         String blankRank = appendNewLine("........");
         assertThat(board.showBoard()).isEqualTo(
-                StringUtils.appendNewLine("RNBQKBNR") +
-                        StringUtils.appendNewLine("PPPPPPPP") +
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
                         blankRank + blankRank + blankRank + blankRank +
-                        StringUtils.appendNewLine("pppppppp") +
-                        StringUtils.appendNewLine("rnbqkbnr")
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr")
         );
     }
 }
