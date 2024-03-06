@@ -20,15 +20,15 @@ class PieceTest {
         Piece blank = Piece.createBlank();
         assertThat(blank.isWhite()).isFalse();
         assertThat(blank.isBlack()).isFalse();
-        assertThat(PieceSymbol.NO_PIECE).isEqualTo(blank.getPieceSymbol());
+        assertThat(blank.getPieceSymbol()).isEqualTo(PieceSymbol.NO_PIECE);
     }
 
     private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final PieceSymbol symbol) {
         assertThat(whitePiece.isWhite()).isTrue();
-        assertThat(symbol).isEqualTo(whitePiece.getPieceSymbol());
+        assertThat(whitePiece.getPieceSymbol()).isEqualTo(symbol);
 
         assertThat(blackPiece.isBlack()).isTrue();
-        assertThat(symbol).isEqualTo(blackPiece.getPieceSymbol());
+        assertThat(blackPiece.getPieceSymbol()).isEqualTo(symbol);
     }
 
     @Test
@@ -46,7 +46,7 @@ class PieceTest {
     @Test
     @DisplayName("기물에 맞는 심볼을 나타낼 수 있다.")
     public void getSymbolPerPiece() throws Exception {
-        assertThat("♙").isEqualTo(PieceSymbol.PAWN.getSymbol());
-        assertThat("♟").isEqualTo(Piece.convertToBlackPiece(PieceSymbol.PAWN.getSymbol()));
+        assertThat(PieceSymbol.PAWN.getSymbol()).isEqualTo("♙");
+        assertThat(Piece.convertToBlackPiece(PieceSymbol.PAWN.getSymbol())).isEqualTo("♟");
     }
 }
