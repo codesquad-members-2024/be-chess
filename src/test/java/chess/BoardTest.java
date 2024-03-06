@@ -14,30 +14,27 @@ public class BoardTest {
     @BeforeEach
     void before() {
         board = new Board();
+        board.initialize();
     }
 
     @Test
-    @DisplayName("흰색 폰이 생성되어야한다")
+    @DisplayName("보드 초기화 후 흰색 폰이 생성되어야한다")
     void createWhitePawn() throws Exception {
-        Pawn white = new Pawn(PawnColor.WHITE);
-        board.whitePawnAdd(white);
-        assertEquals(1, board.whitePawnSize());
-        assertEquals(white, board.findWhitePawn(0));
+        assertEquals(8, board.whitePawnSize());
+        assertEquals(PawnColor.WHITE, board.findWhitePawn(0));
     }
 
     @Test
-    @DisplayName("검은색 폰이 생성되어야한다")
+    @DisplayName("보드 초기화 후 검은색 폰이 생성되어야한다")
     void createBlackPawn() throws Exception {
         Pawn black = new Pawn(PawnColor.BLACK);
-        board.blackPawnAdd(black);
-        assertEquals(1, board.blackPawnSize());
-        assertEquals(black, board.findBlackPawn(0));
+        assertEquals(8, board.blackPawnSize());
+        assertEquals(PawnColor.BLACK, board.findBlackPawn(0));
     }
 
     @Test
-    @DisplayName("보드 초기화 시 흰색, 검정색 폰이 생성되어야한다")
+    @DisplayName("보드 초기화 후 흰색폰과 검정폰의 문자가 p, P 이어야한다.")
     void initialize() throws Exception {
-        board.initialize();
         assertEquals("pppppppp", board.getWhitePawnsResult());
         assertEquals("PPPPPPPP", board.getBlackPawnsResult());
     }
@@ -54,7 +51,6 @@ public class BoardTest {
                 "........\n" +
                 "pppppppp\n" +
                 "........";
-        board.initialize();
         String print = board.print();
         System.out.println(print);
         assertEquals(initBoard, print);
