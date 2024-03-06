@@ -64,4 +64,21 @@ public class Board {
     public String getBlackPawnsResult() {
         return getPawnResult(blackPawns);
     }
+
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<8; i++) {
+            for(int j=0; j<8; j++) {
+                if(board[i][j] == null){
+                    sb.append(".");
+                } else {
+                    sb.append(board[i][j].getRepresentation());
+                }
+            }
+            if(i<7) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }
