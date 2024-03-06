@@ -54,4 +54,17 @@ public class BoardTest {
         assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("a1"));
         assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("h1"));
     }
+
+    @Test
+    @DisplayName("임의의 위치의 체스판에 기물 추가되는지 검증")
+    void move() throws Exception {
+        board.initializeEmpty();
+
+        String position = "b5";
+        Piece piece = Piece.createBlack(TypeOfPiece.ROOK);
+        board.move(position, piece);
+
+        assertEquals(piece, board.findPiece(position));
+        System.out.println(board.showBoard());
+    }
 }
