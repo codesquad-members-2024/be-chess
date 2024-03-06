@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
+import utils.Position;
 
 public class Board {
     private List<Piece> pieces;
@@ -116,16 +117,13 @@ public class Board {
     }
 
     public Piece findPiece(String position) {
-        int row = 8 - Character.getNumericValue(position.charAt(1));
-        int col = position.charAt(0) - 'a';
-
-        return board.get(row).getPiece(col);
+        Position pos = new Position(position);
+        return board.get(pos.getRow()).getPiece(pos.getCol());
     }
 
     public void move(String position, Piece piece) {
-        int row = 8 - Character.getNumericValue(position.charAt(1));
-        int col = position.charAt(0) - 'a';
+        Position pos = new Position(position);
         pieces.remove(piece);
-        board.get(row).getPieces().set(col, piece);
+        board.get(pos.getRow()).getPieces().set(pos.getCol(), piece);
     }
 }
