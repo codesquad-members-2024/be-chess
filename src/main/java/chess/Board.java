@@ -2,6 +2,7 @@ package chess;
 
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import chess.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,29 +55,14 @@ public class Board {
     public void print() {
         // 현재 체스판의 결과를 출력
         StringBuilder sb = new StringBuilder();
-        sb.append(getPieceResult("black", "piece")).append("\n");
-        sb.append(getPieceResult("black", "pawn")).append("\n");
-        sb.append(BLANKS).append("\n");
-        sb.append(BLANKS).append("\n");
-        sb.append(BLANKS).append("\n");
-        sb.append(BLANKS).append("\n");
-        sb.append(getPieceResult("white", "pawn")).append("\n");
-        sb.append(getPieceResult("white", "piece")).append("\n");
-        System.out.println(sb);
-    }
-
-    public String getPieceResult(String color, String piece) {
-        String answer = "";
-        if (color.equals(Piece.BLACK_COLOR) && piece.equals("piece")) {
-            answer = getBlackPieceResult();
-        } else if (color.equals(Piece.WHITE_COLOR) && piece.equals("piece")) {
-            answer = getWhitePieceResult();
-        } else if (color.equals(Piece.BLACK_COLOR) && piece.equals("pawn")) {
-            answer = getBlackPawnsResult();
-        } else if (color.equals(Piece.WHITE_COLOR) && piece.equals("pawn")) {
-            answer = getWhitePawnsResult();
+        sb.append(StringUtils.appendNewLine(getBlackPieceResult()));
+        sb.append(StringUtils.appendNewLine(getBlackPawnsResult()));
+        for (int i = 0; i < 4; i++) {
+            sb.append(StringUtils.appendNewLine(BLANKS));
         }
-        return answer;
+        sb.append(StringUtils.appendNewLine(getWhitePawnsResult()));
+        sb.append(StringUtils.appendNewLine(getWhitePieceResult()));
+        System.out.println(sb);
     }
 
     public String getWhitePieceResult() {
