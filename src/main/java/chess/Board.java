@@ -15,10 +15,8 @@ public class Board {
 
 
     public void initialize() {
-        for(int i=0; i<BOARD_SIZE; i++) {
-            blackPawnAdd(new Pawn(PawnColor.BLACK));
-            whitePawnAdd(new Pawn(PawnColor.WHITE));
-        }
+        addPawns(whitePawns, PawnColor.WHITE);
+        addPawns(blackPawns, PawnColor.BLACK);
 
         for(int i=0; i<BOARD_SIZE; i++) {
             board[BOARD_SIZE-7][i] = blackPawns.get(i);
@@ -26,12 +24,10 @@ public class Board {
         }
     }
 
-    public void whitePawnAdd(final Pawn pawn) {
-        whitePawns.add(pawn);
-    }
-
-    public void blackPawnAdd(final Pawn pawn) {
-        blackPawns.add(pawn);
+    private void addPawns(ArrayList<Pawn> pawns, PawnColor color) {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            pawns.add(new Pawn(color));
+        }
     }
 
     public Pawn findWhitePawn(final int findIndex) {
@@ -81,5 +77,13 @@ public class Board {
             }
         }
         return sb.toString();
+    }
+
+    public ArrayList<Pawn> getWhitePawns() {
+        return whitePawns;
+    }
+
+    public ArrayList<Pawn> getBlackPawns() {
+        return blackPawns;
     }
 }
