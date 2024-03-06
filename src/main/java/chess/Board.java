@@ -11,7 +11,9 @@ import static utils.StringUtils.appendNewLine;
 
 public class Board {
     private final int MIN_RANK = 1;
+    private final int MIN_FILE = 1;
     private final int MAX_RANK = 8;
+    private final int MAX_FILE = 8;
     private final List<Supplier<Piece>> blackPieceSequence = List.of(
             Piece::createBlackRook,
             Piece::createBlackKnight,
@@ -56,7 +58,7 @@ public class Board {
 
     private int[] getRankFile(String position) {
         char file = position.charAt(0);
-        int rank = 8 - Integer.parseInt(position.substring(1));
+        int rank = MAX_RANK - Integer.parseInt(position.substring(1));
         int fileInt = file - 'a'; // a 면 0 h면 8
 
         return new int[]{rank, fileInt};
@@ -78,29 +80,34 @@ public class Board {
 
     public void init() {
         fillRank(8, blackPieceSequence);
-        fillRank(7, List.of(Piece::createBlackPawn));
-        fillRank(2, List.of(Piece::createWhitePawn));
+        fillRank(7, getFillSame(Piece::createBlackPawn));
+        fillRank(2, getFillSame(Piece::createWhitePawn));
         fillRank(1, whitePieceSequence);
 
         for (int i = 3; i <= 6; i++) {
-            fillRank(i, List.of(Piece::createBlank));
+            fillRank(i, getFillSame(Piece::createBlank));
         }
     }
 
     public void initEmpty() {
-        for (int i = 1; i <= 8; i++) {
-            fillRank(i, List.of(Piece::createBlank));
+        for (int i = MIN_RANK; i <= MAX_RANK; i++) {
+            fillRank(i, getFillSame(Piece::createBlank));
         }
     }
 
     private void fillRank(int rank, List<Supplier<Piece>> createPiece) {
-        for (int i = 0; i < MAX_RANK; i++) {
-            if (i >= createPiece.size()) board[MAX_RANK - rank][i] = createPiece.get(0).get();
-            else board[MAX_RANK - rank][i] = createPiece.get(i).get();
+        for (int i = 0; i < MAX_FILE; i++) {
+            board[MAX_RANK - rank][i] = createPiece.get(i).get();
         }
 
         if (board[MAX_RANK - rank][0].getColor().equals(Piece.Color.NOCOLOR)) return;
         Arrays.stream(board[MAX_RANK - rank]).forEach(this::add);
+    }
+
+    private List<Supplier<Piece>> getFillSame(Supplier<Piece> createPiece){
+        List<Supplier<Piece>> toReturn = new ArrayList<>(MAX_FILE);
+        for(int i=0; i<MAX_FILE; i++) toReturn.add(createPiece);
+        return toReturn;
     }
 
     public void print() {
@@ -139,10 +146,10 @@ public class Board {
 
     private int countOverPawn(Piece.Color color) {
         int result = 0;
-        for (int i = 0; i < MAX_RANK; i++) {
+        for (int i = MIN_FILE; i <= MAX_FILE; i++) {
             int cnt = 0;
             for (Piece[] rank : board) {
-                Piece piece = rank[i];
+                Piece piece = rank[i-1];
                 if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
                     cnt++;
                 }
