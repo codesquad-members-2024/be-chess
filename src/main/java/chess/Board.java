@@ -7,37 +7,12 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import static chess.ChessHelp.*;
 import static utils.StringUtils.appendNewLine;
 
 public class Board {
-    private final int MIN_RANK = 1;
-    private final int MIN_FILE = 1;
-    private final int MAX_RANK = 8;
-    private final int MAX_FILE = 8;
-    private final List<Supplier<Piece>> blackPieceSequence = List.of(
-            Piece::createBlackRook,
-            Piece::createBlackKnight,
-            Piece::createBlackBishop,
-            Piece::createBlackQueen,
-            Piece::createBlackKing,
-            Piece::createBlackBishop,
-            Piece::createBlackKnight,
-            Piece::createBlackRook
-    );
-
-    private final List<Supplier<Piece>> whitePieceSequence = List.of(
-            Piece::createWhiteRook,
-            Piece::createWhiteKnight,
-            Piece::createWhiteBishop,
-            Piece::createWhiteQueen,
-            Piece::createWhiteKing,
-            Piece::createWhiteBishop,
-            Piece::createWhiteKnight,
-            Piece::createWhiteRook
-    );
-
     private final List<Piece> pieces = new ArrayList<>();
-    private final Piece[][] board = new Piece[MAX_RANK][MAX_RANK];
+    final Piece[][] board = new Piece[MAX_RANK][MAX_RANK];
 
     public void add(Piece piece) {
         pieces.add(piece);
@@ -47,37 +22,15 @@ public class Board {
         return pieces.size();
     }
 
-    public void addPieceAt(String position, Piece piece) {
-        int[] rankFile = getRankFile(position);
-        int rank = rankFile[0];
-        int fileInt = rankFile[1];
+    public void addPieceAt(int[] position, Piece piece) {
+        int rank = position[0];
+        int fileInt = position[1];
 
         board[rank][fileInt] = piece;
         add(piece);
     }
 
-    private int[] getRankFile(String position) {
-        char file = position.charAt(0);
-        int rank = MAX_RANK - Integer.parseInt(position.substring(1));
-        int fileInt = file - 'a'; // a 면 0 h면 8
-
-        return new int[]{rank, fileInt};
-    }
-
-    public Piece findPiece(String position) {
-        int[] rankFile = getRankFile(position);
-        int rank = rankFile[0];
-        int fileInt = rankFile[1];
-
-        return board[rank][fileInt];
-    }
-
-    public int countPiece(Piece.Color color, Piece.Type type) {
-        return (int) pieces.stream()
-                .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
-                .count();
-    }
-
+    // 초기화
     public void init() {
         fillRank(8, blackPieceSequence);
         fillRank(7, getFillSame(Piece::createBlackPawn));
@@ -95,6 +48,14 @@ public class Board {
         }
     }
 
+    public Piece findPiece(int[] position) {
+        int rank = position[0];
+        int fileInt = position[1];
+
+        return board[rank][fileInt];
+    }
+
+
     private void fillRank(int rank, List<Supplier<Piece>> createPiece) {
         for (int i = 0; i < MAX_FILE; i++) {
             board[MAX_RANK - rank][i] = createPiece.get(i).get();
@@ -110,6 +71,7 @@ public class Board {
         return toReturn;
     }
 
+    // 출력
     public void print() {
         System.out.println(showBoard());
     }
@@ -137,28 +99,13 @@ public class Board {
         return getRankResult(7);
     }
 
-
-    public double calculatePoint(Piece.Color color) {
-        return Arrays.stream(Piece.Type.values())
-                .mapToDouble(type -> countPiece(color, type) * type.getScore())
-                .sum() - countOverPawn(color) * Piece.Type.PAWN.getScore() / 2;
+    public int countPiece(Piece.Color color, Piece.Type type) {
+        return (int) pieces.stream()
+                .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
+                .count();
     }
 
-    private int countOverPawn(Piece.Color color) {
-        int result = 0;
-        for (int i = MIN_FILE; i <= MAX_FILE; i++) {
-            int cnt = 0;
-            for (Piece[] rank : board) {
-                Piece piece = rank[i-1];
-                if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
-                    cnt++;
-                }
-            }
-            result += cnt > 1 ? cnt : 0; // 점수 빼야 하는 기물 수
-        }
-        return result;
-    }
-
+    // Pieces 정렬
     public List<Piece> sortPieces() {
         List<Piece> sortedBlack = new ArrayList<>(sortByScore(Piece::isBlack));
         List<Piece> sortedWhite = new ArrayList<>(sortByScore(Piece::isWhite));
@@ -171,11 +118,5 @@ public class Board {
                 .filter(color)
                 .sorted(Comparator.comparing(p -> p.getType().getScore(), Comparator.reverseOrder())) // 기본 : 오름차순
                 .toList();
-    }
-
-    public void movePieceAt(String sourcePosition, String targetPosition) {
-        Piece start = findPiece(sourcePosition);
-        addPieceAt(sourcePosition , Piece.createBlank());
-        addPieceAt(targetPosition, start);
     }
 }
