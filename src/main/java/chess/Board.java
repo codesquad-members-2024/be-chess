@@ -8,8 +8,7 @@ import static chess.utils.StringUtils.appendNewLine;
 import java.util.*;
 
 public class Board {
-    private final int ROW = 8;
-    private final int COL = 8;
+    private final int RANK = 8;
 
     private final Map<Position, Piece> chessBoard = new HashMap<>();
 
@@ -29,7 +28,7 @@ public class Board {
 
     public String showBoard() {
         StringBuilder sb = new StringBuilder();
-        for (int i = ROW; i > 0; i--) {
+        for (int i = RANK; i > 0; i--) {
             sb.append(appendNewLine((getRowString(i))));
         }
 
@@ -43,4 +42,6 @@ public class Board {
                 .forEach(position -> sb.append(chessBoard.get(position).getRepresent()));
         return sb.toString();
     }
+
+
 }
