@@ -45,4 +45,13 @@ public class BoardTest {
         //하얀 폰 8개
         assertThat(board.numberOfSpecificPiece(TypeOfPiece.PAWN, Color.WHITE)).isEqualTo(8);
     }
+
+    @Test
+    @DisplayName("좌표가 주어졌을 때 해당 위치의 기물을 가져오는지 검증")
+    void findPiece() throws Exception {
+        assertEquals(Piece.createBlack(TypeOfPiece.ROOK), board.findPiece("a8"));
+        assertEquals(Piece.createBlack(TypeOfPiece.ROOK), board.findPiece("h8"));
+        assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("a1"));
+        assertEquals(Piece.createWhite(TypeOfPiece.ROOK), board.findPiece("h1"));
+    }
 }
