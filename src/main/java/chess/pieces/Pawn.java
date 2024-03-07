@@ -2,37 +2,39 @@ package chess.pieces;
 
 public class Pawn {
 
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    public static final String WHITE_REPRESENTATION = "p";
-    public static final String BLACK_REPRESENTATION = "P";
     private static final String COLOR_ERROR_MESSAGE = "[ERROR] 색상은 white 혹은 black만 가능합니다.";
 
-    private final String color;
+    private final Color color;
     private final String representation;
 
     public Pawn() {
-        this.color = WHITE_COLOR;
-        this.representation = WHITE_REPRESENTATION;
+        this.color = Color.WHITE;
+        this.representation = setRepresentation(color);
     }
 
-    public Pawn(String color) {
+    public Pawn(Color color) {
         validate(color);
         this.color = color;
-        if (color.equals("white")) {
-            this.representation = WHITE_REPRESENTATION;
-        } else {
-            this.representation = BLACK_REPRESENTATION;
-        }
+        this.representation = setRepresentation(color);
     }
 
-    private void validate(String color) {
-        if (!color.equals(WHITE_COLOR) && !color.equals(BLACK_COLOR)) {
+    private String setRepresentation(Color color) {
+        for (Representation representation : Representation.values()) {
+            if (representation.getColor().equals(color)) {
+                return representation.getRepresentation();
+            }
+        }
+        // 이미 validate에서 검증했기 때문에 null이 반환되는 상황은 없습니다.
+        return null;
+    }
+
+    private void validate(Color color) {
+        if (!color.equals(Color.WHITE) && !color.equals(Color.BLACK)) {
             throw new IllegalArgumentException(COLOR_ERROR_MESSAGE);
         }
     }
 
-    public boolean verifyPawn(final String color) {
+    public boolean verifyPawn(final Color color) {
         return this.color.equals(color);
     }
 
