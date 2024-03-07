@@ -101,10 +101,8 @@ public class Board {
 
     private final Function<List<Piece>, List<String>> representationConversion =
             (pawnRank) -> pawnRank.stream()
-            .map(value -> Optional.ofNullable(value)
                 .map(Piece::getRepresentation)
-                .orElse("•")
-                ).toList();
+                .toList();
 
     public void addPiece(Piece piece){
         pieces.add(piece);

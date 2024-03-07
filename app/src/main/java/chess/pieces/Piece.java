@@ -8,7 +8,7 @@ public class Piece {
     private Piece(String name, Color color){
         this.name = name;
         this.color = color;
-        this.representation = Representation.of(name, color); //고치자
+        this.representation = Representation.of(name, color);
     }
 
     private Piece(){
