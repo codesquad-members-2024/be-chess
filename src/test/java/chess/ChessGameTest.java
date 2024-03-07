@@ -1,6 +1,7 @@
 package chess;
 
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class ChessGameTest {
     ChessGame game;
     Board board;
+    final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    final PrintStream output = System.out;
+    @BeforeEach
+    void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setOut(output);
+    }
 
     @BeforeEach
     @AfterEach
@@ -46,6 +58,9 @@ class ChessGameTest {
     @DisplayName("기물의 타입에 따라 움직일 수 없는 경우가 있어야 한다")
     void failToMove(String cmd){
         board.init();
-        assertThatThrownBy(() -> game.tryMove("mov=e" + cmd)).isInstanceOf(IllegalArgumentException.class);
+        game.tryMove("move "+cmd);
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        Assertions.assertThat(outputStreamCaptor.toString()).contains("이동할 수 없는 위치입니다.");
     }
 }
