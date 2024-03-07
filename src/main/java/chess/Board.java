@@ -2,87 +2,101 @@ package chess;
 
 import chess.pieces.Piece;
 import chess.pieces.PawnColor;
+import utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
 
     private static final int BOARD_SIZE = 8;
+    private static final int INIT_BLACK_PAWN_ROW = 1;
+    private static final int INIT_BLACK_PIECE_ROW = 0;
+    private static final int INIT_WHITE_PAWN_ROW = 6;
+    private static final int INIT_WHITE_PIECE_ROW = 7;
     private final Piece[][] board = new Piece[BOARD_SIZE][BOARD_SIZE];
-    private final ArrayList<Piece> whitePieces = new ArrayList<>();
-    private final ArrayList<Piece> blackPieces = new ArrayList<>();
+    private final List<List<Piece>> pieceStore = new ArrayList<>();
+
 
 
     public void initialize() {
-        addPawns(whitePieces, PawnColor.WHITE);
-        addPawns(blackPieces, PawnColor.BLACK);
+        addPiece(PawnColor.BLACK);
+        addPawns(PawnColor.BLACK);
 
+        addPawns(PawnColor.WHITE);
+        addPiece(PawnColor.WHITE);
+
+        setPiece();
+    }
+
+    private void setPiece() {
         for(int i=0; i<BOARD_SIZE; i++) {
-            board[BOARD_SIZE-7][i] = blackPieces.get(i);
-            board[BOARD_SIZE-2][i] = whitePieces.get(i);
+            board[INIT_BLACK_PIECE_ROW][i] = pieceStore.get(0).get(i);
+            board[INIT_BLACK_PAWN_ROW][i] = pieceStore.get(1).get(i);
+            board[INIT_WHITE_PAWN_ROW][i] = pieceStore.get(2).get(i);
+            board[INIT_WHITE_PIECE_ROW][i] = pieceStore.get(3).get(i);
         }
     }
 
-    private void addPawns(ArrayList<Piece> pieces, PawnColor color) {
+    private void addPawns(PawnColor pawnColor) {
+        List<Piece> pieces = new ArrayList<>();
         for(int i = 0; i < BOARD_SIZE; i++) {
-            pieces.add(new Piece(color));
+            if(pawnColor.equals(PawnColor.BLACK)) {
+                pieces.add(Piece.createBlackPawn());
+            } else {
+                pieces.add(Piece.createWhitePawn());
+            }
         }
+        pieceStore.add(pieces);
     }
 
-    public PawnColor findWhitePawn(final int findIndex) {
-        return whitePieces.get(findIndex).getColor();
+    private void addPiece(PawnColor pawnColor) {
+        List<Piece> pieces = new ArrayList<>();
+        if(pawnColor.equals(PawnColor.BLACK)) {
+            pieces.add(Piece.createBlackRook());
+            pieces.add(Piece.createBlackKnight());
+            pieces.add(Piece.createBlackBishop());
+            pieces.add(Piece.createBlackQueen());
+            pieces.add(Piece.createBlackKing());
+            pieces.add(Piece.createBlackBishop());
+            pieces.add(Piece.createBlackKnight());
+            pieces.add(Piece.createBlackRook());
+        } else {
+            pieces.add(Piece.createWhiteRook());
+            pieces.add(Piece.createWhiteKnight());
+            pieces.add(Piece.createWhiteBishop());
+            pieces.add(Piece.createWhiteQueen());
+            pieces.add(Piece.createWhiteKing());
+            pieces.add(Piece.createWhiteBishop());
+            pieces.add(Piece.createWhiteKnight());
+            pieces.add(Piece.createWhiteRook());
+        }
+        pieceStore.add(pieces);
     }
 
-    public PawnColor findBlackPawn(final int findIndex) {
-        return blackPieces.get(findIndex).getColor();
+    public int pieceCount() {
+        int count = 0;
+        for(List<Piece> pieces : pieceStore) {
+            count += pieces.size();
+        }
+        return count;
     }
 
-    public int blackPawnSize() {
-        return blackPieces.size();
-    }
-
-    public int whitePawnSize() {
-        return whitePieces.size();
-    }
-
-    private String getPawnResult(ArrayList<Piece> pieces) {
+    public String showBoard() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < BOARD_SIZE; i++) {
-            sb.append(pieces.get(i).getRepresentation());
+            sb.append(StringUtils.appendNewLine(readBoard(i)));
         }
         return sb.toString();
     }
 
-    public String getWhitePawnsResult() {
-        return getPawnResult(whitePieces);
-    }
-
-    public String getBlackPawnsResult() {
-        return getPawnResult(blackPieces);
-    }
-
-    public String print() {
+    private String readBoard(int row) {
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<BOARD_SIZE; i++) {
-            for(int j=0; j<BOARD_SIZE; j++) {
-                if(board[i][j] == null){
-                    sb.append(".");
-                } else {
-                    sb.append(board[i][j].getRepresentation());
-                }
-            }
-            if(i<BOARD_SIZE-1) {
-                sb.append("\n");
-            }
+            sb.append(board[row][i] == null ? "." : board[row][i].getRepresentation());
         }
         return sb.toString();
-    }
-
-    public ArrayList<Piece> getWhitePawns() {
-        return whitePieces;
-    }
-
-    public ArrayList<Piece> getBlackPawns() {
-        return blackPieces;
     }
 }
