@@ -1,6 +1,8 @@
 package chess;
 
 import chess.pieces.Pawn;
+import static utils.StringUtils.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,13 +75,13 @@ public class Board {
         StringBuilder stringBuilder = new StringBuilder();
         for (int column = 0; column < BOARD_SIZE; column++) {
             if(column == WHITE_PAWNS_INDEX){
-                stringBuilder.append(getBlackPawnsResult()).append("\n");
+                appendNewLine(stringBuilder.append(getBlackPawnsResult()));
             }
             if(column == BLACK_PAWNS_INDEX) {
-                stringBuilder.append(getWhitePawnsResult()).append("\n");
+                appendNewLine(stringBuilder.append(getWhitePawnsResult()));
             }
             if (column != WHITE_PAWNS_INDEX && column != BLACK_PAWNS_INDEX) {
-                stringBuilder.append("........").append("\n");
+                appendNewLine(stringBuilder.append("........"));
             }
         }
         return String.valueOf(stringBuilder);
