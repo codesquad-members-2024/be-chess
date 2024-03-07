@@ -1,7 +1,8 @@
 package chess;
 
+import chess.board.Board;
+import chess.board.BoardView;
 import chess.enums.Order;
-import chess.enums.Position;
 
 import java.util.Scanner;
 
@@ -11,20 +12,23 @@ public class Game {
 
     public void run() {
         Order nowOrder = Order.START;
-        Board board = new Board();
+        Board board = Board.getInstance();
+        BoardView view;
+        ChessGame chessGame = new ChessGame();
         while (!nowOrder.equals(Order.END)) {
             try {
                 nowOrder = userInput();
                 switch (nowOrder) {
                     case START -> {
                         board.initialize();
-                        board.printBoard();
+                        view = new BoardView(board.getChessBoard());
+                        view.printBoard();
                     }
                     case END -> {
                         break;
                     }
                     case MOVE -> {
-                        board.move(moveIndex[1], moveIndex[2]);
+                        chessGame.move(moveIndex[1], moveIndex[2]);
                     }
                 }
             } catch (IllegalArgumentException ex) {

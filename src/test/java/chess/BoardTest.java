@@ -1,5 +1,7 @@
 package chess;
 
+import chess.board.Board;
+import chess.board.BoardView;
 import chess.enums.Color;
 import chess.enums.TypeOfPiece;
 import chess.pieces.Piece;
@@ -17,12 +19,14 @@ import static org.assertj.core.api.Assertions.*;
 public class BoardTest {
 
     private Board board;
+    private ChessGame chessGame;
 
     @BeforeEach
     @DisplayName("테스트 시작 전 보드 객체를 초기화한다")
     void setup() {
-        board = new Board();
+        board = Board.getInstance();
         board.initialize();
+        chessGame = new ChessGame();
     }
 
     @Test
@@ -30,13 +34,14 @@ public class BoardTest {
     void create() throws Exception {
         assertThat(32).isEqualTo(board.pieceCount());
         String blankRank = appendNewLine("........");
+        BoardView view = new BoardView(board.getChessBoard());
         assertThat(
                 appendNewLine("♖♘♗♕♔♗♘♖") +
                         appendNewLine("♙♙♙♙♙♙♙♙") +
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("♟♟♟♟♟♟♟♟") +
                         appendNewLine("♜♞♝♛♚♝♞♜"))
-                .isEqualTo(board.showBoard());
+                .isEqualTo(view.showBoard());
     }
 
     @Test
@@ -65,10 +70,13 @@ public class BoardTest {
 
         String position = "b5";
         Piece piece = Piece.createBlack(TypeOfPiece.ROOK);
-        board.move(position, piece);
+
+        chessGame.move(position, piece);
 
         assertThat(piece).isEqualTo(board.findPiece(position));
-        System.out.println(board.showBoard());
+
+        BoardView view = new BoardView(board.getChessBoard());
+        System.out.println(view.showBoard());
     }
 
     @Test
@@ -78,10 +86,12 @@ public class BoardTest {
 
         addAllPieces();
 
-        assertThat(board.calculatePoint(Color.BLACK)).isBetween(14.9, 15.1);
-        assertThat(board.calculatePoint(Color.WHITE)).isBetween(6.9, 7.1);
+        assertThat(chessGame.calculatePoint(Color.BLACK)).isBetween(14.9, 15.1);
+        assertThat(chessGame.calculatePoint(Color.WHITE)).isBetween(6.9, 7.1);
 
-        System.out.println(board.showBoard());
+        BoardView view = new BoardView(board.getChessBoard());
+
+        System.out.println(view.showBoard());
     }
 
     @Test
@@ -109,7 +119,7 @@ public class BoardTest {
     }
 
     List<Double> getSortResult(Color color, boolean reverse) {
-        return board.sortPieceByScore(color, reverse)
+        return chessGame.sortPieceByScore(color, reverse)
                 .stream()
                 .map(piece -> piece.getType().getScore())
                 .toList();
@@ -129,7 +139,7 @@ public class BoardTest {
     }
 
     void addPiece(String position, Piece piece) {
-        board.move(position, piece);
+        chessGame.move(position, piece);
     }
 
     @Test
@@ -143,7 +153,7 @@ public class BoardTest {
         assertThat(TypeOfPiece.PAWN).isEqualTo(board.findPiece(sourcePosition).getType());
         assertThat(Color.WHITE).isEqualTo(board.findPiece(sourcePosition).getColor());
 
-        board.move(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
 
         //이동 후 검증
         assertThat(TypeOfPiece.NO_PIECE).isEqualTo(board.findPiece(sourcePosition).getType());
