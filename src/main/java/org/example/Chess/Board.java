@@ -1,6 +1,7 @@
 package org.example.Chess;
 
 import org.example.Pieces.Pawn;
+import static org.example.Utils.StringUtils.appendNewLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,13 +86,13 @@ public class Board {
     public String getBoardPrint() {
         return board.stream()
                 .map(this::getRowPrint)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(appendNewLine("")));
     }
 
     private String getRowPrint(List<Pawn> row) {
         return row.stream()
                 .map(this::getPawnPrint)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(""));
     }
     private String getPawnPrint(Pawn pawn) {
         return pawn == null ? "." : Character.toString(pawn.getRepresentation());
