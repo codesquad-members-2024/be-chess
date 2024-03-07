@@ -36,6 +36,10 @@ public class Piece {
         return this.representation;
     }
 
+    public boolean verifyMovePosition(int[] now , int[] destination){
+        return this.type.verifyMovePosition(now, destination);
+    };
+
     private static Piece createWhite(Type type) {
         return new Piece(Color.WHITE, type);
     }
@@ -114,30 +118,67 @@ public class Piece {
     }
 
     public enum Type {
-        PAWN(1.0 ,"♙"),
-        KNIGHT(2.5, "♘"),
-        ROOK(5.0, "♖"),
-        BISHOP(3.0, "♗"),
-        QUEEN(9.0, "♕"),
-        KING(0, "♔"),
-        BLANK(0, " ");
+        PAWN(1.0 ,"♙"){
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                return Math.abs(now[0]-destination[0]) + Math.abs(now[1]-destination[1]) == 1;
+                // 1칸 이동만 구현 , 이후에 대각선 공격 , 2칸 전진 추가해야함
+            }
+        },
+        KNIGHT(2.5, "♘") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                int rankMove = Math.abs(now[0]-destination[0]);
+                int fileMove =  Math.abs(now[1]-destination[1]);
+                return rankMove+fileMove == 3 && Math.abs(rankMove-fileMove) == 1; // 2칸 1칸 이동 가능
+            }
+        },
+        ROOK(5.0, "♖") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                return now[0]==destination[0] || now[1]==destination[1]; // 일자 이동 가능
+            }
+        },
+        BISHOP(3.0, "♗") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                return Math.abs(now[0]-destination[0]) != Math.abs(now[1]-destination[1]); // 대각선 이동 가능
+            }
+        },
+        QUEEN(9.0, "♕") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                if(now[0]==destination[0] || now[1]==destination[1]) return true; // 일자 이동 가능
+                return Math.abs(now[0]-destination[0]) != Math.abs(now[1]-destination[1]); // 대각선 이동 가능
+            }
+        },
+        KING(0, "♔") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                return Math.abs(now[0]-destination[0])<=1 && Math.abs(now[1]-destination[1])<=1; // 1칸씩 이동 가능
+            }
+        },
+        BLANK(0, " ") {
+            @Override
+            public boolean verifyMovePosition(int[] now, int[] destination) {
+                return false;
+            }
+        };
 
         private final double score;
+        final String representation;
 
         Type(double score, String representation) {
             this.score = score;
             this.representation = representation;
         }
-
         public double getScore(){
             return score;
         }
-
-        final String representation;
-
-
         public String getRepresentation() {
             return representation;
         }
+
+        public abstract boolean verifyMovePosition(int[] now , int[] destination);
     }
 }

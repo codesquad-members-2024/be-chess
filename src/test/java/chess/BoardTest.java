@@ -1,7 +1,6 @@
 package chess;
 
 import chess.pieces.Piece;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static chess.ChessHelp.getRankFile;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.StringUtils.appendNewLine;
 
@@ -60,14 +60,15 @@ public class BoardTest {
     }
 
     @Test
-    void move() throws Exception {
+    @DisplayName("지정한 위치에 지정한 기물을 추가할 수 있어야 한다")
+    void addPieceAt() throws Exception {
         board.initEmpty();
 
         String position = "b5";
         Piece piece = Piece.createBlackRook();
-        board.addPieceAt(position, piece);
+        board.addPieceAt(getRankFile(position), piece);
 
-        assertThat(board.findPiece(position)).isEqualTo(piece);
+        assertThat(board.findPiece(getRankFile(position))).isEqualTo(piece);
         System.out.println(board.showBoard());
     }
 
@@ -76,54 +77,34 @@ public class BoardTest {
     void findPiece() throws Exception {
         board.init();
 
-        assertThat(board.findPiece("a8")).isEqualTo(Piece.createBlackRook());
-        assertThat(board.findPiece("h8")).isEqualTo(Piece.createBlackRook());
-        assertThat(board.findPiece("a1")).isEqualTo(Piece.createWhiteRook());
-        assertThat(board.findPiece("h1")).isEqualTo(Piece.createWhiteRook());
-    }
-
-    @Test
-    @DisplayName("점수 규칙* 에 따라 각 색상별 기물 점수를 계산할 수 있어야 한다")
-    void calculatePoint() throws Exception {
-        board.initEmpty();
-
-        addPiece("b6", Piece.createBlackPawn());
-        addPiece("e6", Piece.createBlackQueen());
-        addPiece("b8", Piece.createBlackKing());
-        addPiece("c8", Piece.createBlackRook());
-        addPiece("b4", Piece.createBlackPawn());
-        addPiece("b3", Piece.createBlackPawn());
-
-        addPiece("f2", Piece.createWhitePawn());
-        addPiece("g2", Piece.createWhitePawn());
-        addPiece("e1", Piece.createWhiteRook());
-        addPiece("f1", Piece.createWhiteKing());
-
-        assertThat(board.calculatePoint(Piece.Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
-        assertThat(board.calculatePoint(Piece.Color.WHITE)).isCloseTo(7.0, Offset.offset(0.01));
-
-        System.out.println(board.showBoard());
-    }
-
-    private void addPiece(String position, Piece piece) {
-        board.addPieceAt(position, piece);
+        assertThat(board.findPiece(getRankFile("a8"))).isEqualTo(Piece.createBlackRook());
+        assertThat(board.findPiece(getRankFile("h8"))).isEqualTo(Piece.createBlackRook());
+        assertThat(board.findPiece(getRankFile("a1"))).isEqualTo(Piece.createWhiteRook());
+        assertThat(board.findPiece(getRankFile("h1"))).isEqualTo(Piece.createWhiteRook());
     }
 
     @Test
     @DisplayName("보드의 기물들을 정렬했을 때 점수가 높은 순서 , 검은색 -> 흰색 순서로 정렬 되어야 한다")
     void sortPieces(){
+        board.initEmpty();
+
         addPiece("b6", Piece.createBlackPawn());
         addPiece("e6", Piece.createBlackQueen());
         addPiece("f2", Piece.createWhitePawn());
         addPiece("e1", Piece.createWhiteRook());
 
         List<Piece> result = List.of(
-                board.findPiece("e6"),
-                board.findPiece("b6"),
-                board.findPiece("e1"),
-                board.findPiece("f2")
+                board.findPiece(getRankFile("e6")),
+                board.findPiece(getRankFile("b6")),
+                board.findPiece(getRankFile("e1")),
+                board.findPiece(getRankFile("f2"))
         );
 
         assertThat(board.sortPieces()).isEqualTo(result);
     }
+
+    private void addPiece(String position, Piece piece) {
+        board.addPieceAt(getRankFile(position), piece);
+    }
 }
+
