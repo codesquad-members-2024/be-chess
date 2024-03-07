@@ -4,6 +4,7 @@ import static chess.common.Color.*;
 import static chess.pieces.Piece.Type.*;
 
 import chess.common.Color;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class Piece {
@@ -103,6 +104,10 @@ public class Piece {
 
     public boolean isSameColor(Color color) {
         return this.color.equals(color);
+    }
+
+    public boolean isSameType(Type type) {
+        return this.type.equals(type);
     }
 
     public enum Type {
