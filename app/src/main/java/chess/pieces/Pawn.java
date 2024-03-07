@@ -1,16 +1,23 @@
 package chess.pieces;
 
 public class Pawn {
-    private ChessPieceColor color;
+    private final Color color;
+    private final String representation;
 
     public Pawn(String color){
-        this.color = ChessPieceColor.findMatchingColor(color);
+        this.color = Color.findMatchingColor(color);
+        this.representation = Representation.PAWN.inColor(this.color);
     }
     public Pawn(){
-        this.color = ChessPieceColor.WHITE;
+        this.color = Color.WHITE;
+        this.representation = Representation.PAWN.inColor(Color.WHITE);
     }
 
     public String getColor() {
         return color.getColorName();
+    }
+
+    public String getRepresentation() {
+        return representation;
     }
 }

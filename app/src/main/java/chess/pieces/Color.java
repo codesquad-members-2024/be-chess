@@ -2,17 +2,17 @@ package chess.pieces;
 
 import java.util.Arrays;
 
-public enum ChessPieceColor {
+public enum Color {
     WHITE("white"),
     BLACK("black");
 
     private final String colorName;
 
-    ChessPieceColor(String colorName){
+    Color(String colorName){
         this.colorName = colorName;
     }
 
-    public static ChessPieceColor findMatchingColor(String candidate){
+    public static Color findMatchingColor(String candidate){
         return Arrays.stream(values())
                 .filter(v -> candidate.equals(v.colorName))
                 .findFirst()
