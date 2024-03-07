@@ -1,8 +1,8 @@
 package org.example.Pieces;
 
 public class Pawn extends Piece{
-    public static final char WHITE_REPRESENTATION = 'P';
-    public static final char BLACK_REPRESENTATION = 'p';
+    public static final char WHITE_REPRESENTATION = 'p';
+    public static final char BLACK_REPRESENTATION = 'P';
 
     private Pawn(Color color, char representation) {
         super(color, representation);

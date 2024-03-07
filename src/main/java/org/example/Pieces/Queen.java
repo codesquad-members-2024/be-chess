@@ -1,8 +1,8 @@
 package org.example.Pieces;
 
 public class Queen extends Piece{
-    public static final char WHITE_REPRESENTATION = 'Q';
-    public static final char BLACK_REPRESENTATION = 'q';
+    public static final char WHITE_REPRESENTATION = 'q';
+    public static final char BLACK_REPRESENTATION = 'Q';
 
     Queen(Color color, char representation) {
         super(color, representation);

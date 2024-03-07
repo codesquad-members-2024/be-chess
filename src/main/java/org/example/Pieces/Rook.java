@@ -1,8 +1,8 @@
 package org.example.Pieces;
 
 public class Rook extends Piece{
-    public static final char WHITE_REPRESENTATION = 'R';
-    public static final char BLACK_REPRESENTATION = 'r';
+    public static final char WHITE_REPRESENTATION = 'r';
+    public static final char BLACK_REPRESENTATION = 'R';
 
     Rook(Color color, char representation) {
         super(color, representation);

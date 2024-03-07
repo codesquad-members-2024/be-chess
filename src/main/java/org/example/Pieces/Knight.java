@@ -1,8 +1,8 @@
 package org.example.Pieces;
 
 public class Knight extends Piece{
-    public static final char WHITE_REPRESENTATION = 'K';
-    public static final char BLACK_REPRESENTATION = 'k';
+    public static final char WHITE_REPRESENTATION = 'n';
+    public static final char BLACK_REPRESENTATION = 'N';
 
     Knight(Color color, char representation) {
         super(color, representation);
