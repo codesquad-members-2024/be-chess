@@ -7,6 +7,7 @@ import static utils.StringUtils.appendNewLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
