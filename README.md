@@ -74,5 +74,15 @@ public V merge(K key, V value,
 하지만 여전히 비어있는 것을 의미하는 것을 null로 할지, 아니면 Piece에 비어있는 상태의 기물을 만들어야 하는지?
 잘 모르겠다.
 
+
+- null 체크하는 부분을 삼항연산자 사용에서 requireNonNullElse을 사용하는 것으로 개선해보았다.
+```
+//as-is
+result.append(entry.getValue() != null ? entry.getValue() : ".")
+
+//to-be
+result.append(Objects.requireNonNullElse(entry.getValue(),".")
+```
 ### 알아볼 점
 System.getProperty("line.separator");
+Objects.requireNonNullElse();
