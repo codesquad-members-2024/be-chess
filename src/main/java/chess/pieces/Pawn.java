@@ -4,7 +4,7 @@ import chess.board.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private boolean isInit = false;
+    private boolean isInit = true;
 
     protected Pawn(Color color, Position position) {
         super(Type.PAWN, color, position);

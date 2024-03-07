@@ -29,6 +29,11 @@ public class Main {
 
         while (menuCommand.equals(START_COMMAND)) {
             print(view.showBoard(board));
+
+            if (game.isOver()) {
+                break;
+            }
+
             runOrRetry(() -> move(game));
         }
     }

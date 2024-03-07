@@ -29,15 +29,16 @@ public abstract class Piece {
         for (Direction direction : directions) {
             int xPos = source.getXPos();
             int yPos = source.getYPos();
+            boolean isInterrupted = false;
             for (int i = 0; i < Board.RANK_AND_FILE_SIZE; i++) {
                 xPos += direction.getXDegree();
                 yPos += direction.getYDegree();
 
-                if (xPos == target.getXPos() && yPos == target.getYPos()) { // 최종 도착 위치일 경우 리턴
+                if (!isInterrupted && xPos == target.getXPos() && yPos == target.getYPos()) { // 최종 도착 위치일 경우 리턴
                     return true;
                 }
-                if (occupied.contains(new Position(yPos, xPos))) { // 경로에 이미 점유중인 피스가 있으면 이동불가
-                    return false;
+                if (occupied.contains(new Position(yPos, xPos))) {
+                    isInterrupted = true;
                 }
             }
         }
@@ -72,12 +73,19 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public boolean isBlank() {
-        return type == Type.NO_PIECE && color == Color.NO_COLOR;
+    public boolean isNotBlank() {
+        return type != Type.NO_PIECE && color != Color.NO_COLOR;
     }
 
     public boolean isAlly(Piece other) {
         return this.color == other.color;
+    }
+
+    public boolean isEnemy(Piece other) {
+        if (!other.isNotBlank()) {
+            return false;
+        }
+        return this.color != other.color;
     }
 
     public double getDefaultPoint() {
@@ -125,6 +133,7 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(type, color, position);
     }
+
 
     public enum Type {
         PAWN('p', 1.0, Pawn::new),
