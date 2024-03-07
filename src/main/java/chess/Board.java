@@ -14,24 +14,8 @@ public class Board {
     private List<Piece> blackNonPawnPieces = new ArrayList<>();
     public static final int DEFAULT_PAWN_COUNT = 8;
 
-    private void addWhitePawn(Piece piece) {
-        whitePawns.add(piece);
-    }
-
-    private void addBlackPawn(Piece piece) {
-        blackPawns.add(piece);
-    }
-
-    private void addWhiteNonPawnPiece(Piece piece) {
-        whiteNonPawnPieces.add(piece);
-    }
-
-    private void addBlackNonPawnPiece(Piece piece) {
-        blackNonPawnPieces.add(piece);
-    }
-
-    public int pieceCount() {
-        return whitePawns.size() + blackPawns.size() + whiteNonPawnPieces.size() + blackNonPawnPieces.size();
+    private void addPiece(final Piece piece, final List<Piece> pieces){
+        pieces.add(piece);
     }
 
     // 흰색 : 룩 나이트 비숍 퀸 킹 비숍 나이트 룩
@@ -39,31 +23,35 @@ public class Board {
     // 검은색 : 룩 나이트 비숍 퀸 킹 비숍 나이트 룩
     // 검은색 폰
     public void initialize() {
-        addWhiteNonPawnPiece(Piece.createWhiteRook());
-        addWhiteNonPawnPiece(Piece.createWhiteKnight());
-        addWhiteNonPawnPiece(Piece.createWhiteBishop());
-        addWhiteNonPawnPiece(Piece.createWhiteQueen());
-        addWhiteNonPawnPiece(Piece.createWhiteKing());
-        addWhiteNonPawnPiece(Piece.createWhiteBishop());
-        addWhiteNonPawnPiece(Piece.createWhiteKnight());
-        addWhiteNonPawnPiece(Piece.createWhiteRook());
+        addPiece(Piece.createWhiteRook(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteKnight(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteBishop(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteQueen(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteKing(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteBishop(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteKnight(), whiteNonPawnPieces);
+        addPiece(Piece.createWhiteRook(), whiteNonPawnPieces);
 
         for (int i = 0; i < DEFAULT_PAWN_COUNT; i++) {
-            addWhitePawn(Piece.createWhitePawn());
+            addPiece(Piece.createWhitePawn(), whitePawns);
         }
 
         for (int i = 0; i < DEFAULT_PAWN_COUNT; i++) {
-            addBlackPawn(Piece.createBlackPawn());
+            addPiece(Piece.createBlackPawn(), blackPawns);
         }
 
-        addBlackNonPawnPiece(Piece.createBlackRook());
-        addBlackNonPawnPiece(Piece.createBlackKnight());
-        addBlackNonPawnPiece(Piece.createBlackBishop());
-        addBlackNonPawnPiece(Piece.createBlackQueen());
-        addBlackNonPawnPiece(Piece.createBlackKing());
-        addBlackNonPawnPiece(Piece.createBlackBishop());
-        addBlackNonPawnPiece(Piece.createBlackKnight());
-        addBlackNonPawnPiece(Piece.createBlackRook());
+        addPiece(Piece.createBlackRook(), blackNonPawnPieces);
+        addPiece(Piece.createBlackKnight(), blackNonPawnPieces);
+        addPiece(Piece.createBlackBishop(), blackNonPawnPieces);
+        addPiece(Piece.createBlackQueen(), blackNonPawnPieces);
+        addPiece(Piece.createBlackKing(), blackNonPawnPieces);
+        addPiece(Piece.createBlackBishop(), blackNonPawnPieces);
+        addPiece(Piece.createBlackKnight(), blackNonPawnPieces);
+        addPiece(Piece.createBlackRook(), blackNonPawnPieces);
+    }
+
+    public int getTotalPieceCount() {
+        return whitePawns.size() + blackPawns.size() + whiteNonPawnPieces.size() + blackNonPawnPieces.size();
     }
 
     public String getWhiteNonPawnPieceResult() {
@@ -82,7 +70,7 @@ public class Board {
         return getPieceResult(blackPawns);
     }
 
-    private String getPieceResult(List<Piece> pieces) {
+    private String getPieceResult(List<Piece> pieces) { // whitePawns, blackPawns, whiteNonPawnPieces, blackNonPawnPieces . . .
         StringBuilder sb = new StringBuilder();
         for (Piece piece : pieces) {
             sb.append(piece.getRepresentation());

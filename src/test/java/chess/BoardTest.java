@@ -29,7 +29,7 @@ class BoardTest {
     @DisplayName("보드판과 초기 말들이 의도대로 출력되는지 확인한다")
     public void create() throws Exception {
         board.initialize();
-        assertThat(board.pieceCount()).isEqualTo(32);
+        assertThat(board.getTotalPieceCount()).isEqualTo(32);
         String blankRank = appendNewLine("........");
         assertThat(board.showBoard()).isEqualTo(
                 appendNewLine("RNBQKBNR") +
