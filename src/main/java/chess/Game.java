@@ -15,7 +15,7 @@ public class Game {
                 if (nowOrder.equals(Order.START)) {
                     Board board = new Board();
                     board.initialize();
-                    board.print();
+                    System.out.println(board.showBoard());
                 } else {
                     break;
                 }
