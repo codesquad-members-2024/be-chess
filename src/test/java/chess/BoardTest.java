@@ -26,7 +26,7 @@ class BoardTest {
                         appendNewLine("PPPPPPPP") +
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("pppppppp") +
-                        appendNewLine("rnbqkbnr"),
+                        ("rnbqkbnr"),
                 board.showBoard());
     }
 }
