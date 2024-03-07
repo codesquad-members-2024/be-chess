@@ -65,7 +65,6 @@
 
         private void fillEmptySpaces() {
             IntStream.range(0, BOARD_SIZE).forEach(i -> {
-                if (i != 1 && i != 6) {
                     IntStream.range(0, BOARD_SIZE).forEach(j -> {
                         if (board.get(i).size() <= j) {
                             board.get(i).add(null);
@@ -73,7 +72,6 @@
                             board.get(i).set(j, null);
                         }
                     });
-                }
             });
         }
 
