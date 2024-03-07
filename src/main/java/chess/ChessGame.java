@@ -16,11 +16,13 @@ public class ChessGame {
 
     // 게임 로직
     public void movePieceAt(String sourcePosition, String targetPosition) throws IllegalArgumentException{
-        Piece movingPiece = gameBoard.findPiece(getRankFile(sourcePosition));
-        if(!movingPiece.verifyMovePosition(getRankFile(sourcePosition), getRankFile(targetPosition))) throw new IllegalArgumentException();
+        Positon source = new Positon(sourcePosition);
+        Positon target = new Positon(targetPosition);
 
-        gameBoard.setBlank(getRankFile(sourcePosition));
-        gameBoard.addPieceAt(getRankFile(targetPosition), movingPiece);
+        Piece movingPiece = gameBoard.findPiece(source);
+        if(!movingPiece.verifyMovePosition(source,target)) throw new IllegalArgumentException();
+        gameBoard.setBlank(source);
+        gameBoard.addPieceAt(target, movingPiece);
     }
 
 
@@ -34,10 +36,10 @@ public class ChessGame {
 
     private int countOverPawn(Piece.Color color) {
         int overPawn = 0;
-        for (int file = MIN_FILE; file<=MAX_FILE; file++) {
+        for (int file = 1; file<=MAX_FILE; file++) {
             int cnt = 0;
-            for (int rank = MIN_RANK; rank <= MAX_RANK; rank++) {
-                Piece piece = gameBoard.findPiece(new int[]{MAX_RANK - rank , file}); // 포지션 클래스를 만들고 makePosition 으로 통일할까 고민
+            for (int rank = 1; rank <= MAX_RANK; rank++) {
+                Piece piece = gameBoard.findPiece(new Positon(rank , file)); // 포지션 클래스를 만들고 makePosition 으로 통일할까 고민
                 if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
                     cnt++;
                 }

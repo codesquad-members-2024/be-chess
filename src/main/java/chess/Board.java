@@ -34,22 +34,16 @@ public class Board {
         fillRank(1, whitePieceSequence);
     }
 
-    public Piece findPiece(int[] position) {
-        int rank = position[0];
-        int file = position[1];
-
-        return board.get(rank).getPiece(file);
+    public Piece findPiece(Positon position) {
+        return board.get(position.getRank()).getPiece(position.getFile());
     }
 
-    public void addPieceAt(int[] position, Piece piece) {
-        int rank = position[0];
-        int file = position[1];
-
-        board.get(rank).setPiece(file, piece);
+    public void addPieceAt(Positon position, Piece piece) {
+        board.get(position.getRank()).setPiece(position.getFile(), piece);
         add(piece);
     }
 
-    public void setBlank(int[] position){
+    public void setBlank(Positon position){
         addPieceAt(position, PieceFactory.createBlank());
     }
 

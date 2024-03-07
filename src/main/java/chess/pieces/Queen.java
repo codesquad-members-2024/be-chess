@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import chess.Positon;
+
 public class Queen extends Piece{
 
     protected Queen(Color color) {
@@ -7,8 +9,8 @@ public class Queen extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(int[] now, int[] destination) {
-        if (now[0] == destination[0] || now[1] == destination[1]) return true; // 일자 이동 가능
-        return Math.abs(now[0] - destination[0]) == Math.abs(now[1] - destination[1]); // 대각선 이동 가능
+    public boolean verifyMovePosition(Positon now, Positon destination) {
+        if (now.getRank() == destination.getRank() || now.getFile() == destination.getFile()) return true; // 일자 이동 가능
+        return Math.abs(now.getRank() - destination.getRank()) == Math.abs(now.getFile() - destination.getFile()); // 대각선 이동 가능
     }
 }

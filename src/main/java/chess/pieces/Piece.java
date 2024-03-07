@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import chess.Positon;
+
 import java.util.Objects;
 
 public abstract class Piece {
@@ -36,7 +38,7 @@ public abstract class Piece {
         return this.score;
     }
 
-    public abstract boolean verifyMovePosition(int[] now, int[] destination);
+    public abstract boolean verifyMovePosition(Positon now, Positon destination);
 
     public enum Color {
         WHITE, BLACK, NOCOLOR;

@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import chess.Positon;
+
 public class Blank extends Piece{
 
     protected Blank() {
@@ -7,7 +9,7 @@ public class Blank extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(int[] now, int[] destination) {
+    public boolean verifyMovePosition(Positon now, Positon destination) {
         return false;
     }
 }

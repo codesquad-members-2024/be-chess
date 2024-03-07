@@ -7,10 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.function.Supplier;
 
-import static chess.ChessHelp.getRankFile;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.StringUtils.appendNewLine;
 
@@ -65,9 +63,9 @@ public class BoardTest {
     void addPieceAt() throws Exception {
         String position = "b5";
         Piece piece = PieceFactory.createBlackRook();
-        board.addPieceAt(getRankFile(position), piece);
+        board.addPieceAt(new Positon(position), piece);
 
-        assertThat(board.findPiece(getRankFile(position))).isEqualTo(piece);
+        assertThat(board.findPiece(new Positon(position))).isEqualTo(piece);
         System.out.println(board.showBoard());
     }
 
@@ -76,10 +74,10 @@ public class BoardTest {
     void findPiece() throws Exception {
         board.init();
 
-        assertThat(board.findPiece(getRankFile("a8"))).isEqualTo(PieceFactory.createBlackRook());
-        assertThat(board.findPiece(getRankFile("h8"))).isEqualTo(PieceFactory.createBlackRook());
-        assertThat(board.findPiece(getRankFile("a1"))).isEqualTo(PieceFactory.createWhiteRook());
-        assertThat(board.findPiece(getRankFile("h1"))).isEqualTo(PieceFactory.createWhiteRook());
+        assertThat(board.findPiece(new Positon("a8"))).isEqualTo(PieceFactory.createBlackRook());
+        assertThat(board.findPiece(new Positon("h8"))).isEqualTo(PieceFactory.createBlackRook());
+        assertThat(board.findPiece(new Positon("a1"))).isEqualTo(PieceFactory.createWhiteRook());
+        assertThat(board.findPiece(new Positon("h1"))).isEqualTo(PieceFactory.createWhiteRook());
     }
 
     @Test
@@ -90,18 +88,14 @@ public class BoardTest {
         addPiece("f2", PieceFactory.createWhitePawn());
         addPiece("e1", PieceFactory.createWhiteRook());
 
-        List<Piece> result = List.of(
-                board.findPiece(getRankFile("e6")),
-                board.findPiece(getRankFile("b6")),
-                board.findPiece(getRankFile("e1")),
-                board.findPiece(getRankFile("f2"))
-        );
-
-        assertThat(board.sortPieces()).isEqualTo(result);
+        assertThat(board.sortPieces().stream()
+                .map(Piece::getRepresentation)
+                .toList()
+                .toString()).isEqualTo("[♛, ♟, ♖, ♙]");
     }
 
     private void addPiece(String position, Piece piece) {
-        board.addPieceAt(getRankFile(position), piece);
+        board.addPieceAt(new Positon(position), piece);
     }
 }
 

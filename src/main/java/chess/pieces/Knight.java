@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import chess.Positon;
+
 public class Knight extends Piece {
 
     protected Knight(Color color) {
@@ -7,9 +9,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition(int[] now, int[] destination) {
-        int rankMove = Math.abs(now[0] - destination[0]);
-        int fileMove = Math.abs(now[1] - destination[1]);
+    public boolean verifyMovePosition(Positon now, Positon destination) {
+        int rankMove = Math.abs(now.getRank() - destination.getRank());
+        int fileMove = Math.abs(now.getFile() - destination.getFile());
         return rankMove + fileMove == 3 && Math.abs(rankMove - fileMove) == 1; // 2칸 1칸 이동 가능
     }
 }

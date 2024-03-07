@@ -20,6 +20,12 @@ public class GameLauncher {
             else System.out.println("잘못된 명령입니다.");
         }
     }
+    /*
+    Chess> 와 같은 프롬프트가 있으면 좋겠어요
+    처음 시작하면 도움말을 표시해 줘도 좋겠어요.
+    상태에 맞지 않는 명령을 못 내리게 하면 좋겠어요. (start- start 라던가, start 없이 move를 한다던가 하는..
+    테스트 코드도 있으면 좋겠어요.
+     */
 
     private static void runGame() {
         Board board = new Board();

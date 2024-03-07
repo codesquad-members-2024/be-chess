@@ -32,8 +32,8 @@ class ChessGameTest {
         String sourcePosition = "b2";
         String targetPosition = "b3";
         game.movePieceAt(sourcePosition, targetPosition);
-        assertThat(board.findPiece(getRankFile(sourcePosition)).getType()).isEqualTo(Piece.Type.BLANK);
-        assertThat(board.findPiece(getRankFile(targetPosition))).isEqualTo(PieceFactory.createWhitePawn());
+        assertThat(board.findPiece(new Positon(sourcePosition)).getType()).isEqualTo(Piece.Type.BLANK);
+        assertThat(board.findPiece(new Positon(targetPosition))).isEqualTo(PieceFactory.createWhitePawn());
     }
 
     @Test
@@ -48,7 +48,7 @@ class ChessGameTest {
     }
 
     private void addPiece(String position, Piece piece) {
-        board.addPieceAt(getRankFile(position), piece);
+        board.addPieceAt(new Positon(position), piece);
     }
 
     @Test

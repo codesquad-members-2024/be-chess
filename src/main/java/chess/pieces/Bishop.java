@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import chess.Positon;
+
 public class Bishop extends Piece{
 
     protected Bishop(Color color) {
@@ -7,7 +9,7 @@ public class Bishop extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(int[] now, int[] destination) {
-        return Math.abs(now[0] - destination[0]) == Math.abs(now[1] - destination[1]); // 대각선 이동 가능
+    public boolean verifyMovePosition(Positon now, Positon destination) {
+        return Math.abs(now.getRank() - destination.getRank()) == Math.abs(now.getFile()- destination.getFile()); // 대각선 이동 가능
     }
 }
