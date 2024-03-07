@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import src.chess.pieces.Piece;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class Board {
         int endRange = startRange + rowSize;
         chessBoard.entrySet().stream()
                 .filter(entry -> entry.getKey().getOrdinal() >= startRange && entry.getKey().getOrdinal() <= endRange)
-                .forEach(entry -> result.append(entry.getValue() != null ? entry.getValue() : "."));
+                .forEach(entry -> result.append(Objects.requireNonNullElse(entry.getValue(),".")));
         return result.toString();
     }
 
