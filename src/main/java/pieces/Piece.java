@@ -1,6 +1,6 @@
 package pieces;
 
-public class Pawn {
+public class Piece {
     private final Color color;
     public enum Color {
         WHITE("p"), BLACK("P");
@@ -15,11 +15,11 @@ public class Pawn {
         }
     }
 
-    public Pawn() {
+    public Piece() {
         this.color = Color.WHITE;
     }
 
-    public Pawn(Color color) {
+    public Piece(Color color) {
         this.color = color;
     }
 
