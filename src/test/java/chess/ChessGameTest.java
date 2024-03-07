@@ -1,10 +1,8 @@
 package chess;
 
 import chess.pieces.Piece;
-import static chess.ChessHelp.*;
 
 import chess.pieces.PieceFactory;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,14 +24,14 @@ class ChessGameTest {
 
     @Test
     @DisplayName("보드의 기물을 움직였을 때 , 시작 칸은 비워지고 , 도착 칸에 움직인 기물이 놓여져야 한다")
-    void movePieceAt() throws Exception {
+    void movePieceAt() {
         board.init();
 
         String sourcePosition = "b2";
         String targetPosition = "b3";
         game.movePieceAt(sourcePosition, targetPosition);
-        assertThat(board.findPiece(new Positon(sourcePosition)).getType()).isEqualTo(Piece.Type.BLANK);
-        assertThat(board.findPiece(new Positon(targetPosition))).isEqualTo(PieceFactory.createWhitePawn());
+        assertThat(board.findPiece(new Position(sourcePosition)).getType()).isEqualTo(Piece.Type.BLANK);
+        assertThat(board.findPiece(new Position(targetPosition))).isEqualTo(PieceFactory.createWhitePawn());
     }
 
     @Test
@@ -45,30 +43,5 @@ class ChessGameTest {
         String targetPosition = "b7"; // b2는 폰이기 때문에 1칸 이상 움직이려고 하면 실패해야 한다
 
         assertThatThrownBy(() -> game.movePieceAt(sourcePosition, targetPosition)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    private void addPiece(String position, Piece piece) {
-        board.addPieceAt(new Positon(position), piece);
-    }
-
-    @Test
-    @DisplayName("점수 규칙* 에 따라 각 색상별 기물 점수를 계산할 수 있어야 한다")
-    void calculatePoint() throws Exception {
-        addPiece("b6", PieceFactory.createBlackPawn());
-        addPiece("e6", PieceFactory.createBlackQueen());
-        addPiece("b8", PieceFactory.createBlackKing());
-        addPiece("c8", PieceFactory.createBlackRook());
-        addPiece("b4", PieceFactory.createBlackPawn());
-        addPiece("b3", PieceFactory.createBlackPawn());
-
-        addPiece("f2", PieceFactory.createWhitePawn());
-        addPiece("g2", PieceFactory.createWhitePawn());
-        addPiece("e1", PieceFactory.createWhiteRook());
-        addPiece("f1", PieceFactory.createWhiteKing());
-
-        System.out.println(board.showBoard());
-
-        assertThat(game.calculatePoint(Piece.Color.BLACK)).isCloseTo(15.5, Offset.offset(0.01));
-        assertThat(game.calculatePoint(Piece.Color.WHITE)).isCloseTo(7.0, Offset.offset(0.01));
     }
 }

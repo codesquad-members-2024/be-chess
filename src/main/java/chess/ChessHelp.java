@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public class ChessHelp {
     static final int MIN_RANK = 1;
     static final int MIN_FILE = 1;
-    static final int MAX_RANK = 8;
+    public static final int MAX_RANK = 8;
     static final int MAX_FILE = 8;
 
     static final List<Supplier<Piece>> blackPieceSequence = List.of(

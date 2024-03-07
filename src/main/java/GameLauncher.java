@@ -32,7 +32,7 @@ public class GameLauncher {
         board.init();
 
         game = new ChessGame(board);
-        board.print();
+        game.print();
     }
     private static void tryMove(String positions) {
         StringTokenizer st = new StringTokenizer(positions, " ");

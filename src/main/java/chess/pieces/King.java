@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.Positon;
+import chess.Position;
 
 public class King extends Piece{
     protected King(Color color) {
@@ -8,7 +8,7 @@ public class King extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(Positon now, Positon destination) {
+    public boolean verifyMovePosition(Position now, Position destination) {
         return Math.abs(now.getRank() - destination.getRank()) <= 1 && Math.abs(now.getFile()) - destination.getFile() <= 1; // 1칸씩 이동 가능
     }
 }

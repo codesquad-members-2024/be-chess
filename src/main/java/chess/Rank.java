@@ -31,11 +31,4 @@ public class Rank {
     public Stream<Piece> stream() {
         return rank.stream();
     }
-
-    public String getRankResult() {
-        StringJoiner sj = new StringJoiner("");
-        stream().forEach(p -> sj.add(p.getRepresentation()));
-
-        return sj.toString();
-    }
 }

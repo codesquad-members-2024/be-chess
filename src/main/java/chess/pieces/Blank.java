@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.Positon;
+import chess.Position;
 
 public class Blank extends Piece{
 
@@ -9,7 +9,7 @@ public class Blank extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(Positon now, Positon destination) {
+    public boolean verifyMovePosition(Position now, Position destination) {
         return false;
     }
 }

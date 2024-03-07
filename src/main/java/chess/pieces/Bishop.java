@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.Positon;
+import chess.Position;
 
 public class Bishop extends Piece{
 
@@ -9,7 +9,7 @@ public class Bishop extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition(Positon now, Positon destination) {
+    public boolean verifyMovePosition(Position now, Position destination) {
         return Math.abs(now.getRank() - destination.getRank()) == Math.abs(now.getFile()- destination.getFile()); // 대각선 이동 가능
     }
 }

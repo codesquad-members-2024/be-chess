@@ -1,26 +1,15 @@
 package chess;
 
 import chess.pieces.Piece;
-import static chess.pieces.Piece.*;
 import chess.pieces.PieceFactory;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static chess.ChessHelp.*;
-import static utils.StringUtils.appendNewLine;
 
 public class Board {
-    private final List<Piece> pieces = new ArrayList<>();
     private final List<Rank> board = new ArrayList<>(MAX_RANK);
-
-    public void add(Piece piece) { pieces.add(piece); }
-
-    public int size() {
-        return pieces.size();
-    }
-
 
     public Board() {
         for(int rank = MIN_RANK; rank<=MAX_RANK; rank++) board.add(new Rank());
@@ -32,18 +21,18 @@ public class Board {
         fillRank(7, getFillSame(PieceFactory::createBlackPawn));
         fillRank(2, getFillSame(PieceFactory::createWhitePawn));
         fillRank(1, whitePieceSequence);
+
     }
 
-    public Piece findPiece(Positon position) {
+    public Piece findPiece(Position position) {
         return board.get(position.getRank()).getPiece(position.getFile());
     }
 
-    public void addPieceAt(Positon position, Piece piece) {
+    public void addPieceAt(Position position, Piece piece) {
         board.get(position.getRank()).setPiece(position.getFile(), piece);
-        add(piece);
     }
 
-    public void setBlank(Positon position){
+    public void setBlank(Position position){
         addPieceAt(position, PieceFactory.createBlank());
     }
 
@@ -51,9 +40,6 @@ public class Board {
         for (int file = MIN_FILE; file <= MAX_FILE; file++) {
             board.get(MAX_RANK-rank).setPiece(file, createPiece.get(file-MIN_FILE).get());
         }
-
-        if (board.get(MAX_RANK - rank).getPiece(MIN_FILE).getColor().equals(Color.NOCOLOR)) return;
-        board.get(MAX_RANK - rank).stream().forEach(this::add);
     }
 
     private List<Supplier<Piece>> getFillSame(Supplier<Piece> createPiece){
@@ -62,43 +48,35 @@ public class Board {
         return toReturn;
     }
 
-    // 출력
-    public void print() {
-        System.out.println(showBoard());
+    public List<Rank> getBoard() {
+        return this.board;
     }
 
-    public String showBoard() {
-        StringBuilder sb = new StringBuilder();
-         board.forEach(rank -> sb.append(appendNewLine(rank.getRankResult())));
-        return sb.toString();
+     public double getScore(Piece.Color color) {
+        return Arrays.stream(Piece.Type.values())
+                .mapToDouble(type -> countPiece(color, type) * type.getScore())
+                .sum()
+                - countOverPawn(color) * Piece.Type.PAWN.getScore() / 2;
     }
 
-    public String getWhitePawnsResult() {
-        return board.get(MAX_RANK-2).getRankResult();
+    private int countOverPawn(Piece.Color color) {
+        int overPawn = 0;
+        for (int file = 1; file<=MAX_FILE; file++) {
+            int cnt = 0;
+            for (int rank = 1; rank <= MAX_RANK; rank++) {
+                Piece piece = findPiece(new Position(rank , file)); // 포지션 클래스를 만들고 makePosition 으로 통일할까 고민
+                if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
+                    cnt++;
+                }
+            }
+            overPawn += cnt > 1 ? cnt : 0; // 점수 빼야 하는 기물 수
+        }
+        return overPawn;
     }
 
-    public String getBlackPawnsResult() {
-        return board.get(MAX_RANK-7).getRankResult();
-    }
-
-    public int countPiece(Color color , Type type) {
-        return (int) pieces.stream()
-                .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
-                .count();
-    }
-
-    // Pieces 정렬
-    public List<Piece> sortPieces() {
-        List<Piece> sortedBlack = new ArrayList<>(sortByScore(Piece::isBlack));
-        List<Piece> sortedWhite = new ArrayList<>(sortByScore(Piece::isWhite));
-        sortedBlack.addAll(new ArrayList<>(sortedWhite));
-        return sortedBlack;
-    }
-
-    private List<Piece> sortByScore(Predicate<Piece> color) {
-        return pieces.stream()
-                .filter(color)
-                .sorted(Comparator.comparing(Piece::getScore, Comparator.reverseOrder())) // 기본 : 오름차순
-                .toList();
+    public int countPiece(Piece.Color color , Piece.Type type) {
+        return (int)board.stream().mapToLong(rank -> rank.stream()
+            .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
+            .count()).sum();
     }
 }
