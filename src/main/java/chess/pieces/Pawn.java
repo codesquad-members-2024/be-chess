@@ -29,7 +29,7 @@ public class Pawn {
     }
 
     private void validate(Color color) {
-        if (!color.equals(Color.WHITE) && !color.equals(Color.BLACK)) {
+        if (color == null) {
             throw new IllegalArgumentException(COLOR_ERROR_MESSAGE);
         }
     }
