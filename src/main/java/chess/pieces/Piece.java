@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.board.Position;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
@@ -35,6 +36,21 @@ public abstract class Piece {
             return type.getBlackRepresentation();
         }
         return type.getWhiteRepresentation();
+    }
+
+    protected boolean repeatVerifyMovePosition(int xPos, int yPos, List<Direction> directions) {
+        for (Direction direction : directions) {
+            int dx = 0;
+            int dy = 0;
+            for (int i = 0; i < 8; i++) {
+                dx += direction.getXDegree();
+                dy += direction.getYDegree();
+                if (xPos == dx && yPos == dy) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isBlack() {

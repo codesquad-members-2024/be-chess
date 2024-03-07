@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.board.Position;
+import java.util.List;
 
 public class Rook extends Piece {
 
@@ -10,6 +11,9 @@ public class Rook extends Piece {
 
     @Override
     public boolean verifyMovePosition(Position difference) {
-        return false;
+        int xPos = difference.getXPos();
+        int yPos = difference.getYPos();
+        List<Direction> directions = Direction.linearDirection();
+        return repeatVerifyMovePosition(xPos, yPos, directions);
     }
 }
