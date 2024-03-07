@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class ChessGame {
     private static final String GAME_START = "start";
     private static final String GAME_END = "end";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -23,6 +24,6 @@ public class ChessGame {
     private static void startGame() {
         Board board = new Board();
         board.initialize();
-        board.print();
+        System.out.println(board.getResultToPrint());
     }
 }
