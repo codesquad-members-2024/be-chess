@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    List<Pawn> whitePawns = new ArrayList<>();
-    List<Pawn> blackPawns = new ArrayList<>();
+    private List<Pawn> whitePawns = new ArrayList<>();
+    private List<Pawn> blackPawns = new ArrayList<>();
     public static final int DEFAULT_PAWN_COUNT = 8;
     public static final String CHESS_BOARD = "........";
 
@@ -69,9 +69,4 @@ public class Board {
         sb.append(CHESS_BOARD + "\n");
         System.out.println(sb.toString());
     }
-
-//    public static void main(String[] args) {
-//        Board board = new Board();
-//        board.print();
-//    }
 }
