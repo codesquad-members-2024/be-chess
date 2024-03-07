@@ -145,4 +145,36 @@ class BoardTest {
                 () -> assertThat(lastInPiece.getColor()).isEqualTo(WHITE)
         );
     }
+
+    @DisplayName("체스판에 놓인 검정색 나이트 3개를 찾을 수 있다")
+    @Test
+    void getTotalCount_find_three() {
+        // given
+        // 검정색 나이트 3개 배치
+        board.add(Piece.createBlackKnight());
+        board.add(Piece.createBlackKnight());
+        board.add(Piece.createBlackKnight());
+
+        // 흰색 나이트 3개 배치
+        board.add(Piece.createWhiteKnight());
+        board.add(Piece.createWhiteKnight());
+        board.add(Piece.createWhiteKnight());
+
+        // when
+        int totalCount = board.getTotalCount(BLACK, KNIGHT);
+
+        // then
+        assertThat(totalCount).isEqualTo(3);
+    }
+
+    @DisplayName("체스판에 놓인 기물이 없으면 결과는 항상 0개다")
+    @Test
+    void getTotalCount_zero() {
+        int blackKnightCount = board.getTotalCount(BLACK, KNIGHT);
+        int whiteKnightCount = board.getTotalCount(WHITE, KNIGHT);
+
+        // then
+        assertThat(blackKnightCount).isEqualTo(0);
+        assertThat(whiteKnightCount).isEqualTo(0);
+    }
 }

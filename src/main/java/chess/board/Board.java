@@ -1,6 +1,7 @@
 package chess.board;
 
 import static chess.common.Color.*;
+import static chess.pieces.Piece.*;
 import static chess.utils.StringUtils.*;
 import static chess.pieces.Piece.Type.*;
 import static chess.pieces.CreateCommand.create;
@@ -109,5 +110,11 @@ public class Board<T extends Piece> {
         IntStream.range(0, 4).forEach(i -> builder.append(appendNewLine(getBlankPieces().substring(0, FILE_COUNT))));
         builder.append(appendNewLine(getPawnsResultByColor(WHITE)));
         builder.append(appendNewLine(getMajorResultByColor(WHITE)));
+    }
+
+    public int getTotalCount(Color color, Type type) {
+        return (int) pieces.stream()
+                .filter(piece -> piece.isSameColor(color) && piece.isSameType(type))
+                .count();
     }
 }
