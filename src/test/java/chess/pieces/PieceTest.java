@@ -95,4 +95,15 @@ class PieceTest {
                 () -> assertFalse(blank.isPawn())
         );
     }
+
+    @DisplayName("배열 기준으로 흰색 폰은 6번째, 검정색 폰은 1번째 행에 놓인다")
+    @Test
+    void initRank() {
+        int blackPawnRank = InitPos.PAWN.check(BLACK);
+        int whitePawnRank = InitPos.PAWN.check(WHITE);
+
+
+        assertThat(blackPawnRank).isEqualTo(1);
+        assertThat(whitePawnRank).isEqualTo(6);
+    }
 }

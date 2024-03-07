@@ -146,4 +146,20 @@ public class Piece {
             this.allowedName = allowedName;
         }
     }
+
+    public enum InitPos {
+        PAWN(color -> color.equals(WHITE) ? 6 : 1),
+        MAJOR(color -> color.equals(WHITE) ? 7 : 0)
+        ;
+
+        private final Function<Color, Integer> initialPosByColor;
+
+        InitPos(Function<Color, Integer> initialPosByColor) {
+            this.initialPosByColor = initialPosByColor;
+        }
+
+        public int check(Color color) {
+            return initialPosByColor.apply(color);
+        }
+    }
 }
