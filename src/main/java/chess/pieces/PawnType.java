@@ -1,23 +1,25 @@
 package chess.pieces;
 
 public enum PawnType {
-    PAWN('p'),
-    KNIGHT('n'),
-    ROOK('r'),
-    BISHOP('b'),
-    QUEEN('q'),
-    KING('k');
+    PAWN('p', 'P'),
+    KNIGHT('n', 'N'),
+    ROOK('r', 'R'),
+    BISHOP('b', 'B'),
+    QUEEN('q', 'Q'),
+    KING('k', 'K');
 
-    private final char representation;
+    private final char whiteText;
+    private final char blackText;
 
-    PawnType(char representation) {
-        this.representation = representation;
+    PawnType(char whiteText, char blackText) {
+        this.whiteText = whiteText;
+        this.blackText = blackText;
     }
 
     public char getColorRepresentation(PawnColor pawnColor) {
         if(pawnColor.equals(PawnColor.BLACK)) {
-            return Character.toUpperCase(representation);
+            return blackText;
         }
-        return representation;
+        return whiteText;
     }
 }
