@@ -1,4 +1,6 @@
-public abstract class Piece {
+package chess.pieces;
+
+public class Pawn {
     public static final String WHITE_COLOR = "white";
     public static final String BLACK_COLOR = "black";
     public static final char WHITE_REPRESENTATION = 'p';
@@ -6,12 +8,12 @@ public abstract class Piece {
     public String color;
     public char representation;
 
-    public Piece() {
+    public Pawn() {
         this.color = WHITE_COLOR;
         this.representation = WHITE_REPRESENTATION;
     }
 
-    public Piece(final String color) {
+    public Pawn(final String color) {
         this.color = color;
         if (color.equals(WHITE_COLOR)) {
             this.representation = WHITE_REPRESENTATION;
@@ -20,7 +22,7 @@ public abstract class Piece {
         }
     }
 
-    public Piece(String color, final char representation) {
+    public Pawn(final String color, final char representation) {
         this.color = color;
         this.representation = representation;
     }
