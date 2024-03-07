@@ -64,6 +64,10 @@ public class Piece {
         return color.equals(Colors.BLACK);
     }
 
+    public boolean isWhite() {
+        return color.equals(Colors.WHITE);
+    }
+
     // 색에 따라서 Representation의 설정이 필요하다
     private void setRepresentation() {
         if (isBlack()) {
