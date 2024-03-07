@@ -2,29 +2,29 @@ package chess.pieces;
 
 import chess.enums.Color;
 import chess.enums.TypeOfPiece;
+import chess.pieces.implement.Blank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import chess.pieces.implement.*;
 
 public class PieceTest {
 
     @Test
     @DisplayName("모든 기물이 제대로 생성되어야 한다")
     void createPiece() {
-        verifyPiece(Piece.createWhite(TypeOfPiece.BISHOP), Piece.createBlack(TypeOfPiece.BISHOP), TypeOfPiece.BISHOP);
-        verifyPiece(Piece.createWhite(TypeOfPiece.KING), Piece.createBlack(TypeOfPiece.KING), TypeOfPiece.KING);
-        verifyPiece(Piece.createWhite(TypeOfPiece.ROOK), Piece.createBlack(TypeOfPiece.ROOK), TypeOfPiece.ROOK);
-        verifyPiece(Piece.createWhite(TypeOfPiece.KNIGHT), Piece.createBlack(TypeOfPiece.KNIGHT), TypeOfPiece.KNIGHT);
-        verifyPiece(Piece.createWhite(TypeOfPiece.QUEEN), Piece.createBlack(TypeOfPiece.QUEEN), TypeOfPiece.QUEEN);
-        verifyPiece(Piece.createWhite(TypeOfPiece.PAWN), Piece.createBlack(TypeOfPiece.PAWN), TypeOfPiece.PAWN);
+        verifyPiece(Bishop.bishop.create(Color.WHITE), Bishop.bishop.create(Color.BLACK), TypeOfPiece.BISHOP);
+        verifyPiece(King.king.create(Color.WHITE), King.king.create(Color.BLACK), TypeOfPiece.KING);
+        verifyPiece(Rook.rook.create(Color.WHITE), Rook.rook.create(Color.BLACK), TypeOfPiece.ROOK);
+        verifyPiece(Knight.knight.create(Color.WHITE), Knight.knight.create(Color.BLACK), TypeOfPiece.KNIGHT);
+        verifyPiece(Queen.queen.create(Color.WHITE), Queen.queen.create(Color.BLACK), TypeOfPiece.QUEEN);
+        verifyPiece(Pawn.pawn.create(Color.WHITE), Pawn.pawn.create(Color.BLACK), TypeOfPiece.PAWN);
     }
 
     @Test
     @DisplayName("빈칸이 잘 생성되었는지 검증한다")
     void createBlank() {
-        Piece blank = Piece.createBlank(TypeOfPiece.NO_PIECE);
+        Piece blank = Blank.blank.create(Color.NO_COLOR);
         assertThat(blank.isBlack()).isFalse();
         assertThat(blank.isWhite()).isFalse();
         assertThat(blank.isBlank()).isTrue();

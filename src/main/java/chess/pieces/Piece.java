@@ -3,27 +3,17 @@ package chess.pieces;
 import chess.enums.Color;
 import chess.enums.TypeOfPiece;
 
-public class Piece {
+public abstract class Piece {
 
-    private static final int UNICODE_DIFF = 6;
+    protected static final int UNICODE_DIFF = 6;
 
-    public static Piece createWhite(TypeOfPiece type) {
-        return new Piece(Color.WHITE, type, type.getRepresent());
-    }
-
-    public static Piece createBlack(TypeOfPiece type) {
-        return new Piece(Color.BLACK, type, (char) (type.getRepresent() - UNICODE_DIFF));
-    }
-
-    public static Piece createBlank(TypeOfPiece type) {
-        return new Piece(Color.NO_COLOR, type, TypeOfPiece.NO_PIECE.getRepresent());
-    }
+    public abstract Piece create(Color color);
 
     private final Color color;
     private final char represent;
     private final TypeOfPiece type;
 
-    private Piece(Color color, TypeOfPiece type, char represent) {
+    protected Piece(Color color, TypeOfPiece type, char represent) {
         this.color = color;
         this.represent = represent;
         this.type = type;
@@ -60,7 +50,6 @@ public class Piece {
             Piece piece = (Piece) obj;
             return piece.getType().equals(this.type) && piece.getColor().equals(this.color);
         }
-
         return false;
     }
 }

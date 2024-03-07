@@ -6,6 +6,7 @@ import chess.enums.Color;
 import chess.enums.Position;
 import chess.enums.TypeOfPiece;
 import chess.pieces.Piece;
+import chess.pieces.implement.Blank;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +27,7 @@ public class ChessGame {
     //오버로딩
     public void move(String sourcePosition, String targetPosition) {
         Piece source = board.get(Position.valueOf(sourcePosition.toUpperCase()));
-        Piece blank = Piece.createBlank(TypeOfPiece.NO_PIECE);
+        Piece blank = Blank.blank.create(Color.NO_COLOR);
 
         board.replace(Position.valueOf(targetPosition.toUpperCase()), source);
         board.replace(Position.valueOf(sourcePosition.toUpperCase()), blank);

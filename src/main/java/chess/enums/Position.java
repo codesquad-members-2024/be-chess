@@ -1,39 +1,43 @@
 package chess.enums;
 
 import chess.pieces.Piece;
+import chess.pieces.implement.*;
 
 import java.util.function.Supplier;
 
 public enum Position {
-    A8(() -> Piece.createBlack(TypeOfPiece.ROOK)), B8(() -> Piece.createBlack(TypeOfPiece.KNIGHT)),
-    C8(() -> Piece.createBlack(TypeOfPiece.BISHOP)), D8(() -> Piece.createBlack(TypeOfPiece.QUEEN)),
-    E8(() -> Piece.createBlack(TypeOfPiece.KING)), F8(() -> Piece.createBlack(TypeOfPiece.BISHOP)),
-    G8(() -> Piece.createBlack(TypeOfPiece.KNIGHT)), H8(() -> Piece.createBlack(TypeOfPiece.ROOK)),
-    A7(() -> Piece.createBlack(TypeOfPiece.PAWN)), B7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
-    C7(() -> Piece.createBlack(TypeOfPiece.PAWN)), D7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
-    E7(() -> Piece.createBlack(TypeOfPiece.PAWN)), F7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
-    G7(() -> Piece.createBlack(TypeOfPiece.PAWN)), H7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
-    A6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    D6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    G6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    A5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    D5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    G5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    A4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    D4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    G4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    A3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    D3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    G3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
-    A2(() -> Piece.createWhite(TypeOfPiece.PAWN)), B2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
-    C2(() -> Piece.createWhite(TypeOfPiece.PAWN)), D2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
-    E2(() -> Piece.createWhite(TypeOfPiece.PAWN)), F2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
-    G2(() -> Piece.createWhite(TypeOfPiece.PAWN)), H2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
-    A1(() -> Piece.createWhite(TypeOfPiece.ROOK)), B1(() -> Piece.createWhite(TypeOfPiece.KNIGHT)),
-    C1(() -> Piece.createWhite(TypeOfPiece.BISHOP)), D1(() -> Piece.createWhite(TypeOfPiece.QUEEN)),
-    E1(() -> Piece.createWhite(TypeOfPiece.KING)), F1(() -> Piece.createWhite(TypeOfPiece.BISHOP)),
-    G1(() -> Piece.createWhite(TypeOfPiece.KNIGHT)), H1(() -> Piece.createWhite(TypeOfPiece.ROOK));
-
+    A8(() -> Rook.rook.create(Color.BLACK)), B8(() -> Knight.knight.create(Color.BLACK)),
+    C8(() -> Bishop.bishop.create(Color.BLACK)), D8(() -> Queen.queen.create(Color.BLACK)),
+    E8(() -> King.king.create(Color.BLACK)), F8(() -> Bishop.bishop.create(Color.BLACK)),
+    G8(() -> Knight.knight.create(Color.BLACK)), H8(() -> Rook.rook.create(Color.BLACK)),
+    A7(() -> Pawn.pawn.create(Color.BLACK)), B7(() -> Pawn.pawn.create(Color.BLACK)),
+    C7(() -> Pawn.pawn.create(Color.BLACK)), D7(() -> Pawn.pawn.create(Color.BLACK)),
+    E7(() -> Pawn.pawn.create(Color.BLACK)), F7(() -> Pawn.pawn.create(Color.BLACK)),
+    G7(() -> Pawn.pawn.create(Color.BLACK)), H7(() -> Pawn.pawn.create(Color.BLACK)),
+    A6(() -> Blank.blank.create(Color.NO_COLOR)), B6(() -> Blank.blank.create(Color.NO_COLOR)),
+    C6(() -> Blank.blank.create(Color.NO_COLOR)), D6(() -> Blank.blank.create(Color.NO_COLOR)),
+    E6(() -> Blank.blank.create(Color.NO_COLOR)), F6(() -> Blank.blank.create(Color.NO_COLOR)),
+    G6(() -> Blank.blank.create(Color.NO_COLOR)), H6(() -> Blank.blank.create(Color.NO_COLOR)),
+    A5(() -> Blank.blank.create(Color.NO_COLOR)), B5(() -> Blank.blank.create(Color.NO_COLOR)),
+    C5(() -> Blank.blank.create(Color.NO_COLOR)), D5(() -> Blank.blank.create(Color.NO_COLOR)),
+    E5(() -> Blank.blank.create(Color.NO_COLOR)), F5(() -> Blank.blank.create(Color.NO_COLOR)),
+    G5(() -> Blank.blank.create(Color.NO_COLOR)), H5(() -> Blank.blank.create(Color.NO_COLOR)),
+    A4(() -> Blank.blank.create(Color.NO_COLOR)), B4(() -> Blank.blank.create(Color.NO_COLOR)),
+    C4(() -> Blank.blank.create(Color.NO_COLOR)), D4(() -> Blank.blank.create(Color.NO_COLOR)),
+    E4(() -> Blank.blank.create(Color.NO_COLOR)), F4(() -> Blank.blank.create(Color.NO_COLOR)),
+    G4(() -> Blank.blank.create(Color.NO_COLOR)), H4(() -> Blank.blank.create(Color.NO_COLOR)),
+    A3(() -> Blank.blank.create(Color.NO_COLOR)), B3(() -> Blank.blank.create(Color.NO_COLOR)),
+    C3(() -> Blank.blank.create(Color.NO_COLOR)), D3(() -> Blank.blank.create(Color.NO_COLOR)),
+    E3(() -> Blank.blank.create(Color.NO_COLOR)), F3(() -> Blank.blank.create(Color.NO_COLOR)),
+    G3(() -> Blank.blank.create(Color.NO_COLOR)), H3(() -> Blank.blank.create(Color.NO_COLOR)),
+    A2(() -> Pawn.pawn.create(Color.WHITE)), B2(() -> Pawn.pawn.create(Color.WHITE)),
+    C2(() -> Pawn.pawn.create(Color.WHITE)), D2(() -> Pawn.pawn.create(Color.WHITE)),
+    E2(() -> Pawn.pawn.create(Color.WHITE)), F2(() -> Pawn.pawn.create(Color.WHITE)),
+    G2(() -> Pawn.pawn.create(Color.WHITE)), H2(() -> Pawn.pawn.create(Color.WHITE)),
+    A1(() -> Rook.rook.create(Color.WHITE)), B1(() -> Knight.knight.create(Color.WHITE)),
+    C1(() -> Bishop.bishop.create(Color.WHITE)), D1(() -> Queen.queen.create(Color.WHITE)),
+    E1(() -> King.king.create(Color.WHITE)), F1(() -> Bishop.bishop.create(Color.WHITE)),
+    G1(() -> Knight.knight.create(Color.WHITE)), H1(() -> Rook.rook.create(Color.WHITE));
 
     private final Supplier<Piece> init;
 

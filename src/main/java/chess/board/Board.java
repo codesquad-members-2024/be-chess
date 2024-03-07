@@ -4,6 +4,7 @@ import chess.enums.Color;
 import chess.enums.Position;
 import chess.enums.TypeOfPiece;
 import chess.pieces.Piece;
+import chess.pieces.implement.Blank;
 
 import java.util.*;
 
@@ -59,7 +60,7 @@ public class Board {
     //Test만을 위한 메서드...??
     public void initializeEmpty() {
         chessBoard.keySet()
-                .forEach(position -> chessBoard.replace(position, Piece.createBlank(TypeOfPiece.NO_PIECE)));
+                .forEach(position -> chessBoard.replace(position, Blank.blank.create(Color.NO_COLOR)));
     }
 
 

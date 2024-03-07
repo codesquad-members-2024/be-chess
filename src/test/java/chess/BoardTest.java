@@ -5,6 +5,10 @@ import chess.board.BoardView;
 import chess.enums.Color;
 import chess.enums.TypeOfPiece;
 import chess.pieces.Piece;
+import chess.pieces.implement.King;
+import chess.pieces.implement.Pawn;
+import chess.pieces.implement.Queen;
+import chess.pieces.implement.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,10 +61,10 @@ public class BoardTest {
     @Test
     @DisplayName("좌표가 주어졌을 때 해당 위치의 기물을 가져오는지 검증")
     void findPiece() throws Exception {
-        assertThat(Piece.createBlack(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("a8"));
-        assertThat(Piece.createBlack(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("h8"));
-        assertThat(Piece.createWhite(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("a1"));
-        assertThat(Piece.createWhite(TypeOfPiece.ROOK)).isEqualTo(board.findPiece("h1"));
+        assertThat(Rook.rook.create(Color.BLACK)).isEqualTo(board.findPiece("a8"));
+        assertThat(Rook.rook.create(Color.BLACK)).isEqualTo(board.findPiece("h8"));
+        assertThat(Rook.rook.create(Color.WHITE)).isEqualTo(board.findPiece("a1"));
+        assertThat(Rook.rook.create(Color.WHITE)).isEqualTo(board.findPiece("h1"));
     }
 
     @Test
@@ -69,7 +73,7 @@ public class BoardTest {
         board.initializeEmpty();
 
         String position = "b5";
-        Piece piece = Piece.createBlack(TypeOfPiece.ROOK);
+        Piece piece = Rook.rook.create(Color.BLACK);
 
         chessGame.move(position, piece);
 
@@ -127,15 +131,15 @@ public class BoardTest {
 
 
     void addAllPieces() {
-        addPiece("b6", Piece.createBlack(TypeOfPiece.PAWN));
-        addPiece("e6", Piece.createBlack(TypeOfPiece.QUEEN));
-        addPiece("b8", Piece.createBlack(TypeOfPiece.KING));
-        addPiece("c8", Piece.createBlack(TypeOfPiece.ROOK));
+        addPiece("b6", Pawn.pawn.create(Color.BLACK));
+        addPiece("e6", Queen.queen.create(Color.BLACK));
+        addPiece("b8", King.king.create(Color.BLACK));
+        addPiece("c8", Rook.rook.create(Color.BLACK));
 
-        addPiece("f2", Piece.createWhite(TypeOfPiece.PAWN));
-        addPiece("g2", Piece.createWhite(TypeOfPiece.PAWN));
-        addPiece("e1", Piece.createWhite(TypeOfPiece.ROOK));
-        addPiece("f1", Piece.createWhite(TypeOfPiece.KING));
+        addPiece("f2", Pawn.pawn.create(Color.WHITE));
+        addPiece("g2",  Pawn.pawn.create(Color.WHITE));
+        addPiece("e1", Rook.rook.create(Color.WHITE));
+        addPiece("f1", King.king.create(Color.WHITE));
     }
 
     void addPiece(String position, Piece piece) {
