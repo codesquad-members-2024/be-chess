@@ -17,7 +17,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("체스 판 전체의 초기화 시 기물의 개수 및 확인")
+    @DisplayName("체스 판 전체의 초기화 시 기물의 개수 및 상태 출력 기능 확인")
     public void initialize() throws Exception {
         board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);

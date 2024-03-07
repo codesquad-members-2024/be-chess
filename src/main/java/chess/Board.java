@@ -20,11 +20,11 @@ public class Board {
     }
 
     public void initialize() {
-        pieces.add(getWhiteEdgeLine());
-        pieces.add(getWhitePawnLine());
-        pieces.addAll(Collections.nCopies(EMPTY_LINES, getEmptyLine()));
-        pieces.add(getBlackPawnLine());
         pieces.add(getBlackEdgeLine());
+        pieces.add(getBlackPawnLine());
+        pieces.addAll(Collections.nCopies(EMPTY_LINES, getEmptyLine()));
+        pieces.add(getWhitePawnLine());
+        pieces.add(getWhiteEdgeLine());
     }
 
     public int pieceCount() {
@@ -39,7 +39,7 @@ public class Board {
     }
 
     public String showBoard() {
-        return pieces.stream().sorted((o1, o2) -> -1)
+        return pieces.stream()
             .map(line -> appendNewLine(getLineRepresentation(line)))
             .collect(Collectors.joining());
     }
