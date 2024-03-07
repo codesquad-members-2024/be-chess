@@ -63,7 +63,7 @@ class ChessGameTest {
     @ParameterizedTest
     @CsvSource(value = {"d4 d5" , "e3 e5"})
     @DisplayName("기물의 타입에 따라 움직일 수 없는 경우가 있어야 한다")
-    void tryMoveBlank(String cmd){
+    void tryMoveBlack(String cmd){
         board.init();
         game.tryMove("move "+cmd);
         System.setOut(new PrintStream(outputStreamCaptor));
