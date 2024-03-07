@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Pawn;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,9 +52,8 @@ public class Board {
     public String print(){
         StringBuilder builder = new StringBuilder();
         chessBoard.forEach(row -> {
-            List<String> representations = representationConversion.apply(row);
-            representations.forEach(builder::append);
-            builder.append("\n");
+            String gatheredRep = String.join("", representationConversion.apply(row));
+            builder.append(StringUtils.appendNewLine(gatheredRep));
         });
         return builder.deleteCharAt(builder.length()-1).toString();
     }
