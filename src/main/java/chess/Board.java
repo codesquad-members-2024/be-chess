@@ -48,17 +48,11 @@ public class Board {
         return stringBuilder.toString();
     }
 
-    public String getPawnStatus(Pawn pawn){
+    public char getPawnStatus(Pawn pawn){
         if(pawn == null){
-            return ".";
+            return '.';
         }
-        if(pawn.getColor() == PawnColor.WHITE){
-            return "p";
-        }
-        if(pawn.getColor() == PawnColor.BLACK){
-            return "P";
-        }
-        return ".";
+        return pawn.getChessPiece();
     }
 
     public void add(Pawn pawn) {
