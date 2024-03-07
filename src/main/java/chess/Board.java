@@ -1,7 +1,7 @@
 package chess;
 
 import pieces.Piece;
-import pieces.PawnColor;
+import pieces.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public class Board {
     }
 
     public void initialize(){
-        initializePawn(PawnColor.WHITE);
-        initializePawn(PawnColor.BLACK);
+        initializePawn(PieceColor.WHITE);
+        initializePawn(PieceColor.BLACK);
     }
 
-    public void initializePawn(PawnColor color){ // 매개변수로 받은 색의 pawn 위치 초기화
+    public void initializePawn(PieceColor color){ // 매개변수로 받은 색의 pawn 위치 초기화
         int initRow = WHITE_PAWN_START_ROW; // pawn을 추가할 row, 기본으로 white일때 위치
-        if(color == PawnColor.BLACK){
+        if(color == PieceColor.BLACK){
             initRow = BLACK_PAWN_START_ROW;
         }
 

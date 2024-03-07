@@ -1,6 +1,6 @@
 package pieces;
 
-public enum PawnColor {
+public enum PieceColor {
     WHITE,
     BLACK
 }
