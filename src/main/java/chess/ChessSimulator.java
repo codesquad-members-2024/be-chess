@@ -1,12 +1,11 @@
 package chess;
 
 import chess.board.Board;
-import chess.pieces.Piece;
 import java.util.Scanner;
 
 public class ChessSimulator {
     private static final Scanner INPUT = new Scanner(System.in);
-    private static final Board<Piece> BOARD = new Board<>();
+    private static final Board BOARD = new Board();
 
     public static void main(String[] args) {
         run();
