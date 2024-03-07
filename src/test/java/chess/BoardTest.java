@@ -1,6 +1,6 @@
 package chess;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import chess.pieces.PawnColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ public class BoardTest {
     @Test
     @DisplayName("보드 초기화 후 검은색 폰이 생성되어야한다")
     void createBlackPawn() throws Exception {
-        Pawn black = new Pawn(PawnColor.BLACK);
+        Piece black = new Piece(PawnColor.BLACK);
         assertEquals(8, board.blackPawnSize());
         assertEquals(PawnColor.BLACK, board.findBlackPawn(0));
     }
