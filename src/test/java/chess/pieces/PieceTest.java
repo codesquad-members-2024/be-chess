@@ -11,14 +11,14 @@ class PieceTest {
     @Test
     @DisplayName("Type을 입력하면 해당 Piece를 생성할 수 있다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhite(Type.PAWN), Piece.createBlack(Type.PAWN), Type.PAWN);
-        verifyPiece(Piece.createWhite(Type.KNIGHT), Piece.createBlack(Type.KNIGHT), Type.KNIGHT);
-        verifyPiece(Piece.createWhite(Type.ROOK), Piece.createBlack(Type.ROOK), Type.ROOK);
-        verifyPiece(Piece.createWhite(Type.BISHOP), Piece.createBlack(Type.BISHOP), Type.BISHOP);
-        verifyPiece(Piece.createWhite(Type.QUEEN), Piece.createBlack(Type.QUEEN), Type.QUEEN);
-        verifyPiece(Piece.createWhite(Type.KING), Piece.createBlack(Type.KING), Type.KING);
+        verifyPiece(Piece.of(Type.PAWN, Color.WHITE, null), Piece.of(Type.PAWN, Color.BLACK, null), Type.PAWN);
+        verifyPiece(Piece.of(Type.KNIGHT, Color.WHITE, null), Piece.of(Type.KNIGHT, Color.BLACK, null), Type.KNIGHT);
+        verifyPiece(Piece.of(Type.ROOK, Color.WHITE, null), Piece.of(Type.ROOK, Color.BLACK, null), Type.ROOK);
+        verifyPiece(Piece.of(Type.BISHOP, Color.WHITE, null), Piece.of(Type.BISHOP, Color.BLACK, null), Type.BISHOP);
+        verifyPiece(Piece.of(Type.QUEEN, Color.WHITE, null), Piece.of(Type.QUEEN, Color.BLACK, null), Type.QUEEN);
+        verifyPiece(Piece.of(Type.KING, Color.WHITE, null), Piece.of(Type.KING, Color.BLACK, null), Type.KING);
 
-        Piece blank = Piece.createBlank();
+        Piece blank = Piece.createBlank(null);
         assertThat(blank.isWhite()).isFalse();
         assertThat(blank.isBlack()).isFalse();
         assertThat(blank.getType()).isEqualTo(Type.NO_PIECE);
@@ -36,8 +36,8 @@ class PieceTest {
     @Test
     @DisplayName("특정 piece가 흰색인지 검은색인지 확인할 수 있다.")
     void isBlack() {
-        Piece black = Piece.createBlack(Type.PAWN);
-        Piece white = Piece.createWhite(Type.PAWN);
+        Piece black = Piece.of(Type.PAWN, Color.BLACK, null);
+        Piece white = Piece.of(Type.PAWN, Color.WHITE, null);
 
         assertThat(black.isBlack()).isTrue();
         assertThat(black.isWhite()).isFalse();

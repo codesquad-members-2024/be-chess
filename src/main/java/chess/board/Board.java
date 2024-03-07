@@ -34,22 +34,22 @@ public class Board {
     private void fillRank(Rank rank, int i, List<Type> otherTypes) {
         for (int j = 0; j < RANK_AND_FILE_SIZE; j++) {
             if (i == BLACK_INITIAL_OTHERS_ROW) {
-                rank.add(Piece.createBlack(otherTypes.get(j)));
+                rank.add(Piece.of(otherTypes.get(j), Color.BLACK, new Position(i, j)));
                 continue;
             }
             if (i == BLACK_INITIAL_PAWNS_ROW) {
-                rank.add(Piece.createBlack(Type.PAWN));
+                rank.add(Piece.of(Type.PAWN, Color.BLACK, new Position(i, j)));
                 continue;
             }
             if (i == WHITE_INITIAL_PAWNS_ROW) {
-                rank.add(Piece.createWhite(Type.PAWN));
+                rank.add(Piece.of(Type.PAWN, Color.WHITE, new Position(i, j)));
                 continue;
             }
             if (i == WHITE_INITIAL_OTHERS_ROW) {
-                rank.add(Piece.createWhite(otherTypes.get(j)));
+                rank.add(Piece.of(otherTypes.get(j), Color.WHITE, new Position(i, j)));
                 continue;
             }
-            rank.add(Piece.createBlank());
+            rank.add(Piece.createBlank(new Position(i, j)));
         }
     }
 
@@ -62,7 +62,7 @@ public class Board {
         for (int i = 0; i < RANK_AND_FILE_SIZE; i++) {
             Rank rank = new Rank();
             for (int j = 0; j < RANK_AND_FILE_SIZE; j++) {
-                rank.add(Piece.createBlank());
+                rank.add(Piece.createBlank(new Position(i, j)));
             }
             ranks.add(rank);
         }

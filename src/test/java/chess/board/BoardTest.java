@@ -40,12 +40,15 @@ public class BoardTest {
     @DisplayName("특정 위치의 피스 정보를 가져올 수 있다.")
     public void findPiece() {
         board.initialize();
-        assertThat(board.findPiece(new Position("a8"))).isEqualTo(Piece.createBlack(Type.ROOK));
-        assertThat(board.findPiece(new Position("h8"))).isEqualTo(Piece.createBlack(Type.ROOK));
-        assertThat(board.findPiece(new Position("a1"))).isEqualTo(Piece.createWhite(Type.ROOK));
-        assertThat(board.findPiece(new Position("h1"))).isEqualTo(Piece.createWhite(Type.ROOK));
+        assertThat(board.findPiece(new Position("a8"))).isEqualTo(
+                Piece.of(Type.ROOK, Color.BLACK, new Position("a8")));
+        assertThat(board.findPiece(new Position("h8"))).isEqualTo(
+                Piece.of(Type.ROOK, Color.BLACK, new Position("h8")));
+        assertThat(board.findPiece(new Position("a1"))).isEqualTo(
+                Piece.of(Type.ROOK, Color.WHITE, new Position("a1")));
+        assertThat(board.findPiece(new Position("h1"))).isEqualTo(Piece.of(Type.ROOK, Color.WHITE, new Position("h1")));
 
-        assertThat(board.findPiece(new Position("e1"))).isEqualTo(Piece.createWhite(Type.KING));
+        assertThat(board.findPiece(new Position("e1"))).isEqualTo(Piece.of(Type.KING, Color.WHITE, new Position("e1")));
     }
 
 
@@ -54,12 +57,18 @@ public class BoardTest {
     void getDescendingPieces() {
         board.initializeEmpty();
         addPieces();
-        List<Piece> expect = List.of(Piece.createBlack(Type.QUEEN), Piece.createBlack(Type.ROOK),
-                Piece.createBlack(Type.PAWN)
-                , Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN), Piece.createBlack(Type.KING)
-                , Piece.createWhite(Type.ROOK), Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN),
-                Piece.createWhite(Type.PAWN)
-                , Piece.createWhite(Type.PAWN), Piece.createWhite(Type.KING));
+        List<Piece> expect = List.of(Piece.of(Type.QUEEN, Color.BLACK, null)
+                , Piece.of(Type.ROOK, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.KING, Color.BLACK, null)
+                , Piece.of(Type.ROOK, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.KING, Color.WHITE, null));
         assertThat(board.getDescendingPieces()).isEqualTo(expect);
     }
 
@@ -68,31 +77,37 @@ public class BoardTest {
     void getAscendingPieces() {
         board.initializeEmpty();
         addPieces();
-        List<Piece> expect = List.of(Piece.createBlack(Type.KING)
-                , Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN), Piece.createBlack(Type.PAWN)
-                , Piece.createBlack(Type.ROOK), Piece.createBlack(Type.QUEEN)
-                , Piece.createWhite(Type.KING)
-                , Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN),
-                Piece.createWhite(Type.PAWN), Piece.createWhite(Type.PAWN), Piece.createWhite(Type.ROOK));
+        List<Piece> expect = List.of(Piece.of(Type.KING, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.PAWN, Color.BLACK, null)
+                , Piece.of(Type.ROOK, Color.BLACK, null)
+                , Piece.of(Type.QUEEN, Color.BLACK, null)
+                , Piece.of(Type.KING, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.PAWN, Color.WHITE, null)
+                , Piece.of(Type.ROOK, Color.WHITE, null));
 
         assertThat(board.getAscendingPieces()).isEqualTo(expect);
     }
 
 
     private void addPieces() {
-        addPiece("b6", Piece.createBlack(Type.PAWN));
-        addPiece("e6", Piece.createBlack(Type.QUEEN));
-        addPiece("b8", Piece.createBlack(Type.KING));
-        addPiece("c8", Piece.createBlack(Type.ROOK));
-        addPiece("b7", Piece.createBlack(Type.PAWN)); // 같은 컬럼에 폰 추가
-        addPiece("b5", Piece.createBlack(Type.PAWN)); // 같은 컬럼에 폰 추가
+        addPiece("b6", Piece.of(Type.PAWN, Color.BLACK, null));
+        addPiece("e6", Piece.of(Type.QUEEN, Color.BLACK, null));
+        addPiece("b8", Piece.of(Type.KING, Color.BLACK, null));
+        addPiece("c8", Piece.of(Type.ROOK, Color.BLACK, null));
+        addPiece("b7", Piece.of(Type.PAWN, Color.BLACK, null)); // 같은 컬럼에 폰 추가
+        addPiece("b5", Piece.of(Type.PAWN, Color.BLACK, null)); // 같은 컬럼에 폰 추가
 
-        addPiece("f2", Piece.createWhite(Type.PAWN));
-        addPiece("g2", Piece.createWhite(Type.PAWN));
-        addPiece("e1", Piece.createWhite(Type.ROOK));
-        addPiece("f1", Piece.createWhite(Type.KING));
-        addPiece("f3", Piece.createWhite(Type.PAWN)); // 같은 컬럼에 폰 추가
-        addPiece("f4", Piece.createWhite(Type.PAWN)); // 같은 컬럼에 폰 추가
+        addPiece("f2", Piece.of(Type.PAWN, Color.WHITE, null));
+        addPiece("g2", Piece.of(Type.PAWN, Color.WHITE, null));
+        addPiece("e1", Piece.of(Type.ROOK, Color.WHITE, null));
+        addPiece("f1", Piece.of(Type.KING, Color.WHITE, null));
+        addPiece("f3", Piece.of(Type.PAWN, Color.WHITE, null)); // 같은 컬럼에 폰 추가
+        addPiece("f4", Piece.of(Type.PAWN, Color.WHITE, null)); // 같은 컬럼에 폰 추가
     }
 
     private void addPiece(String position, Piece piece) {

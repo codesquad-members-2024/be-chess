@@ -14,7 +14,8 @@ public class Game {
 
     public void move(Position source, Position target) {
         Piece piece = board.findPiece(source);
-        board.addPiece(target, piece.changePosition(target));
+        piece.changePosition(target);
+        board.addPiece(target, piece);
         board.addPiece(source, Piece.createBlank(source));
     }
 

@@ -6,6 +6,11 @@ public class Position {
     private final int yPos;
     private final int xPos;
 
+    public Position(int yPos, int xPos) {
+        this.yPos = yPos;
+        this.xPos = xPos;
+    }
+
     public Position(String positionValue) {
         this.yPos = Board.RANK_AND_FILE_SIZE - Character.getNumericValue(positionValue.charAt(1));
         this.xPos = positionValue.charAt(0) - 'a';
