@@ -5,28 +5,40 @@ import chess.pieces.Piece;
 import java.util.function.Supplier;
 
 public enum Position {
-    A8(Piece::createBlackRook), B8(Piece::createBlackKnight), C8(Piece::createBlackBishop), D8(Piece::createBlackQueen),
-    E8(Piece::createBlackKing), F8(Piece::createBlackBishop), G8(Piece::createBlackKnight), H8(Piece::createBlackRook),
-    A7(Piece::createBlackPawn), B7(Piece::createBlackPawn), C7(Piece::createBlackPawn), D7(Piece::createBlackPawn),
-    E7(Piece::createBlackPawn), F7(Piece::createBlackPawn), G7(Piece::createBlackPawn), H7(Piece::createBlackPawn),
-    A6(), B6(), C6(), D6(), E6(), F6(), G6(), H6(),
-    A5(), B5(), C5(), D5(), E5(), F5(), G5(), H5(),
-    A4(), B4(), C4(), D4(), E4(), F4(), G4(), H4(),
-    A3(), B3(), C3(), D3(), E3(), F3(), G3(), H3(),
-    A2(Piece::createWhitePawn), B2(Piece::createWhitePawn), C2(Piece::createWhitePawn), D2(Piece::createWhitePawn),
-    E2(Piece::createWhitePawn), F2(Piece::createWhitePawn), G2(Piece::createWhitePawn), H2(Piece::createWhitePawn),
-    A1(Piece::createWhiteRook), B1(Piece::createWhiteKnight), C1(Piece::createWhiteBishop), D1(Piece::createWhiteQueen),
-    E1(Piece::createWhiteKing), F1(Piece::createWhiteBishop), G1(Piece::createWhiteKnight), H1(Piece::createWhiteRook);
+    A8(() -> Piece.createBlack(TypeOfPiece.ROOK)), B8(() -> Piece.createBlack(TypeOfPiece.KNIGHT)),
+    C8(() -> Piece.createBlack(TypeOfPiece.BISHOP)), D8(() -> Piece.createBlack(TypeOfPiece.QUEEN)),
+    E8(() -> Piece.createBlack(TypeOfPiece.KING)), F8(() -> Piece.createBlack(TypeOfPiece.BISHOP)),
+    G8(() -> Piece.createBlack(TypeOfPiece.KNIGHT)), H8(() -> Piece.createBlack(TypeOfPiece.ROOK)),
+    A7(() -> Piece.createBlack(TypeOfPiece.PAWN)), B7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
+    C7(() -> Piece.createBlack(TypeOfPiece.PAWN)), D7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
+    E7(() -> Piece.createBlack(TypeOfPiece.PAWN)), F7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
+    G7(() -> Piece.createBlack(TypeOfPiece.PAWN)), H7(() -> Piece.createBlack(TypeOfPiece.PAWN)),
+    A6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    D6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    G6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H6(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    A5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    D5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    G5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H5(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    A4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    D4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    G4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H4(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    A3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), B3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), C3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    D3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), E3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), F3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    G3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)), H3(() -> Piece.createBlank(TypeOfPiece.NO_PIECE)),
+    A2(() -> Piece.createWhite(TypeOfPiece.PAWN)), B2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
+    C2(() -> Piece.createWhite(TypeOfPiece.PAWN)), D2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
+    E2(() -> Piece.createWhite(TypeOfPiece.PAWN)), F2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
+    G2(() -> Piece.createWhite(TypeOfPiece.PAWN)), H2(() -> Piece.createWhite(TypeOfPiece.PAWN)),
+    A1(() -> Piece.createWhite(TypeOfPiece.ROOK)), B1(() -> Piece.createWhite(TypeOfPiece.KNIGHT)),
+    C1(() -> Piece.createWhite(TypeOfPiece.BISHOP)), D1(() -> Piece.createWhite(TypeOfPiece.QUEEN)),
+    E1(() -> Piece.createWhite(TypeOfPiece.KING)), F1(() -> Piece.createWhite(TypeOfPiece.BISHOP)),
+    G1(() -> Piece.createWhite(TypeOfPiece.KNIGHT)), H1(() -> Piece.createWhite(TypeOfPiece.ROOK));
 
 
     private final Supplier<Piece> init;
 
-    private Position(Supplier<Piece> init) {
+    Position(Supplier<Piece> init) {
         this.init = init;
-    }
-
-    private Position() {
-        this.init = () -> null;
     }
 
     public Piece initPosition() {

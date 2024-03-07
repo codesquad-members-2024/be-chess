@@ -5,65 +5,18 @@ import chess.enums.TypeOfPiece;
 
 public class Piece {
 
-    public static final char WHITE_PAWN_REPRESENT = '♟';
-    public static final char BLACK_PAWN_REPRESENT = '♙';
-    public static final char WHITE_QUEEN_REPRESENT = '♛';
-    public static final char BLACK_QUEEN_REPRESENT = '♕';
-    public static final char WHITE_KING_REPRESENT = '♚';
-    public static final char BLACK_KING_REPRESENT = '♔';
-    public static final char WHITE_ROOK_REPRESENT = '♜';
-    public static final char BLACK_ROOK_REPRESENT = '♖';
-    public static final char WHITE_BISHOP_REPRESENT = '♝';
-    public static final char BLACK_BISHOP_REPRESENT = '♗';
-    public static final char WHITE_KNIGHT_REPRESENT = '♞';
-    public static final char BLACK_KNIGHT_REPRESENT = '♘';
+    private static final int UNICODE_DIFF = 6;
 
-    public static Piece createBlackQueen() {
-        return new Piece(Color.BLACK, TypeOfPiece.QUEEN, BLACK_QUEEN_REPRESENT);
+    public static Piece createWhite(TypeOfPiece type) {
+        return new Piece(Color.WHITE, type, type.getRepresent());
     }
 
-    public static Piece createWhiteQueen() {
-        return new Piece(Color.WHITE, TypeOfPiece.QUEEN, WHITE_QUEEN_REPRESENT);
+    public static Piece createBlack(TypeOfPiece type) {
+        return new Piece(Color.BLACK, type, (char) (type.getRepresent() - UNICODE_DIFF));
     }
 
-    public static Piece createBlackKing() {
-        return new Piece(Color.BLACK, TypeOfPiece.KING, BLACK_KING_REPRESENT);
-    }
-
-    public static Piece createWhiteKing() {
-        return new Piece(Color.WHITE, TypeOfPiece.KING, WHITE_KING_REPRESENT);
-    }
-
-    public static Piece createBlackRook() {
-        return new Piece(Color.BLACK, TypeOfPiece.ROOK, BLACK_ROOK_REPRESENT);
-    }
-
-    public static Piece createWhiteRook() {
-        return new Piece(Color.WHITE, TypeOfPiece.ROOK, WHITE_ROOK_REPRESENT);
-    }
-
-    public static Piece createBlackPawn() {
-        return new Piece(Color.BLACK, TypeOfPiece.PAWN, BLACK_PAWN_REPRESENT);
-    }
-
-    public static Piece createWhitePawn() {
-        return new Piece(Color.WHITE, TypeOfPiece.PAWN, WHITE_PAWN_REPRESENT);
-    }
-
-    public static Piece createBlackBishop() {
-        return new Piece(Color.BLACK, TypeOfPiece.BISHOP, BLACK_BISHOP_REPRESENT);
-    }
-
-    public static Piece createWhiteBishop() {
-        return new Piece(Color.WHITE, TypeOfPiece.BISHOP, WHITE_BISHOP_REPRESENT);
-    }
-
-    public static Piece createBlackKnight() {
-        return new Piece(Color.BLACK, TypeOfPiece.KNIGHT, BLACK_KNIGHT_REPRESENT);
-    }
-
-    public static Piece createWhiteKnight() {
-        return new Piece(Color.WHITE, TypeOfPiece.KNIGHT, WHITE_KNIGHT_REPRESENT);
+    public static Piece createBlank(TypeOfPiece type) {
+        return new Piece(Color.NO_COLOR, type, TypeOfPiece.NO_PIECE.getRepresent());
     }
 
     private final Color color;
@@ -85,6 +38,10 @@ public class Piece {
         return this.represent;
     }
 
+    public TypeOfPiece getType() {
+        return this.type;
+    }
+
     public boolean isWhite() {
         return this.color.equals(Color.WHITE);
     }
@@ -93,4 +50,17 @@ public class Piece {
         return this.color.equals(Color.BLACK);
     }
 
+    public boolean isBlank() {
+        return this.type.equals(TypeOfPiece.NO_PIECE);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Piece) {
+            Piece piece = (Piece) obj;
+            return piece.getType().equals(this.type) && piece.getColor().equals(this.color);
+        }
+
+        return false;
+    }
 }
