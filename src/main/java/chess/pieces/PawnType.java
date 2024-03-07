@@ -2,7 +2,7 @@ package chess.pieces;
 
 public enum PawnType {
     PAWN('p'),
-    KNIGHT('k'),
+    KNIGHT('n'),
     ROOK('r'),
     BISHOP('b'),
     QUEEN('q'),
