@@ -1,5 +1,6 @@
 package src.test.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,12 +24,11 @@ public class BoardTest {
         board.initialize();
         assertEquals(32, board.pieceCount());
         String blankRank = StringUtils.appendNewLine("........");
-        assertEquals(
+        assertThat(
                 StringUtils.appendNewLine("RNBQKBNR") +
                         StringUtils.appendNewLine("PPPPPPPP") +
                         blankRank + blankRank + blankRank + blankRank +
                         StringUtils.appendNewLine("pppppppp") +
-                        StringUtils.appendNewLine("rnbqkbnr"),
-                board.showBoard());
+                        StringUtils.appendNewLine("rnbqkbnr")).isEqualTo(board.showBoard());
     }
 }
