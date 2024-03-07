@@ -8,7 +8,13 @@ public class Piece {
     private Piece(String name, Color color){
         this.name = name;
         this.color = color;
-        this.representation = Representation.PAWN.inColor(color);
+        this.representation = Representation.of(name, color); //고치자
+    }
+
+    private Piece(){
+        this.name = "empty";
+        this.color = null;
+        this.representation = "•";
     }
 
     public static Piece createWhitePawn(){
@@ -57,6 +63,10 @@ public class Piece {
 
     public static Piece createBlackKing(){
         return new Piece(Name.KING, Color.BLACK);
+    }
+
+    public static Piece createEmpty(){
+        return new Piece();
     }
 
     public boolean isBlack(){

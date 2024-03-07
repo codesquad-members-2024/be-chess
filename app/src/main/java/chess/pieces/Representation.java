@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public enum Representation {
@@ -29,8 +30,12 @@ public enum Representation {
         this.representationByColors = representationByColors;
     }
 
-    public String inColor(Color color) {
-        return getRepresentationByColors().get(color);
+    public static String of(String pieceName, Color pieceColor) {
+        return Arrays.stream(values())
+                .filter(r -> r.name().toLowerCase().equals(pieceName))
+                .findFirst()
+                .map(r -> r.getRepresentationByColors().get(pieceColor))
+                .orElseThrow();
     }
 
     private Map<Color, String> getRepresentationByColors() {
