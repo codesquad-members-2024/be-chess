@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Board {
     public static final int CHESSBOARD_MAX_LENGTH = 8;
+    public static final int WHITE_PAWN_START_ROW = 1;
+    public static final int BLACK_PAWN_START_ROW = 6;
+
     private List<Pawn> pawns;
     private Pawn[][] chessboard;
 
@@ -22,9 +25,9 @@ public class Board {
     }
 
     public void initializePawn(PawnColor color){ // 매개변수로 받은 색의 pawn 위치 초기화
-        int initRow = 1; // pawn을 추가할 row, 기본으로 white일때 위치
+        int initRow = WHITE_PAWN_START_ROW; // pawn을 추가할 row, 기본으로 white일때 위치
         if(color == PawnColor.BLACK){
-            initRow = 6;
+            initRow = BLACK_PAWN_START_ROW;
         }
 
         for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
@@ -46,7 +49,6 @@ public class Board {
             }
             stringBuilder.append("\n");
         }
-
         return stringBuilder.toString();
     }
 
@@ -73,5 +75,21 @@ public class Board {
 
     public Pawn findPawn(int index) {
         return pawns.get(index);
+    }
+
+    public String getWhitePawnsResult() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++) {
+            stringBuilder.append(getPawnStatus(chessboard[WHITE_PAWN_START_ROW][i]));
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getBlackPawnsResult() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++) {
+            stringBuilder.append(getPawnStatus(chessboard[BLACK_PAWN_START_ROW][i]));
+        }
+        return stringBuilder.toString();
     }
 }

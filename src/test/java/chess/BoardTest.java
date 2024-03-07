@@ -10,7 +10,7 @@ public class BoardTest {
     public Board board;
 
     @BeforeEach
-    public void initialize() {
+    public void init() {
         this.board = new Board();
     }
 
@@ -25,5 +25,20 @@ public class BoardTest {
         board.add(black);
         assertThat(board.size()).isEqualTo(2);
         assertThat(board.findPawn(1)).isEqualTo(black);
+    }
+
+    @Test
+    @DisplayName("초기 체스판에 흰색, 검은색 폰이 정상적으로 배치되어야 한다.")
+    public void initialize() throws Exception {
+        board.initialize();
+        assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
+        assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+    }
+
+    @Test
+    @DisplayName("초기 체스판이 정상적으로 출력되어야 한다.")
+    void print_initialize() {
+        board.initialize();
+        board.print();
     }
 }
