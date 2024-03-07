@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
+    public static final int CHESSBOARD_MAX_LENGTH = 8;
     private List<Pawn> pawns;
     private Pawn[][] chessboard;
 
     Board(){
         pawns = new ArrayList<Pawn>();
-        chessboard = new Pawn[8][8];
+        chessboard = new Pawn[CHESSBOARD_MAX_LENGTH][CHESSBOARD_MAX_LENGTH];
     }
 
     public void initialize(){
@@ -26,7 +27,7 @@ public class Board {
             initRow = 6;
         }
 
-        for(int i=0; i<8; i++){
+        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
             Pawn pawn = new Pawn(color);
             add(pawn);
             chessboard[initRow][i] = pawn;
@@ -34,13 +35,30 @@ public class Board {
     }
 
     public void print(){
-
+        System.out.print(makeChessboardPicture());
     }
 
-//    public String makeChessboardStr(){
-//        StringBuilder stringBuilder = new StringBuilder(); // chessboard 상태 출력 위해
-//
-//    }
+    public String makeChessboardPicture(){ // chessboard 상태 string 으로 변환 후 반환
+        StringBuilder stringBuilder = new StringBuilder(); // chessboard 상태 출력 위해
+        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
+            for(int j=0; j<CHESSBOARD_MAX_LENGTH; j++){
+                stringBuilder.append(getPawnStatus(chessboard[i][j]));
+            }
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String getPawnStatus(Pawn pawn){
+        if(pawn.getColor() == PawnColor.WHITE){
+            return "p";
+        }
+        if(pawn.getColor() == PawnColor.BLACK){
+            return "P";
+        }
+        return ".";
+    }
 
     public void add(Pawn pawn) {
         pawns.add(pawn);
