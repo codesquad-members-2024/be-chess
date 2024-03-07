@@ -51,6 +51,9 @@ public class Board {
     }
 
     public String getPawnStatus(Pawn pawn){
+        if(pawn == null){
+            return ".";
+        }
         if(pawn.getColor() == PawnColor.WHITE){
             return "p";
         }
