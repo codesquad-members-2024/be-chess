@@ -22,6 +22,7 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("체스 판 초기화 결과에서 흰색 및 검은색 폰 라인의 출력 검증")
     public void initialize() throws Exception {
         board.initialize();
         assertEquals("pppppppp", board.getWhitePawnsResult());
