@@ -1,69 +1,69 @@
 package chess.pieces;
 
 public class Piece {
-    private final PawnColor color;
-    private final PawnType pawnName;
+    private final PieceColor color;
+    private final PieceType pieceName;
     private final char representation;
 
-    private Piece(PawnColor color, PawnType pawnName) {
+    private Piece(PieceColor color, PieceType pieceType) {
         this.color = color;
-        this.pawnName = pawnName;
+        this.pieceName = pieceType;
         this.representation = findPawnRepresentation();
     }
 
-    private static Piece createPawn(PawnColor pawnColor, PawnType pawnName) {
-        return new Piece(pawnColor, pawnName);
+    private static Piece createPawn(PieceColor pieceColor, PieceType pawnName) {
+        return new Piece(pieceColor, pawnName);
     }
 
     public static Piece createWhitePawn() {
-        return createPawn(PawnColor.WHITE, PawnType.PAWN);
+        return createPawn(PieceColor.WHITE, PieceType.PAWN);
     }
 
     public static Piece createBlackPawn() {
-        return createPawn(PawnColor.BLACK, PawnType.PAWN);
+        return createPawn(PieceColor.BLACK, PieceType.PAWN);
     }
 
     public static Piece createWhiteKnight() {
-        return createPawn(PawnColor.WHITE, PawnType.KNIGHT);
+        return createPawn(PieceColor.WHITE, PieceType.KNIGHT);
     }
 
     public static Piece createBlackKnight() {
-        return createPawn(PawnColor.BLACK, PawnType.KNIGHT);
+        return createPawn(PieceColor.BLACK, PieceType.KNIGHT);
     }
 
     public static Piece createWhiteRook() {
-        return createPawn(PawnColor.WHITE, PawnType.ROOK);
+        return createPawn(PieceColor.WHITE, PieceType.ROOK);
     }
 
     public static Piece createBlackRook() {
-        return createPawn(PawnColor.BLACK, PawnType.ROOK);
+        return createPawn(PieceColor.BLACK, PieceType.ROOK);
     }
 
     public static Piece createWhiteBishop() {
-        return createPawn(PawnColor.WHITE, PawnType.BISHOP);
+        return createPawn(PieceColor.WHITE, PieceType.BISHOP);
     }
 
     public static Piece createBlackBishop() {
-        return createPawn(PawnColor.BLACK, PawnType.BISHOP);
+        return createPawn(PieceColor.BLACK, PieceType.BISHOP);
     }
 
     public static Piece createWhiteQueen() {
-        return createPawn(PawnColor.WHITE, PawnType.QUEEN);
+        return createPawn(PieceColor.WHITE, PieceType.QUEEN);
     }
 
     public static Piece createBlackQueen() {
-        return createPawn(PawnColor.BLACK, PawnType.QUEEN);
+        return createPawn(PieceColor.BLACK, PieceType.QUEEN);
     }
 
     public static Piece createWhiteKing() {
-        return createPawn(PawnColor.WHITE, PawnType.KING);
+        return createPawn(PieceColor.WHITE, PieceType.KING);
     }
 
     public static Piece createBlackKing() {
-        return createPawn(PawnColor.BLACK, PawnType.KING);
+        return createPawn(PieceColor.BLACK, PieceType.KING);
     }
 
-    public PawnColor getColor() {
+    public PieceColor getColor() {
         return color;
     }
 
@@ -72,18 +72,18 @@ public class Piece {
     }
 
     public boolean isWhite() {
-        return color.equals(PawnColor.WHITE);
+        return color.equals(PieceColor.WHITE);
     }
 
     public boolean isBlack() {
-        return color.equals(PawnColor.BLACK);
+        return color.equals(PieceColor.BLACK);
     }
 
     private char findPawnRepresentation() {
         if(isWhite()){
-            return pawnName.getColorRepresentation(PawnColor.WHITE);
+            return pieceName.getColorRepresentation(PieceColor.WHITE);
         } else {
-            return pawnName.getColorRepresentation(PawnColor.BLACK);
+            return pieceName.getColorRepresentation(PieceColor.BLACK);
         }
     }
 }

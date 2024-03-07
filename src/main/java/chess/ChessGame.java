@@ -19,7 +19,7 @@ public class ChessGame {
             if(userInput.equals("end")) {
                 return;
             } else if (userInput.equals("start")) {
-                String print = board.print();
+                String print = board.showBoard();
                 System.out.println(print);
             }
         }

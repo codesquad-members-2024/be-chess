@@ -1,6 +1,6 @@
 package chess.pieces;
 
-public enum PawnColor {
+public enum PieceColor {
     WHITE,
     BLACK;
 }
