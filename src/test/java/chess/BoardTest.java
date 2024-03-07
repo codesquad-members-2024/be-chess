@@ -34,10 +34,11 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("검정 폰과 흰색 폰이 8개씩 올바르게 생성되었는지 확인")
     public void initialize() throws Exception {
         Board board = new Board();
         board.initialize();
-//        assertEquals("pppppppp", board.getWhitePawnsResult());
-//        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
+        assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
     }
 }
