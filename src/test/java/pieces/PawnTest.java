@@ -1,11 +1,8 @@
 package pieces;
 
-import org.assertj.core.api.AbstractCharacterAssert;
 import org.junit.jupiter.api.*;
-import pieces.Pawn;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals; // JUnit 5의 assertEquals를 임포트
 
 public class PawnTest {
 
@@ -20,8 +17,8 @@ public class PawnTest {
     @DisplayName("색이 없는 Pawn을 생성하는 경우 white Pawn을 생성해야 한다 ")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
-        assertEquals(PawnColor.WHITE, pawn.getColor());
-        assertEquals(Pawn.WHITE_PAWN, pawn.getChessPiece());
+        assertThat(pawn.getColor()).isEqualTo(PawnColor.WHITE);
+        assertThat(pawn.getChessPiece()).isEqualTo(Pawn.WHITE_PAWN);
     }
 
     private void verifyPawn(PawnColor color) {
