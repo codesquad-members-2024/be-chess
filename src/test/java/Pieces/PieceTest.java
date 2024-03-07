@@ -1,7 +1,6 @@
 package Pieces;
 
 import org.example.Pieces.Pawn;
-import org.example.Pieces.Piece;
 import org.example.Pieces.Color;
 import org.junit.jupiter.api.*;
 

@@ -85,11 +85,11 @@
             }
         }
 
-        public int getPiecesSize() {
+        public int pieceCount() {
             return whitePiece.size() + blackPiece.size();
         }
 
-        public String getBoardPrint() {
+        public String showBoard() {
             return board.stream()
                     .map(this::getRowPrint)
                     .collect(Collectors.joining(appendNewLine("")));
