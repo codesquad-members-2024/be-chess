@@ -2,11 +2,11 @@ package chess.board;
 
 import static chess.common.Color.*;
 import static chess.pieces.Piece.*;
+import static chess.pieces.Piece.Type.*;
 import static chess.utils.StringUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.pieces.CreateCommand;
 import chess.pieces.Piece;
 import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeEach;
@@ -118,15 +118,15 @@ class BoardTest {
     @Test
     void initialize_first_in_first_out() {
         // given
-        board.add(CreateCommand.create(BLACK, ALLOWED_KING_NAME));
-        board.add(CreateCommand.create(BLACK, ALLOWED_ROOK_NAME));
-        board.add(CreateCommand.create(BLACK, ALLOWED_KNIGHT_NAME));
-        board.add(CreateCommand.create(BLACK, ALLOWED_PAWN_NAME));
+        board.add(Piece.createBlackKing());
+        board.add(Piece.createBlackRook());
+        board.add(Piece.createBlackKnight());
+        board.add(Piece.createBlackPawn());
 
-        board.add(CreateCommand.create(WHITE, ALLOWED_KING_NAME));
-        board.add(CreateCommand.create(WHITE, ALLOWED_ROOK_NAME));
-        board.add(CreateCommand.create(WHITE, ALLOWED_KNIGHT_NAME));
-        board.add(CreateCommand.create(WHITE, ALLOWED_PAWN_NAME));
+        board.add(Piece.createWhiteKing());
+        board.add(Piece.createWhiteRook());
+        board.add(Piece.createWhiteKnight());
+        board.add(Piece.createWhitePawn());
 
         // when
         Piece firstInPiece = board.findPiece(0);
@@ -135,13 +135,13 @@ class BoardTest {
         // then
         assertAll(
                 "체스판에 먼저 들어간 기물은 검정색 킹이다",
-                () -> assertThat(firstInPiece.getName()).isEqualTo(ALLOWED_KING_NAME),
+                () -> assertThat(firstInPiece.getName()).isEqualTo(KING.allowedName),
                 () -> assertThat(firstInPiece.getColor()).isEqualTo(BLACK)
         );
 
         assertAll(
                 "체스판에 마지막으로 들어간 기물은 흰색 폰이다",
-                () -> assertThat(lastInPiece.getName()).isEqualTo(ALLOWED_PAWN_NAME),
+                () -> assertThat(lastInPiece.getName()).isEqualTo(PAWN.allowedName),
                 () -> assertThat(lastInPiece.getColor()).isEqualTo(WHITE)
         );
     }
