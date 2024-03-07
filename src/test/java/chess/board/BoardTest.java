@@ -17,38 +17,40 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
 
-    private Board<Piece> board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        board = new Board<>();
+        board = new Board();
     }
 
-    @DisplayName("체스판은 기물을 추가할 수 있다")
+    @DisplayName("체스판 a1 위치에 흰색 폰을 추가할 수 있다")
     @Test
     void create() {
         // given
+        board.initializeBoardBlocks();
         Piece white = createWhitePawn();
 
         // when
-        board.add(white);
+        board.move("a1", white);
 
         // then
         assertEquals(1, board.pieceCount());
     }
 
-    @DisplayName("체스판에 첫번째로 추가된 흰색 폰은 0번째에 위치한다.")
+    @DisplayName("a1에 추가된 흰색 폰은 a1에 위치하고, a2에 추가된 흰색 폰은 a2에 위치한다")
     @Test
     void findPawn() {
         // given
+        board.initializeBoardBlocks();
         Piece whitePawn = createWhitePawn();
         Piece blackPawn = createBlackPawn();
-        board.add(whitePawn);
-        board.add(blackPawn);
+        board.move("a1", whitePawn);
+        board.move("a2", blackPawn);
 
         // when
-        Piece firstFindPiece = board.findPiece(0);
-        Piece secondFindPiece = board.findPiece(1);
+        Piece firstFindPiece = board.findPiece("a1");
+        Piece secondFindPiece = board.findPiece("a2");
 
         // then
         assertAll(
@@ -63,7 +65,7 @@ class BoardTest {
     void add_compileError(String number) {
         assertThatCode(
                 () -> {
-                    Method addMethod = Board.class.getDeclaredMethod("add", Piece.class);
+                    Method addMethod = Board.class.getDeclaredMethod("move", String.class, Piece.class);
                     addMethod.setAccessible(true);
                     addMethod.invoke(board, Integer.parseInt(number));
                 }).isInstanceOf(IllegalArgumentException.class);
@@ -114,34 +116,29 @@ class BoardTest {
         );
     }
 
-    @DisplayName("체스판에 먼저 추가되는 기물은 출력할 때 좌측 첫번째에 위치한다")
+    @DisplayName("체스판에 a1, h8 위치에 추가되는 검은색 킹과 흰색 킹을 찾을 수 있다")
     @Test
-    void initialize_first_in_first_out() {
+    void findPiece() {
         // given
-        board.add(Piece.createBlackKing());
-        board.add(Piece.createBlackRook());
-        board.add(Piece.createBlackKnight());
-        board.add(Piece.createBlackPawn());
+        board.initializeBoardBlocks();
+        board.move("a1", Piece.createBlackKing());
 
-        board.add(Piece.createWhiteKing());
-        board.add(Piece.createWhiteRook());
-        board.add(Piece.createWhiteKnight());
-        board.add(Piece.createWhitePawn());
+        board.move("h8", Piece.createWhiteKing());
 
         // when
-        Piece firstInPiece = board.findPiece(0);
-        Piece lastInPiece = board.findPiece(7);
+        Piece firstInPiece = board.findPiece("a1");
+        Piece lastInPiece = board.findPiece("h8");
 
         // then
         assertAll(
-                "체스판에 먼저 들어간 기물은 검정색 킹이다",
+                "체스판 a1에 들어간 기물은 검정색 킹이다",
                 () -> assertThat(firstInPiece.getName()).isEqualTo(KING.allowedName),
                 () -> assertThat(firstInPiece.getColor()).isEqualTo(BLACK)
         );
 
         assertAll(
-                "체스판에 마지막으로 들어간 기물은 흰색 폰이다",
-                () -> assertThat(lastInPiece.getName()).isEqualTo(PAWN.allowedName),
+                "체스판 h8에 들어간 기물은 흰색 킹이다",
+                () -> assertThat(lastInPiece.getName()).isEqualTo(KING.allowedName),
                 () -> assertThat(lastInPiece.getColor()).isEqualTo(WHITE)
         );
     }
@@ -150,15 +147,16 @@ class BoardTest {
     @Test
     void getTotalCount_find_three() {
         // given
+        board.initializeBoardBlocks();
         // 검정색 나이트 3개 배치
-        board.add(Piece.createBlackKnight());
-        board.add(Piece.createBlackKnight());
-        board.add(Piece.createBlackKnight());
+        board.move("a1", Piece.createBlackKnight());
+        board.move("a2", Piece.createBlackKnight());
+        board.move("a3", Piece.createBlackKnight());
 
         // 흰색 나이트 3개 배치
-        board.add(Piece.createWhiteKnight());
-        board.add(Piece.createWhiteKnight());
-        board.add(Piece.createWhiteKnight());
+        board.move("b1", Piece.createWhiteKnight());
+        board.move("b2", Piece.createWhiteKnight());
+        board.move("b3", Piece.createWhiteKnight());
 
         // when
         int totalCount = board.getTotalCount(BLACK, KNIGHT);
@@ -167,7 +165,7 @@ class BoardTest {
         assertThat(totalCount).isEqualTo(3);
     }
 
-    @DisplayName("체스판에 놓인 기물이 없으면 결과는 항상 0개다")
+    @DisplayName("체스판에 놓인 기물이 없으면 찾는 기물의 개수는 항상 0개다")
     @Test
     void getTotalCount_zero() {
         int blackKnightCount = board.getTotalCount(BLACK, KNIGHT);

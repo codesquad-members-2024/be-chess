@@ -17,23 +17,22 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Board<T extends Piece> {
+public class Board {
     private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
-    private static final String BLANK_PIECES = ".".repeat(FILE_COUNT);
-    private List<Piece> pieces = new ArrayList<>();
     private List<Position> boardBlocks = new ArrayList<>();
 
-    public Piece findPiece(int index) {
-        return pieces.get(index);
-    }
-
-    public void add(Piece piece) {
-        pieces.add(piece);
+    public Piece findPiece(String pos) {
+        return boardBlocks.stream()
+                .filter(positions -> Arrays.equals(convertPosToRankAndFile(pos), positions.getRankAndFile()))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new)
+                .getPiece();
     }
 
     public int pieceCount() {
-        return (int) pieces.stream()
+        return (int) boardBlocks.stream()
+                .map(Position::getPiece)
                 .filter(piece -> !piece.isSameColor(NO_COLOR))
                 .count();
     }
@@ -71,22 +70,25 @@ public class Board<T extends Piece> {
     }
 
     private void createMajor(Color color) {
-        pieces.add(create(color, ROOK));
-        pieces.add(create(color, KNIGHT));
-        pieces.add(create(color, BISHOP));
-        pieces.add(create(color, QUEEN));
-        pieces.add(create(color, KING));
-        pieces.add(create(color, BISHOP));
-        pieces.add(create(color, KNIGHT));
-        pieces.add(create(color, ROOK));
+        int rank = InitPos.MAJOR.check(color);
+
+        move(convertRankAndFileToPos(rank, 0), create(color, ROOK));
+        move(convertRankAndFileToPos(rank, 1), create(color, KNIGHT));
+        move(convertRankAndFileToPos(rank, 2), create(color, BISHOP));
+        move(convertRankAndFileToPos(rank, 3), create(color, QUEEN));
+        move(convertRankAndFileToPos(rank, 4), create(color, KING));
+        move(convertRankAndFileToPos(rank, 5), create(color, BISHOP));
+        move(convertRankAndFileToPos(rank, 6), create(color, KNIGHT));
+        move(convertRankAndFileToPos(rank, 7), create(color, ROOK));
     }
 
     private void createPawns(Color color) {
-        IntStream.range(0, FILE_COUNT).forEach(i -> pieces.add(create(color, PAWN)));
-    }
+        int rank = InitPos.PAWN.check(color);
 
-    private void createBlank() {
-        IntStream.range(0, FILE_COUNT * 2).forEach(i -> pieces.add(create(NO_COLOR, NO_PIECE)));
+        IntStream.range(0, FILE_COUNT)
+                .forEach(file -> {
+                    move(convertRankAndFileToPos(rank, file), create(color, PAWN));
+                });
     }
 
     public String getPawnsResultByColor(Color color) {
@@ -102,7 +104,8 @@ public class Board<T extends Piece> {
     }
 
     private String getPieceResultByColor(Predicate<Piece> filterCondition) {
-        return pieces.stream()
+        return boardBlocks.stream()
+                .map(Position::getPiece)
                 .filter(filterCondition::test)
                 .map(Piece::getRepresentation)
                 .collect(Collectors.joining());
@@ -125,15 +128,19 @@ public class Board<T extends Piece> {
     }
 
     private void getBoardRepresentation(StringBuilder builder) {
-        builder.append(appendNewLine(getMajorResultByColor(BLACK)));
-        builder.append(appendNewLine(getPawnsResultByColor(BLACK)));
-        IntStream.range(0, 4).forEach(i -> builder.append(appendNewLine(getBlankPieces().substring(0, FILE_COUNT))));
-        builder.append(appendNewLine(getPawnsResultByColor(WHITE)));
-        builder.append(appendNewLine(getMajorResultByColor(WHITE)));
+        IntStream.range(0, RANK_COUNT * FILE_COUNT)
+                .forEach(i -> {
+                    if (i % FILE_COUNT == FILE_COUNT - 1) {
+                        builder.append(appendNewLine(boardBlocks.get(i).getPiece().getRepresentation()));
+                    } else {
+                        builder.append(boardBlocks.get(i).getPiece().getRepresentation());
+                    }
+                });
     }
 
     public int getTotalCount(Color color, Type type) {
-        return (int) pieces.stream()
+        return (int) boardBlocks.stream()
+                .map(Position::getPiece)
                 .filter(piece -> piece.isSameColor(color) && piece.isSameType(type))
                 .count();
     }
