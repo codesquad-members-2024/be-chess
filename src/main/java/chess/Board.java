@@ -6,7 +6,10 @@ import java.util.List;
 
 public class Board {
     private final List<Pawn> pawns = new ArrayList<>(); //final 변경
-    String[][] table = new String[8][8];
+    private final List<Pawn> whitePawns = new ArrayList<>(); //final 변경
+    private final List<Pawn> blackPawns = new ArrayList<>(); //final 변경
+
+
     public void add(final Pawn pawn) {
         this.pawns.add(pawn);
     }
@@ -17,5 +20,7 @@ public class Board {
         return this.pawns.get(index);
     }
 
+    public void initialize() {
 
+    }
 }

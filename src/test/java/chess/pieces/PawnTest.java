@@ -15,7 +15,7 @@ public class PawnTest {
     @DisplayName("기본 생성자 구현 테스트")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
-        assertThat(Pawn.WHITE_COLOR).isEqualTo(pawn.getColor());
+        assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
     }
 
     public void verifyPawn(final String color,final char representation) {
