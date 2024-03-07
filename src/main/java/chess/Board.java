@@ -73,10 +73,10 @@ public class Board {
         StringBuilder stringBuilder = new StringBuilder();
         for (int column = 0; column < BOARD_SIZE; column++) {
             if(column == WHITE_PAWNS_INDEX){
-                stringBuilder.append(getBlackPawnsResult()).append("\n");
+                stringBuilder.append(getWhitePawnsResult()).append("\n");
             }
             if(column == BLACK_PAWNS_INDEX) {
-                stringBuilder.append(getWhitePawnsResult()).append("\n");
+                stringBuilder.append(getBlackPawnsResult()).append("\n");
             }
             if (column != WHITE_PAWNS_INDEX && column != BLACK_PAWNS_INDEX) {
                 stringBuilder.append("........").append("\n");
