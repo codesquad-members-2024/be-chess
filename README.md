@@ -73,7 +73,7 @@
 - [x] 출력 상황에서 자신의 콘솔에서 어떻게 출력될 것인가에 대한 정보를 지니고 있다
 
 #### Board::initialize()
-- ~~[ ] 흰색 pawn 열과 검은색 pawn 열을 구분해서 구현한다 (ArrayList)~~
+- ~~[ ] 흰색 piece 열과 검은색 piece 열을 구분해서 구현한다 (ArrayList)~~
   - 하나의 열에서 모두 관리
 - [x] 기물의 열을 하나로 합쳐야 하는 상황에서는 StringBuilder를 활용하여 합친다
 
@@ -91,3 +91,61 @@
 - [x] main() 메서드를 가지는 새로운 클래스를 추가하여 시작과 종료 기능을 제공
 - [x] Scanner를 이용해 사용자 입력 값을 받는다
 - [x] while을 통해 사용자 입력 값을 받을 수 있도록 한다
+
+
+## Step 4 : 모든 기물 배치하기
+### StringUtils 클래스
+- [ ] `utils.StringUtils` 클래스를 추가한다
+  - [ ] 상수값으로 NEWLINE을 `System.getProperty("line.separator")`으로 가진다 (운영체제 독립적으로 작동시키기 위해)
+  - [ ] `appendNewLine("문자열")` 메서드 구현
+    - [ ] 인자로 전달한 메서드에 개행 문자를 추가하는 기능을 지님
+    - [ ] static import를 통해 구현한다
+  - [ ] 생성자를 private으로 선언하여 직접적으로 인스턴스를 생성하지 못하도록 막는다
+
+### Pawn -> Piece (리팩토링)
+- [ ] 색상과 이름을 속성으로 지닌다
+  - [ ] 이름은 기물의 종류를 의미하며 piece, knight, rook, bishop, queen, king 으로 구분 가능
+- [ ] 값(value) 객체여야 한다
+  - [ ] private 생성자를 가지며, 인스턴스 생성한 이후 인스턴스의 상태앖을 변경 불가하다
+- [ ] 색과 이름을 받아 Piece 객체를 생성하는 팩토리 메서드를 구현
+- [ ] 기본 말을 생성하는 생성자는 없앤다
+- [x] 검은색 말과 흰색 말을 구분할 수 있는 메서드를 추가한다
+  - ex. isBlack(), isWhite()
+
+### 팩토리 메서드 생성
+- [ ] 각 Piece별로 흰색 말과 검은 색 말을 생성하는 팩토리 메소드를 추가한다
+
+### 전체 기물의 상태를 볼 수 있는 체스판 구현 및 테스트
+- [ ] 다음 테스트를 만족하는 Board를 구현한다
+```java
+import static utils.StringUtils.appendNewLine;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class BoardTest {
+    private Board board;
+    
+    @Before
+    public void setup() {
+        board = new Board();
+    }
+    
+    @Test
+    public void create() throws Exception {
+        board.initialize();
+        assertEquals(32, board.pieceCount());
+        String blankRank = appendNewLine("........");
+        assertEquals(
+            appendNewLine("RNBQKBNR") +
+            appendNewLine("PPPPPPPP") +
+            blankRank + blankRank + blankRank + blankRank +
+            appendNewLine("pppppppp") +
+            appendNewLine("rnbqkbnr"),
+            board.showBoard());        
+    }
+}
+```
+
