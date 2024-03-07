@@ -60,12 +60,20 @@ public class Piece {
         return new Piece(Colors.WHITE, Type.KING);
     }
 
+    public static Piece createBlank() {
+        return new Piece(Colors.NO_COLOR, Type.NO_PIECE);
+    }
+
     public boolean isBlack() {
         return color.equals(Colors.BLACK);
     }
 
     public boolean isWhite() {
         return color.equals(Colors.WHITE);
+    }
+
+    public boolean isBlank() {
+        return type.equals(Type.NO_PIECE);
     }
 
     // 색에 따라서 Representation의 설정이 필요하다
@@ -79,6 +87,10 @@ public class Piece {
 
     public String getColor() {
         return color.getColorName();
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override

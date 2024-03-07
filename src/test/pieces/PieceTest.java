@@ -6,18 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import src.chess.pieces.Piece;
 import org.junit.jupiter.api.Test;
+import src.chess.pieces.Piece.Type;
 
 public class PieceTest {
     @Test
-    @DisplayName("폰을 생성할 때 올바른 색의 폰인지, 색에 따라 올바른 기물 모양이 세팅되었는지 확인한다.")
+    @DisplayName("생성한 기물이 올바른 색, 올바른 기물 타입을 가지는지 확인한다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), Piece.Colors.WHITE.getColorName(), Piece.Type.PAWN.getPieceByColor(Piece.Colors.WHITE));
-        verifyPiece(Piece.createBlackPawn(), Piece.Colors.BLACK.getColorName(), Piece.Type.PAWN.getPieceByColor(Piece.Colors.BLACK));
+        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), Type.PAWN);
+        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), Type.KNIGHT);
+        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), Type.ROOK);
+        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), Type.BISHOP);
+        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), Type.QUEEN);
+        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), Type.KING);
+
+        Piece blank = Piece.createBlank();
+        assertThat(blank.isWhite()).isFalse();
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(Type.NO_PIECE).isEqualTo(blank.getType());
     }
 
-    private void verifyPiece(final Piece piece, final String color, final char representation) {
-        assertEquals(color, piece.getColor());
-        assertEquals(String.valueOf(representation), piece.toString());
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Type type) {
+        assertThat(whitePiece.isWhite()).isTrue();
+        assertThat(type).isEqualTo(whitePiece.getType());
+
+        assertThat(blackPiece.isBlack()).isTrue();
+        assertThat(type).isEqualTo(blackPiece.getType());
     }
 
     @Test

@@ -5,7 +5,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import src.chess.pieces.Piece;
 import java.util.ArrayList;
 import src.utils.StringUtils;
@@ -33,22 +32,8 @@ public class Board {
 
     public int pieceCount() {
         return (int) (chessBoard.values().stream()
-                .filter(square -> square != null)
+                .filter(square -> !square.isBlank())
                 .count());
-    }
-
-    public String getBlackPawnsResult() {
-        return chessBoard.keySet().stream()
-                .filter(key -> Square.A7.ordinal() <= key.ordinal() && Square.H7.ordinal() >= key.ordinal())
-                .map(key -> chessBoard.get(key).toString())
-                .collect(Collectors.joining());
-    }
-
-    public String getWhitePawnsResult() {
-        return chessBoard.keySet().stream()
-                .filter(key -> Square.A2.ordinal() <= key.ordinal() && Square.H2.ordinal() >= key.ordinal())
-                .map(key -> chessBoard.get(key).toString())
-                .collect(Collectors.joining());
     }
 
     public String getPieceByRow(int startRange) {
@@ -57,7 +42,7 @@ public class Board {
         int endRange = startRange + rowSize;
         chessBoard.entrySet().stream()
                 .filter(entry -> entry.getKey().getOrdinal() >= startRange && entry.getKey().getOrdinal() <= endRange)
-                .forEach(entry -> result.append(Objects.requireNonNullElse(entry.getValue(),".")));
+                .forEach(entry -> result.append(entry.getValue()));
         return result.toString();
     }
 

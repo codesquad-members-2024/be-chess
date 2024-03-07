@@ -10,10 +10,17 @@ public enum Square {
     A7(Piece::createBlackPawn), B7(Piece::createBlackPawn), C7(Piece::createBlackPawn), D7(Piece::createBlackPawn),
     E7(Piece::createBlackPawn), F7(Piece::createBlackPawn), G7(Piece::createBlackPawn), H7(Piece::createBlackPawn),
 
-    A6(null), B6(null), C6(null), D6(null), E6(null), F6(null), G6(null), H6(null),
-    A5(null), B5(null), C5(null), D5(null), E5(null), F5(null), G5(null), H5(null),
-    A4(null), B4(null), C4(null), D4(null), E4(null), F4(null), G4(null), H4(null),
-    A3(null), B3(null), C3(null), D3(null), E3(null), F3(null), G3(null), H3(null),
+    A6(Piece::createBlank), B6(Piece::createBlank), C6(Piece::createBlank), D6(Piece::createBlank),
+    E6(Piece::createBlank), F6(Piece::createBlank), G6(Piece::createBlank), H6(Piece::createBlank),
+
+    A5(Piece::createBlank), B5(Piece::createBlank), C5(Piece::createBlank), D5(Piece::createBlank),
+    E5(Piece::createBlank), F5(Piece::createBlank), G5(Piece::createBlank), H5(Piece::createBlank),
+
+    A4(Piece::createBlank), B4(Piece::createBlank), C4(Piece::createBlank), D4(Piece::createBlank),
+    E4(Piece::createBlank), F4(Piece::createBlank), G4(Piece::createBlank), H4(Piece::createBlank),
+
+    A3(Piece::createBlank), B3(Piece::createBlank), C3(Piece::createBlank), D3(Piece::createBlank),
+    E3(Piece::createBlank), F3(Piece::createBlank), G3(Piece::createBlank), H3(Piece::createBlank),
 
     A2(Piece::createWhitePawn), B2(Piece::createWhitePawn), C2(Piece::createWhitePawn), D2(Piece::createWhitePawn),
     E2(Piece::createWhitePawn), F2(Piece::createWhitePawn), G2(Piece::createWhitePawn), H2(Piece::createWhitePawn),
@@ -28,9 +35,6 @@ public enum Square {
     }
 
     public Piece initBoard() {
-        if (init == null) {
-            return null;
-        }
         return init.get();
     }
 
