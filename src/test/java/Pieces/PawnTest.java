@@ -5,23 +5,23 @@ import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PawnTest{
+class PawnTest{
 
     @Test
-    public void create_기본생성자(){
+    void create_기본생성자(){
         Pawn pawn = new Pawn();
         assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
     }
 
     @Test
     @DisplayName("흰색 폰이 생성되어야 한다.")
-    public void createWhitePawn() {
+    void createWhitePawn() {
         verifyPawn(Pawn.WHITE_COLOR);
     }
 
     @Test
     @DisplayName("검정색 폰이 생성되어야 한다.")
-    public void createBlackPawn() {
+    void createBlackPawn() {
         verifyPawn(Pawn.BLACK_COLOR);
     }
 

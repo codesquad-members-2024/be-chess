@@ -5,23 +5,23 @@ import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardTest {
+class BoardTest {
     private Board board;
 
     @BeforeEach
-    public void setupBoard() {
+    void setupBoard() {
         this.board = new Board();
     }
 
     @Test
     @DisplayName("흰색 폰이 보드에 추가 되어야 한다.")
-    public void TestWhitePawnAdd() {
+    void TestWhitePawnAdd() {
         addAndTestPawn(Pawn.WHITE_COLOR);
     }
 
     @Test
     @DisplayName("검은색 폰이 보드에 추가 되어야 한다.")
-    public void TestBlackPawnAdd() {
+    void TestBlackPawnAdd() {
         addAndTestPawn(Pawn.BLACK_COLOR);
     }
 
@@ -34,15 +34,11 @@ public class BoardTest {
     }
 
     @Test
-    public void initialize() throws Exception {
+    void initialize() throws Exception {
         board.initialize();
         String expectedWhitePawns = "PPPPPPPP";
         String expectedBlackPawns = "pppppppp";
         assertThat(board.getWhitePawnsResult()).isEqualTo(expectedWhitePawns);
         assertThat(board.getBlackPawnsResult()).isEqualTo(expectedBlackPawns);
     }
-
-
-
-
 }
