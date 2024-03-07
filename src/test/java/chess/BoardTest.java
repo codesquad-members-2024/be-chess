@@ -9,25 +9,25 @@ import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-  Board board;
+    Board board;
 
-  @BeforeEach
-  void setup() {
-    board = new Board();
-  }
+    @BeforeEach
+    void setup() {
+        board = new Board();
+    }
 
-  @Test
-  @DisplayName("체스 판 전체의 초기화 상태 확인")
-  public void initialize() throws Exception {
-    board.initialize();
-    assertThat(board.pieceCount()).isEqualTo(32);
-    String blankRank = appendNewLine("........");
-    assertThat(board.showBoard()).isEqualTo(
-        appendNewLine("RNBQKBNR") +
-            appendNewLine("PPPPPPPP") +
-            blankRank + blankRank + blankRank + blankRank +
-            appendNewLine("pppppppp") +
-            appendNewLine("rnbqkbnr")
-    );
-  }
+    @Test
+    @DisplayName("체스 판 전체의 초기화 시 기물의 개수 및 확인")
+    public void initialize() throws Exception {
+        board.initialize();
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+            appendNewLine("RNBQKBNR") +
+                appendNewLine("PPPPPPPP") +
+                blankRank + blankRank + blankRank + blankRank +
+                appendNewLine("pppppppp") +
+                appendNewLine("rnbqkbnr")
+        );
+    }
 }

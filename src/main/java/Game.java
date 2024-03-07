@@ -1,6 +1,7 @@
 import chess.Board;
 
 public class Game {
+
     private final Board board;
 
     Game() {

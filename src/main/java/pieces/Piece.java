@@ -1,7 +1,9 @@
 package pieces;
 
 public class Piece {
+
     private enum Name {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING, EMPTY}
+
     public static final String WHITE_COLOR = "white";
     public static final String BLACK_COLOR = "black";
     public static final String EMPTY_COLOR = "";
