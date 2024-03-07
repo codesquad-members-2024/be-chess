@@ -9,7 +9,7 @@
 
 **Board**
 - 체스판을 담당하는 Board 클래스 
-- 체스판에 Pawn 이외의 객체가 추가되지 않도록 한다. add(Pawn pawn) {pawns.add(pawn)}
+- 체스판에 Pawn 이외의 객체가 추가되지 않도록 한다. add(Pawn piece) {pieces.add(piece)}
 - 검은색 폰과 흰색 폰을 각각 8개씩 가지도록 초기화 한다 (검은색 폰은 P, 흰색 폰은 p 출력)
 - 체스 판을 콘솔 화면에 출력한다.
 
