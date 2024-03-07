@@ -5,6 +5,11 @@ public class Piece {
     private final Color color;
     private final Type type;
 
+    private Piece(Color color, Type type) {
+        this.color = color;
+        this.type = type;
+    }
+
     public enum Color {
         WHITE, BLACK;
     }
@@ -44,16 +49,11 @@ public class Piece {
         return isWhite() ? type.getWhiteRepresentation() : type.getBlackRepresentation();
     }
 
-    private Piece(Color color, Type type) {
-        this.color = color;
-        this.type = type;
-    }
-
-    private boolean isBlack() {
+    public boolean isBlack() {
         return color == Color.BLACK;
     }
 
-    private boolean isWhite() {
+    public boolean isWhite() {
         return color == Color.WHITE;
     }
 
