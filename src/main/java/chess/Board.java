@@ -1,6 +1,5 @@
 package chess;
 
-import chess.pieces.Pawn;
 import chess.pieces.Representation;
 
 import java.util.ArrayList;
@@ -8,46 +7,38 @@ import java.util.List;
 
 public class Board {
 
-    private final List<Pawn> pawns;
+    private static final String BLANK = "-";
+    private static final int START_INDEX = 0;
+    private static final int END_INDEX = 7;
+    private static final int INITIAL_BLACK_PAWNS_INDEX = 1;
+    private static final int INITIAL_WHITE_PAWNS_INDEX = 6;
+
     private final List<List<String>> board;
 
     public Board() {
-        this.pawns = new ArrayList<>();
         this.board = new ArrayList<>();
-    }
-
-    public void addPawn(Pawn pawn) {
-        pawns.add(pawn);
-    }
-
-    public int getPawnsSize() {
-        return pawns.size();
-    }
-
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
     }
 
     public void initialize() {
         List<String> basicLine = getBasicLine();
-        for (int i = 0; i < 8; i++) {
+        for (int i = START_INDEX; i <= END_INDEX; i++) {
             board.add(basicLine);
         }
-        board.set(1, getBlackPawns());
-        board.set(6, getWhitePawns());
+        board.set(INITIAL_BLACK_PAWNS_INDEX, getBlackPawns());
+        board.set(INITIAL_WHITE_PAWNS_INDEX, getWhitePawns());
     }
 
     private List<String> getBasicLine() {
         List<String> basic = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            basic.add("-");
+        for (int i = START_INDEX; i <= END_INDEX; i++) {
+            basic.add(BLANK);
         }
         return basic;
     }
 
     private List<String> getWhitePawns() {
         List<String> whitePawns = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = START_INDEX; i <= END_INDEX; i++) {
             whitePawns.add(Representation.WHITE_PAWN.getRepresentation());
         }
         return whitePawns;
@@ -55,7 +46,7 @@ public class Board {
 
     private List<String> getBlackPawns() {
         List<String> blackPawns = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = START_INDEX; i <= END_INDEX; i++) {
             blackPawns.add(Representation.BLACK_PAWN.getRepresentation());
         }
         return blackPawns;
@@ -72,7 +63,7 @@ public class Board {
         return result.toString();
     }
 
-    public List<List<String>> getBoard() {
-        return board;
+    public boolean verifyBoardLineContent(int line, List<String> content) {
+        return board.get(line - 1).equals(content);
     }
 }
