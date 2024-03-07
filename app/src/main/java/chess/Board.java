@@ -1,6 +1,6 @@
 package chess;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import utils.StringUtils;
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class Board {
-    private List<List<Pawn>> chessBoard;
-    private List<Pawn> pawns;
+    private List<List<Piece>> chessBoard;
+    private List<Piece> pawns;
     private final int CHESS_BOARD_START_INDEX = 0;
     private final int CHESS_BOARD_END_INDEX = 8;
 
@@ -26,20 +26,20 @@ public class Board {
 
         for (int i = CHESS_BOARD_START_INDEX; i < CHESS_BOARD_END_INDEX; i++){
           if(i == BLACK_PAWN_ROW){
-              addPawnRow("black");
+              addPieceRow("black");
           }
           else if(i == WHITE_PAWN_ROW){
-              addPawnRow("white");
+              addPieceRow("white");
           } else {
               addEmptyRow();
           }
         }
     }
 
-    private void addPawnRow(String color){
-        List<Pawn> pawnRow = new ArrayList<>();
+    private void addPieceRow(String color){
+        List<Piece> pawnRow = new ArrayList<>();
         for (int i = CHESS_BOARD_START_INDEX; i < CHESS_BOARD_END_INDEX; i++){
-            pawnRow.add(new Pawn(color));
+            pawnRow.add(new Piece(color));
         }
         chessBoard.add(pawnRow);
     }
@@ -58,20 +58,20 @@ public class Board {
         return builder.deleteCharAt(builder.length()-1).toString();
     }
 
-    private final Function<List<Pawn>, List<String>> representationConversion =
+    private final Function<List<Piece>, List<String>> representationConversion =
             (pawnRow) -> pawnRow.stream()
             .map(value -> Optional.ofNullable(value)
-                .map(Pawn::getRepresentation)
+                .map(Piece::getRepresentation)
                 .orElse("•")
                 ).toList();
 
-    public void addPawn(Pawn pawn){
+    public void addPiece(Piece pawn){
         pawns.add(pawn);
     }
-    public int getNumOfPawn() {
+    public int getNumOfPiece() {
         return pawns.size();
     }
-    public String findPawn(int index){
+    public String findPiece(int index){
         return pawns.get(index).getColor();
     }
 }

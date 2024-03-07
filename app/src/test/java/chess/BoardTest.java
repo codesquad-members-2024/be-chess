@@ -1,10 +1,11 @@
 package chess;
 
 import chess.pieces.Color;
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtils.appendNewLine;
 
 @Nested
 @DisplayName("Board 클래스는 생성 후")
@@ -17,11 +18,11 @@ public class BoardTest {
 
         @Nested
         @DisplayName("기본 폰 한 개를 추가한다면")
-        class AddOneStandardPawn {
+        class AddOneStandardPiece {
             @BeforeEach
             void onePawn(){
-                Pawn whitePawn = new Pawn();
-                board.addPawn(whitePawn);
+                Piece whitePiece = new Piece();
+                board.addPawn(whitePiece);
             }
             @Test
             @DisplayName("보드 위의 폰의 갯수는 1개이다")
@@ -38,14 +39,14 @@ public class BoardTest {
 
         @Nested
         @DisplayName("하얀 말 하나, 검은 말 하나를 추가한다면")
-        class AddWhiteBlackPawn {
+        class AddWhiteBlackPiece {
 
             @BeforeEach
             void addPawns(){
-                Pawn whitePawn = new Pawn(Color.WHITE.getColorName());
-                Pawn blackPawn = new Pawn(Color.BLACK.getColorName());
-                board.addPawn(whitePawn);
-                board.addPawn(blackPawn);
+                Piece whitePiece = new Piece(Color.WHITE.getColorName());
+                Piece blackPiece = new Piece(Color.BLACK.getColorName());
+                board.addPawn(whitePiece);
+                board.addPawn(blackPiece);
             }
 
             @Test
@@ -56,7 +57,7 @@ public class BoardTest {
 
             @Nested
             @DisplayName("폰의 색상은")
-            class ColorOfPawn {
+            class ColorOfPiece {
                 @Test
                 @DisplayName("첫 번째는 하얀색이다")
                 void findFirstPawnColorOnBoard(){
