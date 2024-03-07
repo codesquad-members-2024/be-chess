@@ -43,27 +43,41 @@ public class Board {
     public void movePiece(Square start, Square target, Color color) throws IllegalArgumentException {
         Piece movingPiece = findPiece(start);
         // 홀수 턴일 때 흰색 , 짝수 턴일 때 검은색 이 아니면 예외 발생
-        if (movingPiece.getColor()!=color) throw new IllegalArgumentException("not your Piece");
+        if (movingPiece.getColor() != color) throw new IllegalArgumentException("not your Piece");
 
         List<Square> pieceCanMove = getAvailableSquares(movingPiece, start); // 보드 범위 내 가능한 모든 위치
 
-        if (!pieceCanMove.contains(target)) throw new IllegalArgumentException(movingPiece + " fail to move"); // 이동 실패
+        if (!pieceCanMove.contains(target)) throw new IllegalArgumentException(movingPiece.getRepresentation() + " fail to move"); // 이동 실패
 
         // 이동 실행
         addPieceAt(target, movingPiece);
         setBlank(start);
-        System.out.println(start + " moved to " + target);
+        System.out.println(movingPiece.getRepresentation() + start + " moved to " + target);
     }
 
     private List<Square> getAvailableSquares(Piece piece, Square start) {
         List<Square> squares = new ArrayList<>();
 
-        piece.getDirection().forEach(D -> {
-
-            checkCanMove(piece, start, squares, D , 0);
-        });
-
+        if (piece.getType() == Piece.Type.PAWN) checkPawnMove(piece, start, squares);
+        else {
+            piece.getDirection().forEach(D -> {
+                checkCanMove(piece, start, squares, D, 0);
+            });
+        }
         return squares;
+    }
+
+    private void checkPawnMove(Piece piece, Square start, List<Square> squares) { // 중복 로직 수정 필요
+        if ((start.rankIndex() == 6 && piece.getColor() == Color.WHITE) || (start.rankIndex() == 1 && piece.getColor() == Color.BLACK))
+            checkCanMove(piece, start, squares, piece.getDirection().get(0), -1);
+        else checkCanMove(piece, start, squares, piece.getDirection().get(0), 0);
+
+        Square target;
+        target = getSquare(start, piece.getDirection().get(1));
+        if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
+
+        target = getSquare(start, piece.getDirection().get(2));
+        if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
     }
 
     private void checkCanMove(Piece piece, Square start, List<Square> squares, Direction D, int count) {
@@ -79,12 +93,13 @@ public class Board {
         Piece pieceAtTarget = findPiece(target);
         if (pieceAtTarget.getType() == Piece.Type.BLANK) { // 빈칸이라면 이동 가능 , 다음 확인 위해 재귀 호출
             squares.add(target);
-            checkCanMove(piece, target, squares, D, count+1);
+            checkCanMove(piece, target, squares, D, count + 1);
         }
 
         // 다른 색이면 거기까지 추가 , 같은 색이면 추가 안하고 그만
         if (pieceAtTarget.getColor() != piece.getColor()) squares.add(target);
     }
+
 
     private Piece findPiece(Square square) throws IndexOutOfBoundsException {
         return board.get(square.rankIndex()).getPiece(square.fileIndex());
