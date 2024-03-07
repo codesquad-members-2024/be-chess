@@ -3,63 +3,84 @@ package chess;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import pieces.Pawn;
+import pieces.Piece;
 
 public class Board {
-    private ArrayList<Pawn> pawns;
-    private Pawn[][] pieces;
+    private ArrayList<Piece> pieces;
+    private Piece[][] board;
 
     public Board() {
-        pawns = new ArrayList<>();
-        pieces = new Pawn[8][8];
+        pieces = new ArrayList<>();
+        board = new Piece[8][8];
     }
 
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
-    }
-
-    public int size() {
-        return pawns.size();
-    }
-
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
+    public void add(Piece piece) {
+        pieces.add(piece);
     }
 
     public void initialize() {
-        initializePawns(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL, 6);
-        initializePawns(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL, 1);
+        initializeExceptPawns(Piece.WHITE_COLOR, 7);
+        initializePawns(Piece.WHITE_COLOR, 6);
+        initializePawns(Piece.BLACK_COLOR, 1);
+        initializeExceptPawns(Piece.BLACK_COLOR, 0);
     }
 
-    private void initializePawns(String color, String symbol, int index) {
-        IntStream.range(0, 8).forEach(i -> {
-            Pawn pawn = new Pawn(color, symbol);
-            pawns.add(pawn);
-            pieces[index][i] = pawn;
+    private void initializePawns(String color, int row) {
+        IntStream.range(0, 8).forEach(col -> {
+            Piece piece = generatePawn(color);
+            add(piece);
+            board[row][col] = piece;
         });
     }
 
-    public String getWhitePawnsResult() {
-        return getPawnsResult(Pawn.WHITE_COLOR, Pawn.WHITE_SYMBOL);
+    private Piece generatePawn(String color) {
+        if (color.equals(Piece.WHITE_COLOR)) {
+            return Piece.createWhitePawn();
+        }
+        return Piece.createBlackPawn();
     }
 
-    public String getBlackPawnsResult() {
-        return getPawnsResult(Pawn.BLACK_COLOR, Pawn.BLACK_SYMBOL);
+    private void initializeExceptPawns(String color, int row) {
+        Piece[] piecesExceptPawns = generatePiecesExceptPawns(color);
+        IntStream.range(0, 8).forEach(col -> {
+            add(piecesExceptPawns[col]);
+            board[row][col] = piecesExceptPawns[col];
+        });
     }
 
-    private String getPawnsResult(String color, String symbol) {
-        return pawns.stream()
-                .filter(pawn -> pawn.getColor().equals(color) && pawn.getSymbol().equals(symbol))
-                .map(Pawn::getSymbol)
-                .reduce(new StringBuilder(), StringBuilder::append, StringBuilder::append)
-                .toString();
+    private Piece[] generatePiecesExceptPawns(String color) {
+        Piece[] result = new Piece[8];
+        if (color.equals(Piece.WHITE_COLOR)) {
+            result[0] = Piece.createWhiteRook();
+            result[1] = Piece.createWhiteKnight();
+            result[2] = Piece.createWhiteBishop();
+            result[3] = Piece.createWhiteQueen();
+            result[4] = Piece.createWhiteKing();
+            result[5] = Piece.createWhiteBishop();
+            result[6] = Piece.createWhiteKnight();
+            result[7] = Piece.createWhiteRook();
+        } else if (color.equals(Piece.BLACK_COLOR)) {
+            result[0] = Piece.createBlackRook();
+            result[1] = Piece.createBlackKnight();
+            result[2] = Piece.createBlackBishop();
+            result[3] = Piece.createBlackQueen();
+            result[4] = Piece.createBlackKing();
+            result[5] = Piece.createBlackBishop();
+            result[6] = Piece.createBlackKnight();
+            result[7] = Piece.createBlackRook();
+        }
+        return result;
     }
 
-    public String print() {
+    public int pieceCount() {
+        return pieces.size();
+    }
+
+    public String showBoard() {
         return IntStream.range(0, 8)
                 .mapToObj(row -> IntStream.range(0, 8)
-                        .mapToObj(col -> pieces[row][col] == null ? " " : pieces[row][col].getSymbol())
+                        .mapToObj(col -> board[row][col] == null ? " " : board[row][col].getSymbol())
                         .collect(Collectors.joining()))
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n")).concat("\n");
     }
 }

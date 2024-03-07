@@ -13,7 +13,7 @@ public class ChessGame {
         while (!userInput.equals(END)) {
             if (userInput.equals(START)) {
                 board.initialize();
-                System.out.println(board.print());
+                System.out.println(board.showBoard());
             }
             userInput = getUserInput();
         }
