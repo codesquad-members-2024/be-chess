@@ -54,7 +54,7 @@ public class PieceTest {
     }
 
     private void verifyPiece(SoftAssertions softAssertions, Piece piece, Color color, Type type) {
-        softAssertions.assertThat(piece.getColor()).as(color + " 폰이 생성되었는지 검증한다").isEqualTo(color);
-        softAssertions.assertThat(piece.getType()).as(color + " 폰의 기물이 알맞게 생성되었는지 검증한다.").isEqualTo(type);
+        softAssertions.assertThat(piece.getColor()).as(color + "체스의 색상이 올바르게 생성되었는지 검증한다").isEqualTo(color);
+        softAssertions.assertThat(piece.getType()).as(color + "체스의 기물이 올바르게 생성되었는지 검증한다").isEqualTo(type);
     }
 }
