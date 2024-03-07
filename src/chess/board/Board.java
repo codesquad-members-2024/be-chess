@@ -2,15 +2,11 @@ package src.chess.board;
 
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import src.chess.pieces.Colors;
 import src.chess.pieces.Piece;
 import java.util.ArrayList;
-import src.chess.pieces.PieceType;
 import src.utils.StringUtils;
 
 public class Board {
@@ -54,18 +50,20 @@ public class Board {
                 .collect(Collectors.joining());
     }
 
-    public String getPieceByRow(int ordinal) {
+    public String getPieceByRow(int startRange) {
         StringBuilder result = new StringBuilder();
-        int maxRange = ordinal + 7;
+        final int rowSize = 7;
+        int endRange = startRange + rowSize;
         chessBoard.entrySet().stream()
-                .filter(entry -> entry.getKey().getOrdinal() >= ordinal && entry.getKey().getOrdinal() <= maxRange)
+                .filter(entry -> entry.getKey().getOrdinal() >= startRange && entry.getKey().getOrdinal() <= endRange)
                 .forEach(entry -> result.append(entry.getValue() != null ? entry.getValue() : "."));
         return result.toString();
     }
 
     public String showBoard() {
         StringBuilder result = new StringBuilder();
-        for(int i = 0; i < chessBoard.size(); i += 8) {
+        final int rowSize = 8;
+        for(int i = 0; i < chessBoard.size(); i += rowSize) {
             result.append(StringUtils.appendNewLine(getPieceByRow(i)));
         }
         return result.toString();
