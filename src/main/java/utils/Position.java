@@ -21,4 +21,13 @@ public class Position {
     public int getCol() {
         return col;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Position position = (Position) object;
+        return this.row == position.row && this.col == position.col;
+    }
 }

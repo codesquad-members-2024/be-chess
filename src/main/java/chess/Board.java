@@ -1,26 +1,32 @@
 package chess;
 
-import static utils.StringUtils.NEWLINE;
+import static utils.Position.FIRST_COLUMN_LETTER;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import pieces.Bishop;
+import pieces.Blank;
+import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
 import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
+import pieces.Queen;
+import pieces.Rook;
 import utils.Position;
 
 public class Board {
+    public static final int FIRST_ROW = 0;
+    public static final int LAST_ROW = 7;
+    public static final int FIRST_COLUMN = 0;
+    public static final int BLACK_PAWN_ROW = 1;
+    public static final int WHITE_PAWN_ROW = 6;
     public static final int EMPTY_CAPACITY = 0;
     public static final int BLANK_CAPACITY = 4;
     public static final int RANK_CAPACITY = 8;
-    public static final double DIVIDE_IN_HALF = 2.0;
     public static final String LIST_TO_STRING_DELIMITER = "";
 
     private final List<Piece> whitePieces;
@@ -52,29 +58,46 @@ public class Board {
     public void initialize() {
         initializeExceptPawns(Color.BLACK);
         initializePawns(Color.BLACK);
-        IntStream.range(EMPTY_CAPACITY, BLANK_CAPACITY).forEach(i -> initializeBlank());
+        IntStream.range(EMPTY_CAPACITY, BLANK_CAPACITY).forEach(this::initializeBlank);
         initializePawns(Color.WHITE);
         initializeExceptPawns(Color.WHITE);
     }
 
-    private void initializeBlank() {
-        List<Piece> blanks = new ArrayList<>();
-        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> blanks.add(Piece.createBlank()));
+    private void initializeBlank(int row) {
+        List<Piece> blanks = IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY)
+                .mapToObj(col -> new Position(convert2String(row, col)))
+                .map(Blank::create)
+                .collect(Collectors.toList());
+
         board.add(new Rank(blanks));
+    }
+
+    private String convert2String(int row, int col) {
+        return (char) (FIRST_COLUMN_LETTER + col) + String.valueOf(RANK_CAPACITY - row);
     }
 
     private void initializePawns(Color color) {
         List<Piece> pawns = new ArrayList<>();
-        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> pawns.add(generatePawn(color)));
+        if (color.equals(Color.BLACK)) {
+            pawns = initializePawnsWithRow(color, BLACK_PAWN_ROW);
+        }
+        if (color.equals(Color.WHITE)) {
+            pawns = initializePawnsWithRow(color, WHITE_PAWN_ROW);
+        }
         addPieces(color, pawns);
         board.add(new Rank(pawns));
+
     }
 
-    private Piece generatePawn(Color color) {
-        if (color.equals(Color.WHITE)) {
-            return Piece.createWhitePawn();
-        }
-        return Piece.createBlackPawn();
+    private List<Piece> initializePawnsWithRow(Color color, int row) {
+        return IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY)
+                .mapToObj(col -> new Position(convert2String(row, col)))
+                .map(position -> generatePawn(color, position))
+                .collect(Collectors.toList());
+    }
+
+    private Piece generatePawn(Color color, Position position) {
+        return Pawn.create(color, position);
     }
 
     private void initializeExceptPawns(Color color) {
@@ -84,120 +107,61 @@ public class Board {
     }
 
     private ArrayList<Piece> generatePiecesExceptPawns(Color color) {
-        ArrayList<Piece> piecesExceptPawns = new ArrayList<>();
-        if (color.equals(Color.WHITE)) {
-            piecesExceptPawns.add(Piece.createWhiteRook());
-            piecesExceptPawns.add(Piece.createWhiteKnight());
-            piecesExceptPawns.add(Piece.createWhiteBishop());
-            piecesExceptPawns.add(Piece.createWhiteQueen());
-            piecesExceptPawns.add(Piece.createWhiteKing());
-            piecesExceptPawns.add(Piece.createWhiteBishop());
-            piecesExceptPawns.add(Piece.createWhiteKnight());
-            piecesExceptPawns.add(Piece.createWhiteRook());
-        } else if (color.equals(Color.BLACK)) {
-            piecesExceptPawns.add(Piece.createBlackRook());
-            piecesExceptPawns.add(Piece.createBlackKnight());
-            piecesExceptPawns.add(Piece.createBlackBishop());
-            piecesExceptPawns.add(Piece.createBlackQueen());
-            piecesExceptPawns.add(Piece.createBlackKing());
-            piecesExceptPawns.add(Piece.createBlackBishop());
-            piecesExceptPawns.add(Piece.createBlackKnight());
-            piecesExceptPawns.add(Piece.createBlackRook());
+        int row = determineRow(color);
+        int column = FIRST_COLUMN;
+        ArrayList<Piece> pieces = new ArrayList<>();
+        pieces.add(Rook.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Knight.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Bishop.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Queen.create(color, new Position(convert2String(row, column++))));
+        pieces.add(King.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Bishop.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Knight.create(color, new Position(convert2String(row, column++))));
+        pieces.add(Rook.create(color, new Position(convert2String(row, column))));
+        return pieces;
+    }
+
+    private int determineRow(Color color) {
+        if (color.equals(Color.BLACK)) {
+            return FIRST_ROW;
         }
-        return piecesExceptPawns;
+        return LAST_ROW;
     }
 
     public void initializeEmpty() {
         whitePieces.clear();
         blackPieces.clear();
         board.clear();
-        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(i -> initializeBlank());
+        IntStream.range(EMPTY_CAPACITY, RANK_CAPACITY).forEach(this::initializeBlank);
     }
 
     public int pieceCount() {
         return whitePieces.size() + blackPieces.size();
     }
 
-    public String showBoard() {
-        return board.stream()
-                .map(rank -> rank.getPieces().stream().map(this::getSymbol)
-                        .collect(Collectors.joining(LIST_TO_STRING_DELIMITER)))
-                .collect(Collectors.joining(NEWLINE)).concat(NEWLINE);
-    }
-
-    private String getSymbol(Piece piece) {
-        if (piece.isWhite()) {
-            return piece.getPieceSymbol().getSymbol();
-        } else if (piece.isBlack()) {
-            return Piece.convertToBlackPiece(piece.getPieceSymbol().getSymbol());
-        }
-        return piece.getPieceSymbol().getSymbol();
-    }
-
     public int getPieceCount(Color color, PieceSymbol pieceSymbol) {
-        return (int) board.stream().flatMap(rank -> rank.getPieces().stream())
-                .filter(piece -> piece.equalsPiece(color, pieceSymbol))
-                .count();
-    }
-
-    public Piece findPiece(String position) {
-        Position pos = new Position(position);
-        return board.get(pos.getRow()).getPiece(pos.getCol());
-    }
-
-    public void move(String position, Piece piece) {
-        Position pos = new Position(position);
-        whitePieces.remove(piece);
-        blackPieces.remove(piece);
-        board.get(pos.getRow()).getPieces().set(pos.getCol(), piece);
-    }
-
-    public double calculatePoint(Color color) {
         return board.stream()
-                .flatMap(rank -> rank.getPieces().stream())
-                .filter(piece -> piece.matchColor(color))
-                .mapToDouble(piece -> getPawnPoint(color, piece))
+                .mapToInt(rank -> rank.findSameColorAndSymbolPieces(color, pieceSymbol).size())
                 .sum();
     }
 
-    private double getPawnPoint(Color color, Piece piece) {
-        double defaultPoint = piece.getPieceSymbol().getDefaultPoint();
-        if (hasSameVerticalPawns(color) && piece.equalsPawn(color)) {
-            return defaultPoint / DIVIDE_IN_HALF;
-        }
-        return defaultPoint;
+    public Piece findPiece(Position position) {
+        return board.get(position.getRow()).getPiece(position.getCol());
     }
 
-    public boolean hasSameVerticalPawns(Color color) {
-        Set<Integer> cols = new HashSet<>();
-
-        return board.stream().anyMatch(rank -> rank.getPieces().stream()
-                .filter(piece -> piece.equalsPawn(color) && !cols.add(rank.getPieces().indexOf(piece)))
-                .isParallel());
+    public void setPiece(Position position, Piece piece) {
+        board.get(position.getRow()).getPieces().set(position.getCol(), piece);
     }
 
-    public List<String> sortPieces(Color color) {
-        Stream<Piece> piecesStream = color.equals(Color.WHITE) ? whitePieces.stream() : blackPieces.stream();
-        List<String> copyPieces = new ArrayList<>(sortPiecesInternal(piecesStream));
-        Collections.reverse(copyPieces);
-        return copyPieces;
+    public List<Piece> getWhitePieces() {
+        return whitePieces;
     }
 
-    public List<String> sortPiecesReversed(Color color) {
-        Stream<Piece> piecesStream = color.equals(Color.WHITE) ? whitePieces.stream() : blackPieces.stream();
-        return sortPiecesInternal(piecesStream);
+    public List<Piece> getBlackPieces() {
+        return blackPieces;
     }
 
-    private List<String> sortPiecesInternal(Stream<Piece> piecesStream) {
-        return piecesStream.sorted(new PieceComparator())
-                .map(piece -> piece.getPieceSymbol().getSymbol())
-                .collect(Collectors.toList());
-    }
-}
-
-class PieceComparator implements Comparator<Piece> {
-    @Override
-    public int compare(Piece piece1, Piece piece2) {
-        return Double.compare(piece1.getPieceSymbol().getDefaultPoint(), piece2.getPieceSymbol().getDefaultPoint());
+    public List<Rank> getBoard() {
+        return board;
     }
 }

@@ -1,6 +1,8 @@
 package pieces;
 
-public class Piece {
+import utils.Position;
+
+public abstract class Piece {
     public enum Color {
         WHITE("white"),
         BLACK("black"),
@@ -52,74 +54,49 @@ public class Piece {
     public static final int UNICODE_TO_CHAR = 0;
     public static final int UNICODE_VALUE_DIFFERENCE = 6;
 
+    protected final Color color;
+    protected final PieceSymbol pieceSymbol;
+    protected Position position;
 
-    private final Color color;
-    private final PieceSymbol pieceSymbol;
-
-    private Piece(Color color, PieceSymbol pieceSymbol) {
+    protected Piece(Color color, PieceSymbol pieceSymbol, Position position) {
         this.color = color;
         this.pieceSymbol = pieceSymbol;
+        this.position = position;
     }
 
-    public static Piece createWhitePawn() {
-        return creatWhite(PieceSymbol.PAWN);
+    public boolean isWhite() {
+        return matchColor(Color.WHITE);
     }
 
-    public static Piece createBlackPawn() {
-        return createBlack(PieceSymbol.PAWN);
+    public boolean isBlack() {
+        return matchColor(Color.BLACK);
     }
 
-    public static Piece createWhiteRook() {
-        return creatWhite(PieceSymbol.ROOK);
+    public boolean matchColor(Color color) {
+        return this.color.equals(color);
     }
 
-    public static Piece createBlackRook() {
-        return createBlack(PieceSymbol.ROOK);
+    public boolean isPawn() {
+        return pieceSymbol.equals(PieceSymbol.PAWN);
     }
 
-    public static Piece createWhiteKnight() {
-        return creatWhite(PieceSymbol.KNIGHT);
+    public static String convertToBlackPiece(String whitePiece) {
+        char whitePieceChar = whitePiece.charAt(UNICODE_TO_CHAR);
+        char blackPieceChar = (char) (whitePieceChar + UNICODE_VALUE_DIFFERENCE);
+        return String.valueOf(blackPieceChar);
     }
 
-    public static Piece createBlackKnight() {
-        return createBlack(PieceSymbol.KNIGHT);
+    public boolean equalsPiece(Color color, PieceSymbol pieceSymbol) {
+        return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 
-    public static Piece createWhiteBishop() {
-        return creatWhite(PieceSymbol.BISHOP);
-    }
+    public void changePos(Position targetPos) {
+        this.position = targetPos;
+    } // 추상 클래스 구조에 맞게 삭제 필요
 
-    public static Piece createBlackBishop() {
-        return createBlack(PieceSymbol.BISHOP);
-    }
+    public abstract boolean verifyMovePosition();
 
-    public static Piece createWhiteQueen() {
-        return creatWhite(PieceSymbol.QUEEN);
-    }
-
-    public static Piece createBlackQueen() {
-        return createBlack(PieceSymbol.QUEEN);
-    }
-
-    public static Piece createWhiteKing() {
-        return creatWhite(PieceSymbol.KING);
-    }
-
-    public static Piece createBlackKing() {
-        return createBlack(PieceSymbol.KING);
-    }
-
-    public static Piece createBlank() {
-        return new Piece(Color.NOCOLOR, PieceSymbol.NO_PIECE);
-    }
-
-    private static Piece creatWhite(PieceSymbol pieceSymbol) {
-        return new Piece(Color.WHITE, pieceSymbol);
-    }
-
-    private static Piece createBlack(PieceSymbol pieceSymbol) {
-        return new Piece(Color.BLACK, pieceSymbol);
-    }
+    public abstract boolean move();
 
     public Color getColor() {
         return color;
@@ -129,22 +106,8 @@ public class Piece {
         return pieceSymbol;
     }
 
-    public boolean isWhite() {
-        return color.equals(Color.WHITE);
-    }
-
-    public boolean isBlack() {
-        return color.equals(Color.BLACK);
-    }
-
-    public boolean matchColor(Color color) {
-        return this.color.equals(color);
-    }
-
-    public static String convertToBlackPiece(String whitePiece) {
-        char whitePieceChar = whitePiece.charAt(UNICODE_TO_CHAR);
-        char blackPieceChar = (char) (whitePieceChar + UNICODE_VALUE_DIFFERENCE);
-        return String.valueOf(blackPieceChar);
+    public Position getPosition() {
+        return position;
     }
 
     @Override
@@ -153,15 +116,8 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) object;
-        return this.color.equals(piece.color) &&
-                this.pieceSymbol.equals(piece.pieceSymbol);
-    }
-
-    public boolean equalsPawn(Color color) {
-        return this.color.equals(color) && this.pieceSymbol.equals(PieceSymbol.PAWN);
-    }
-
-    public boolean equalsPiece(Color color, PieceSymbol pieceSymbol) {
-        return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
+        return this.position.equals(piece.position)
+                && this.color.equals(piece.color)
+                && this.pieceSymbol.equals(piece.pieceSymbol);
     }
 }
