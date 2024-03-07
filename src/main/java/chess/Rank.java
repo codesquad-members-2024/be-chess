@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Rank {
 
     public Rank() { // 기본값 : 다 비워져있음
         for (int file = 1; file <= MAX_FILE; file++) {
-            this.rank.add(Piece.createBlank());
+            this.rank.add(PieceFactory.createBlank());
         }
     }
 

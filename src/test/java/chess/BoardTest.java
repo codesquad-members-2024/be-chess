@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,8 +35,8 @@ public class BoardTest {
     @Test
     @DisplayName("보드에 기물이 정상적으로 추가되어야 한다")
     void addPawn() {
-        verifyAddPawn(Piece::createWhitePawn);
-        verifyAddPawn(Piece::createBlackPawn);
+        verifyAddPawn(PieceFactory::createWhitePawn);
+        verifyAddPawn(PieceFactory::createBlackPawn);
     }
 
     private void verifyAddPawn(Supplier<Piece> createPiece) {
@@ -62,10 +63,8 @@ public class BoardTest {
     @Test
     @DisplayName("지정한 위치에 지정한 기물을 추가할 수 있어야 한다")
     void addPieceAt() throws Exception {
-        board.initEmpty();
-
         String position = "b5";
-        Piece piece = Piece.createBlackRook();
+        Piece piece = PieceFactory.createBlackRook();
         board.addPieceAt(getRankFile(position), piece);
 
         assertThat(board.findPiece(getRankFile(position))).isEqualTo(piece);
@@ -77,21 +76,19 @@ public class BoardTest {
     void findPiece() throws Exception {
         board.init();
 
-        assertThat(board.findPiece(getRankFile("a8"))).isEqualTo(Piece.createBlackRook());
-        assertThat(board.findPiece(getRankFile("h8"))).isEqualTo(Piece.createBlackRook());
-        assertThat(board.findPiece(getRankFile("a1"))).isEqualTo(Piece.createWhiteRook());
-        assertThat(board.findPiece(getRankFile("h1"))).isEqualTo(Piece.createWhiteRook());
+        assertThat(board.findPiece(getRankFile("a8"))).isEqualTo(PieceFactory.createBlackRook());
+        assertThat(board.findPiece(getRankFile("h8"))).isEqualTo(PieceFactory.createBlackRook());
+        assertThat(board.findPiece(getRankFile("a1"))).isEqualTo(PieceFactory.createWhiteRook());
+        assertThat(board.findPiece(getRankFile("h1"))).isEqualTo(PieceFactory.createWhiteRook());
     }
 
     @Test
     @DisplayName("보드의 기물들을 정렬했을 때 점수가 높은 순서 , 검은색 -> 흰색 순서로 정렬 되어야 한다")
     void sortPieces(){
-        board.initEmpty();
-
-        addPiece("b6", Piece.createBlackPawn());
-        addPiece("e6", Piece.createBlackQueen());
-        addPiece("f2", Piece.createWhitePawn());
-        addPiece("e1", Piece.createWhiteRook());
+        addPiece("b6", PieceFactory.createBlackPawn());
+        addPiece("e6", PieceFactory.createBlackQueen());
+        addPiece("f2", PieceFactory.createWhitePawn());
+        addPiece("e1", PieceFactory.createWhiteRook());
 
         List<Piece> result = List.of(
                 board.findPiece(getRankFile("e6")),

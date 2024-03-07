@@ -1,6 +1,9 @@
 package chess;
 
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
+
 import static chess.ChessHelp.*;
 
 import java.util.Arrays;
@@ -16,7 +19,7 @@ public class ChessGame {
         Piece movingPiece = gameBoard.findPiece(getRankFile(sourcePosition));
         if(!movingPiece.verifyMovePosition(getRankFile(sourcePosition), getRankFile(targetPosition))) throw new IllegalArgumentException();
 
-        gameBoard.addPieceAt(getRankFile(sourcePosition) , Piece.createBlank());
+        gameBoard.setBlank(getRankFile(sourcePosition));
         gameBoard.addPieceAt(getRankFile(targetPosition), movingPiece);
     }
 
@@ -25,7 +28,8 @@ public class ChessGame {
     public double calculatePoint(Piece.Color color) {
         return Arrays.stream(Piece.Type.values())
                 .mapToDouble(type -> gameBoard.countPiece(color, type) * type.getScore())
-                .sum() - countOverPawn(color) * Piece.Type.PAWN.getScore() / 2;
+                .sum()
+                - countOverPawn(color) * Piece.Type.PAWN.getScore() / 2;
     }
 
     private int countOverPawn(Piece.Color color) {

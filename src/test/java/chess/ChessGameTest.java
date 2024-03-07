@@ -2,6 +2,8 @@ package chess;
 
 import chess.pieces.Piece;
 import static chess.ChessHelp.*;
+
+import chess.pieces.PieceFactory;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +33,7 @@ class ChessGameTest {
         String targetPosition = "b3";
         game.movePieceAt(sourcePosition, targetPosition);
         assertThat(board.findPiece(getRankFile(sourcePosition)).getType()).isEqualTo(Piece.Type.BLANK);
-        assertThat(board.findPiece(getRankFile(targetPosition))).isEqualTo(Piece.createWhitePawn());
+        assertThat(board.findPiece(getRankFile(targetPosition))).isEqualTo(PieceFactory.createWhitePawn());
     }
 
     @Test
@@ -52,19 +54,17 @@ class ChessGameTest {
     @Test
     @DisplayName("점수 규칙* 에 따라 각 색상별 기물 점수를 계산할 수 있어야 한다")
     void calculatePoint() throws Exception {
-        board.initEmpty();
+        addPiece("b6", PieceFactory.createBlackPawn());
+        addPiece("e6", PieceFactory.createBlackQueen());
+        addPiece("b8", PieceFactory.createBlackKing());
+        addPiece("c8", PieceFactory.createBlackRook());
+        addPiece("b4", PieceFactory.createBlackPawn());
+        addPiece("b3", PieceFactory.createBlackPawn());
 
-        addPiece("b6", Piece.createBlackPawn());
-        addPiece("e6", Piece.createBlackQueen());
-        addPiece("b8", Piece.createBlackKing());
-        addPiece("c8", Piece.createBlackRook());
-        addPiece("b4", Piece.createBlackPawn());
-        addPiece("b3", Piece.createBlackPawn());
-
-        addPiece("f2", Piece.createWhitePawn());
-        addPiece("g2", Piece.createWhitePawn());
-        addPiece("e1", Piece.createWhiteRook());
-        addPiece("f1", Piece.createWhiteKing());
+        addPiece("f2", PieceFactory.createWhitePawn());
+        addPiece("g2", PieceFactory.createWhitePawn());
+        addPiece("e1", PieceFactory.createWhiteRook());
+        addPiece("f1", PieceFactory.createWhiteKing());
 
         System.out.println(board.showBoard());
 

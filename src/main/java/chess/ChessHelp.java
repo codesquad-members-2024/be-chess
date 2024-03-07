@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -12,25 +13,25 @@ public class ChessHelp {
     static final int MAX_FILE = 8;
 
     static final List<Supplier<Piece>> blackPieceSequence = List.of(
-            Piece::createBlackRook,
-            Piece::createBlackKnight,
-            Piece::createBlackBishop,
-            Piece::createBlackQueen,
-            Piece::createBlackKing,
-            Piece::createBlackBishop,
-            Piece::createBlackKnight,
-            Piece::createBlackRook
+            PieceFactory::createBlackRook,
+            PieceFactory::createBlackKnight,
+            PieceFactory::createBlackBishop,
+            PieceFactory::createBlackQueen,
+            PieceFactory::createBlackKing,
+            PieceFactory::createBlackBishop,
+            PieceFactory::createBlackKnight,
+            PieceFactory::createBlackRook
     );
 
     static final List<Supplier<Piece>> whitePieceSequence = List.of(
-            Piece::createWhiteRook,
-            Piece::createWhiteKnight,
-            Piece::createWhiteBishop,
-            Piece::createWhiteQueen,
-            Piece::createWhiteKing,
-            Piece::createWhiteBishop,
-            Piece::createWhiteKnight,
-            Piece::createWhiteRook
+            PieceFactory::createWhiteRook,
+            PieceFactory::createWhiteKnight,
+            PieceFactory::createWhiteBishop,
+            PieceFactory::createWhiteQueen,
+            PieceFactory::createWhiteKing,
+            PieceFactory::createWhiteBishop,
+            PieceFactory::createWhiteKnight,
+            PieceFactory::createWhiteRook
     );
 
     static int[] getRankFile(String position) {

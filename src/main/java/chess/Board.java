@@ -1,24 +1,44 @@
 package chess;
 
 import chess.pieces.Piece;
+import static chess.pieces.Piece.*;
+import chess.pieces.PieceFactory;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import static chess.ChessHelp.*;
 import static utils.StringUtils.appendNewLine;
 
 public class Board {
     private final List<Piece> pieces = new ArrayList<>();
-
     private final List<Rank> board = new ArrayList<>(MAX_RANK);
 
     public void add(Piece piece) { pieces.add(piece); }
 
     public int size() {
         return pieces.size();
+    }
+
+
+    public Board() {
+        for(int rank = MIN_RANK; rank<=MAX_RANK; rank++) board.add(new Rank());
+    }
+
+    // 초기화
+    public void init() {
+        fillRank(8, blackPieceSequence);
+        fillRank(7, getFillSame(PieceFactory::createBlackPawn));
+        fillRank(2, getFillSame(PieceFactory::createWhitePawn));
+        fillRank(1, whitePieceSequence);
+    }
+
+    public Piece findPiece(int[] position) {
+        int rank = position[0];
+        int file = position[1];
+
+        return board.get(rank).getPiece(file);
     }
 
     public void addPieceAt(int[] position, Piece piece) {
@@ -30,36 +50,15 @@ public class Board {
     }
 
     public void setBlank(int[] position){
-        addPieceAt(position, Piece.createBlank());
+        addPieceAt(position, PieceFactory.createBlank());
     }
-
-    // 초기화
-    public void init() {
-        initEmpty();
-        fillRank(8, blackPieceSequence);
-        fillRank(7, getFillSame(Piece::createBlackPawn));
-        fillRank(2, getFillSame(Piece::createWhitePawn));
-        fillRank(1, whitePieceSequence);
-    }
-
-    public void initEmpty() {
-        for(int rank = MIN_RANK; rank<=MAX_RANK; rank++) board.add(new Rank());
-    }
-
-    public Piece findPiece(int[] position) {
-        int rank = position[0];
-        int file = position[1];
-
-        return board.get(rank).getPiece(file);
-    }
-
 
     private void fillRank(int rank, List<Supplier<Piece>> createPiece) {
         for (int file = MIN_FILE; file <= MAX_FILE; file++) {
             board.get(MAX_RANK-rank).setPiece(file, createPiece.get(file-MIN_FILE).get());
         }
 
-        if (board.get(MAX_RANK - rank).getPiece(MIN_FILE).getColor().equals(Piece.Color.NOCOLOR)) return;
+        if (board.get(MAX_RANK - rank).getPiece(MIN_FILE).getColor().equals(Color.NOCOLOR)) return;
         board.get(MAX_RANK - rank).stream().forEach(this::add);
     }
 
@@ -88,7 +87,7 @@ public class Board {
         return board.get(MAX_RANK-7).getRankResult();
     }
 
-    public int countPiece(Piece.Color color, Piece.Type type) {
+    public int countPiece(Color color , Type type) {
         return (int) pieces.stream()
                 .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
                 .count();
@@ -105,7 +104,7 @@ public class Board {
     private List<Piece> sortByScore(Predicate<Piece> color) {
         return pieces.stream()
                 .filter(color)
-                .sorted(Comparator.comparing(p -> p.getType().getScore(), Comparator.reverseOrder())) // 기본 : 오름차순
+                .sorted(Comparator.comparing(Piece::getScore, Comparator.reverseOrder())) // 기본 : 오름차순
                 .toList();
     }
 }
