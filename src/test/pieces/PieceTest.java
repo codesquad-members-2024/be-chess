@@ -12,12 +12,12 @@ public class PieceTest {
     @Test
     @DisplayName("생성한 기물이 올바른 색, 올바른 기물 타입을 가지는지 확인한다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), Type.PAWN);
-        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), Type.KNIGHT);
-        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), Type.ROOK);
-        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), Type.BISHOP);
-        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), Type.QUEEN);
-        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), Type.KING);
+        verifyPiece(Piece.createWhite(Type.PAWN), Piece.createBlack(Type.PAWN), Type.PAWN);
+        verifyPiece(Piece.createWhite(Type.KNIGHT), Piece.createBlack(Type.KNIGHT), Type.PAWN);
+        verifyPiece(Piece.createWhite(Type.ROOK), Piece.createBlack(Type.ROOK), Type.ROOK);
+        verifyPiece(Piece.createWhite(Type.BISHOP), Piece.createBlack(Type.BISHOP), Type.BISHOP);
+        verifyPiece(Piece.createWhite(Type.QUEEN), Piece.createBlack(Type.QUEEN), Type.QUEEN);
+        verifyPiece(Piece.createWhite(Type.KING), Piece.createBlack(Type.KING), Type.KING);
 
         Piece blank = Piece.createBlank();
         assertThat(blank.isWhite()).isFalse();
@@ -31,22 +31,6 @@ public class PieceTest {
 
         assertThat(blackPiece.isBlack()).isTrue();
         assertThat(type).isEqualTo(blackPiece.getType());
-    }
-
-    @Test
-    @DisplayName("해당 폰이 black 폰인지 확인한다")
-    public void isBlackPawn() {
-        Piece pawn = Piece.createBlackPawn();
-        assertThat(pawn.isBlack()).isTrue();
-        assertThat(pawn.isWhite()).isFalse();
-    }
-
-    @Test
-    @DisplayName("해당 나이트가 white 나이트인지 확인한다")
-    public void isWhiteKnight() {
-        Piece knight = Piece.createWhiteKnight();
-        assertThat(knight.isWhite()).isTrue();
-        assertThat(knight.isBlack()).isFalse();
     }
 
     @Test
