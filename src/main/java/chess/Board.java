@@ -37,11 +37,7 @@ public class Board {
         }
     }
 
-    public void print(){
-        System.out.print(makeChessboardPicture());
-    }
-
-    public String makeChessboardPicture(){ // chessboard 상태 string 으로 변환 후 반환
+    public String print(){ // chessboard 상태 string 으로 변환 후 반환
         StringBuilder stringBuilder = new StringBuilder(); // chessboard 상태 출력 위해
         for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
             for(int j=0; j<CHESSBOARD_MAX_LENGTH; j++){

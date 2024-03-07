@@ -9,7 +9,7 @@ public class GamePlay {
 
         while(getUserInput().equals(START)){
             board.initialize();
-            board.print();
+            System.out.print(board.print());
         }
     }
 
