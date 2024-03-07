@@ -1,5 +1,7 @@
 package chess;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,31 +16,15 @@ public class BoardTest {
         board.initialize();
     }
 
-//    @Test
-//    @DisplayName("보드 초기화 후 흰색 폰이 두 번째 줄에 생성되어야한다")
-//    void createWhitePawn() throws Exception {
-//        assertEquals(8, board.whitePawnSize());
-//        assertEquals(PieceColor.WHITE, board.findWhitePawn(0));
-//    }
-//
-//    @Test
-//    @DisplayName("보드 초기화 후 검은색 폰이 생성되어야한다")
-//    void createBlackPawn() throws Exception {
-//        Piece black = new Piece(PieceColor.BLACK);
-//        assertEquals(8, board.blackPawnSize());
-//        assertEquals(PieceColor.BLACK, board.findBlackPawn(0));
-//    }
-
-//    @Test
-//    @DisplayName("보드 초기화 후 흰색폰과 검정폰의 문자가 p, P 이어야한다.")
-//    void initialize() throws Exception {
-//        assertEquals("pppppppp", board.getWhitePawnsResult());
-//        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
-//    }
+    @Test
+    @DisplayName("초기화 후 모든 piece 의 수는 32개여야한다")
+    void testPieceCount() {
+        assertEquals(32, board.pieceCount());
+    }
 
     @Test
-    public void create() throws Exception {
-        assertEquals(32, board.pieceCount());
+    @DisplayName("초기화된 보드판 출력 테스트")
+    void testShowBoard() throws Exception {
         String blankRank = appendNewLine("........");
         assertEquals(
                 appendNewLine("RNBQKBNR") +
