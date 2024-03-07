@@ -104,17 +104,4 @@
             return piece == null ? "." : Character.toString(piece.getRepresentation());
         }
 
-        public String getWhitePiecesResult() {
-            return getPiecesResult(whitePiece);
-        }
-
-        public String getBlackPiecesResult() {
-            return getPiecesResult(blackPiece);
-        }
-
-        private String getPiecesResult(List<Piece> pieces) {
-            return pieces.stream()
-                    .map(piece -> Character.toString(piece.getRepresentation()))
-                    .collect(Collectors.joining());
-        }
     }
