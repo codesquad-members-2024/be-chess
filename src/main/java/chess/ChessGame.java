@@ -6,7 +6,7 @@ import static chess.pieces.Square.getSquare;
 
 public class ChessGame {
     private final Board gameBoard;
-
+    private int turn = 1;
     public ChessGame(Board board) {
         this.gameBoard = board;
     }
@@ -15,10 +15,13 @@ public class ChessGame {
         StringTokenizer st = new StringTokenizer(positions, " ");
         st.nextToken();
         try {
-            gameBoard.movePiece(getSquare(st.nextToken()), getSquare(st.nextToken()));
+            gameBoard.movePiece(getSquare(st.nextToken()), getSquare(st.nextToken()) , turn);
         }catch (IllegalArgumentException failMove){
-            System.out.println("이동할 수 없는 위치입니다.");
+            System.out.println(failMove.getMessage());
         }
+
+        turn++;
+        System.out.println("Turn "+turn +" ");
         printView();
     }
 

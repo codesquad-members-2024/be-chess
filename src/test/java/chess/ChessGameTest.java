@@ -12,10 +12,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
-
 class ChessGameTest {
     ChessGame game;
     Board board;
@@ -54,13 +50,37 @@ class ChessGameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b2 b7" , "a1 a2" , "d4 d5" , "e3 e5"})
+    @CsvSource(value = {"b2 b7" , "a1 a2"})
     @DisplayName("기물의 타입에 따라 움직일 수 없는 경우가 있어야 한다")
     void failToMove(String cmd){
         board.init();
         game.tryMove("move "+cmd);
         System.setOut(new PrintStream(outputStreamCaptor));
 
-        Assertions.assertThat(outputStreamCaptor.toString()).contains("이동할 수 없는 위치입니다.");
+        Assertions.assertThat(outputStreamCaptor.toString()).contains("fail to move");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"d4 d5" , "e3 e5"})
+    @DisplayName("기물의 타입에 따라 움직일 수 없는 경우가 있어야 한다")
+    void tryMoveBlank(String cmd){
+        board.init();
+        game.tryMove("move "+cmd);
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        Assertions.assertThat(outputStreamCaptor.toString()).contains("not your Piece");
+    }
+
+    @Test
+    @DisplayName("턴을 진행할 때 본인 색상의 기물만 움직일 수 있어야 한다")
+    void turnException(){
+        board.init();
+        game.tryMove("move d2 d3");
+        game.tryMove("move c1 e3"); // 비숍 이동
+
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        Assertions.assertThat(outputStreamCaptor.toString()).contains("not your Piece");
+    }
+
 }

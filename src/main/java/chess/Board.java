@@ -40,8 +40,11 @@ public class Board {
         return toReturn;
     }
 
-    public void movePiece(Square start, Square target) throws IllegalArgumentException {
+    public void movePiece(Square start, Square target, int turn) throws IllegalArgumentException {
         Piece movingPiece = findPiece(start);
+        // 홀수 턴일 때 흰색 , 짝수 턴일 때 검은색 이 아니면 예외 발생
+        if (!(turn%2 ==1 && movingPiece.isWhite()) || (turn%2 ==0 && movingPiece.isBlack())) throw new IllegalArgumentException("not your Piece");
+
         List<Square> pieceCanMove = getAvailableSquares(movingPiece, start); // 보드 범위 내 가능한 모든 위치
 
         if (!pieceCanMove.contains(target)) throw new IllegalArgumentException(movingPiece + " fail to move"); // 이동 실패
