@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Pawn;
+import chess.pieces.Representation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class Board {
     private List<String> getWhitePawns() {
         List<String> whitePawns = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            whitePawns.add(Pawn.WHITE_REPRESENTATION);
+            whitePawns.add(Representation.WHITE_PAWN.getRepresentation());
         }
         return whitePawns;
     }
@@ -55,7 +56,7 @@ public class Board {
     private List<String> getBlackPawns() {
         List<String> blackPawns = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            blackPawns.add(Pawn.BLACK_REPRESENTATION);
+            blackPawns.add(Representation.BLACK_PAWN.getRepresentation());
         }
         return blackPawns;
     }

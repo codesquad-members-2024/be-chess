@@ -11,33 +11,33 @@ public class PawnTest {
     @Test
     @DisplayName("흰색 폰이 정상적으로 생성되어야 합니다.")
     void createPawnByWhiteColor() {
-        String color = Pawn.WHITE_COLOR;
+        Color color = Color.WHITE;
         Pawn pawn = new Pawn(color);
         assertThat(pawn.verifyPawn(color)).isTrue();
-        assertThat(pawn.verifyRepresentation(Pawn.WHITE_REPRESENTATION)).isTrue();
+        assertThat(pawn.verifyRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
     }
 
     @Test
     @DisplayName("검은색 폰이 정상적으로 생성되어야 합니다.")
     void createPawnByBlackColor() {
-        String color = Pawn.BLACK_COLOR;
+        Color color = Color.BLACK;
         Pawn pawn = new Pawn(color);
         assertThat(pawn.verifyPawn(color)).isTrue();
-        assertThat(pawn.verifyRepresentation(Pawn.BLACK_REPRESENTATION)).isTrue();
+        assertThat(pawn.verifyRepresentation(Representation.BLACK_PAWN.getRepresentation())).isTrue();
     }
 
     @Test
     @DisplayName("색상이 흰색 혹은 검은색인 경우에만 폰 객체가 생성됩니다.")
     void createPawnByNonWhiteAndNonBlackColor() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Pawn("blue"));
+                .isThrownBy(() -> new Pawn(null));
     }
 
     @Test
     @DisplayName("기본 생성자로 Pawn 객체를 생성하면 흰색 폰이 생성됩니다.")
     public void createPawnBy기본생성자() {
         Pawn pawn = new Pawn();
-        assertThat(pawn.verifyPawn(Pawn.WHITE_COLOR)).isTrue();
-        assertThat(pawn.verifyRepresentation(Pawn.WHITE_REPRESENTATION)).isTrue();
+        assertThat(pawn.verifyPawn(Color.WHITE)).isTrue();
+        assertThat(pawn.verifyRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
     }
 }
