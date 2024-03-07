@@ -11,9 +11,7 @@ import java.util.*;
 
 public class Board {
     private final int RANK_CNT = 8;
-
     private final Map<Position, Piece> chessBoard = new HashMap<>();
-
 
     public void initialize() {
         Arrays.stream(Position.values())
