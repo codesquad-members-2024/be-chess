@@ -95,28 +95,28 @@
 
 ## Step 4 : 모든 기물 배치하기
 ### StringUtils 클래스
-- [ ] `utils.StringUtils` 클래스를 추가한다
-  - [ ] 상수값으로 NEWLINE을 `System.getProperty("line.separator")`으로 가진다 (운영체제 독립적으로 작동시키기 위해)
-  - [ ] `appendNewLine("문자열")` 메서드 구현
-    - [ ] 인자로 전달한 메서드에 개행 문자를 추가하는 기능을 지님
-    - [ ] static import를 통해 구현한다
-  - [ ] 생성자를 private으로 선언하여 직접적으로 인스턴스를 생성하지 못하도록 막는다
+- [x] `utils.StringUtils` 클래스를 추가한다
+  - [x] 상수값으로 NEWLINE을 `System.getProperty("line.separator")`으로 가진다 (운영체제 독립적으로 작동시키기 위해)
+  - [x] `appendNewLine("문자열")` 메서드 구현
+    - [x] 인자로 전달한 메서드에 개행 문자를 추가하는 기능을 지님
+    - [x] static import를 통해 구현한다
+  - [x] 생성자를 private으로 선언하여 직접적으로 인스턴스를 생성하지 못하도록 막는다
 
 ### Pawn -> Piece (리팩토링)
-- [ ] 색상과 이름을 속성으로 지닌다
-  - [ ] 이름은 기물의 종류를 의미하며 piece, knight, rook, bishop, queen, king 으로 구분 가능
-- [ ] 값(value) 객체여야 한다
-  - [ ] private 생성자를 가지며, 인스턴스 생성한 이후 인스턴스의 상태앖을 변경 불가하다
-- [ ] 색과 이름을 받아 Piece 객체를 생성하는 팩토리 메서드를 구현
-- [ ] 기본 말을 생성하는 생성자는 없앤다
+- [x] 색상과 이름을 속성으로 지닌다
+  - [x] 이름은 기물의 종류를 의미하며 pawn, knight, rook, bishop, queen, king 으로 구분 가능
+- [x] 값(value) 객체여야 한다
+  - [x] private 생성자를 가지며, 인스턴스 생성한 이후 인스턴스의 상태값을 변경 불가하다
+- [x] 색과 이름을 받아 Piece 객체를 생성하는 팩토리 메서드를 구현
+- [x] 기본 말을 생성하는 생성자는 없앤다
 - [x] 검은색 말과 흰색 말을 구분할 수 있는 메서드를 추가한다
   - ex. isBlack(), isWhite()
 
 ### 팩토리 메서드 생성
-- [ ] 각 Piece별로 흰색 말과 검은 색 말을 생성하는 팩토리 메소드를 추가한다
+- [x] 각 Piece별로 흰색 말과 검은 색 말을 생성하는 팩토리 메소드를 추가한다
 
 ### 전체 기물의 상태를 볼 수 있는 체스판 구현 및 테스트
-- [ ] 다음 테스트를 만족하는 Board를 구현한다
+- [x] 다음 테스트를 만족하는 Board를 구현한다
 ```java
 import static utils.StringUtils.appendNewLine;
 
