@@ -25,6 +25,6 @@ public class ChessGame {
     public void startGame(){
         Board board = new Board();
         board.initialize();
-        board.print();
+        System.out.println(board.showBoard());
     }
 }
