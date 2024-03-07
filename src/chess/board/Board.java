@@ -1,17 +1,15 @@
 package src.chess.board;
 
-import java.util.Arrays;
-import java.util.EnumMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.stream.Collectors;
 import src.chess.pieces.Piece;
 import java.util.ArrayList;
 import src.utils.StringUtils;
 
 public class Board {
     private List<Piece> pieces = new ArrayList<>();
-    private Map<Square, Piece> chessBoard = new EnumMap<>(Square.class);
+    private List<Rank> board = new ArrayList<>();
 
     public void add(Piece piece) {
         this.pieces.add(piece);
@@ -26,32 +24,28 @@ public class Board {
     }
 
     public void initialize() {
-       Arrays.stream(Square.values())
-                .forEach(square -> chessBoard.put(square, square.initBoard()));
+        board.add(Rank.createWhiteInitRank());
+        board.add(Rank.createWhitePawnRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlackPawnRank());
+        board.add(Rank.createBlackInitRank());
     }
 
     public int pieceCount() {
-        return (int) (chessBoard.values().stream()
-                .filter(square -> !square.isBlank())
-                .count());
-    }
-
-    public String getPieceByRow(int startRange) {
-        StringBuilder result = new StringBuilder();
-        final int rowSize = 7;
-        int endRange = startRange + rowSize;
-        chessBoard.entrySet().stream()
-                .filter(entry -> entry.getKey().getOrdinal() >= startRange && entry.getKey().getOrdinal() <= endRange)
-                .forEach(entry -> result.append(entry.getValue()));
-        return result.toString();
+        return board.stream()
+                .map(Rank::getPieceSize)
+                .reduce(0, Integer::sum);
     }
 
     public String showBoard() {
-        StringBuilder result = new StringBuilder();
-        final int rowSize = 8;
-        for(int i = 0; i < chessBoard.size(); i += rowSize) {
-            result.append(StringUtils.appendNewLine(getPieceByRow(i)));
-        }
-        return result.toString();
+        List<Rank> reversedBoard = new ArrayList<>(board);
+        Collections.reverse(reversedBoard);
+
+        return reversedBoard.stream()
+                .map(rank -> StringUtils.appendNewLine(rank.toString()))
+                .collect(Collectors.joining());
     }
 }

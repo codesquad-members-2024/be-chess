@@ -12,52 +12,12 @@ public class Piece {
     }
 
     // 생성자를 막고 팩토리 메서드를 추가한다. 색과 이름을 받아서 구현해야 한다.
-    public static Piece createWhitePawn() {
-        return new Piece(Colors.WHITE, Type.PAWN);
+    public static Piece createWhite(Type type) {
+        return new Piece(Colors.WHITE, type);
     }
 
-    public static Piece createBlackPawn() {
-        return new Piece(Colors.BLACK, Type.PAWN);
-    }
-
-    public static Piece createBlackKnight() {
-        return new Piece(Colors.BLACK, Type.KNIGHT);
-    }
-
-    public static Piece createWhiteKnight() {
-        return new Piece(Colors.WHITE, Type.KNIGHT);
-    }
-
-    public static Piece createBlackRook() {
-        return new Piece(Colors.BLACK, Type.ROOK);
-    }
-
-    public static Piece createWhiteRook() {
-        return new Piece(Colors.WHITE, Type.ROOK);
-    }
-
-    public static Piece createBlackBishop() {
-        return new Piece(Colors.BLACK, Type.BISHOP);
-    }
-
-    public static Piece createWhiteBishop() {
-        return new Piece(Colors.WHITE, Type.BISHOP);
-    }
-
-    public static Piece createBlackQueen() {
-        return new Piece(Colors.BLACK, Type.QUEEN);
-    }
-
-    public static Piece createWhiteQueen() {
-        return new Piece(Colors.WHITE, Type.QUEEN);
-    }
-
-    public static Piece createBlackKing() {
-        return new Piece(Colors.BLACK, Type.KING);
-    }
-
-    public static Piece createWhiteKing() {
-        return new Piece(Colors.WHITE, Type.KING);
+    public static Piece createBlack(Type type){
+        return new Piece(Colors.BLACK, type);
     }
 
     public static Piece createBlank() {
