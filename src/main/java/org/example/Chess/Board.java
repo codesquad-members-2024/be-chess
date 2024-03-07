@@ -4,6 +4,7 @@ import org.example.Pieces.Pawn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Board {
     private static final int BOARD_SIZE = 8;
@@ -15,9 +16,7 @@ public class Board {
         whitePawns = new ArrayList<>();
         blackPawns = new ArrayList<>();
         board = new ArrayList<>();
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            board.add(new ArrayList<>());
-        }
+        IntStream.range(0, BOARD_SIZE).forEach(i -> board.add(new ArrayList<>()));
     }
 
     public void addPawn(Pawn pawn) {
