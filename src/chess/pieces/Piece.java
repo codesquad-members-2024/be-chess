@@ -116,7 +116,8 @@ public class Piece {
     // Enum Colors
     public enum Colors {
         WHITE("white"),
-        BLACK("black");
+        BLACK("black"),
+        NO_COLOR("noColor");
 
         private final String colorName;
 
