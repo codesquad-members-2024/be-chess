@@ -70,7 +70,8 @@ public enum Direction {
         return List.of(SOUTHEAST, SOUTHWEST);
     }
 
-    public boolean sameDegree(Position difference) {
+    public boolean sameDegree(Position source, Position target) {
+        Position difference = new Position(target.getYPos() - source.getYPos(), target.getXPos() - source.getXPos());
         return yDegree == difference.getYPos() && xDegree == difference.getXPos();
     }
 }

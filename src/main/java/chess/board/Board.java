@@ -107,6 +107,13 @@ public class Board {
         return sum;
     }
 
+    public List<Position> getOccupiedPosition() {
+        return ranks.stream()
+                .flatMap(rank -> rank.findPieces(piece -> !piece.isBlank()).stream())
+                .map(Piece::getPosition)
+                .collect(Collectors.toList());
+    }
+
     public List<Piece> getDescendingPieces() {
         List<Piece> descendingPieces = new ArrayList<>();
         descendingPieces.addAll(

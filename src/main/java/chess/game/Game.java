@@ -4,12 +4,14 @@ import chess.board.Board;
 import chess.board.Position;
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
+import java.util.List;
 
 public class Game {
     public static final int BOARD_MIN__IDX = 0;
     public static final int BOARD_MAX__IDX = 7;
     public static final double DECREASED_PAWN_POINT = 0.5;
     public static final String INVALID_POSITION = "해당 위치로 이동할 수 없습니다.";
+    public static final String INVALID_DIRECTION = "해당 방향으로 이동할 수 없습니다.";
     public static final String INVALID_SELECT = "아군의 피스만 움직일 수 있습니다.";
     private final Board board;
     private int turn = 1;
@@ -27,6 +29,13 @@ public class Game {
         if (isInvalidSelect(piece)) {
             throw new IllegalArgumentException(INVALID_SELECT);
         }
+
+        List<Position> occupied = board.getOccupiedPosition();
+        boolean isValidDirection = piece.verifyMovingDirection(source, target, occupied);
+        if (!isValidDirection) {
+            throw new IllegalArgumentException(INVALID_DIRECTION);
+        }
+
         // 성공로직
 
         piece.changePosition(target);

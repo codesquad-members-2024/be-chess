@@ -11,11 +11,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition(Position difference) {
-        int xPos = difference.getXPos();
-        int yPos = difference.getYPos();
+    public boolean verifyMovingDirection(Position source, Position target, List<Position> occupied) {
         Direction direction;
-
         if (isWhite()) {
             direction = Direction.whitePawnMoveDirection();
         } else {
@@ -29,22 +26,22 @@ public class Pawn extends Piece {
             count = 1;
         }
 
-        int dx = 0;
-        int dy = 0;
+        int xPos = source.getXPos();
+        int yPos = source.getYPos();
         for (int i = 0; i < count; i++) {
-            dx += direction.getXDegree();
-            dy += direction.getYDegree();
-            if (xPos == dx && yPos == dy) {
+            xPos += direction.getXDegree();
+            yPos += direction.getYDegree();
+            if (xPos == target.getXPos() && yPos == target.getYPos()) { // 최종 도착 위치일 경우 리턴
                 return true;
+            }
+            if (occupied.contains(new Position(yPos, xPos))) { // 경로에 이미 점유중인 피스가 있으면 이동불가
+                return false;
             }
         }
         return false;
     }
 
-    public boolean verifyAttackPosition(Position difference) {
-        int xPos = difference.getXPos();
-        int yPos = difference.getYPos();
-
+    public boolean verifyAttackPosition(Position source, Position target) {
         List<Direction> directions;
 
         if (isWhite()) {
@@ -52,7 +49,8 @@ public class Pawn extends Piece {
         } else {
             directions = Direction.blackPawnAttackDirection();
         }
-        return repeatVerifyMovePosition(xPos, yPos, directions);
+        return directions.stream()
+                .anyMatch(direction -> direction.sameDegree(source, target));
     }
 
     public void setInit(boolean init) {
