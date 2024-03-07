@@ -34,16 +34,16 @@ public class PieceTest {
     @Test
     @DisplayName("흰색폰을 생성한 후 isWhite는 true, isBlack은 false 이어야한다")
     void isWhiteColor() {
-        Piece whitePawn = Piece.createWhitePawn();
-        assertTrue(whitePawn.isWhite());
-        assertFalse(whitePawn.isBlack());
+        Piece whitePiece = Piece.createWhitePawn();
+        assertTrue(whitePiece.isWhite());
+        assertFalse(whitePiece.isBlack());
     }
 
     @Test
     @DisplayName("검정폰을 생성한 후 isWhite는 true, isBlack은 false 이어야한다")
     void isBlackColor() {
-        Piece blackPawn = Piece.createBlackPawn();
-        assertTrue(blackPawn.isBlack());
-        assertFalse(blackPawn.isWhite());
+        Piece blackPiece = Piece.createBlackPawn();
+        assertTrue(blackPiece.isBlack());
+        assertFalse(blackPiece.isWhite());
     }
 }
