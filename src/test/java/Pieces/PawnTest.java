@@ -3,15 +3,14 @@ package Pieces;
 import org.example.Pieces.Pawn;
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest{
 
     @Test
-    public void create_기본생성자() throws Exception {
+    public void create_기본생성자(){
         Pawn pawn = new Pawn();
-        assertEquals(Pawn.WHITE_COLOR, pawn.getColor());
+        assertThat(pawn.getColor()).isEqualTo(Pawn.WHITE_COLOR);
     }
 
     @Test
@@ -19,13 +18,15 @@ public class PawnTest{
     public void createWhitePawn() {
         verifyPawn(Pawn.WHITE_COLOR);
     }
+
     @Test
     @DisplayName("검정색 폰이 생성되어야 한다.")
     public void createBlackPawn() {
         verifyPawn(Pawn.BLACK_COLOR);
     }
-    private void verifyPawn(boolean expectedColor) {
+
+    private void verifyPawn(String expectedColor) {
         Pawn pawn = new Pawn(expectedColor);
-        assertEquals(expectedColor, pawn.getColor());
+        assertThat(pawn.getColor()).isEqualTo(expectedColor);
     }
 }
