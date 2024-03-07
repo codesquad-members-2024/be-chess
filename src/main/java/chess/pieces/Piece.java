@@ -110,6 +110,22 @@ public class Piece {
         return this.type.equals(type);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Piece piece)) {
+            return false;
+        }
+        return getColor() == piece.getColor() && getType() == piece.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getType());
+    }
+
     public enum Type {
         PAWN("♙", "♟", "pawn"),
         KNIGHT("♘", "♞", "knight"),
