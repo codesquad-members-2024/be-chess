@@ -13,8 +13,8 @@ public class PawnTest {
     void createPawnByWhiteColor() {
         Color color = Color.WHITE;
         Pawn pawn = new Pawn(color);
-        assertThat(pawn.verifyPawn(color)).isTrue();
-        assertThat(pawn.verifyRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
+        assertThat(pawn.verifyPawnColor(color)).isTrue();
+        assertThat(pawn.verifyPawnRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
     }
 
     @Test
@@ -22,8 +22,8 @@ public class PawnTest {
     void createPawnByBlackColor() {
         Color color = Color.BLACK;
         Pawn pawn = new Pawn(color);
-        assertThat(pawn.verifyPawn(color)).isTrue();
-        assertThat(pawn.verifyRepresentation(Representation.BLACK_PAWN.getRepresentation())).isTrue();
+        assertThat(pawn.verifyPawnColor(color)).isTrue();
+        assertThat(pawn.verifyPawnRepresentation(Representation.BLACK_PAWN.getRepresentation())).isTrue();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PawnTest {
     @DisplayName("기본 생성자로 Pawn 객체를 생성하면 흰색 폰이 생성됩니다.")
     public void createPawnBy기본생성자() {
         Pawn pawn = new Pawn();
-        assertThat(pawn.verifyPawn(Color.WHITE)).isTrue();
-        assertThat(pawn.verifyRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
+        assertThat(pawn.verifyPawnColor(Color.WHITE)).isTrue();
+        assertThat(pawn.verifyPawnRepresentation(Representation.WHITE_PAWN.getRepresentation())).isTrue();
     }
 }

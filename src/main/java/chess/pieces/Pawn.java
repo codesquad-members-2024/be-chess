@@ -2,8 +2,6 @@ package chess.pieces;
 
 public class Pawn {
 
-    private static final String COLOR_ERROR_MESSAGE = "[ERROR] 색상은 white 혹은 black만 가능합니다.";
-
     private final Color color;
     private final String representation;
 
@@ -30,15 +28,15 @@ public class Pawn {
 
     private void validate(Color color) {
         if (color == null) {
-            throw new IllegalArgumentException(COLOR_ERROR_MESSAGE);
+            throw new IllegalArgumentException();
         }
     }
 
-    public boolean verifyPawn(final Color color) {
+    public boolean verifyPawnColor(final Color color) {
         return this.color.equals(color);
     }
 
-    public boolean verifyRepresentation(final String representation) {
+    public boolean verifyPawnRepresentation(final String representation) {
         return this.representation.equals(representation);
     }
 }
