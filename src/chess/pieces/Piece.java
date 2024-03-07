@@ -86,14 +86,15 @@ public class Piece {
         return representation;
     }
 
-    // Enum
+    // Enum Type
     public enum Type {
         PAWN("p", "P"),
         KNIGHT("n", "N"),
         ROOK("r", "R"),
         BISHOP("b", "B"),
         QUEEN("q", "Q"),
-        KING("k", "K");
+        KING("k", "K"),
+        NO_PIECE(".",".");
 
         private final String whitePiece;
         private final String blackPiece;
@@ -109,6 +110,22 @@ public class Piece {
                 return blackPiece;
             }
             return whitePiece;
+        }
+    }
+
+    // Enum Colors
+    public enum Colors {
+        WHITE("white"),
+        BLACK("black");
+
+        private final String colorName;
+
+        Colors(String colorName) {
+            this.colorName = colorName;
+        }
+
+        public String getColorName() {
+            return colorName;
         }
     }
 }
