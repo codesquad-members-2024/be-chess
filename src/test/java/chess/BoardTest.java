@@ -2,41 +2,31 @@ package chess;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
-import pieces.Piece;
-import pieces.PieceColor;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static utils.StringUtils.appendNewLine;
 
 class BoardTest {
-    Board board;
-    @Test
-    @DisplayName("흰색 폰과 검은색 폰이 보드에 추가되었습니다.")
-    void create() throws Exception {
+    private Board board;
+
+    @BeforeEach
+    public void setup() {
         board = new Board();
-
-        Piece white = Piece.createWhitePawn();
-        testAddPawn(white,1,0);
-
-        Piece black = Piece.createBlackPawn();
-        testAddPawn(black,2,0);
-    }
-    void testAddPawn(Piece piece, int pawnNumber, int indexNumber){
-        if (piece.getColor().equals(PieceColor.WHITE)){
-            board.addWhitePawn(piece);
-            assertEquals(piece, board.findWhitePawn(indexNumber));
-        }else if (piece.getColor().equals(PieceColor.BLACK)){
-            board.addBlackPawn(piece);
-            assertEquals(piece, board.findBlackPawn(indexNumber));
-        }
-        assertEquals(pawnNumber, board.totalSize());
+        board.initialize();
     }
     @Test
-    @DisplayName("폰 객체가 흰색 검은색 각각 8개씩 추가되었습니다.")
-    void initialize() throws Exception {
-        Board board = new Board();
-        board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
-        board.print();
+    void checkSize() throws Exception {
+        assertEquals(32, board.totalSize());
+    }
+    @Test
+    void createBoard() throws Exception {
+        String blankRank = appendNewLine("........");
+        assertEquals(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr"),
+                board.showBoard());
     }
 }
