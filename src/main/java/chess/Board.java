@@ -70,18 +70,4 @@ public class Board {
         Pawn emptyPawn = new Pawn(Pawn.EMPTY, Pawn.EMPTY_REPRESENTATION);
         return new ArrayList<>(Collections.nCopies(SIZE, emptyPawn));
     }
-
-/*
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
-    }
-
-    public int size() {
-        return pawns.size();
-    }
-
-    public Pawn findPawn(int order) {
-        return pawns.get(order);
-    }
- */
 }
