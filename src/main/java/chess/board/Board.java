@@ -1,5 +1,7 @@
 package chess.board;
 
+import static chess.board.Position.*;
+import static chess.board.Position.convertRankAndFileToPos;
 import static chess.common.Color.*;
 import static chess.pieces.Piece.*;
 import static chess.utils.StringUtils.*;
@@ -9,15 +11,18 @@ import static chess.pieces.CreateCommand.create;
 import chess.common.Color;
 import chess.pieces.Piece;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Board<T extends Piece> {
+    private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
     private static final String BLANK_PIECES = ".".repeat(FILE_COUNT);
     private List<Piece> pieces = new ArrayList<>();
+    private List<Position> boardBlocks = new ArrayList<>();
 
     public Piece findPiece(int index) {
         return pieces.get(index);
@@ -34,8 +39,23 @@ public class Board<T extends Piece> {
     }
 
     public void initialize() {
+        initializeBoardBlocks();
         initializePiecesByColorOrder(BLACK);
         initializePiecesByColorOrder(WHITE);
+    }
+
+    public void initializeBoardBlocks() {
+        IntStream.range(0, RANK_COUNT)
+                .forEach(rank -> IntStream.range(0, FILE_COUNT)
+                        .forEach(file -> boardBlocks.add(Position.init(rank, file))));
+    }
+
+    public void move(String pos, Piece piece) {
+        boardBlocks.stream()
+                .filter(position -> position.isSamePos(pos))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new)
+                .changePiece(piece);
     }
 
     private void initializePiecesByColorOrder(Color color) {

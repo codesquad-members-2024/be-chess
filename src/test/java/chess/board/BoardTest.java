@@ -177,4 +177,22 @@ class BoardTest {
         assertThat(blackKnightCount).isEqualTo(0);
         assertThat(whiteKnightCount).isEqualTo(0);
     }
+
+    @DisplayName("체스판에 빈 블록들을 64개 생성할 수 있다")
+    @Test
+    void initializeBoardBlocks() {
+        // given
+        board.initializeBoardBlocks();
+        String blankRank = appendNewLine(".".repeat(8));
+
+        // when
+        assertEquals(0, board.pieceCount());
+        assertEquals(
+                blankRank + blankRank +
+                        blankRank + blankRank +
+                        blankRank + blankRank +
+                        blankRank + blankRank,
+                board.showBoard()
+        );
+    }
 }
