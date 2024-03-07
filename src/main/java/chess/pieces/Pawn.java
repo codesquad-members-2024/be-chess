@@ -1,35 +1,42 @@
 package chess.pieces;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Pawn {
 
+    private final Map<Color, Representation> type;
     private final Color color;
     private final String representation;
 
     public Pawn() {
+        type = new HashMap<>();
+        setType();
         this.color = Color.WHITE;
         this.representation = setRepresentation(color);
     }
 
     public Pawn(Color color) {
         validate(color);
+        type = new HashMap<>();
+        setType();
         this.color = color;
         this.representation = setRepresentation(color);
-    }
-
-    private String setRepresentation(Color color) {
-        for (Representation representation : Representation.values()) {
-            if (representation.getColor().equals(color)) {
-                return representation.getRepresentation();
-            }
-        }
-        // 이미 validate에서 검증했기 때문에 null이 반환되는 상황은 없습니다.
-        return null;
     }
 
     private void validate(Color color) {
         if (color == null) {
             throw new IllegalArgumentException();
         }
+    }
+
+    private void setType() {
+        type.put(Color.WHITE, Representation.WHITE_PAWN);
+        type.put(Color.BLACK, Representation.BLACK_PAWN);
+    }
+
+    private String setRepresentation(Color color) {
+        return type.get(color).getRepresentation();
     }
 
     public boolean verifyPawnColor(final Color color) {
