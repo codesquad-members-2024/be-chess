@@ -36,9 +36,15 @@ public class BoardTest {
     @Test
     @DisplayName("검정 폰과 흰색 폰이 8개씩 올바르게 생성되었는지 확인")
     public void initialize() throws Exception {
-        Board board = new Board();
         board.initialize();
         assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
         assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+    }
+
+    @Test
+    @DisplayName("검정 폰과 흼색 폰 출력 테스트")
+    public void printTest() {
+        board.initialize();
+        System.out.println(board.print());
     }
 }

@@ -5,7 +5,6 @@ public class Pawn {
     public static final String BLACK_COLOR = "black";
     public static final char WHITE_REPRESENTATION = 'p';
     public static final char BLACK_REPRESENTATION = 'P';
-
     private final String color;
 
     private final char representation;
