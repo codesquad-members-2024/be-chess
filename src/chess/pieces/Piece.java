@@ -2,7 +2,7 @@ package src.chess.pieces;
 
 public class Piece {
     private Colors color;
-    private String representation;
+    private char representation;
     private Type type;
 
     private Piece(Colors color, Type type) {
@@ -83,33 +83,31 @@ public class Piece {
 
     @Override
     public String toString() {
-        return representation;
+        return String.valueOf(representation);
     }
 
     // Enum Type
     public enum Type {
-        PAWN("p", "P"),
-        KNIGHT("n", "N"),
-        ROOK("r", "R"),
-        BISHOP("b", "B"),
-        QUEEN("q", "Q"),
-        KING("k", "K"),
-        NO_PIECE(".",".");
+        PAWN('p'),
+        KNIGHT('n'),
+        ROOK('r'),
+        BISHOP('b'),
+        QUEEN('q'),
+        KING('k'),
+        NO_PIECE('.');
 
-        private final String whitePiece;
-        private final String blackPiece;
+        private final char pieceRepresentation;
 
-        Type(String whitePiece, String blackPiece) {
-            this.whitePiece = whitePiece;
-            this.blackPiece = blackPiece;
+        Type(char pieceRepresentation) {
+            this.pieceRepresentation = pieceRepresentation;
         }
 
         // 색을 파라미터로 받아서 해당되는 말의 모양을 return 해주자
-        public String getPieceByColor(Colors color) {
+        public char getPieceByColor(Colors color) {
             if (color.equals(Colors.BLACK)) {
-                return blackPiece;
+                return Character.toUpperCase(pieceRepresentation);
             }
-            return whitePiece;
+            return pieceRepresentation;
         }
     }
 

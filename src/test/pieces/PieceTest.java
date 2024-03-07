@@ -15,9 +15,9 @@ public class PieceTest {
         verifyPiece(Piece.createBlackPawn(), Piece.Colors.BLACK.getColorName(), Piece.Type.PAWN.getPieceByColor(Piece.Colors.BLACK));
     }
 
-    private void verifyPiece(final Piece piece, final String color, final String representation) {
+    private void verifyPiece(final Piece piece, final String color, final char representation) {
         assertEquals(color, piece.getColor());
-        assertEquals(representation, piece.toString());
+        assertEquals(String.valueOf(representation), piece.toString());
     }
 
     @Test
@@ -39,8 +39,8 @@ public class PieceTest {
     @Test
     @DisplayName("폰의 기물 모양이 색에 맞게 올바르게 관리되고 있는지 확인한다.")
     public void getRepresentationPerPiece() throws Exception {
-        assertThat("p").isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.WHITE));
-        assertThat("P").isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.BLACK));
+        assertThat('p').isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.WHITE));
+        assertThat('P').isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.BLACK));
     }
 }
 
