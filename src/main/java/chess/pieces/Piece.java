@@ -1,7 +1,9 @@
 package chess.pieces;
 
-import chess.Position;
+import chess.Color;
+import chess.Direction;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -10,9 +12,12 @@ public abstract class Piece {
     private final String representation;
     private final double score;
 
-    protected Piece(Color color, Type type) {
+    public final int canMove;
+
+    protected Piece(Color color, Type type, int canMove) {
         this.color = color;
         this.type = type;
+        this.canMove = canMove;
         if (isBlack()) this.representation = String.valueOf((char) (type.getRepresentation().charAt(0) + 6));
         else this.representation = type.getRepresentation();
         this.score = type.getScore();
@@ -21,6 +26,7 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
     public boolean isBlack() {
         return color == Color.BLACK;
     }
@@ -29,36 +35,37 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public Type getType(){ return this.type; }
+    public Type getType() {
+        return this.type;
+    }
+
     public String getRepresentation() {
         return this.representation;
     }
 
-    public double getScore(){
+    public double getScore() {
         return this.score;
     }
 
-    public abstract boolean verifyMovePosition(Position now, Position destination);
+    public abstract List<Direction> getDirection();
 
-    public enum Color {
-        WHITE, BLACK, NOCOLOR;
-    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Double.compare(piece.score, score) == 0 && color == piece.color;
+        return color == piece.color && type == piece.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, score);
+        return Objects.hash(color,type);
     }
 
     public enum Type {
-        PAWN(1.0 ,"♙"),
+        PAWN(1.0, "♙"),
         KNIGHT(2.5, "♘"),
         ROOK(5.0, "♖"),
         BISHOP(3.0, "♗"),
@@ -68,13 +75,16 @@ public abstract class Piece {
 
         private final double score;
         final String representation;
+
         Type(double score, String representation) {
             this.score = score;
             this.representation = representation;
         }
-        public double getScore(){
+
+        public double getScore() {
             return score;
         }
+
         public String getRepresentation() {
             return representation;
         }

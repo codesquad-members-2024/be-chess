@@ -1,15 +1,17 @@
 package chess.pieces;
 
-import chess.Position;
+import chess.Color;
+import chess.Direction;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blank extends Piece{
 
     protected Blank() {
-        super(Color.NOCOLOR, Type.BLANK);
+        super(Color.NOCOLOR, Type.BLANK, 0);
     }
 
-    @Override
-    public boolean verifyMovePosition(Position now, Position destination) {
-        return false;
+    public List<Direction> getDirection() {
+        return new ArrayList<>();
     }
 }

@@ -2,17 +2,22 @@ package chess;
 
 import chess.pieces.Piece;
 import chess.pieces.PieceFactory;
+import chess.pieces.Square;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static chess.ChessHelp.*;
+import static chess.pieces.Square.getSquare;
 
 public class Board {
     private final List<Rank> board = new ArrayList<>(MAX_RANK);
 
     public Board() {
-        for(int rank = MIN_RANK; rank<=MAX_RANK; rank++) board.add(new Rank());
+        for (int rank = MIN_RANK; rank <= MAX_RANK; rank++) board.add(new Rank());
     }
 
     // 초기화
@@ -21,50 +26,88 @@ public class Board {
         fillRank(7, getFillSame(PieceFactory::createBlackPawn));
         fillRank(2, getFillSame(PieceFactory::createWhitePawn));
         fillRank(1, whitePieceSequence);
-
-    }
-
-    public Piece findPiece(Position position) {
-        return board.get(position.getRank()).getPiece(position.getFile());
-    }
-
-    public void addPieceAt(Position position, Piece piece) {
-        board.get(position.getRank()).setPiece(position.getFile(), piece);
-    }
-
-    public void setBlank(Position position){
-        addPieceAt(position, PieceFactory.createBlank());
     }
 
     private void fillRank(int rank, List<Supplier<Piece>> createPiece) {
         for (int file = MIN_FILE; file <= MAX_FILE; file++) {
-            board.get(MAX_RANK-rank).setPiece(file, createPiece.get(file-MIN_FILE).get());
+            board.get(MAX_RANK - rank).setPiece(file - 1, createPiece.get(file - MIN_FILE).get());
         }
     }
 
-    private List<Supplier<Piece>> getFillSame(Supplier<Piece> createPiece){
+    private List<Supplier<Piece>> getFillSame(Supplier<Piece> createPiece) {
         List<Supplier<Piece>> toReturn = new ArrayList<>(MAX_FILE);
-        for(int i=MIN_FILE; i<=MAX_FILE; i++) toReturn.add(createPiece);
+        for (int i = MIN_FILE; i <= MAX_FILE; i++) toReturn.add(createPiece);
         return toReturn;
     }
 
-    public List<Rank> getBoard() {
-        return this.board;
+    public void movePiece(Square start, Square target) throws IllegalArgumentException {
+        Piece movingPiece = findPiece(start);
+        List<Square> pieceCanMove = getAvailableSquares(movingPiece, start); // 보드 범위 내 가능한 모든 위치
+
+        if (!pieceCanMove.contains(target)) throw new IllegalArgumentException(movingPiece + " fail to move"); // 이동 실패
+
+        // 이동 실행
+        addPieceAt(target, movingPiece);
+        setBlank(start);
+        System.out.println(start + " moved to " + target);
     }
 
-     public double getScore(Piece.Color color) {
+    private List<Square> getAvailableSquares(Piece piece, Square start) {
+        List<Square> squares = new ArrayList<>();
+
+        piece.getDirection().forEach(D -> {
+
+            checkCanMove(piece, start, squares, D , 0);
+        });
+
+        return squares;
+    }
+
+    private void checkCanMove(Piece piece, Square start, List<Square> squares, Direction D, int count) {
+        if (count == piece.canMove) return;
+
+        Square target;
+        try {
+            target = getSquare(start, D); // inRange 검증
+        } catch (IllegalArgumentException outRange) {
+            return;
+        }
+
+        Piece pieceAtTarget = findPiece(target);
+        if (pieceAtTarget.getType() == Piece.Type.BLANK) { // 빈칸이라면 이동 가능 , 다음 확인 위해 재귀 호출
+            squares.add(target);
+            checkCanMove(piece, target, squares, D, count+1);
+        }
+
+        // 다른 색이면 거기까지 추가 , 같은 색이면 추가 안하고 그만
+        if (pieceAtTarget.getColor() != piece.getColor()) squares.add(target);
+    }
+
+    private Piece findPiece(Square square) throws IndexOutOfBoundsException {
+        return board.get(square.rankIndex()).getPiece(square.fileIndex());
+    }
+
+    void addPieceAt(Square square, Piece piece) {
+        board.get(square.rankIndex()).setPiece(square.fileIndex(), piece);
+    }
+
+    private void setBlank(Square square) {
+        addPieceAt(square, PieceFactory.createBlank());
+    }
+
+    public double getScore(Color color) {
         return Arrays.stream(Piece.Type.values())
                 .mapToDouble(type -> countPiece(color, type) * type.getScore())
                 .sum()
                 - countOverPawn(color) * Piece.Type.PAWN.getScore() / 2;
     }
 
-    private int countOverPawn(Piece.Color color) {
+    private int countOverPawn(Color color) {
         int overPawn = 0;
-        for (int file = 1; file<=MAX_FILE; file++) {
+        for (int file = 1; file <= MAX_FILE; file++) {
             int cnt = 0;
             for (int rank = 1; rank <= MAX_RANK; rank++) {
-                Piece piece = findPiece(new Position(rank , file)); // 포지션 클래스를 만들고 makePosition 으로 통일할까 고민
+                Piece piece = findPiece(getSquare(rank, file));
                 if (piece.getType() == Piece.Type.PAWN && piece.getColor() == color) {
                     cnt++;
                 }
@@ -74,9 +117,13 @@ public class Board {
         return overPawn;
     }
 
-    public int countPiece(Piece.Color color , Piece.Type type) {
-        return (int)board.stream().mapToLong(rank -> rank.stream()
-            .filter(p -> p.getColor().equals(color) && p.getType().equals(type))
-            .count()).sum();
+    private int countPiece(Color color, Piece.Type type) {
+        return (int) board.stream().mapToLong(rank -> rank.stream()
+                .filter(p -> p.getColor() == color && p.getType().equals(type))
+                .count()).sum();
+    }
+
+    public List<Rank> getBoard() {
+        return Collections.unmodifiableList(board);
     }
 }

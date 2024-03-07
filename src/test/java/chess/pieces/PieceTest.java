@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.pieces.Piece.Color;
+import chess.Color;
 import chess.pieces.Piece.Type;
 import org.junit.jupiter.api.*;
 

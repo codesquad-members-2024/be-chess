@@ -1,15 +1,19 @@
 package chess.pieces;
 
-import chess.Position;
+import chess.Color;
+import chess.Direction;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static chess.Direction.*;
 
 public class Bishop extends Piece{
-
     protected Bishop(Color color) {
-        super(color, Type.BISHOP);
+        super(color, Type.BISHOP, 8);
     }
-
     @Override
-    public boolean verifyMovePosition(Position now, Position destination) {
-        return Math.abs(now.getRank() - destination.getRank()) == Math.abs(now.getFile()- destination.getFile()); // 대각선 이동 가능
+    public List<Direction> getDirection() {
+        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 }

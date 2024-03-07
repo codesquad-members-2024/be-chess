@@ -1,24 +1,28 @@
 package chess;
 
-import chess.pieces.Piece;
+import java.util.StringTokenizer;
+
+import static chess.pieces.Square.getSquare;
 
 public class ChessGame {
     private final Board gameBoard;
-    public ChessGame(Board board){
+
+    public ChessGame(Board board) {
         this.gameBoard = board;
     }
 
-    // 게임 로직
-    public void movePieceAt(String sourcePosition, String targetPosition) throws IllegalArgumentException{
-        Position source = new Position(sourcePosition);
-        Position target = new Position(targetPosition);
-
-        Piece movingPiece = gameBoard.findPiece(source);
-        if(!movingPiece.verifyMovePosition(source,target)) throw new IllegalArgumentException();
-        gameBoard.setBlank(source);
-        gameBoard.addPieceAt(target, movingPiece);
+    public void tryMove(String positions) {
+        StringTokenizer st = new StringTokenizer(positions, " ");
+        st.nextToken();
+        try {
+            gameBoard.movePiece(getSquare(st.nextToken()), getSquare(st.nextToken()));
+        }catch (IllegalArgumentException failMove){
+            System.out.println("이동할 수 없는 위치입니다.");
+        }
+        printView();
     }
-    public void print() {
+
+    public void printView(){
         System.out.println(ChessView.showBoard(gameBoard.getBoard()));
     }
 }

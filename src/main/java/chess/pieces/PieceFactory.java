@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import static chess.pieces.Piece.Color.*;
+import static chess.Color.*;
 
 public class PieceFactory {
 

@@ -1,15 +1,21 @@
 package chess.pieces;
 
-import chess.Position;
+import chess.Color;
+import chess.Direction;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static chess.Direction.*;
 
 public class Pawn extends Piece{
-    @Override
-    public boolean verifyMovePosition(Position now, Position destination) {
-        return Math.abs(now.getRank() - destination.getRank()) + Math.abs(now.getFile() - destination.getFile()) == 1;
-        // 1칸 이동만 구현 , 이후에 대각선 공격 , 2칸 전진 추가해야함
+    protected Pawn(Color color){
+        super(color , Type.PAWN, 1);
     }
 
-    protected Pawn(Color color){
-        super(color , Type.PAWN);
+    @Override
+    public List<Direction> getDirection() {
+        if(isWhite()) return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+        else return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 }

@@ -1,16 +1,22 @@
 package chess.pieces;
 
-import chess.Position;
+import chess.Color;
+import chess.Direction;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static chess.Direction.*;
+import static chess.Direction.NORTHWEST;
 
 public class Queen extends Piece{
 
     protected Queen(Color color) {
-        super(color, Type.QUEEN);
+        super(color, Type.QUEEN, 8);
     }
 
     @Override
-    public boolean verifyMovePosition(Position now, Position destination) {
-        if (now.getRank() == destination.getRank() || now.getFile() == destination.getFile()) return true; // 일자 이동 가능
-        return Math.abs(now.getRank() - destination.getRank()) == Math.abs(now.getFile() - destination.getFile()); // 대각선 이동 가능
+    public List<Direction> getDirection() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 }
