@@ -69,6 +69,10 @@ public abstract class Piece {
         return type == Type.NO_PIECE && color == Color.NO_COLOR;
     }
 
+    public boolean isAlly(Piece other) {
+        return this.color == other.color;
+    }
+
     public double getDefaultPoint() {
         return type.getDefaultPoint();
     }

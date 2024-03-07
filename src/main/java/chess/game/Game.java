@@ -20,7 +20,8 @@ public class Game {
 
     public void move(Position source, Position target) {
         Piece piece = board.findPiece(source);
-        if (isNotPositionOnBoard(source) || isNotPositionOnBoard(target)) {
+        if (isNotPositionOnBoard(source) || isNotPositionOnBoard(target) || isSamePosition(source, target)
+                || isAllyPresent(piece, target)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
         if (isInvalidSelect(piece)) {
@@ -39,6 +40,15 @@ public class Game {
             return !piece.isWhite();
         }
         return !piece.isBlack();
+    }
+
+    private boolean isSamePosition(Position source, Position target) {
+        return source.equals(target);
+    }
+
+    private boolean isAllyPresent(Piece sourcePiece, Position target) {
+        Piece tagetPiece = board.findPiece(target);
+        return tagetPiece.isAlly(sourcePiece);
     }
 
     private boolean isNotPositionOnBoard(Position position) {
