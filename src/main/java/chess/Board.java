@@ -53,7 +53,7 @@ public class Board {
         }
 
         for (int i = 0; i < DEFAULT_PAWN_COUNT; i++) {
-            addBlackPawn(Piece.createBlackKing());
+            addBlackPawn(Piece.createBlackPawn());
         }
 
         addBlackNonPawnPiece(Piece.createBlackRook());

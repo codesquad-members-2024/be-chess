@@ -1,14 +1,12 @@
 package chess.pieces;
 
-// 값 객체? 객체의 인스턴스가 아닌 그 객체가 가지고 있는 값으로 동일성 판단 , 불변
-// 로직이 더 명확해지고, 오류 가능성이 줄어들고, 일관성을 유지할 수 있다.
 public class Piece {
     public static final String WHITE = "white";
     public static final String BLACK = "black";
     public static final String WHITE_PAWN_REPRESENTATION = "p";
     public static final String BLACK_PAWN_REPRESENTATION = "P";
-    public static final String WHITE_KNIGHT_REPRESENTATION = "k";
-    public static final String BLACK_KNIGHT_REPRESENTATION = "K";
+    public static final String WHITE_KNIGHT_REPRESENTATION = "n";
+    public static final String BLACK_KNIGHT_REPRESENTATION = "N";
     public static final String WHITE_ROOK_REPRESENTATION = "r";
     public static final String BLACK_ROOK_REPRESENTATION = "R";
     public static final String WHITE_BISHOP_REPRESENTATION = "b";
