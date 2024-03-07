@@ -18,8 +18,13 @@ public class Board {
   }
 
   public void initialize() {
+    pawns.add(WHITE_PAWNS_LINE, getNewWhitePawns());
+    pawns.add(BLACK_PAWNS_LINE, getNewBlackPawns());
+
     for (int line = 0; line < SIZE; line++) {
-      pawns.add(line, getInitialPawns(line));
+      if (line != WHITE_PAWNS_LINE && line != BLACK_PAWNS_LINE) {
+        pawns.add(getEmptyPawns());
+      }
     }
   }
 
@@ -38,16 +43,6 @@ public class Board {
 
   public String getBlackPawnsResult() {
     return getPawnsOfLineString(pawns.get(BLACK_PAWNS_LINE));
-  }
-
-  private List<Pawn> getInitialPawns(int line) {
-    if (line == WHITE_PAWNS_LINE) {
-      return getNewWhitePawns();
-    }
-    if (line == BLACK_PAWNS_LINE) {
-      return getNewBlackPawns();
-    }
-    return getEmptyPawns();
   }
 
   private String getPawnsOfLineString(List<Pawn> pawnsOfLine) {
