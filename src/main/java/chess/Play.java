@@ -13,7 +13,7 @@ public class Play {
             if (input.equals("start")) {
                 Board board = new Board();
                 board.initialize();
-                board.print();
+                board.showBoard();
                 System.out.println("게임을 그만하고 싶다면 end 라고 입력하세요" + " 👊 ");
             } else if (input.equals("end")) {
                 break;
