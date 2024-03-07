@@ -1,6 +1,6 @@
 package chess;
 
-import pieces.Pawn;
+import pieces.Piece;
 import pieces.PawnColor;
 
 import java.util.ArrayList;
@@ -11,12 +11,12 @@ public class Board {
     public static final int WHITE_PAWN_START_ROW = 1;
     public static final int BLACK_PAWN_START_ROW = 6;
 
-    private List<Pawn> pawns;
-    private Pawn[][] chessboard;
+    private List<Piece> pieces;
+    private Piece[][] chessboard;
 
     Board(){
-        pawns = new ArrayList<Pawn>();
-        chessboard = new Pawn[CHESSBOARD_MAX_LENGTH][CHESSBOARD_MAX_LENGTH];
+        pieces = new ArrayList<Piece>();
+        chessboard = new Piece[CHESSBOARD_MAX_LENGTH][CHESSBOARD_MAX_LENGTH];
     }
 
     public void initialize(){
@@ -31,9 +31,9 @@ public class Board {
         }
 
         for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
-            Pawn pawn = new Pawn(color);
-            add(pawn);
-            chessboard[initRow][i] = pawn;
+            Piece piece = new Piece(color);
+            add(piece);
+            chessboard[initRow][i] = piece;
         }
     }
 
@@ -48,23 +48,23 @@ public class Board {
         return stringBuilder.toString();
     }
 
-    public char getPawnStatus(Pawn pawn){
-        if(pawn == null){
+    public char getPawnStatus(Piece piece){
+        if(piece == null){
             return '.';
         }
-        return pawn.getChessPiece();
+        return piece.getChessPiece();
     }
 
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+    public void add(Piece piece) {
+        pieces.add(piece);
     }
 
     public int size() {
-        return pawns.size();
+        return pieces.size();
     }
 
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
+    public Piece findPawn(int index) {
+        return pieces.get(index);
     }
 
     public String getWhitePawnsResult() {

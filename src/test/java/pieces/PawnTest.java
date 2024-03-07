@@ -16,20 +16,20 @@ public class PawnTest {
     @Test
     @DisplayName("색이 없는 Pawn을 생성하는 경우 white Pawn을 생성해야 한다 ")
     public void create_기본생성자() throws Exception {
-        Pawn pawn = new Pawn();
-        assertThat(pawn.getColor()).isEqualTo(PawnColor.WHITE);
-        assertThat(pawn.getChessPiece()).isEqualTo(Pawn.WHITE_PAWN);
+        Piece piece = new Piece();
+        assertThat(piece.getColor()).isEqualTo(PawnColor.WHITE);
+        assertThat(piece.getChessPiece()).isEqualTo(Piece.WHITE_PAWN);
     }
 
     private void verifyPawn(PawnColor color) {
-        Pawn pawn = new Pawn(color);
+        Piece piece = new Piece(color);
 
-        assertThat(pawn.getColor()).isEqualTo(color); // 색 비교
+        assertThat(piece.getColor()).isEqualTo(color); // 색 비교
 
         if(color == PawnColor.WHITE){ // chessPiece 비교
-            assertThat(pawn.getChessPiece()).isEqualTo(Pawn.WHITE_PAWN);
+            assertThat(piece.getChessPiece()).isEqualTo(Piece.WHITE_PAWN);
         }else{
-            assertThat(pawn.getChessPiece()).isEqualTo(Pawn.BLACK_PAWN);
+            assertThat(piece.getChessPiece()).isEqualTo(Piece.BLACK_PAWN);
         }
     }
 }
