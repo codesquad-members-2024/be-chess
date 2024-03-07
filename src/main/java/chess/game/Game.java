@@ -10,6 +10,7 @@ public class Game {
     public static final int BOARD_MAX__IDX = 7;
     public static final double DECREASED_PAWN_POINT = 0.5;
     public static final String INVALID_POSITION = "해당 위치로 이동할 수 없습니다.";
+    public static final String INVALID_SELECT = "아군의 피스만 움직일 수 있습니다.";
     private final Board board;
     private int turn = 1;
 
@@ -18,22 +19,33 @@ public class Game {
     }
 
     public void move(Position source, Position target) {
-        if (!isPositionOnBoard(source) || !isPositionOnBoard(target)) {
+        Piece piece = board.findPiece(source);
+        if (isNotPositionOnBoard(source) || isNotPositionOnBoard(target)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
-
+        if (isInvalidSelect(piece)) {
+            throw new IllegalArgumentException(INVALID_SELECT);
+        }
         // 성공로직
-        Piece piece = board.findPiece(source);
+
         piece.changePosition(target);
         board.addPiece(target, piece);
         board.addPiece(source, Piece.createBlank(source));
+        turn++;
     }
 
-    private boolean isPositionOnBoard(Position position) {
+    private boolean isInvalidSelect(Piece piece) {
+        if (isWhiteTurn()) {
+            return !piece.isWhite();
+        }
+        return !piece.isBlack();
+    }
+
+    private boolean isNotPositionOnBoard(Position position) {
         int yPos = position.getYPos();
         int xPos = position.getXPos();
 
-        return yPos >= BOARD_MIN__IDX && yPos <= BOARD_MAX__IDX && xPos >= BOARD_MIN__IDX && xPos <= BOARD_MAX__IDX;
+        return yPos < BOARD_MIN__IDX || yPos > BOARD_MAX__IDX || xPos < BOARD_MIN__IDX || xPos > BOARD_MAX__IDX;
     }
 
     public double calculatePoint(Color color) {
@@ -44,9 +56,5 @@ public class Game {
 
     private boolean isWhiteTurn() {
         return turn % 2 == 1;
-    }
-
-    private boolean isBlackTurn() {
-        return turn % 2 == 0;
     }
 }
