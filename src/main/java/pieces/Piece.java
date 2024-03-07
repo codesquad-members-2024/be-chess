@@ -14,7 +14,8 @@ public class Piece {
     public PieceColor getColor(){
         return teamColor;
     }
-    private boolean isWhite(){
+    public PieceType getPieceType(){return pieceType;}
+    public boolean isWhite(){
         return teamColor.equals(WHITE);
     }
     public char getRepresentation(){

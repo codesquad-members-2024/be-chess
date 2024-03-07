@@ -7,8 +7,8 @@ public enum PieceType {
     BISHOP('b'),
     QUEEN('q'),
     KING('k');
-    private char representation;
-    private PieceType(char representation) {
+    private final char representation;
+    PieceType(char representation) {
         this.representation = representation;
     }
     public char getWhiteRepresentation() {
