@@ -30,8 +30,4 @@ public enum CreateCommand {
                 .orElseThrow(IllegalArgumentException::new)
                 .createByColor.apply(color);
     }
-
-    private static boolean isAllowedName(String requestName, CreateCommand commandName) {
-        return commandName.name().toLowerCase().equals(requestName);
-    }
 }

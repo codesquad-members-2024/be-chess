@@ -1,94 +1,90 @@
 package chess.board;
 
 import static chess.common.Color.*;
-import static chess.pieces.Piece.*;
 import static chess.utils.StringUtils.*;
-import static chess.pieces.CreateCommand.*;
+import static chess.pieces.Piece.Type.*;
+import static chess.pieces.CreateCommand.create;
 
 import chess.common.Color;
 import chess.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Board <T extends Piece> {
-    private static final int INIT_PAWN_COUNT = 8;
-    private static final String BLANK_PIECES = ".".repeat(INIT_PAWN_COUNT);
-    private List<T> pieces = new ArrayList<>();
+public class Board<T extends Piece> {
+    private static final int FILE_COUNT = 8;
+    private static final String BLANK_PIECES = ".".repeat(FILE_COUNT);
+    private List<Piece> pieces = new ArrayList<>();
 
-    public T findPiece(int index) {
+    public Piece findPiece(int index) {
         return pieces.get(index);
     }
 
-    public void add(T piece) {
+    public void add(Piece piece) {
         pieces.add(piece);
     }
 
     public int pieceCount() {
-        return pieces.size();
+        return (int) pieces.stream()
+                .filter(piece -> !piece.isSameColor(NO_COLOR))
+                .count();
     }
 
     public void initialize() {
-        initializePieces(BLACK);
-        initializePieces(WHITE);
+        initializePiecesByColorOrder(BLACK);
+        initializePiecesByColorOrder(WHITE);
     }
 
-    private void initializePieces(Color color) {
+    private void initializePiecesByColorOrder(Color color) {
         if (color.equals(BLACK)) {
             createMajor(color);
             createPawns(color);
+            createBlank();
         } else {
+            createBlank();
             createPawns(color);
             createMajor(color);
         }
     }
 
     private void createMajor(Color color) {
-        pieces.add(createPiece(color, ALLOWED_ROOK_NAME));
-        pieces.add(createPiece(color, ALLOWED_KNIGHT_NAME));
-        pieces.add(createPiece(color, ALLOWED_BISHOP_NAME));
-        pieces.add(createPiece(color, ALLOWED_QUEEN_NAME));
-        pieces.add(createPiece(color, ALLOWED_KING_NAME));
-        pieces.add(createPiece(color, ALLOWED_BISHOP_NAME));
-        pieces.add(createPiece(color, ALLOWED_KNIGHT_NAME));
-        pieces.add(createPiece(color, ALLOWED_ROOK_NAME));
+        pieces.add(create(color, ROOK));
+        pieces.add(create(color, KNIGHT));
+        pieces.add(create(color, BISHOP));
+        pieces.add(create(color, QUEEN));
+        pieces.add(create(color, KING));
+        pieces.add(create(color, BISHOP));
+        pieces.add(create(color, KNIGHT));
+        pieces.add(create(color, ROOK));
     }
 
     private void createPawns(Color color) {
-        IntStream.range(0, INIT_PAWN_COUNT)
-                .forEach(i -> pieces.add(createPiece(color, ALLOWED_PAWN_NAME)));
+        IntStream.range(0, FILE_COUNT).forEach(i -> pieces.add(create(color, PAWN)));
     }
 
-    private T createPiece(Color color, String pieceName) {
-        return (T) create(color, pieceName);
+    private void createBlank() {
+        IntStream.range(0, FILE_COUNT * 2).forEach(i -> pieces.add(create(NO_COLOR, NO_PIECE)));
     }
 
     public String getPawnsResultByColor(Color color) {
-        StringBuilder builder = new StringBuilder();
-
-        pieces.stream()
-                .filter(piece -> isPawn(piece) && isSameColor(color, piece))
-                .forEach(piece -> builder.append(piece.getRepresentation()));
-
-        return builder.toString();
+        return getPieceResultByColor(piece -> piece.isPawn() && piece.isSameColor(color));
     }
 
     public String getMajorResultByColor(Color color) {
-        StringBuilder builder = new StringBuilder();
-
-        pieces.stream()
-                .filter(piece -> !isPawn(piece) && isSameColor(color, piece))
-                .forEach(piece -> builder.append(piece.getRepresentation()));
-
-        return builder.toString();
+        return getPieceResultByColor(piece -> !piece.isPawn() && piece.isSameColor(color));
     }
 
-    private boolean isPawn(T piece) {
-        return piece.getName().equals(ALLOWED_PAWN_NAME);
+    public String getBlankPieces() {
+        return getPieceResultByColor(piece -> piece.isSameColor(NO_COLOR));
     }
 
-    private boolean isSameColor(Color color, T piece) {
-        return piece.getColor().equals(color);
+    private String getPieceResultByColor(Predicate<Piece> filterCondition) {
+        return pieces.stream()
+                .filter(filterCondition::test)
+                .map(Piece::getRepresentation)
+                .collect(Collectors.joining());
     }
 
     public void print() {
@@ -110,7 +106,7 @@ public class Board <T extends Piece> {
     private void getBoardRepresentation(StringBuilder builder) {
         builder.append(appendNewLine(getMajorResultByColor(BLACK)));
         builder.append(appendNewLine(getPawnsResultByColor(BLACK)));
-        IntStream.range(0, 4).forEach(i -> builder.append(appendNewLine(BLANK_PIECES)));
+        IntStream.range(0, 4).forEach(i -> builder.append(appendNewLine(getBlankPieces().substring(0, FILE_COUNT))));
         builder.append(appendNewLine(getPawnsResultByColor(WHITE)));
         builder.append(appendNewLine(getMajorResultByColor(WHITE)));
     }
