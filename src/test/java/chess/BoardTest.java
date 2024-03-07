@@ -16,7 +16,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("흰색,검은색 pawn을 추가하고 보드에서 찾을 수 있다")
+    @DisplayName("흰색,검은색 pawn을 추가하고 보드에서 찾을 수 있다.")
     public void create() throws Exception {
         Pawn white = new Pawn(Pawn.WHITE_COLOR);
         board.add(white);
@@ -30,7 +30,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("흰색 pawn열의 결과와 검은색 pawn열의 결과를 검증한다")
+    @DisplayName("흰색 pawn열의 결과와 검은색 pawn열의 결과를 검증한다.")
     public void initialize() throws Exception {
         Board board = new Board();
         assertEquals("pppppppp", board.getWhitePawnsResult());

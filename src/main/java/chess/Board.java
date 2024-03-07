@@ -56,6 +56,7 @@ public class Board {
         return sb.toString();
     }
 
+
     public void add(Pawn pawn) {
         if (pawn.getColor().equals(Pawn.WHITE_COLOR)) {
             whitePawns.add(pawn);
