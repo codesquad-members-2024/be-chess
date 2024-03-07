@@ -1,6 +1,6 @@
 package chess.pieces;
 
-public enum PawnType {
+public enum PieceType {
     PAWN('p', 'P'),
     KNIGHT('n', 'N'),
     ROOK('r', 'R'),
@@ -11,13 +11,13 @@ public enum PawnType {
     private final char whiteText;
     private final char blackText;
 
-    PawnType(char whiteText, char blackText) {
+    PieceType(char whiteText, char blackText) {
         this.whiteText = whiteText;
         this.blackText = blackText;
     }
 
-    public char getColorRepresentation(PawnColor pawnColor) {
-        if(pawnColor.equals(PawnColor.BLACK)) {
+    public char getColorRepresentation(PieceColor pieceColor) {
+        if(pieceColor.equals(PieceColor.BLACK)) {
             return blackText;
         }
         return whiteText;

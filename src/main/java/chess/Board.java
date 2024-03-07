@@ -1,13 +1,11 @@
 package chess;
 
 import chess.pieces.Piece;
-import chess.pieces.PawnColor;
+import chess.pieces.PieceColor;
 import utils.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -22,11 +20,11 @@ public class Board {
 
 
     public void initialize() {
-        addPiece(PawnColor.BLACK);
-        addPawns(PawnColor.BLACK);
+        addPiece(PieceColor.BLACK);
+        addPawns(PieceColor.BLACK);
 
-        addPawns(PawnColor.WHITE);
-        addPiece(PawnColor.WHITE);
+        addPawns(PieceColor.WHITE);
+        addPiece(PieceColor.WHITE);
 
         setPiece();
     }
@@ -40,10 +38,10 @@ public class Board {
         }
     }
 
-    private void addPawns(PawnColor pawnColor) {
+    private void addPawns(PieceColor pieceColor) {
         List<Piece> pieces = new ArrayList<>();
         for(int i = 0; i < BOARD_SIZE; i++) {
-            if(pawnColor.equals(PawnColor.BLACK)) {
+            if(pieceColor.equals(PieceColor.BLACK)) {
                 pieces.add(Piece.createBlackPawn());
             } else {
                 pieces.add(Piece.createWhitePawn());
@@ -52,9 +50,9 @@ public class Board {
         pieceStore.add(pieces);
     }
 
-    private void addPiece(PawnColor pawnColor) {
+    private void addPiece(PieceColor pieceColor) {
         List<Piece> pieces = new ArrayList<>();
-        if(pawnColor.equals(PawnColor.BLACK)) {
+        if(pieceColor.equals(PieceColor.BLACK)) {
             pieces.add(Piece.createBlackRook());
             pieces.add(Piece.createBlackKnight());
             pieces.add(Piece.createBlackBishop());
