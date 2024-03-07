@@ -12,9 +12,10 @@ public class Board {
     ArrayList<Piece> blackPieces;
     ArrayList<Piece> whitePawns;
     ArrayList<Piece> blackPawns;
-    int pieceCount = 0;
+    private int pieceCount;
 
     public Board() {
+        pieceCount = 0;
         whitePieces = new ArrayList<Piece>();
         blackPieces = new ArrayList<Piece>();
         whitePawns = new ArrayList<Piece>();
@@ -34,7 +35,34 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             whitePawns.add(Piece.createWhitePawn());
             blackPawns.add(Piece.createBlackPawn());
-        }
+        } // 16개
+        pieceCount += 16;
+        createWhitePieces(); //8개
+        createBlackPieces(); //8개
+    }
+
+    private void createWhitePieces() {
+        whitePieces.add(Piece.createWhiteRook());
+        whitePieces.add(Piece.createWhiteKnight());
+        whitePieces.add(Piece.createWhiteBishop());
+        whitePieces.add(Piece.createWhiteQueen());
+        whitePieces.add(Piece.createWhiteKing());
+        whitePieces.add(Piece.createWhiteBishop());
+        whitePieces.add(Piece.createWhiteKnight());
+        whitePieces.add(Piece.createWhiteRook());
+        pieceCount += 8;
+    }
+
+    private void createBlackPieces() {
+        blackPieces.add(Piece.createBlackRook());
+        blackPieces.add(Piece.createBlackKnight());
+        blackPieces.add(Piece.createBlackBishop());
+        blackPieces.add(Piece.createBlackQueen());
+        blackPieces.add(Piece.createBlackKing());
+        blackPieces.add(Piece.createBlackBishop());
+        blackPieces.add(Piece.createBlackKnight());
+        blackPieces.add(Piece.createBlackRook());
+        pieceCount += 8;
     }
 
     public void print() {
@@ -53,6 +81,18 @@ public class Board {
     public String getPieceResult(ArrayList<Piece> pieces) {
         StringBuilder sb = new StringBuilder();
         pieces.stream().map(Piece::getRepresentation).forEach(sb::append);
+        return sb.toString();
+    }
+
+    public String showBoard() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(appendNewLine(getPieceResult(blackPieces)));
+        sb.append(appendNewLine(getPieceResult(blackPawns)));
+        for (int i = 0; i < 4; i++) {
+            sb.append(appendNewLine(BLANKS));
+        }
+        sb.append(appendNewLine(getPieceResult(whitePawns)));
+        sb.append(appendNewLine(getPieceResult(whitePieces)));
         return sb.toString();
     }
 
@@ -91,11 +131,5 @@ public class Board {
 
     public int getPieceCount() {
         return pieceCount;
-    }
-
-    public String showBoard() {
-        StringBuilder sb = new StringBuilder();
-
-        return sb.toString();
     }
 }
