@@ -18,6 +18,7 @@ public class Board {
     }
 
     private Board() {
+        initialize();
     }
 
     public void initialize() {
@@ -27,8 +28,16 @@ public class Board {
                 });
     }
 
+    public void replace(Position key, Piece newValue) {
+        chessBoard.replace(key, newValue);
+    }
+
+    public Piece get(Position key) {
+        return chessBoard.get(key);
+    }
+
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public int pieceCount() {

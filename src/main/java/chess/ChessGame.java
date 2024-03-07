@@ -20,16 +20,16 @@ public class ChessGame {
 
     //오버로딩
     public void move(String position, Piece piece) {
-        getChessBoard().replace(Position.valueOf(position.toUpperCase()), piece);
+        board.replace(Position.valueOf(position.toUpperCase()), piece);
     }
 
     //오버로딩
     public void move(String sourcePosition, String targetPosition) {
-        Piece source = getChessBoard().get(Position.valueOf(sourcePosition.toUpperCase()));
+        Piece source = board.get(Position.valueOf(sourcePosition.toUpperCase()));
         Piece blank = Piece.createBlank(TypeOfPiece.NO_PIECE);
 
-        getChessBoard().replace(Position.valueOf(targetPosition.toUpperCase()), source);
-        getChessBoard().replace(Position.valueOf(sourcePosition.toUpperCase()), blank);
+        board.replace(Position.valueOf(targetPosition.toUpperCase()), source);
+        board.replace(Position.valueOf(sourcePosition.toUpperCase()), blank);
 
         BoardView view = new BoardView(getChessBoard());
         view.printBoard();
@@ -43,7 +43,7 @@ public class ChessGame {
             for (int nowRank = RANK_CNT; nowRank > 0; nowRank--) {
                 StringBuilder index = new StringBuilder();
                 index.append((char)startFile).append(nowRank);
-                Piece now = getChessBoard().get(Position.valueOf(index.toString().toUpperCase()));
+                Piece now = board.get(Position.valueOf(index.toString().toUpperCase()));
                 if (now.getColor().equals(color)) {
                     result += now.getType().getScore();
                     pawnCnt += now.getType().equals(TypeOfPiece.PAWN) ? 1 : 0;
