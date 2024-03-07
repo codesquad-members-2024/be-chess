@@ -60,7 +60,7 @@ public class BoardTest {
 
     @Test
     @DisplayName("임의의 위치의 체스판에 기물 추가되는지 검증")
-    void move() throws Exception {
+    void addPieceInBoard() throws Exception {
         board.initializeEmpty();
 
         String position = "b5";
@@ -132,5 +132,23 @@ public class BoardTest {
         board.move(position, piece);
     }
 
+    @Test
+    @DisplayName("기물이 제대로 이동하는지 검증한다")
+    void move() throws Exception {
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+
+        //이동 전 검증
+        assertThat(TypeOfPiece.NO_PIECE).isEqualTo(board.findPiece(targetPosition).getType());
+        assertThat(TypeOfPiece.PAWN).isEqualTo(board.findPiece(sourcePosition).getType());
+        assertThat(Color.WHITE).isEqualTo(board.findPiece(sourcePosition).getColor());
+
+        board.move(sourcePosition, targetPosition);
+
+        //이동 후 검증
+        assertThat(TypeOfPiece.NO_PIECE).isEqualTo(board.findPiece(sourcePosition).getType());
+        assertThat(TypeOfPiece.PAWN).isEqualTo(board.findPiece(targetPosition).getType());
+        assertThat(Color.WHITE).isEqualTo(board.findPiece(targetPosition).getColor());
+    }
 
 }

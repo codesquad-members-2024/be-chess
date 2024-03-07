@@ -20,6 +20,10 @@ public class Board {
                 });
     }
 
+    public void printBoard() {
+        System.out.println(showBoard());
+    }
+
     public int pieceCount() {
         return (int)chessBoard.values().stream()
                                     .filter(piece -> !piece.isBlank())
@@ -59,8 +63,20 @@ public class Board {
                 .forEach(position -> chessBoard.replace(position, Piece.createBlank(TypeOfPiece.NO_PIECE)));
     }
 
+    //오버로딩
     public void move(String position, Piece piece) {
         chessBoard.replace(Position.valueOf(position.toUpperCase()), piece);
+    }
+
+    //오버로딩
+    public void move(String sourcePosition, String targetPosition) {
+        Piece source = chessBoard.get(Position.valueOf(sourcePosition.toUpperCase()));
+        Piece blank = Piece.createBlank(TypeOfPiece.NO_PIECE);
+
+        chessBoard.replace(Position.valueOf(targetPosition.toUpperCase()), source);
+        chessBoard.replace(Position.valueOf(sourcePosition.toUpperCase()), blank);
+
+        printBoard();
     }
 
     public double calculatePoint(Color color) {
@@ -87,7 +103,6 @@ public class Board {
     }
 
     public List<Piece> sortPieceByScore(Color color, boolean reverse) {
-
         List<Piece> toReturn = chessBoard.values()
                 .stream()
                 .filter(piece -> piece.getColor().equals(color))
@@ -100,4 +115,6 @@ public class Board {
 
         return toReturn;
     }
+
+
 }
