@@ -25,7 +25,7 @@ public class Board {
 
   public void print() {
     StringBuilder stringBuilder = new StringBuilder();
-    pawns.stream().sorted((list1, list2) -> -1)
+    pawns.stream().sorted((o1, o2) -> -1) // 체스판 라인의 순서는 아래쪽->위쪽이므로 역순 정렬
         .map(this::getPawnsOfLineString)
         .forEach(string -> stringBuilder.append(string).append("\n"));
     System.out.println(stringBuilder);
