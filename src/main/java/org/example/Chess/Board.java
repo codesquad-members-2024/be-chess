@@ -4,6 +4,7 @@ import org.example.Pieces.Pawn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Board {
@@ -41,22 +42,29 @@ public class Board {
     }
 
     public void initialize() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (i == 1) {
-                    Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR);
-                    board.get(i).add(blackPawn);
-                    blackPawns.add(blackPawn);
-                } else if (i == 6) {
-                    Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR);
-                    board.get(i).add(whitePawn);
-                    whitePawns.add(whitePawn);
-                } else {
-                    board.get(i).add(null);
-                }
-            }
+        IntStream.range(0, BOARD_SIZE).forEach(this::initRow);
+    }
+
+    private void initRow(int rowIndex) {
+        IntStream.range(0, BOARD_SIZE).forEach(j -> addPieceOrEmpty(rowIndex));
+    }
+
+    private void addPieceOrEmpty(int rowIndex) {
+        if (rowIndex == 1) {
+            addPawnToBoardAndList(rowIndex, Pawn.BLACK_COLOR, blackPawns);
+        } else if (rowIndex == 6) {
+            addPawnToBoardAndList(rowIndex, Pawn.WHITE_COLOR, whitePawns);
+        } else {
+            board.get(rowIndex).add(null);
         }
     }
+
+    private void addPawnToBoardAndList(int rowIndex, String color, List<Pawn> pawns) {
+        Pawn pawn = new Pawn(color);
+        board.get(rowIndex).add(pawn);
+        pawns.add(pawn);
+    }
+
 
 
     public String getWhitePawnsResult() {
@@ -68,25 +76,25 @@ public class Board {
     }
 
     private String getPawnsResult(List<Pawn> pawns) {
-        StringBuilder result = new StringBuilder();
-        for (Pawn pawn : pawns) {
-            result.append(pawn.getRepresentation());
-        }
-        return result.toString();
+        return pawns.stream()
+                .map(pawn -> Character.toString(pawn.getRepresentation()))
+                .collect(Collectors.joining());
     }
 
+
     public String getBoardPrint() {
-        StringBuilder builder = new StringBuilder();
-        for (List<Pawn> row : board) {
-            for (Pawn pawn : row) {
-                if (pawn == null) {
-                    builder.append('.');
-                } else {
-                    builder.append(pawn.getRepresentation());
-                }
-            }
-            builder.append('\n');
-        }
-        return builder.toString();
+        return board.stream()
+                .map(this::getRowPrint)
+                .collect(Collectors.joining("\n"));
     }
+
+    private String getRowPrint(List<Pawn> row) {
+        return row.stream()
+                .map(this::getPawnPrint)
+                .collect(Collectors.joining());
+    }
+    private String getPawnPrint(Pawn pawn) {
+        return pawn == null ? "." : Character.toString(pawn.getRepresentation());
+    }
+
 }
