@@ -8,7 +8,7 @@ public class Piece {
     private Piece(PieceColor color, PieceType pieceType) {
         this.color = color;
         this.pieceName = pieceType;
-        this.representation = findPawnRepresentation();
+        this.representation = findPieceRepresentation();
     }
 
     private static Piece createPawn(PieceColor pieceColor, PieceType pawnName) {
@@ -79,7 +79,7 @@ public class Piece {
         return color.equals(PieceColor.BLACK);
     }
 
-    private char findPawnRepresentation() {
+    private char findPieceRepresentation() {
         if(isWhite()){
             return pieceName.getColorRepresentation(PieceColor.WHITE);
         } else {
