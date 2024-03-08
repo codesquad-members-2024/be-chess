@@ -1,77 +1,72 @@
 package src.chess.board;
 
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import src.chess.pieces.Colors;
-import src.chess.pieces.Pawn;
+import src.chess.pieces.Piece;
 import java.util.ArrayList;
+import src.utils.StringUtils;
 
 public class Board {
-    private List<Pawn> pawns = new ArrayList<>();
-    List<List<Pawn>> board = new ArrayList<>();
+    private List<Piece> pieces = new ArrayList<>();
+    private Map<Square, Piece> chessBoard = new EnumMap<>(Square.class);
 
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+    public void add(Piece piece) {
+        this.pieces.add(piece);
     }
 
     public int size() {
-        return pawns.size();
+        return pieces.size();
     }
 
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
+    public Piece findPawn(int index) {
+        return pieces.get(index);
     }
 
     public void initialize() {
-        board.add(fillEmptyBoard());
-        board.add(initPawn(Colors.BLACK));
-        board.add(fillEmptyBoard());
-        board.add(fillEmptyBoard());
-        board.add(fillEmptyBoard());
-        board.add(fillEmptyBoard());
-        board.add(initPawn(Colors.WHITE));
-        board.add(fillEmptyBoard());
+       Arrays.stream(Square.values())
+                .forEach(square -> chessBoard.put(square, square.initBoard()));
     }
 
-    private ArrayList<Pawn> fillEmptyBoard() {
-        ArrayList<Pawn> row = new ArrayList<>();
-        IntStream.range(0,8)
-                .forEach(i -> row.add(null));
-        return row;
-    }
-
-    private List<Pawn> initPawn(Colors colors) {
-        return IntStream.range(0, 8)
-                .mapToObj(i -> new Pawn(colors))
-                .collect(Collectors.toList());
+    public int pieceCount() {
+        return (int) (chessBoard.values().stream()
+                .filter(square -> square != null)
+                .count());
     }
 
     public String getBlackPawnsResult() {
-        return initPawn(Colors.BLACK).stream()
-                .map(Pawn::toString)
+        return chessBoard.keySet().stream()
+                .filter(key -> Square.A7.ordinal() <= key.ordinal() && Square.H7.ordinal() >= key.ordinal())
+                .map(key -> chessBoard.get(key).toString())
                 .collect(Collectors.joining());
     }
 
     public String getWhitePawnsResult() {
-        return initPawn(Colors.WHITE).stream()
-                .map(Pawn::toString)
+        return chessBoard.keySet().stream()
+                .filter(key -> Square.A2.ordinal() <= key.ordinal() && Square.H2.ordinal() >= key.ordinal())
+                .map(key -> chessBoard.get(key).toString())
                 .collect(Collectors.joining());
     }
 
-    public void print() {
+    public String getPieceByRow(int startRange) {
         StringBuilder result = new StringBuilder();
+        final int rowSize = 7;
+        int endRange = startRange + rowSize;
+        chessBoard.entrySet().stream()
+                .filter(entry -> entry.getKey().getOrdinal() >= startRange && entry.getKey().getOrdinal() <= endRange)
+                .forEach(entry -> result.append(Objects.requireNonNullElse(entry.getValue(),".")));
+        return result.toString();
+    }
 
-        for (List<Pawn> pawnList : board) {
-            for (Pawn pawn : pawnList) {
-                if (pawn == null) {
-                    result.append(".");
-                } else {
-                    result.append(pawn);
-                }
-            }
-            result.append("\n");
+    public String showBoard() {
+        StringBuilder result = new StringBuilder();
+        final int rowSize = 8;
+        for(int i = 0; i < chessBoard.size(); i += rowSize) {
+            result.append(StringUtils.appendNewLine(getPieceByRow(i)));
         }
-        System.out.println(result);
+        return result.toString();
     }
 }
