@@ -25,11 +25,4 @@ public class BoardTest {
                 "♟♟♟♟♟♟♟♟" + StringUtils.getNewLine() +
                 "♜♞♝♛♚♝♞♜" + StringUtils.getNewLine());
     }
-
-    @Test
-    @DisplayName("초기 체스판이 정상적으로 출력되어야 한다.")
-    void print_initialize() {
-        board.initialize();
-        System.out.print(board.print());
-    }
 }
