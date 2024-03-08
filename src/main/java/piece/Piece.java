@@ -4,7 +4,6 @@ import chess.Board;
 
 public class Piece {
 
-
     protected String color;
     protected String logo;
 

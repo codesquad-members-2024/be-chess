@@ -35,4 +35,3 @@ public class BoardTest {
             assertThat(pawnPieces2.get(i).getLogo()).isEqualTo("p");
         }
     }
-}

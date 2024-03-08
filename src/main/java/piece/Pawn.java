@@ -1,7 +1,5 @@
 package piece;
 
-import java.util.Objects;
-
 public class Pawn extends Piece {
     public Pawn(String color, Pieces pieces) {
         if (!isValidColor(color)) {

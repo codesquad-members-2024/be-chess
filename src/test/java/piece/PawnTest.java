@@ -42,5 +42,3 @@ public class PawnTest {
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
-
-}
