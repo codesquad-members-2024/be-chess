@@ -49,18 +49,11 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("e1 위치에 하얀 킹이 있는지 확인한다.")
-    public void checkWhiteKingLocation() {
-        Piece piece = board.findPieceBy("e1");
-        assertThat(piece.getType()).isEqualTo(Type.KING);
-        assertThat(piece.getColor()).isEqualTo(Colors.WHITE.getColorName());
-    }
-
-    @Test
-    @DisplayName("a8 위치에 검은 룩이 있는지 확인한다.")
+    @DisplayName("특정 위치를 제공하면 체스판의 해당 위치에 어떤 기물이 있는지 확인한다.")
     public void checkBlackRookLocation() {
-        Piece piece = board.findPieceBy("a8");
-        assertThat(piece.getType()).isEqualTo(Type.ROOK);
-        assertThat(piece.getColor()).isEqualTo(Colors.BLACK.getColorName());
+        assertThat(Piece.createBlack(Type.ROOK)).isEqualTo(board.findPieceBy("a8"));
+        assertThat(Piece.createBlack(Type.ROOK)).isEqualTo(board.findPieceBy("h8"));
+        assertThat(Piece.createWhite(Type.ROOK)).isEqualTo(board.findPieceBy("a1"));
+        assertThat(Piece.createWhite(Type.ROOK)).isEqualTo(board.findPieceBy("h1"));
     }
 }
