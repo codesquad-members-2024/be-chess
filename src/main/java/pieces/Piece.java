@@ -1,102 +1,167 @@
 package pieces;
 
 public class Piece {
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    public static final String PAWN = "pawn";
-    public static final String ROOK = "rook";
-    public static final String KNIGHT = "knight";
-    public static final String BISHOP = "bishop";
-    public static final String QUEEN = "queen";
-    public static final String KING = "king";
-    public static final String WHITE_PAWN_SYMBOL = PieceSymbol.WHITE_PAWN.getSymbol();
-    public static final String BLACK_PAWN_SYMBOL = PieceSymbol.BLACK_PAWN.getSymbol();
-    public static final String WHITE_ROOK_SYMBOL = PieceSymbol.WHITE_ROOK.getSymbol();
-    public static final String BLACK_ROOK_SYMBOL = PieceSymbol.BLACK_ROOK.getSymbol();
-    public static final String WHITE_KNIGHT_SYMBOL = PieceSymbol.WHITE_KNIGHT.getSymbol();
-    public static final String BLACK_KNIGHT_SYMBOL = PieceSymbol.BLACK_KNIGHT.getSymbol();
-    public static final String WHITE_BISHOP_SYMBOL = PieceSymbol.WHITE_BISHOP.getSymbol();
-    public static final String BLACK_BISHOP_SYMBOL = PieceSymbol.BLACK_BISHOP.getSymbol();
-    public static final String WHITE_QUEEN_SYMBOL = PieceSymbol.WHITE_QUEEN.getSymbol();
-    public static final String BLACK_QUEEN_SYMBOL = PieceSymbol.BLACK_QUEEN.getSymbol();
-    public static final String WHITE_KING_SYMBOL = PieceSymbol.WHITE_KING.getSymbol();
-    public static final String BLACK_KING_SYMBOL = PieceSymbol.BLACK_KING.getSymbol();
+    public enum Color {
+        WHITE("white"),
+        BLACK("black"),
+        NOCOLOR("no-color");
 
-    private final String name;
-    private final String color;
-    private final String symbol;
+        private final String color;
 
-    private Piece(String name, String color, String symbol) {
-        this.name = name;
+        Color(String color) {
+            this.color = color;
+        }
+
+        public String getColor() {
+            return color;
+        }
+    }
+
+    public enum PieceSymbol {
+        NO_PIECE("no-piece", "•", 0.0),
+        PAWN("pawn", "♙", 1.0),
+        ROOK("rook", "♖", 5.0),
+        KNIGHT("knight", "♘", 2.5),
+        BISHOP("bishop", "♗", 3.0),
+        QUEEN("queen", "♕", 9.0),
+        KING("king", "♔", 0.0);
+
+        private final String name;
+        private final String symbol;
+        private final double defaultPoint;
+
+        PieceSymbol(String name, String symbol, double defaultPoint) {
+            this.name = name;
+            this.symbol = symbol;
+            this.defaultPoint = defaultPoint;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getDefaultPoint() {
+            return defaultPoint;
+        }
+    }
+
+    public static final int UNICODE_TO_CHAR = 0;
+    public static final int UNICODE_VALUE_DIFFERENCE = 6;
+
+
+    private final Color color;
+    private final PieceSymbol pieceSymbol;
+
+    private Piece(Color color, PieceSymbol pieceSymbol) {
         this.color = color;
-        this.symbol = symbol;
+        this.pieceSymbol = pieceSymbol;
     }
 
     public static Piece createWhitePawn() {
-        return new Piece(PAWN, WHITE_COLOR, WHITE_PAWN_SYMBOL);
+        return creatWhite(PieceSymbol.PAWN);
     }
 
     public static Piece createBlackPawn() {
-        return new Piece(PAWN, BLACK_COLOR, BLACK_PAWN_SYMBOL);
+        return createBlack(PieceSymbol.PAWN);
     }
 
     public static Piece createWhiteRook() {
-        return new Piece(ROOK, WHITE_COLOR, WHITE_ROOK_SYMBOL);
+        return creatWhite(PieceSymbol.ROOK);
     }
 
     public static Piece createBlackRook() {
-        return new Piece(ROOK, BLACK_COLOR, BLACK_ROOK_SYMBOL);
+        return createBlack(PieceSymbol.ROOK);
     }
 
     public static Piece createWhiteKnight() {
-        return new Piece(KNIGHT, WHITE_COLOR, WHITE_KNIGHT_SYMBOL);
+        return creatWhite(PieceSymbol.KNIGHT);
     }
 
     public static Piece createBlackKnight() {
-        return new Piece(KNIGHT, BLACK_COLOR, BLACK_KNIGHT_SYMBOL);
+        return createBlack(PieceSymbol.KNIGHT);
     }
 
     public static Piece createWhiteBishop() {
-        return new Piece(BISHOP, WHITE_COLOR, WHITE_BISHOP_SYMBOL);
+        return creatWhite(PieceSymbol.BISHOP);
     }
 
     public static Piece createBlackBishop() {
-        return new Piece(BISHOP, BLACK_COLOR, BLACK_BISHOP_SYMBOL);
+        return createBlack(PieceSymbol.BISHOP);
     }
 
     public static Piece createWhiteQueen() {
-        return new Piece(QUEEN, WHITE_COLOR, WHITE_QUEEN_SYMBOL);
+        return creatWhite(PieceSymbol.QUEEN);
     }
 
     public static Piece createBlackQueen() {
-        return new Piece(QUEEN, BLACK_COLOR, BLACK_QUEEN_SYMBOL);
+        return createBlack(PieceSymbol.QUEEN);
     }
 
     public static Piece createWhiteKing() {
-        return new Piece(KING, WHITE_COLOR, WHITE_KING_SYMBOL);
+        return creatWhite(PieceSymbol.KING);
     }
 
     public static Piece createBlackKing() {
-        return new Piece(KING, BLACK_COLOR, BLACK_KING_SYMBOL);
+        return createBlack(PieceSymbol.KING);
     }
 
-    public String getName() {
-        return name;
+    public static Piece createBlank() {
+        return new Piece(Color.NOCOLOR, PieceSymbol.NO_PIECE);
     }
 
-    public String getColor() {
+    private static Piece creatWhite(PieceSymbol pieceSymbol) {
+        return new Piece(Color.WHITE, pieceSymbol);
+    }
+
+    private static Piece createBlack(PieceSymbol pieceSymbol) {
+        return new Piece(Color.BLACK, pieceSymbol);
+    }
+
+    public Color getColor() {
         return color;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public PieceSymbol getPieceSymbol() {
+        return pieceSymbol;
     }
 
     public boolean isWhite() {
-        return color.equals(WHITE_COLOR);
+        return color.equals(Color.WHITE);
     }
 
     public boolean isBlack() {
-        return color.equals(BLACK_COLOR);
+        return color.equals(Color.BLACK);
+    }
+
+    public boolean matchColor(Color color) {
+        return this.color.equals(color);
+    }
+
+    public static String convertToBlackPiece(String whitePiece) {
+        char whitePieceChar = whitePiece.charAt(UNICODE_TO_CHAR);
+        char blackPieceChar = (char) (whitePieceChar + UNICODE_VALUE_DIFFERENCE);
+        return String.valueOf(blackPieceChar);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) object;
+        return this.color.equals(piece.color) &&
+                this.pieceSymbol.equals(piece.pieceSymbol);
+    }
+
+    public boolean equalsPawn(Color color) {
+        return this.color.equals(color) && this.pieceSymbol.equals(PieceSymbol.PAWN);
+    }
+
+    public boolean equalsPiece(Color color, PieceSymbol pieceSymbol) {
+        return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 }
