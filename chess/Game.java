@@ -15,8 +15,7 @@ public class Game {
             if (command.isStart()) {
                 board = new Board();
                 board.initialize();
-                board.print();
-
+                board.showBoard();
             }
 
         } while (!command.isEnd());
