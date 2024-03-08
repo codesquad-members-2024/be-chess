@@ -193,4 +193,74 @@ class BoardTest {
                 board.showBoard()
         );
     }
+
+    @DisplayName("검정색 기물에 대해 폰이 아닌 킹, 퀸, 나이트, 비숍, 룩의 합은 19.5점이다")
+    @Test
+    void calculateMajorPoints() {
+        // given
+        board.initializeBoardBlocks();
+        board.move("a1", Piece.createBlackKing());
+        board.move("a2", Piece.createBlackQueen());
+        board.move("a3", Piece.createBlackKnight());
+        board.move("a4", Piece.createBlackBishop());
+        board.move("a5", Piece.createBlackRook());
+
+        // when
+        double majorPoints = board.calculateMajorPoints(BLACK);
+
+        // then
+        assertEquals(19.5, majorPoints, 0.01);
+    }
+
+    @DisplayName("검정색 기물에 대해, 폰이 같은 열에 3개 있으면 합은 1.5점이다")
+    @Test
+    void calculatePawnPoints_when_same_file() {
+        // given
+        board.initializeBoardBlocks();
+        board.move("a1", Piece.createBlackPawn());
+        board.move("a2", Piece.createBlackPawn());
+        board.move("a3", Piece.createBlackPawn());
+
+        // when
+        double pawnPoints = board.calculatePawnPoints(BLACK);
+
+        // then
+        assertEquals(1.5, pawnPoints, 0.01);
+    }
+
+    @DisplayName("검은색 기물에 대해, 폰이 같은 행에 3개 있으면 합은 3.0점이다")
+    @Test
+    void calculatePawnPoints_when_different_file() {
+        // given
+        board.initializeBoardBlocks();
+        board.move("a1", Piece.createBlackPawn());
+        board.move("b1", Piece.createBlackPawn());
+        board.move("c1", Piece.createBlackPawn());
+
+        // when
+        double pawnPoints = board.calculatePawnPoints(BLACK);
+
+        // then
+        assertEquals(3.0, pawnPoints, 0.01);
+    }
+
+    @DisplayName("검정색 기물에 대해, 나이트 2개, 룩 1개, 퀸 1개, 같은 열의 폰 2개의 점수 합은 20.0 이다")
+    @Test
+    void calculatePoints() {
+        // given
+        board.initializeBoardBlocks();
+        board.move("a1", Piece.createBlackKnight());
+        board.move("a2", Piece.createBlackKnight());
+        board.move("a3", Piece.createBlackRook());
+        board.move("a4", Piece.createBlackQueen());
+
+        board.move("b1", Piece.createBlackPawn());
+        board.move("b2", Piece.createBlackPawn());
+
+        // when
+        double points = board.calculatePoints(BLACK);
+
+        // then
+        assertEquals(20.0, points, 0.01);
+    }
 }
