@@ -131,7 +131,7 @@ public class BoardTest {
         addPiece("a1", Piece.createWhite(Type.PAWN));
 
         System.out.println(board.showBoard());
-        assertThat(board.calculatePawnPoint(Colors.WHITE)).isEqualTo(2.5);
+        assertThat(board.calculatePoint(Colors.WHITE)).isEqualTo(2.5);
     }
 
     private void addPiece(String position, Piece piece) {
