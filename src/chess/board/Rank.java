@@ -92,6 +92,14 @@ public class Rank {
         row.add(index, piece);
     }
 
+    // 색을 입력받아 지금 해당 색의 기물이 총 몇점인지 계산합니다.
+    public double calculateRankPoint(Colors colors) {
+        return row.stream()
+                .filter(piece -> piece.getColor().equals(colors.getColorName()))
+                .mapToDouble(piece -> piece.getType().getDefaultPoint())
+                .sum();
+    }
+
     @Override
     public String toString() {
         return row.stream()

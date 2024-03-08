@@ -83,4 +83,11 @@ public class Board {
         int row = StringUtils.parserToRowIndex(position.charAt(1));
         board.get(row).setPiece(col, piece);
     }
+
+    // 점수를 확인하기를 원하는 색을 받아서 해당 색의 점수를 계산한다.
+    public double calculatePoint(Colors colors) {
+        return board.stream()
+                .mapToDouble(rank -> rank.calculateRankPoint(colors))
+                .sum();
+    }
 }

@@ -78,18 +78,20 @@ public class Piece {
 
     // Enum Type
     public enum Type {
-        PAWN('p'),
-        KNIGHT('n'),
-        ROOK('r'),
-        BISHOP('b'),
-        QUEEN('q'),
-        KING('k'),
-        NO_PIECE('.');
+        PAWN('p', 1.0),
+        KNIGHT('n', 2.5),
+        ROOK('r', 5.0),
+        BISHOP('b', 3.0),
+        QUEEN('q', 9.0),
+        KING('k', 0.0),
+        NO_PIECE('.', 0.0);
 
         private final char pieceRepresentation;
+        private final double defaultPoint;
 
-        Type(char pieceRepresentation) {
+        Type(char pieceRepresentation, double defaultPoint) {
             this.pieceRepresentation = pieceRepresentation;
+            this.defaultPoint = defaultPoint;
         }
 
         // 색을 파라미터로 받아서 해당되는 말의 모양을 return 해주자
@@ -98,6 +100,10 @@ public class Piece {
                 return Character.toUpperCase(pieceRepresentation);
             }
             return pieceRepresentation;
+        }
+
+        public double getDefaultPoint() {
+            return defaultPoint;
         }
     }
 
