@@ -1,21 +1,31 @@
 package pieces;
 
 public class Pawn {
-    public static final String COLOR_WHITE = "white";
-    public static final String COLOR_BLACK = "black";
+    public static final char WHITE_PAWN = 'p';
+    public static final char BLACK_PAWN = 'P';
 
-    private String color;
-
+    private final char chessPiece;
+    private final PawnColor color;
 
     Pawn() {
-        this.color = COLOR_WHITE;
+        this.chessPiece = WHITE_PAWN;
+        this.color = PawnColor.WHITE;
     }
 
-    public Pawn(String color) {
+    public Pawn(PawnColor color) {
+        if(color == PawnColor.WHITE){
+            this.chessPiece = WHITE_PAWN;
+        }else{
+            this.chessPiece = BLACK_PAWN;
+        }
         this.color = color;
     }
 
-    public String getColor() {
+    public char getChessPiece(){
+        return chessPiece;
+    }
+
+    public PawnColor getColor() {
         return color;
     }
 }
