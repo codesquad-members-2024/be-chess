@@ -1,8 +1,8 @@
 package src.test.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import src.chess.board.Board;
@@ -94,6 +94,20 @@ public class BoardTest {
         assertThat(7.0).isEqualTo(board.calculatePoint(Colors.WHITE), Offset.offset(0.01));
 
         System.out.println(board.showBoard());
+    }
+
+    @Test
+    @DisplayName("같은 색상의 폰이 일직선으로 놓여 있을 때, 해당 폰은 0.5점으로 계산된다")
+    public void calculatePawnInCol() {
+        board.initializeEmpty();
+
+        addPiece("b1", Piece.createWhite(Type.PAWN));
+        addPiece("b2", Piece.createWhite(Type.PAWN));
+        addPiece("b3", Piece.createWhite(Type.PAWN));
+        addPiece("a1", Piece.createWhite(Type.PAWN));
+
+        System.out.println(board.showBoard());
+        assertThat(board.calculatePawnPoint(Colors.WHITE)).isEqualTo(2.5);
     }
 
     private void addPiece(String position, Piece piece) {
