@@ -127,23 +127,29 @@ public class Piece {
     }
 
     public enum Type {
-        PAWN("♙", "♟", "pawn"),
-        KNIGHT("♘", "♞", "knight"),
-        BISHOP("♗", "♝", "bishop"),
-        ROOK("♖", "♜", "rook"),
-        QUEEN("♕", "♛", "queen"),
-        KING("♔", "♚", "king"),
-        NO_PIECE(".", ".", "blank"),
+        PAWN("♙", "♟", "pawn", 1.0),
+        KNIGHT("♘", "♞", "knight", 2.5),
+        BISHOP("♗", "♝", "bishop", 3.0),
+        ROOK("♖", "♜", "rook", 5.0),
+        QUEEN("♕", "♛", "queen", 9.0),
+        KING("♔", "♚", "king", 0.0),
+        NO_PIECE(".", ".", "blank", 0.0),
         ;
 
         public final String whiteRepresentation;
         public final String blackRepresentation;
         public final String allowedName;
+        public final double defaultPoint;
 
-        Type(String whiteRepresentation, String blackRepresentation, String allowedName) {
+        Type(String whiteRepresentation, String blackRepresentation, String allowedName, double defaultPoint) {
             this.whiteRepresentation = whiteRepresentation;
             this.blackRepresentation = blackRepresentation;
             this.allowedName = allowedName;
+            this.defaultPoint = defaultPoint;
+        }
+
+        public double getDefaultPoint() {
+            return defaultPoint;
         }
     }
 
