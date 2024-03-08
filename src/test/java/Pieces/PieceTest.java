@@ -1,31 +1,33 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.Pieces.PieceFactory.*;
 
-import org.example.Pieces.Piece;
-import org.example.Pieces.Color;
+import org.example.Pieces.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {
+
+    @DisplayName("흰색 기물들을 표현 방식과 색상을 검증")
     @Test
-    void create_piece() {
-        verifyPiece(createWhitePawn(), Color.WHITE, Piece.WHITE_PAWN_REPRESENTATION,true, false);
-        verifyPiece(createBlackPawn(), Color.BLACK, Piece.BLACK_PAWN_REPRESENTATION,false, true);
-
-        verifyPiece(createWhiteBishop(), Color.WHITE, Piece.WHITE_BISHOP_REPRESENTATION,true, false);
-        verifyPiece(createBlackBishop(), Color.BLACK, Piece.BLACK_BISHOP_REPRESENTATION,false, true);
-
-        verifyPiece(createWhiteRook(), Color.WHITE, Piece.WHITE_ROOK_REPRESENTATION,true, false);
-        verifyPiece(createBlackRook(), Color.BLACK, Piece.BLACK_ROOK_REPRESENTATION,false, true);
-
-        verifyPiece(createWhiteKnight(), Color.WHITE, Piece.WHITE_KNIGHT_REPRESENTATION,true, false);
-        verifyPiece(createBlackKnight(), Color.BLACK, Piece.BLACK_KNIGHT_REPRESENTATION,false, true);
-
-        verifyPiece(createWhiteQueen(), Color.WHITE, Piece.WHITE_QUEEN_REPRESENTATION,true, false);
-        verifyPiece(createBlackQueen(), Color.BLACK, Piece.BLACK_QUEEN_REPRESENTATION,false, true);
-
-        verifyPiece(createWhiteKing(), Color.WHITE, Piece.WHITE_KING_REPRESENTATION,true, false);
-        verifyPiece(createBlackKing(), Color.BLACK, Piece.BLACK_KING_REPRESENTATION,false, true);
+    void create_Whitepiece() {
+        verifyPiece(createWhitePawn(), Color.WHITE, Pawn.WHITE_REPRESENTATION,true, false);
+        verifyPiece(createWhiteBishop(), Color.WHITE, Bishop.WHITE_REPRESENTATION,true, false);
+        verifyPiece(createWhiteRook(), Color.WHITE, Rook.WHITE_REPRESENTATION,true, false);
+        verifyPiece(createWhiteKnight(), Color.WHITE, Knight.WHITE_REPRESENTATION,true, false);
+        verifyPiece(createWhiteQueen(), Color.WHITE, Queen.WHITE_REPRESENTATION,true, false);
+        verifyPiece(createWhiteKing(), Color.WHITE, King.WHITE_REPRESENTATION,true, false);
     }
+    @DisplayName("검은색 기물들을 표현 방식과 색상을 검증")
+    @Test
+    void create_Blackpiece() {
+        verifyPiece(createBlackPawn(), Color.BLACK, Pawn.BLACK_REPRESENTATION,false, true);
+        verifyPiece(createBlackBishop(), Color.BLACK, Bishop.BLACK_REPRESENTATION,false, true);
+        verifyPiece(createBlackRook(), Color.BLACK, Rook.BLACK_REPRESENTATION,false, true);
+        verifyPiece(createBlackKnight(), Color.BLACK, Knight.BLACK_REPRESENTATION,false, true);
+        verifyPiece(createBlackQueen(), Color.BLACK, Queen.BLACK_REPRESENTATION,false, true);
+        verifyPiece(createBlackKing(), Color.BLACK, King.BLACK_REPRESENTATION,false, true);
+    }
+
 
     private void verifyPiece(final Piece piece, final Color color, final char representation,
                              final boolean isWhite, final boolean isBlack) {
