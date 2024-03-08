@@ -4,8 +4,8 @@ public enum Representation {
 
     WHITE_PAWN("p"),
     BLACK_PAWN("P"),
-    WHITE_KNIGHT("k"),
-    BLACK_KNIGHT("K"),
+    WHITE_KNIGHT("n"),
+    BLACK_KNIGHT("N"),
     WHITE_ROOK("r"),
     BLACK_ROOK("R"),
     WHITE_BISHOP("b"),
@@ -13,7 +13,8 @@ public enum Representation {
     WHITE_QUEEN("q"),
     BLACK_QUEEN("Q"),
     WHITE_KING("k"),
-    BLACK_KING("K");
+    BLACK_KING("K"),
+    BLANK("-");
 
     private final String representation;
 
