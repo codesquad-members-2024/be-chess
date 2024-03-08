@@ -82,6 +82,11 @@ public class Rank {
                 .count());
     }
 
+    // 기물을 가져오기 위해서 n번째 위치에 있는 기물을 리턴합니다
+    public Piece getPieceBy(int index) {
+        return row.get(index);
+    }
+
     @Override
     public String toString() {
         return row.stream()

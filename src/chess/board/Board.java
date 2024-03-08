@@ -57,4 +57,12 @@ public class Board {
                 .map(rank -> rank.getPieceCountBy(colors, type))
                 .reduce(0, Integer::sum);
     }
+
+    // 위치를 조회한다
+    // row는 어떤 Rank를 조회할 것인지를 결정하고, cold은 Rank 내에서 몇번째 말인지를 결정한다
+    public Piece findPieceBy(String location) {
+        int col = StringUtils.parserToColIndex(location.charAt(0));
+        int row = StringUtils.parserToRowIndex(location.charAt(1));
+        return board.get(row).getPieceBy(col);
+    }
 }
