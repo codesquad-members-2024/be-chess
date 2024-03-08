@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.common.Color;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -102,8 +103,29 @@ class PieceTest {
         int blackPawnRank = InitPos.PAWN.check(BLACK);
         int whitePawnRank = InitPos.PAWN.check(WHITE);
 
-
         assertThat(blackPawnRank).isEqualTo(1);
         assertThat(whitePawnRank).isEqualTo(6);
+    }
+
+    @DisplayName("c4에 놓인 킹의 움직일 수 있는 문자열 좌표는 b5, c5, d5, b4, d4, b3, c3, d3 이다")
+    @Test
+    void calculateMovablePos_when_king_at_c4() {
+        // given & when
+        List<String> movablePos = Piece.calculateMovablePos(KING, "c4");
+
+        // then
+        assertThat(movablePos.size()).isEqualTo(8);
+        assertThat(movablePos).contains("b5", "c5", "d5", "b4", "d4", "b3", "c3", "d3");
+    }
+
+    @DisplayName("a1에 놓인 킹의 움직일 수 있는 문자열 좌표는 a2, b2, b1 이다")
+    @Test
+    void calculateMovablePos_when_king_at_a1() {
+        // given & when
+        List<String> movablePos = Piece.calculateMovablePos(KING, "a1");
+
+        // then
+        assertThat(movablePos.size()).isEqualTo(3);
+        assertThat(movablePos).contains("a2", "b2", "b1");
     }
 }
