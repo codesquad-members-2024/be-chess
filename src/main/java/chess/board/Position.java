@@ -3,6 +3,8 @@ package chess.board;
 import java.util.Objects;
 
 public class Position {
+    private static final String INVALID_POSITION = "좌표 입력이 올바르지 않습니다.";
+    private static final int POSITION_VALUE_LENGTH = 2;
     private final int yPos;
     private final int xPos;
 
@@ -12,6 +14,9 @@ public class Position {
     }
 
     public Position(String positionValue) {
+        if (positionValue.length() != POSITION_VALUE_LENGTH) {
+            throw new IllegalArgumentException(INVALID_POSITION);
+        }
         this.yPos = Board.RANK_AND_FILE_SIZE - Character.getNumericValue(positionValue.charAt(1));
         this.xPos = positionValue.charAt(0) - 'a';
     }

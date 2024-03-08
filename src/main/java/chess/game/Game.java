@@ -101,7 +101,7 @@ public class Game {
         return sum - (count * DECREASED_PAWN_POINT);
     }
 
-    private boolean isWhiteTurn() {
+    public boolean isWhiteTurn() {
         return turn % 2 == 1;
     }
 
