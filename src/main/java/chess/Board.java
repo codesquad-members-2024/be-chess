@@ -69,8 +69,8 @@ public class Board {
 
     private void checkPawnMove(Piece piece, Square start, List<Square> squares) { // 중복 로직 수정 필요
         if ((start.rankIndex() == 6 && piece.getColor() == Color.WHITE) || (start.rankIndex() == 1 && piece.getColor() == Color.BLACK))
-            checkCanMove(piece, start, squares, piece.getDirection().get(0), -1);
-        else checkCanMove(piece, start, squares, piece.getDirection().get(0), 0);
+            checkCanPawnMove(piece, start, squares, piece.getDirection().get(0), -1);
+        else checkCanPawnMove(piece, start, squares, piece.getDirection().get(0), 0);
 
         Square target;
         target = getSquare(start, piece.getDirection().get(1));
@@ -98,6 +98,23 @@ public class Board {
 
         // 다른 색이면 거기까지 추가 , 같은 색이면 추가 안하고 그만
         if (pieceAtTarget.getColor() != piece.getColor()) squares.add(target);
+    }
+
+    private void checkCanPawnMove(Piece piece, Square start, List<Square> squares, Direction D, int count) {
+        if (count == piece.canMove) return;
+
+        Square target;
+        try {
+            target = getSquare(start, D); // inRange 검증
+        } catch (IllegalArgumentException outRange) {
+            return;
+        }
+
+        Piece pieceAtTarget = findPiece(target);
+        if (pieceAtTarget.getType() == Piece.Type.BLANK) { // 빈칸이라면 이동 가능 , 다음 확인 위해 재귀 호출
+            squares.add(target);
+            checkCanPawnMove(piece, target, squares, D, count + 1);
+        }
     }
 
 
