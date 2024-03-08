@@ -22,6 +22,7 @@ public class Board {
     public static final int FIRST_ROW = 0;
     public static final int LAST_ROW = 7;
     public static final int FIRST_COLUMN = 0;
+    public static final int LAST_COLUMN = 7;
     public static final int BLACK_PAWN_ROW = 1;
     public static final int WHITE_PAWN_ROW = 6;
     public static final int EMPTY_CAPACITY = 0;
@@ -147,6 +148,11 @@ public class Board {
 
     public Piece findPiece(Position position) {
         return board.get(position.getRow()).getPiece(position.getCol());
+    }
+
+    public void move(Piece piece, Position sourcePos, Position targetPos) {
+        setPiece(sourcePos, Blank.create(sourcePos));
+        setPiece(targetPos, piece);
     }
 
     public void setPiece(Position position, Piece piece) {

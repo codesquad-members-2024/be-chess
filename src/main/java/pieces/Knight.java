@@ -1,5 +1,6 @@
 package pieces;
 
+import java.util.List;
 import utils.Position;
 
 public class Knight extends Piece {
@@ -12,12 +13,22 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition() {
+    public List<Direction> getDirections() {
+        return null;
+    }
+
+    @Override
+    public boolean verifyMovePosition(Position position) {
         return false;
     }
 
     @Override
-    public boolean move() {
+    public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return false;
+    }
+
+    @Override
+    public void move(Position targetPos) {
+
     }
 }

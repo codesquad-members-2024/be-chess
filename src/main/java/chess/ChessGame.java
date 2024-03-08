@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import pieces.Blank;
+import pieces.Direction;
 import pieces.Piece;
 import pieces.Piece.Color;
 import utils.Position;
@@ -44,9 +44,27 @@ public class ChessGame {
         Position sourcePos = new Position(sourcePosition);
         Position targetPos = new Position(targetPosition);
         Piece piece = chessBoard.findPiece(sourcePos);
-        piece.changePos(targetPos); // 추상 클래스 구조에 맞게 수정 필요
-        chessBoard.setPiece(sourcePos, Blank.create(sourcePos));
-        chessBoard.setPiece(targetPos, piece);
+
+        if (!piece.verifyMovePosition(targetPos)) {
+            System.out.println("이동할 수 없는 위치값입니다.");
+            return;
+        }
+        if (piece.isObstacleInPath(targetPos, getObstacle(piece))) {
+            System.out.println("같은 색의 기물이 존재하여 움직일 수 없습니다.");
+            return;
+        }
+
+        piece.move(targetPos);
+        chessBoard.move(piece, sourcePos, targetPos);
+    }
+
+    public List<Position> getObstacle(Piece piece) {
+        Position position = piece.getPosition();
+        List<Direction> directions = piece.getDirections();
+        return directions.stream()
+                .filter(position::isValidDirection)
+                .filter(direction -> chessBoard.findPiece(position.addPos(direction)).matchColor(piece.getColor()))
+                .map(position::addPos).toList();
     }
 
     public double calculatePoint(Color color) {

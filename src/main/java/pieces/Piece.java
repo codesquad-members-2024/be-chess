@@ -77,6 +77,10 @@ public abstract class Piece {
         return this.color.equals(color);
     }
 
+    public boolean matchSymbol(PieceSymbol pieceSymbol) {
+        return this.pieceSymbol.equals(pieceSymbol);
+    }
+
     public boolean isPawn() {
         return pieceSymbol.equals(PieceSymbol.PAWN);
     }
@@ -91,15 +95,17 @@ public abstract class Piece {
         return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 
-    public void changePos(Position targetPos) {
-        this.position = targetPos;
-    } // 추상 클래스 구조에 맞게 삭제 필요
+//    public void changePos(Position targetPos) {
+//        this.position = targetPos;
+//    } // 추상 클래스 구조에 맞게 삭제 필요
 
-    protected abstract List<Direction> getDirections();
+    public abstract List<Direction> getDirections();
 
-    protected abstract boolean verifyMovePosition(Position position);
+    public abstract boolean verifyMovePosition(Position position);
 
-    protected abstract boolean move();
+    public abstract boolean isObstacleInPath(Position targetPos, List<Position> obstacles);
+
+    public abstract void move(Position targetPos);
 
     public Color getColor() {
         return color;
