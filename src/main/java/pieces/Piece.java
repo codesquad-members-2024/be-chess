@@ -1,11 +1,6 @@
 package pieces;
 
-import javax.swing.plaf.SplitPaneUI;
-
 public class Piece {
-    public static final char WHITE_PAWN = 'p';
-    public static final char BLACK_PAWN = 'P';
-
     private final PieceColor color;
     private final PieceName name;
     private final char pieceRepresentation;
