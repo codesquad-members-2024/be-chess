@@ -1,7 +1,9 @@
 package src.test.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import src.chess.board.Board;
 import org.junit.jupiter.api.DisplayName;
@@ -72,5 +74,29 @@ public class BoardTest {
 
         assertThat(piece).isEqualTo(board.findPieceBy(position));
         System.out.println(board.showBoard());
+    }
+
+    @Test
+    public void caculcatePoint() throws Exception {
+        board.initializeEmpty();
+
+        addPiece("b6", Piece.createBlack(Type.PAWN));
+        addPiece("e6", Piece.createBlack(Type.QUEEN));
+        addPiece("b8", Piece.createBlack(Type.KING));
+        addPiece("c8", Piece.createBlack(Type.ROOK));
+
+        addPiece("f2", Piece.createWhite(Type.PAWN));
+        addPiece("g2", Piece.createWhite(Type.PAWN));
+        addPiece("e1", Piece.createWhite(Type.ROOK));
+        addPiece("f1", Piece.createWhite(Type.KING));
+
+        assertThat(15.0).isEqualTo(board.caculcatePoint(Colors.BLACK), Offset.offset(0.01));
+        assertThat(7.0).isEqualTo(board.caculcatePoint(Colors.WHITE), Offset.offset(0.01));
+
+        System.out.println(board.showBoard());
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(position, piece);
     }
 }
