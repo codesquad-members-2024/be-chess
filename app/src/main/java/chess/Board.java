@@ -1,77 +1,119 @@
 package chess;
 
-import chess.pieces.Pawn;
+import chess.pieces.Color;
+import chess.pieces.Piece;
+import utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
+import java.util.function.ToLongFunction;
 
 public class Board {
-    private List<List<Pawn>> chessBoard;
-    private List<Pawn> pawns;
+    private List<List<Piece>> chessBoard;
+    private List<Piece> pieces;
     private final int CHESS_BOARD_START_INDEX = 0;
     private final int CHESS_BOARD_END_INDEX = 8;
 
     public Board(){
         this.chessBoard = new ArrayList<>();
-        this.pawns = new ArrayList<>();
+        this.pieces = new ArrayList<>();
     }
 
     public void initialize(){
-        final int BLACK_PAWN_ROW = 1;
-        final int WHITE_PAWN_ROW = 6;
+        final int BLACK_RNBQKBNR_RANK = 0;
+        final int BLACK_PAWN_RANK = 1;
+        final int WHITE_PAWN_RANK = 6;
+        final int WHITE_RNBQKBNR_RANK = 7;
 
         for (int i = CHESS_BOARD_START_INDEX; i < CHESS_BOARD_END_INDEX; i++){
-          if(i == BLACK_PAWN_ROW){
-              addPawnRow("black");
-          }
-          else if(i == WHITE_PAWN_ROW){
-              addPawnRow("white");
-          } else {
-              addEmptyRow();
-          }
-        }
+            switch (i) {
+                case BLACK_RNBQKBNR_RANK :
+                    addBlackRNBQKBNRRank();
+                    break;
+                case BLACK_PAWN_RANK:
+                    addPawnRank(Color.BLACK);
+                    break;
+                case WHITE_PAWN_RANK:
+                    addPawnRank(Color.WHITE);
+                    break;
+                case WHITE_RNBQKBNR_RANK:
+                    addWhiteRNBQKBNRRank();
+                    break;
+                default:
+                    addEmptyRank();
+            }}
     }
 
-    private void addPawnRow(String color){
-        List<Pawn> pawnRow = new ArrayList<>();
+    private void addBlackRNBQKBNRRank(){
+            chessBoard.add(Arrays.asList(
+                    Piece.createBlackRook(),
+                    Piece.createBlackKnight(),
+                    Piece.createBlackBishop(),
+                    Piece.createBlackQueen(),
+                    Piece.createBlackKing(),
+                    Piece.createBlackBishop(),
+                    Piece.createBlackKnight(),
+                    Piece.createBlackRook())
+            );
+        }
+
+    private void addWhiteRNBQKBNRRank(){
+            chessBoard.add(Arrays.asList(
+                    Piece.createWhiteRook(),
+                    Piece.createWhiteKnight(),
+                    Piece.createWhiteBishop(),
+                    Piece.createWhiteQueen(),
+                    Piece.createWhiteKing(),
+                    Piece.createWhiteBishop(),
+                    Piece.createWhiteKnight(),
+                    Piece.createWhiteRook())
+            );
+        }
+
+    private void addPawnRank(Color color){
+        List<Piece> pawnRank = new ArrayList<>();
         for (int i = CHESS_BOARD_START_INDEX; i < CHESS_BOARD_END_INDEX; i++){
-            pawnRow.add(new Pawn(color));
+            if (color.equals(Color.BLACK)){
+                pawnRank.add(Piece.createBlackPawn());
+            } else {
+                pawnRank.add(Piece.createWhitePawn());
+            }
         }
-        chessBoard.add(pawnRow);
+        chessBoard.add(pawnRank);
     }
 
-    private void addEmptyRow(){
-        final int LENGTH_OF_ROW = 8;
-        chessBoard.add(new ArrayList<>(Collections.nCopies(LENGTH_OF_ROW, null)));
+    private void addEmptyRank(){
+        List<Piece> emptyRank = new ArrayList<>();
+        for (int i = CHESS_BOARD_START_INDEX; i < CHESS_BOARD_END_INDEX; i++){
+            emptyRank.add(Piece.createEmpty());
+        }
+        chessBoard.add(emptyRank);
     }
 
-    public String print(){
+    public String showBoard(){
         StringBuilder builder = new StringBuilder();
         chessBoard.forEach(row -> {
-            List<String> representations = representationConversion.apply(row);
-            representations.forEach(builder::append);
-            builder.append("\n");
+            String gatheredRep = String.join("", representationConversion.apply(row));
+            builder.append(StringUtils.appendNewLine(gatheredRep));
         });
-        return builder.deleteCharAt(builder.length()-1).toString();
+        return builder.toString();
     }
 
-    private final Function<List<Pawn>, List<String>> representationConversion =
-            (pawnRow) -> pawnRow.stream()
-            .map(value -> Optional.ofNullable(value)
-                .map(Pawn::getRepresentation)
-                .orElse("•")
-                ).toList();
+    private final Function<List<Piece>, List<String>> representationConversion =
+            (pawnRank) -> pawnRank.stream()
+                .map(Piece::getRepresentation)
+                .toList();
 
-    public void addPawn(Pawn pawn){
-        pawns.add(pawn);
+    public void addPiece(Piece piece){
+        pieces.add(piece);
     }
-    public int getNumOfPawn() {
-        return pawns.size();
+
+    public long pieceCount() {
+        return chessBoard.stream().mapToLong(countNonEmptyPiece).sum();
     }
-    public String findPawn(int index){
-        return pawns.get(index).getColor();
-    }
+
+    private final ToLongFunction<List<Piece>> countNonEmptyPiece =
+            rank -> rank.stream()
+                    .filter(piece -> !piece.getName().equals("empty"))
+                    .count();
 }

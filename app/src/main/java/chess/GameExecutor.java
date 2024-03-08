@@ -13,7 +13,7 @@ public class GameExecutor {
                 Board board = new Board();
                 board.initialize();
                 System.out.println("체스 보드가 초기화되었습니다");
-                System.out.println(board.print());
+                System.out.println(board.showBoard());
             } while(!checkGameEnd());
 
         }
