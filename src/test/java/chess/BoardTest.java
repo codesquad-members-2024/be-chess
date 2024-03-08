@@ -166,7 +166,7 @@ public class BoardTest {
         assertThat(Color.WHITE).isEqualTo(board.findPiece(targetPosition).getColor());
 
         //잘못된 위치로 비숍 이동
-        assertThatThrownBy(() -> chessGame.move("c1", "b1")).isEqualTo(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessGame.move("c1", "b1")).isInstanceOf(IllegalArgumentException.class);
 
 
     }
