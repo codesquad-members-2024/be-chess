@@ -15,12 +15,15 @@ public class Board {
     private void initialize() {
         board = new ArrayList<>();
 
-        for(int i=0; i < BOARD_ROW; i++) {
-            board.add(blank());
-        }
+        board.add(blank());
+        board.add(blackPawn());
+        board.add(blank());
+        board.add(blank());
+        board.add(blank());
+        board.add(blank());
+        board.add(whitePawn());
+        board.add(blank());
 
-        board.add(1, blackPawn());
-        board.add(6, whitePawn());
     }
 
     private List<String> blank() {
@@ -47,14 +50,15 @@ public class Board {
         return list;
     }
 
-
-
-
     public void print() {
-        for(int i=0; i<BOARD_ROW; i++) {
-            List<String> list = board.get(i);
-            System.out.println(list);
+        StringBuilder builder = new StringBuilder();
+        for(List<String> row : board) {
+            for(String item : row) {
+                builder.append(item);
+            }
+            builder.append("\n");
         }
+        System.out.println(builder.toString());
     }
 
     public void add(Pawn pawn) {
