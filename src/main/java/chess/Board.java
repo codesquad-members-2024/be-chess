@@ -67,17 +67,21 @@ public class Board {
         return squares;
     }
 
-    private void checkPawnMove(Piece piece, Square start, List<Square> squares) { // 중복 로직 수정 필요
+    private void checkPawnMove(Piece piece, Square start, List<Square> squares){ // 중복 로직 수정 필요
         if ((start.rankIndex() == 6 && piece.getColor() == Color.WHITE) || (start.rankIndex() == 1 && piece.getColor() == Color.BLACK))
             checkCanPawnMove(piece, start, squares, piece.getDirection().get(0), -1);
         else checkCanPawnMove(piece, start, squares, piece.getDirection().get(0), 0);
 
         Square target;
-        target = getSquare(start, piece.getDirection().get(1));
-        if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
-
-        target = getSquare(start, piece.getDirection().get(2));
-        if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
+        try {
+            target = getSquare(start, piece.getDirection().get(1));
+            if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
+        }catch (IllegalArgumentException outRange){
+        }
+        try {
+            target = getSquare(start, piece.getDirection().get(2));
+            if (findPiece(target).getColor() != piece.getColor() && findPiece(target).getColor() != Color.NOCOLOR) squares.add(target);
+        }catch (IllegalArgumentException outRange){}
     }
 
     private void checkCanMove(Piece piece, Square start, List<Square> squares, Direction D, int count) {
