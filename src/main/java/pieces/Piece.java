@@ -1,5 +1,7 @@
 package pieces;
 
+import javax.swing.plaf.SplitPaneUI;
+
 public class Piece {
     public static final char WHITE_PAWN = 'p';
     public static final char BLACK_PAWN = 'P';
@@ -25,6 +27,13 @@ public class Piece {
 
     public char getPieceRepresentation(){
         return pieceRepresentation;
+    }
+
+    public boolean isWhite(){
+        return color == PieceColor.WHITE;
+    }
+    public boolean isBlack(){
+        return color == PieceColor.BLACK;
     }
 
 
