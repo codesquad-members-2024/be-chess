@@ -263,4 +263,19 @@ class BoardTest {
         // then
         assertEquals(20.0, points, 0.01);
     }
+
+    @DisplayName("a1에 배치한 흰색 폰을 a2에 옮기면 a2에 흰색 폰이 옮겨지고, a1은 빈칸이 된다")
+    @Test
+    void move() {
+        // given
+        board.initializeBoardBlocks();
+        board.setPiece("a1", Piece.createBlackPawn());
+
+        // when
+        board.move("a1", "a2");
+
+        // then
+        assertThat(board.findPiece("a1")).isEqualTo(Piece.createBlank());
+        assertThat(board.findPiece("a2")).isEqualTo(Piece.createBlackPawn());
+    }
 }

@@ -188,4 +188,18 @@ public class Board {
 
         return pawnCount > 1;
     }
+
+    public void move(String from, String to) {
+        Block fromBlock = boardBlocks.stream()
+                .filter(black -> black.isSamePos(from))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+
+        Block toBlock = boardBlocks.stream()
+                .filter(black -> black.isSamePos(to))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+
+        fromBlock.movePieceToTargetBlock(toBlock);
+    }
 }
