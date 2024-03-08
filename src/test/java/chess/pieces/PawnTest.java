@@ -1,10 +1,10 @@
 package chess.pieces;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.board.Position;
-import chess.pieces.Piece.Color;
+import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,43 +12,40 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PawnTest {
 
     @ParameterizedTest
-    @DisplayName("폰은 첫 이동시 1~2칸 ,이후 이동시 1칸 전진할 수 있다.")
     @MethodSource("providePawnMoves")
-    void verifyMovePositionForPawn(Color color, boolean isInit, Position difference, boolean expectedOutcome) {
-        Pawn pawn = new Pawn(color, null);
-        pawn.setInit(isInit); // 첫 이동 여부 설정
-
-        boolean result = pawn.verifyMovePosition(difference);
-
-        Assertions.assertThat(result).isEqualTo(expectedOutcome);
+    void verifyMovePosition(Piece pawn, Position target, boolean expected, List<Position> obstacles) {
+        boolean result = pawn.verifyMovingDirection(pawn.getPosition(), target, obstacles);
+        assertThat(result).isEqualTo(expected);
     }
 
     @ParameterizedTest
-    @DisplayName("폰은 공격시 대각선으로 이동할 수 있다.")
     @MethodSource("providePawnAttacks")
-    void verifyAttackPositionForPawn(Color color, Position difference, boolean expectedOutcome) {
-        Pawn pawn = new Pawn(color, null);
-        boolean result = pawn.verifyAttackPosition(difference);
-
-        Assertions.assertThat(result).isEqualTo(expectedOutcome);
+    void verifyAttackPosition(Pawn pawn, Position target, boolean expected) {
+        boolean result = pawn.verifyAttackPosition(pawn.getPosition(), target);
+        assertThat(result).isEqualTo(expected);
     }
 
     static Stream<Arguments> providePawnMoves() {
+        List<Position> noObstacles = List.of();
+        List<Position> withObstacleInFront = List.of(new Position(2, 1));
+        Pawn whitePawn = new Pawn(Piece.Color.WHITE, new Position(3, 1));
+        whitePawn.setInit(true);
+
         return Stream.of(
-                Arguments.of(Color.WHITE, true, new Position(-1, 0), true), // 첫 이동, 위로 한 칸 전진
-                Arguments.of(Color.WHITE, true, new Position(-2, 0), true), // 첫 이동, 두 칸 전진
-                Arguments.of(Color.WHITE, false, new Position(-1, 0), true), // 첫 이동 X, 한 칸 전진
-                Arguments.of(Color.WHITE, false, new Position(-2, 0), false) // 첫 이동 X, 두 칸 전진 시도 (무효)
+                Arguments.of(whitePawn, new Position(1, 1), true, noObstacles),
+                Arguments.of(whitePawn, new Position(2, 1), true, noObstacles),
+                Arguments.of(whitePawn, new Position(4, 1), false, noObstacles), // 아래방향
+                Arguments.of(whitePawn, new Position(1, 1), false, withObstacleInFront)
+
         );
     }
 
     static Stream<Arguments> providePawnAttacks() {
+        Pawn whitePawn = new Pawn(Piece.Color.WHITE, new Position(1, 1));
         return Stream.of(
-                Arguments.of(Color.WHITE, new Position(-1, 1), true), // 대각선 위 공격
-                Arguments.of(Color.WHITE, new Position(-1, -1), true), // 대각선 위 공격
-                Arguments.of(Color.WHITE, new Position(-1, 0), false), // 직선 이동으로 공격 시도 (무효)
-                Arguments.of(Color.WHITE, new Position(1, 1), false), // 대각선 아래 공격 (무효)
-                Arguments.of(Color.BLACK, new Position(1, 1), true) // 대각선 아래 공격
+                Arguments.of(whitePawn, new Position(0, 2), true), // Attack to the right
+                Arguments.of(whitePawn, new Position(0, 0), true), // Attack to the left
+                Arguments.of(whitePawn, new Position(0, 1), false) // Invalid attack move
         );
     }
 }

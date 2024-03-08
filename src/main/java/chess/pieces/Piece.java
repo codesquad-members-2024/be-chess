@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Board;
 import chess.board.Position;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,28 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public abstract boolean verifyMovePosition(Position difference);
+    public abstract boolean verifyMovingDirection(Position source, Position target, List<Position> occupied);
+
+    protected boolean repeatVerifyMovePosition(Position source, Position target, List<Direction> directions,
+                                               List<Position> occupied) {
+        for (Direction direction : directions) {
+            int xPos = source.getXPos();
+            int yPos = source.getYPos();
+            boolean isInterrupted = false;
+            for (int i = 0; i < Board.RANK_AND_FILE_SIZE; i++) {
+                xPos += direction.getXDegree();
+                yPos += direction.getYDegree();
+
+                if (!isInterrupted && xPos == target.getXPos() && yPos == target.getYPos()) { // 최종 도착 위치일 경우 리턴
+                    return true;
+                }
+                if (occupied.contains(new Position(yPos, xPos))) {
+                    isInterrupted = true;
+                }
+            }
+        }
+        return false;
+    }
 
     public static Piece of(Type type, Color color, Position position) {
         return type.getImpl(color, position);
@@ -38,20 +60,6 @@ public abstract class Piece {
         return type.getWhiteRepresentation();
     }
 
-    protected boolean repeatVerifyMovePosition(int xPos, int yPos, List<Direction> directions) {
-        for (Direction direction : directions) {
-            int dx = 0;
-            int dy = 0;
-            for (int i = 0; i < 8; i++) {
-                dx += direction.getXDegree();
-                dy += direction.getYDegree();
-                if (xPos == dx && yPos == dy) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public boolean isBlack() {
         return color == Color.BLACK;
@@ -65,8 +73,19 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public boolean isBlank() {
-        return type == Type.NO_PIECE && color == Color.NO_COLOR;
+    public boolean isNotBlank() {
+        return type != Type.NO_PIECE && color != Color.NO_COLOR;
+    }
+
+    public boolean isAlly(Piece other) {
+        return this.color == other.color;
+    }
+
+    public boolean isEnemy(Piece other) {
+        if (!other.isNotBlank()) {
+            return false;
+        }
+        return this.color != other.color;
     }
 
     public double getDefaultPoint() {
@@ -83,6 +102,10 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     @Override
@@ -110,6 +133,7 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(type, color, position);
     }
+
 
     public enum Type {
         PAWN('p', 1.0, Pawn::new),

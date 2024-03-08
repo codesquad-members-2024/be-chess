@@ -34,7 +34,7 @@ public class Rank {
 
     public int count() {
         return (int) pieces.stream()
-                .filter(piece -> !piece.isBlank())
+                .filter(Piece::isNotBlank)
                 .count();
     }
 

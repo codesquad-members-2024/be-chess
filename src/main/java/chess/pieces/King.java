@@ -10,9 +10,9 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition(Position difference) {
+    public boolean verifyMovingDirection(Position source, Position target, List<Position> occupied) {
         List<Direction> directions = Direction.everyDirection();
         return directions.stream()
-                .anyMatch(direction -> direction.sameDegree(difference));
+                .anyMatch(direction -> direction.sameDegree(source, target));
     }
 }

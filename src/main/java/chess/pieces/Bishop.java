@@ -9,10 +9,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition(Position difference) {
-        int xPos = difference.getXPos();
-        int yPos = difference.getYPos();
+    public boolean verifyMovingDirection(Position source, Position target, List<Position> occupied) {
         List<Direction> directions = Direction.diagonalDirection();
-        return repeatVerifyMovePosition(xPos, yPos, directions);
+        return repeatVerifyMovePosition(source, target, directions, occupied);
     }
 }

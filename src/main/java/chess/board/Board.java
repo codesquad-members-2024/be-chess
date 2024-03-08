@@ -4,12 +4,9 @@ import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -19,6 +16,7 @@ public class Board {
     private static final int WHITE_INITIAL_PAWNS_ROW = 6;
     private static final int WHITE_INITIAL_OTHERS_ROW = 7;
     public static final int DUPLICATED_VALUE = 2;
+    public static final int INIT_TOTAL_KING_COUNT = 2;
 
     private final List<Rank> ranks = new ArrayList<>(RANK_AND_FILE_SIZE);
 
@@ -81,6 +79,7 @@ public class Board {
     }
 
     public void addPiece(Position position, Piece piece) {
+        piece.changePosition(position);
         ranks.get(position.getYPos()).set(position.getXPos(), piece);
     }
 
@@ -107,31 +106,22 @@ public class Board {
         return sum;
     }
 
-    public List<Piece> getDescendingPieces() {
-        List<Piece> descendingPieces = new ArrayList<>();
-        descendingPieces.addAll(
-                getPiecesPerColor(Piece::isBlack, Comparator.comparing(Piece::getDefaultPoint).reversed()));
-        descendingPieces.addAll(
-                getPiecesPerColor(Piece::isWhite, Comparator.comparing(Piece::getDefaultPoint).reversed()));
-        return descendingPieces;
-    }
-
-    public List<Piece> getAscendingPieces() {
-        List<Piece> ascendingPieces = new ArrayList<>();
-        ascendingPieces.addAll(getPiecesPerColor(Piece::isBlack, Comparator.comparing(Piece::getDefaultPoint)));
-        ascendingPieces.addAll(getPiecesPerColor(Piece::isWhite, Comparator.comparing(Piece::getDefaultPoint)));
-        return ascendingPieces;
-    }
-
-    private List<Piece> getPiecesPerColor(Predicate<Piece> isColor, Comparator<Piece> comparator) {
+    public List<Position> getOccupiedPosition() {
         return ranks.stream()
-                .map(rank -> rank.findPieces(isColor))
-                .flatMap(Collection::stream)
-                .sorted(comparator)
+                .flatMap(rank -> rank.findPieces(Piece::isNotBlank).stream())
+                .map(Piece::getPosition)
                 .collect(Collectors.toList());
+    }
+
+    public boolean hasTwoKings() {
+        int blackKingCount = pieceCount(Type.KING, Color.BLACK);
+        int whiteKingCount = pieceCount(Type.KING, Color.WHITE);
+        int totalKingCount = blackKingCount + whiteKingCount;
+        return totalKingCount == INIT_TOTAL_KING_COUNT;
     }
 
     public List<Rank> getRanks() {
         return ranks;
     }
+
 }
