@@ -158,7 +158,7 @@ public class BoardTest {
         assertThat(Color.WHITE).isEqualTo(board.findPiece(sourcePosition).getColor());
 
         //폰 이동
-        chessGame.move(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition, Color.WHITE);
 
         //이동 후 검증
         assertThat(TypeOfPiece.NO_PIECE).isEqualTo(board.findPiece(sourcePosition).getType());
@@ -166,7 +166,7 @@ public class BoardTest {
         assertThat(Color.WHITE).isEqualTo(board.findPiece(targetPosition).getColor());
 
         //잘못된 위치로 비숍 이동
-        assertThatThrownBy(() -> chessGame.move("c1", "b1")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessGame.move("c1", "b1", Color.WHITE)).isInstanceOf(IllegalArgumentException.class);
 
 
     }

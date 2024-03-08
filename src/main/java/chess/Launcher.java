@@ -2,6 +2,7 @@ package chess;
 
 import chess.board.Board;
 import chess.board.BoardView;
+import chess.enums.Color;
 import chess.enums.Order;
 
 import java.util.Scanner;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 public class Launcher {
 
     private String[] moveIndex;
+    private Color nowTurn = Color.WHITE;
 
     public void run() {
         Order nowOrder = Order.START;
@@ -17,6 +19,7 @@ public class Launcher {
         ChessGame chessGame = new ChessGame();
         while (!nowOrder.equals(Order.END)) {
             try {
+                System.out.println("NOW > " + nowTurn.name());
                 nowOrder = userInput();
                 switch (nowOrder) {
                     case START -> {
@@ -28,7 +31,8 @@ public class Launcher {
                         break;
                     }
                     case MOVE -> {
-                        chessGame.move(moveIndex[1], moveIndex[2]);
+                        chessGame.move(moveIndex[1], moveIndex[2], nowTurn);
+                        nowTurn = nowTurn.equals(Color.WHITE) ? Color.BLACK : Color.WHITE;
                     }
                 }
             } catch (IllegalArgumentException ex) {

@@ -12,6 +12,8 @@ import java.util.*;
 public class Board {
     public static final int RANK_CNT = 8;
     private final Map<Position, Piece> chessBoard = new EnumMap<>(Position.class);
+    private final int BLACK_PAWN_START_RANK = 7;
+    private final int WHITE_PAWN_START_RANK = 2;
 
     private static final Board instance = new Board();
 
@@ -64,18 +66,26 @@ public class Board {
                 .forEach(position -> chessBoard.replace(position, Blank.blank.create(Color.NO_COLOR)));
     }
 
-    public boolean verifyMove(String source, String target) {
-        Piece now = chessBoard.get(Position.valueOf(source.toUpperCase()));
+    public boolean verifyMove(String source, String target, Color nowTurn) {
         try {
-            List<Direction> dir = now.getDirections();
-//            Piece start = chessBoard.get(source.toUpperCase());
-            for (Direction direction : dir) {
-                int[] nowIdx = new int[2];
-                nowIdx[0] = source.charAt(0);
-                nowIdx[1] = Character.digit(source.charAt(1), 10);
+            Piece now = chessBoard.get(Position.valueOf(source.toUpperCase()));
+            if (!now.getColor().equals(nowTurn)) return false;
+            if (now.getColor().equals(chessBoard.get(Position.valueOf(target.toUpperCase())).getColor())) return false;
 
-                if (findRecursion(nowIdx, target, direction)) {
+            List<Direction> dir = now.getDirections();
+
+            int[] nowIdx = new int[2];
+            nowIdx[0] = source.charAt(0);
+            nowIdx[1] = Character.digit(source.charAt(1), 10);
+            if (now.getType().equals(TypeOfPiece.PAWN)){
+                if (findPawn(nowIdx, target, dir, nowTurn)) {
                     return true;
+                }
+            }else {
+                for (Direction direction : dir) {
+                    if (findRecursion(nowIdx, target, direction, now.getType().getCanMoveCount(), nowTurn)) {
+                        return true;
+                    }
                 }
             }
 
@@ -87,7 +97,31 @@ public class Board {
         return false;
     }
 
-    private boolean findRecursion(int[] now, String target, Direction dir) {
+    private boolean findPawn(int[] now, String target, List<Direction> direction, Color nowTurn) {
+        List<Position> canMove = new ArrayList<>();
+        Position targetPos;
+        try {
+            targetPos = (Position.valueOf(target.toUpperCase()));
+            int rank = now[1] + direction.get(0).getYDegree();
+            int file = now[0] + direction.get(0).getXDegree();
+            if (now[1] == BLACK_PAWN_START_RANK || now[1] == WHITE_PAWN_START_RANK) {
+                canMove.add(Position.valueOf((String.valueOf((char) file) + (rank + direction.get(0).getYDegree())).toUpperCase()));
+            }
+            canMove.add(Position.valueOf((String.valueOf((char) file) + rank).toUpperCase()));
+
+            if (!chessBoard.get(targetPos).isBlank() && !chessBoard.get(targetPos).getColor().equals(nowTurn)) {
+                canMove.add(Position.valueOf((String.valueOf((char) (now[0] + direction.get(1).getXDegree())) + (now[1] + direction.get(1).getYDegree())).toUpperCase()));
+                canMove.add(Position.valueOf((String.valueOf((char) (now[0] + direction.get(2).getXDegree())) + (now[1] + direction.get(2).getYDegree())).toUpperCase()));
+            }
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        return canMove.contains(targetPos);
+    }
+
+    private boolean findRecursion(int[] now, String target, Direction dir, int nowCount, Color nowTurn) {
+        if (nowCount == 0) return false;
+
         int[] newNow = new int[2];
         newNow[0] += now[0] + dir.getXDegree();
         newNow[1] += now[1] + dir.getYDegree();
@@ -95,7 +129,11 @@ public class Board {
         String nowStr = (String.valueOf((char) newNow[0]) + newNow[1]);
         try {
             Position nowPos = Position.valueOf(nowStr.toUpperCase());
-            if (!chessBoard.get(nowPos).isBlank()) return false;
+            if (!chessBoard.get(nowPos).isBlank()) {
+                if (nowStr.equalsIgnoreCase(target) && !chessBoard.get(nowPos).getColor().equals(nowTurn))
+                    return true;
+                return false;
+            }
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -103,7 +141,7 @@ public class Board {
             return true;
         }
 
-        return findRecursion(newNow, target, dir);
+        return findRecursion(newNow, target, dir, --nowCount, nowTurn);
     }
 
 }
