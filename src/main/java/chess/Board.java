@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.Representation;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class Board {
             for (String element : line) {
                 result.append(element);
             }
-            result.append("\n");
+            result.append(StringUtils.NEWLINE);
         }
         return result.toString();
     }
