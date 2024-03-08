@@ -1,5 +1,7 @@
 package src.chess.pieces;
 
+import java.util.Objects;
+
 public class Piece {
     private Colors color;
     private char representation;
@@ -16,7 +18,7 @@ public class Piece {
         return new Piece(Colors.WHITE, type);
     }
 
-    public static Piece createBlack(Type type){
+    public static Piece createBlack(Type type) {
         return new Piece(Colors.BLACK, type);
     }
 
@@ -56,6 +58,22 @@ public class Piece {
     @Override
     public String toString() {
         return String.valueOf(representation);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Piece otherPiece) {
+            return Objects.equals(color, otherPiece.color) && Objects.equals(type, otherPiece.type);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, type);
     }
 
     // Enum Type
