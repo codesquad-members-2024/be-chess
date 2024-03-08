@@ -36,6 +36,18 @@ public class Board {
         board.add(Rank.createBlackInitRank());
     }
 
+    // 체스판을 전부 빈 칸으로 초기화한다.
+    public void initializeEmpty() {
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+        board.add(Rank.createBlankRank());
+    }
+
     public int pieceCount() {
         return board.stream()
                 .map(Rank::getAllPieceCount)
@@ -64,5 +76,11 @@ public class Board {
         int col = StringUtils.parserToColIndex(location.charAt(0));
         int row = StringUtils.parserToRowIndex(location.charAt(1));
         return board.get(row).getPieceBy(col);
+    }
+
+    public void move(String position, Piece piece) {
+        int col = StringUtils.parserToColIndex(position.charAt(0));
+        int row = StringUtils.parserToRowIndex(position.charAt(1));
+        board.get(row).setPiece(col, piece);
     }
 }

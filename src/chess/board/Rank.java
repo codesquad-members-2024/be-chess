@@ -87,6 +87,11 @@ public class Rank {
         return row.get(index);
     }
 
+    // 해당 위치에 기물을 놓습니다
+    public void setPiece(int index, Piece piece) {
+        row.add(index, piece);
+    }
+
     @Override
     public String toString() {
         return row.stream()
