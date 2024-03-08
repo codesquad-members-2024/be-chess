@@ -19,6 +19,7 @@ public class Launcher {
         ChessGame chessGame = new ChessGame();
         while (!nowOrder.equals(Order.END)) {
             try {
+                System.out.println("NOW > " + nowTurn.name());
                 nowOrder = userInput();
                 switch (nowOrder) {
                     case START -> {
