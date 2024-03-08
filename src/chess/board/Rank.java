@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import src.chess.pieces.Piece;
+import src.chess.pieces.Piece.Colors;
 import src.chess.pieces.Piece.Type;
 
 public class Rank {
@@ -67,9 +68,17 @@ public class Rank {
     }
 
     // 말이 몇개나 있는지 알려줍니다.
-    public int getPieceSize() {
+    public int getAllPieceCount() {
         return (int) (row.stream()
                 .filter(piece -> !piece.isBlank())
+                .count());
+    }
+
+    // 해당 색, 해당 모양의 기물이 몇개가 있는지 알려줍니다.
+    public int getPieceCountBy(Colors colors, Type type) {
+        return (int) (row.stream()
+                .filter(piece -> piece.getColor().equals(colors.getColorName()))
+                .filter(piece -> piece.getType().equals(type))
                 .count());
     }
 
