@@ -1,17 +1,18 @@
 package chess.pieces;
 
 import chess.enums.Color;
+import chess.enums.Direction;
 import chess.enums.TypeOfPiece;
+
+import java.util.List;
 
 public abstract class Piece {
 
     protected static final int UNICODE_DIFF = 6;
 
-    public abstract Piece create(Color color);
-
-    private final Color color;
-    private final char represent;
-    private final TypeOfPiece type;
+    protected final Color color;
+    protected final char represent;
+    protected final TypeOfPiece type;
 
     protected Piece(Color color, TypeOfPiece type, char represent) {
         this.color = color;
@@ -19,6 +20,10 @@ public abstract class Piece {
         this.type = type;
 
     }
+
+    public abstract Piece create(Color color);
+
+    public abstract List<Direction> getDirections() throws IllegalArgumentException;
 
     public Color getColor() {
         return color;

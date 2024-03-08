@@ -6,7 +6,7 @@ import chess.enums.Order;
 
 import java.util.Scanner;
 
-public class Game {
+public class Launcher {
 
     private String[] moveIndex;
 
