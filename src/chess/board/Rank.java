@@ -82,14 +82,21 @@ public class Rank {
                 .count());
     }
 
-    // 기물을 가져오기 위해서 n번째 위치에 있는 기물을 리턴합니다
+    // 해당 색의 기물을 전체 리턴합니다.
+    public List<Piece> getAllPieceBy(Colors colors) {
+        return row.stream()
+                .filter(piece -> piece.getColor().equals(colors.getColorName()))
+                .collect(Collectors.toList());
+    }
+
+    // 기물을 가져오기 위해서 n번째 위치에 있는 기물을 리턴합니다.
     public Piece getPieceBy(int index) {
         return row.get(index);
     }
 
     // 해당 위치에 기물을 놓습니다
     public void setPiece(int index, Piece piece) {
-        row.add(index, piece);
+        row.set(index, piece);
     }
 
     // 색을 입력받아 지금 해당 색의 기물이 총 몇점인지 계산합니다.

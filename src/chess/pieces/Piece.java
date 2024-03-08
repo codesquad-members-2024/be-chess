@@ -71,6 +71,10 @@ public class Piece {
         return false;
     }
 
+    public double getDefaultPoint() {
+        return type.getDefaultPoint();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(color, type);
