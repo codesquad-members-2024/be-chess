@@ -1,26 +1,34 @@
 package chess.pieces;
 
+import chess.board.Position;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
-public class Piece {
+public abstract class Piece {
     private final Type type;
     private final Color color;
+    private Position position;
 
-    private Piece(Type type, Color color) {
+    protected Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
     }
 
-    public static Piece createWhite(Type type) {
-        return new Piece(type, Color.WHITE);
+    protected Piece(Type type, Color color, Position position) {
+        this.type = type;
+        this.color = color;
+        this.position = position;
     }
 
-    public static Piece createBlack(Type type) {
-        return new Piece(type, Color.BLACK);
+    public abstract boolean verifyMovePosition(Position difference);
+
+    public static Piece of(Type type, Color color, Position position) {
+        return type.getImpl(color, position);
     }
 
-    public static Piece createBlank() {
-        return new Piece(Type.NO_PIECE, Color.NO_COLOR);
+    public static Piece createBlank(Position position) {
+        return new NoPiece(position);
     }
 
     public char getRepresentation() {
@@ -28,6 +36,21 @@ public class Piece {
             return type.getBlackRepresentation();
         }
         return type.getWhiteRepresentation();
+    }
+
+    protected boolean repeatVerifyMovePosition(int xPos, int yPos, List<Direction> directions) {
+        for (Direction direction : directions) {
+            int dx = 0;
+            int dy = 0;
+            for (int i = 0; i < 8; i++) {
+                dx += direction.getXDegree();
+                dy += direction.getYDegree();
+                if (xPos == dx && yPos == dy) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isBlack() {
@@ -50,6 +73,10 @@ public class Piece {
         return type.getDefaultPoint();
     }
 
+    public void changePosition(Position position) {
+        this.position = position;
+    }
+
     public Type getType() {
         return type;
     }
@@ -63,6 +90,7 @@ public class Piece {
         return "Piece{" +
                 "type=" + type +
                 ", color=" + color +
+                ", position=" + position +
                 '}';
     }
 
@@ -75,30 +103,37 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return type == piece.type && color == piece.color;
+        return type == piece.type && color == piece.color && Objects.equals(position, piece.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, color);
+        return Objects.hash(type, color, position);
     }
 
     public enum Type {
-        PAWN('p', 1.0),
-        ROOK('r', 5.0),
-        KNIGHT('n', 2.5),
-        BISHOP('b', 3.0),
-        QUEEN('q', 9.0),
-        KING('k', 0.0),
-        NO_PIECE('.', 0.0);
+        PAWN('p', 1.0, Pawn::new),
+        ROOK('r', 5.0, Rook::new),
+        KNIGHT('n', 2.5, Knight::new),
+        BISHOP('b', 3.0, Bishop::new),
+        QUEEN('q', 9.0, Queen::new),
+        KING('k', 0.0, King::new),
+        NO_PIECE('.', 0.0, null);
 
         private final char representation;
         private final double defaultPoint;
+        private final BiFunction<Color, Position, Piece> biFunction;
 
-        Type(char representation, double defaultPoint) {
+        Type(char representation, double defaultPoint, BiFunction<Color, Position, Piece> biFunction) {
             this.representation = representation;
             this.defaultPoint = defaultPoint;
+            this.biFunction = biFunction;
         }
+
+        public Piece getImpl(Color color, Position position) {
+            return biFunction.apply(color, position);
+        }
+
 
         public double getDefaultPoint() {
             return defaultPoint;
