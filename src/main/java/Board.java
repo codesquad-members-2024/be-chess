@@ -12,7 +12,7 @@ public class Board {
         initialize();
     }
 
-    private void initialize() {
+    public void initialize() {
         board = new ArrayList<>();
 
         board.add(blank());
@@ -75,5 +75,13 @@ public class Board {
 
     public static void main(String[] args) {
         new Board().print();
+    }
+
+    public List<String> getWhitePawnsResult() {
+        return whitePawn();
+    }
+
+    public List<String> getBlackPawnsResult() {
+        return blackPawn();
     }
 }

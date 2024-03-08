@@ -1,7 +1,9 @@
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import pieces.Pawn;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
@@ -33,4 +35,14 @@ public class BoardTest {
         Board board = new Board();
 //        board.add(new Integer(7)); //컴파일 에러 확인
     }
+
+    @Test
+    public void initialize() throws Exception {
+        board.initialize();
+        assertThat(board.getWhitePawnsResult())
+                .contains("\u2659","\u2659","\u2659","\u2659","\u2659","\u2659","\u2659","\u2659");
+        assertThat(board.getBlackPawnsResult())
+                .contains("\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F");
+    }
+
 }
