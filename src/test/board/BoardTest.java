@@ -97,6 +97,30 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("플레이어의 모든 기물을 점수 순서대로 리스트에 담는다.")
+    public void setListAllPiece() {
+        board.initializeEmpty();
+
+        addPiece("b6", Piece.createBlack(Type.PAWN));
+        addPiece("e6", Piece.createBlack(Type.QUEEN));
+        addPiece("b8", Piece.createBlack(Type.KING));
+        addPiece("c8", Piece.createBlack(Type.ROOK));
+
+        addPiece("f2", Piece.createWhite(Type.PAWN));
+        addPiece("g2", Piece.createWhite(Type.PAWN));
+        addPiece("e1", Piece.createWhite(Type.ROOK));
+        addPiece("f1", Piece.createWhite(Type.KING));
+
+        List<Piece> test = List.of(Piece.createWhite(Type.ROOK),
+                Piece.createWhite(Type.PAWN),
+                Piece.createWhite(Type.PAWN),
+                Piece.createWhite(Type.KING));
+
+        assertThat(board.getAllPiecesList(Colors.WHITE))
+                .isEqualTo(test);
+    }
+
+    @Test
     @DisplayName("같은 색상의 폰이 일직선으로 놓여 있을 때, 해당 폰은 0.5점으로 계산된다")
     public void calculatePawnInCol() {
         board.initializeEmpty();
