@@ -46,7 +46,7 @@ public class Board {
     public void initializeBoardBlocks() {
         IntStream.range(0, RANK_COUNT)
                 .forEach(rank -> IntStream.range(0, FILE_COUNT)
-                        .forEach(file -> boardBlocks.add(Position.init(rank, file))));
+                        .forEach(file -> boardBlocks.add(init(rank, file))));
     }
 
     public void move(String pos, Piece piece) {
@@ -143,5 +143,51 @@ public class Board {
                 .map(Position::getPiece)
                 .filter(piece -> piece.isSameColor(color) && piece.isSameType(type))
                 .count();
+    }
+
+    public double calculatePoints(Color color) {
+        return calculateMajorPoints(color) + calculatePawnPoints(color);
+    }
+
+    public double calculateMajorPoints(Color color) {
+        return boardBlocks.stream()
+                .map(Position::getPiece)
+                .filter(piece -> !piece.isPawn() && piece.isSameColor(color))
+                .mapToDouble(piece -> piece.getType().getDefaultPoint())
+                .reduce(0.0, Double::sum);
+    }
+
+    public double calculatePawnPoints(Color color) {
+        return IntStream.range(0, FILE_COUNT)
+                .mapToDouble(file -> boardBlocks.stream()
+                        .filter(block -> block.getFile() == file)
+                        .filter(block -> {
+                            Piece piece = block.getPiece();
+                            return piece.isPawn() && piece.isSameColor(color);
+                        })
+                        .mapToDouble(block -> {
+                            double pawnDefaultPoint = block.getPiece().getType().getDefaultPoint();
+                            return convertDefaultPointByCondition(color, file, pawnDefaultPoint);
+                        })
+                        .reduce(0.0, Double::sum))
+                .sum();
+    }
+
+    private double convertDefaultPointByCondition(Color color, int file, double pawnDefaultPoint) {
+        if (hasOtherPawn(color, file)) {
+            return 0.5 * pawnDefaultPoint;
+        } else {
+            return pawnDefaultPoint;
+        }
+    }
+
+    public boolean hasOtherPawn(Color color, int file) {
+        long pawnCount = boardBlocks.stream()
+                .filter(block -> block.getFile() == file)
+                .map(Position::getPiece)
+                .filter(piece -> piece.isPawn() && piece.isSameColor(color))
+                .count();
+
+        return pawnCount > 1;
     }
 }
