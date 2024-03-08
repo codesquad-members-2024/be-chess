@@ -64,11 +64,13 @@ public class Board {
                 .forEach(position -> chessBoard.replace(position, Blank.blank.create(Color.NO_COLOR)));
     }
 
-    public boolean verifyMove(String source, String target) {
-        Piece now = chessBoard.get(Position.valueOf(source.toUpperCase()));
+    public boolean verifyMove(String source, String target, Color nowTurn) {
         try {
+            Piece now = chessBoard.get(Position.valueOf(source.toUpperCase()));
+            if (!now.getColor().equals(nowTurn)) return false;
+            if (now.getColor().equals(chessBoard.get(Position.valueOf(target.toUpperCase())).getColor())) return false;
+
             List<Direction> dir = now.getDirections();
-//            Piece start = chessBoard.get(source.toUpperCase());
             for (Direction direction : dir) {
                 int[] nowIdx = new int[2];
                 nowIdx[0] = source.charAt(0);

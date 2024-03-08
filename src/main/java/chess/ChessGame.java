@@ -25,9 +25,8 @@ public class ChessGame {
     }
 
     //오버로딩
-    public void move(String sourcePosition, String targetPosition) throws IllegalArgumentException{
-
-        if (!board.verifyMove(sourcePosition, targetPosition)) throw new IllegalArgumentException("이동할 수 없습니다");
+    public void move(String sourcePosition, String targetPosition, Color nowTurn) throws IllegalArgumentException{
+        if (!board.verifyMove(sourcePosition, targetPosition, nowTurn)) throw new IllegalArgumentException("이동할 수 없습니다");
 
         Piece source = board.get(Position.valueOf(sourcePosition.toUpperCase()));
         Piece blank = Blank.blank.create(Color.NO_COLOR);
