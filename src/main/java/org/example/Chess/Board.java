@@ -1,93 +1,105 @@
-package org.example.Chess;
+    package org.example.Chess;
 
-import org.example.Pieces.Pawn;
+    import org.example.Pieces.Color;
+    import org.example.Pieces.Piece;
 
-import java.util.ArrayList;
-import java.util.List;
+    import static org.example.Pieces.PieceFactory.*;
+    import static org.example.Utils.StringUtils.appendNewLine;
 
-public class Board {
-    private static final int BOARD_SIZE = 8;
-    private List<Pawn> whitePawns;
-    private List<Pawn> blackPawns;
-    private List<List<Pawn>> board;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.Collectors;
+    import java.util.stream.IntStream;
 
-    public Board() {
-        whitePawns = new ArrayList<>();
-        blackPawns = new ArrayList<>();
-        board = new ArrayList<>();
-        for(int i = 0; i < BOARD_SIZE; i++) {
-            board.add(new ArrayList<>());
+    public class Board {
+        private static final int BOARD_SIZE = 8;
+        private List<Piece> whitePiece;
+        private List<Piece> blackPiece;
+        private List<List<Piece>> board;
+
+        public Board() {
+            whitePiece = new ArrayList<>();
+            blackPiece = new ArrayList<>();
+            board = new ArrayList<>();
+            IntStream.range(0, BOARD_SIZE).forEach(i -> board.add(new ArrayList<>()));
         }
-    }
 
-    public void addPawn(Pawn pawn) {
-        if (pawn.getColor().equals(Pawn.WHITE_COLOR)) {
-            whitePawns.add(pawn);
-        } else {
-            blackPawns.add(pawn);
+        public void initialize() {
+            initBlackPieces();
+            initWhitePieces();
+            fillEmptySpaces();
         }
-    }
-
-    public int getPawnsSize() {
-        return whitePawns.size() + blackPawns.size();
-    }
-
-    public Pawn findPawn(int index) {
-        if (index >= 0 && index < whitePawns.size()) {
-            return whitePawns.get(index);
-        } else if (index >= whitePawns.size() && index < getPawnsSize()) {
-            return blackPawns.get(index - whitePawns.size());
+        void initBlackPieces() {
+            IntStream.range(0, BOARD_SIZE).forEach(i -> {
+                Piece blackPawn = createBlackPawn();
+                addPiece(blackPawn);
+                board.get(1).add(blackPawn);
+            });
+            addPiece(createBlackRook());
+            addPiece(createBlackKnight());
+            addPiece(createBlackBishop());
+            addPiece(createBlackQueen());
+            addPiece(createBlackKing());
+            addPiece(createBlackBishop());
+            addPiece(createBlackKnight());
+            addPiece(createBlackRook());
+            board.get(0).addAll(blackPiece.subList(BOARD_SIZE, blackPiece.size()));
         }
-        throw new IndexOutOfBoundsException("Invalid index: " + index);
-    }
+        void initWhitePieces() {
+            IntStream.range(0, BOARD_SIZE).forEach(i -> {
+                Piece whitePawn = createWhitePawn();
+                addPiece(whitePawn);
+                board.get(6).add(whitePawn);
+            });
+            addPiece(createWhiteRook());
+            addPiece(createWhiteKnight());
+            addPiece(createWhiteBishop());
+            addPiece(createWhiteQueen());
+            addPiece(createWhiteKing());
+            addPiece(createWhiteBishop());
+            addPiece(createWhiteKnight());
+            addPiece(createWhiteRook());
+            board.get(7).addAll(whitePiece.subList(BOARD_SIZE, whitePiece.size()));
+        }
 
-    public void initialize() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (i == 1) {
-                    Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR);
-                    board.get(i).add(blackPawn);
-                    blackPawns.add(blackPawn);
-                } else if (i == 6) {
-                    Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR);
-                    board.get(i).add(whitePawn);
-                    whitePawns.add(whitePawn);
-                } else {
-                    board.get(i).add(null);
-                }
+
+        private void fillEmptySpaces() {
+            IntStream.range(0, BOARD_SIZE).forEach(i -> {
+                    IntStream.range(0, BOARD_SIZE).forEach(j -> {
+                        if (board.get(i).size() <= j) {
+                            board.get(i).add(null);
+                        } else if (board.get(i).get(j) == null) {
+                            board.get(i).set(j, null);
+                        }
+                    });
+            });
+        }
+
+        public void addPiece(Piece piece) {
+            if (piece.getColor().equals(Color.WHITE)) {
+                whitePiece.add(piece);
+            } else {
+                blackPiece.add(piece);
             }
         }
-    }
 
-
-    public String getWhitePawnsResult() {
-        return getPawnsResult(whitePawns);
-    }
-
-    public String getBlackPawnsResult() {
-        return getPawnsResult(blackPawns);
-    }
-
-    private String getPawnsResult(List<Pawn> pawns) {
-        StringBuilder result = new StringBuilder();
-        for (Pawn pawn : pawns) {
-            result.append(pawn.getRepresentation());
+        public int pieceCount() {
+            return whitePiece.size() + blackPiece.size();
         }
-        return result.toString();
-    }
 
-    public String getBoardPrint() {
-        StringBuilder builder = new StringBuilder();
-        for (List<Pawn> row : board) {
-            for (Pawn pawn : row) {
-                if (pawn == null) {
-                    builder.append('.');
-                } else {
-                    builder.append(pawn.getRepresentation());
-                }
-            }
-            builder.append('\n');
+        public String showBoard() {
+            return board.stream()
+                    .map(this::getRowPrint)
+                    .collect(Collectors.joining(appendNewLine("")));
         }
-        return builder.toString();
+
+        private String getRowPrint(List<Piece> row) {
+            return row.stream()
+                    .map(this::getPiecePrint)
+                    .collect(Collectors.joining(""));
+        }
+        private String getPiecePrint(Piece piece) {
+            return piece == null ? "." : Character.toString(piece.getRepresentation());
+        }
+
     }
-}

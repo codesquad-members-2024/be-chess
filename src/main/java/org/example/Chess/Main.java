@@ -14,12 +14,11 @@ public class Main {
 
             if ("start".equalsIgnoreCase(input)) {
                 board.initialize();
-                System.out.println(board.getBoardPrint());
+                System.out.println(board.showBoard());
             } else if ("end".equalsIgnoreCase(input)) {
                 break;
             }
         }
-
         scanner.close();
     }
 }

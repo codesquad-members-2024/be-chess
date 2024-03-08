@@ -1,48 +1,31 @@
-package org.example.Chess;
-
-import org.example.Pieces.Pawn;
-import org.junit.jupiter.api.*;
-
+import static org.example.Utils.StringUtils.appendNewLine;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardTest {
+import org.example.Chess.Board;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class BoardTest {
     private Board board;
 
     @BeforeEach
-    public void setupBoard() {
-        this.board = new Board();
+    void setup() {
+        board = new Board();
     }
 
+    @DisplayName("체스 기물의 개수와 보드 처음 시작 상태 검증")
     @Test
-    @DisplayName("흰색 폰이 보드에 추가 되어야 한다.")
-    public void TestWhitePawnAdd() {
-        addAndTestPawn(Pawn.WHITE_COLOR);
-    }
-
-    @Test
-    @DisplayName("검은색 폰이 보드에 추가 되어야 한다.")
-    public void TestBlackPawnAdd() {
-        addAndTestPawn(Pawn.BLACK_COLOR);
-    }
-
-    private void addAndTestPawn(String color) {
-        Pawn pawn = new Pawn(color);
-        int initialSize = board.getPawnsSize();
-        board.addPawn(pawn);
-        assertThat(board.getPawnsSize()).isEqualTo(initialSize + 1);
-        assertThat(board.findPawn(initialSize)).isEqualTo(pawn);
-    }
-
-    @Test
-    public void initialize() throws Exception {
+    void create() throws Exception {
         board.initialize();
-        String expectedWhitePawns = "PPPPPPPP";
-        String expectedBlackPawns = "pppppppp";
-        assertThat(board.getWhitePawnsResult()).isEqualTo(expectedWhitePawns);
-        assertThat(board.getBlackPawnsResult()).isEqualTo(expectedBlackPawns);
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+
+        assertThat(board.showBoard()).isEqualTo(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        ("rnbqkbnr"));
     }
-
-
-
-
 }
