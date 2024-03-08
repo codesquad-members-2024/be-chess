@@ -1,31 +1,33 @@
 package chess;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtils.appendNewLine;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class BoardTest {
+
     Board board;
 
     @BeforeEach
-    void beforeEach() {
+    void setup() {
         board = new Board();
     }
 
     @Test
-    @DisplayName("Pawn 이외의 다른 객체를 추가하면 컴파일 에러가 발생한다.")
-    void addNotPawnObject() {
-        Integer integer = Integer.valueOf("7");
-//        board.add(integer); // 컴파일 에러 발생
-    }
-
-    @Test
-    @DisplayName("체스 판 초기화 결과에서 흰색 및 검은색 폰 라인의 출력 검증")
+    @DisplayName("체스 판 전체의 초기화 시 기물의 개수 및 상태 출력 기능 확인")
     public void initialize() throws Exception {
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+            appendNewLine("RNBQKBNR") +
+                appendNewLine("PPPPPPPP") +
+                blankRank + blankRank + blankRank + blankRank +
+                appendNewLine("pppppppp") +
+                appendNewLine("rnbqkbnr")
+        );
     }
 }

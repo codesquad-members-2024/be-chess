@@ -1,68 +1,90 @@
 package chess;
 
-import chess.pieces.Pawn;
+import static utils.StringUtils.appendNewLine;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import pieces.Piece;
 
 public class Board {
 
-  private static final int SIZE = 8;
-  private static final int WHITE_PAWNS_LINE = 1;
-  private static final int BLACK_PAWNS_LINE = 6;
+    private static final int SIZE = 8;
+    private static final int EMPTY_LINES = 4;
 
-  private final List<List<Pawn>> pawns;
+    private final List<List<Piece>> pieces;
 
-  public Board() {
-    this.pawns = new ArrayList<>();
-  }
-
-  public void initialize() {
-    pawns.add(WHITE_PAWNS_LINE, getNewWhitePawns());
-    pawns.add(BLACK_PAWNS_LINE, getNewBlackPawns());
-
-    for (int line = 0; line < SIZE; line++) {
-      if (line != WHITE_PAWNS_LINE && line != BLACK_PAWNS_LINE) {
-        pawns.add(getEmptyPawns());
-      }
+    public Board() {
+        this.pieces = new ArrayList<>();
     }
-  }
 
-  public void print() {
-    StringBuilder stringBuilder = new StringBuilder();
-    pawns.stream().sorted((o1, o2) -> -1) // 체스판 라인의 순서는 아래쪽->위쪽이므로 역순 정렬
-        .map(this::getPawnsOfLineString)
-        .forEach(string -> stringBuilder.append(string).append("\n"));
-    System.out.println(stringBuilder);
-  }
+    public void initialize() {
+        pieces.add(getBlackEdgeLine());
+        pieces.add(getBlackPawnLine());
+        pieces.addAll(Collections.nCopies(EMPTY_LINES, getEmptyLine()));
+        pieces.add(getWhitePawnLine());
+        pieces.add(getWhiteEdgeLine());
+    }
 
+    public int pieceCount() {
+        return (int) pieces.stream()
+            .flatMap(List::stream)
+            .filter(piece -> !piece.isEmpty())
+            .count();
+    }
 
-  public String getWhitePawnsResult() {
-    return getPawnsOfLineString(pawns.get(WHITE_PAWNS_LINE));
-  }
+    public void print() {
+        System.out.println(showBoard());
+    }
 
-  public String getBlackPawnsResult() {
-    return getPawnsOfLineString(pawns.get(BLACK_PAWNS_LINE));
-  }
+    public String showBoard() {
+        return pieces.stream()
+            .map(line -> appendNewLine(getLineRepresentation(line)))
+            .collect(Collectors.joining());
+    }
 
-  private String getPawnsOfLineString(List<Pawn> pawnsOfLine) {
-    StringBuilder stringBuilder = new StringBuilder();
-    pawnsOfLine.stream().map(Pawn::getRepresentation).forEach(stringBuilder::append);
-    return stringBuilder.toString();
-  }
+    private String getLineRepresentation(List<Piece> lineOfPieces) {
+        return lineOfPieces.stream()
+            .map(Piece::getRepresentation)
+            .collect(Collectors.joining());
+    }
 
-  private List<Pawn> getNewWhitePawns() {
-    Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
-    return new ArrayList<>(Collections.nCopies(SIZE, whitePawn));
-  }
+    private List<Piece> getWhiteEdgeLine() {
+        return List.of(
+            Piece.createWhiteRook(),
+            Piece.createWhiteKnight(),
+            Piece.createWhiteBishop(),
+            Piece.createWhiteQueen(),
+            Piece.createWhiteKing(),
+            Piece.createWhiteBishop(),
+            Piece.createWhiteKnight(),
+            Piece.createWhiteRook()
+        );
+    }
 
-  private List<Pawn> getNewBlackPawns() {
-    Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
-    return new ArrayList<>(Collections.nCopies(SIZE, blackPawn));
-  }
+    private List<Piece> getBlackEdgeLine() {
+        return List.of(
+            Piece.createBlackRook(),
+            Piece.createBlackKnight(),
+            Piece.createBlackBishop(),
+            Piece.createBlackQueen(),
+            Piece.createBlackKing(),
+            Piece.createBlackBishop(),
+            Piece.createBlackKnight(),
+            Piece.createBlackRook()
+        );
+    }
 
-  private List<Pawn> getEmptyPawns() {
-    Pawn emptyPawn = new Pawn(Pawn.EMPTY, Pawn.EMPTY_REPRESENTATION);
-    return new ArrayList<>(Collections.nCopies(SIZE, emptyPawn));
-  }
+    private List<Piece> getWhitePawnLine() {
+        return new ArrayList<>(Collections.nCopies(SIZE, Piece.createWhitePawn()));
+    }
+
+    private List<Piece> getBlackPawnLine() {
+        return new ArrayList<>(Collections.nCopies(SIZE, Piece.createBlackPawn()));
+    }
+
+    private List<Piece> getEmptyLine() {
+        return new ArrayList<>(Collections.nCopies(SIZE, Piece.createEmptyPiece()));
+    }
 }
