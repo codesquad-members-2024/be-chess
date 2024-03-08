@@ -14,10 +14,10 @@ class BlockTest {
 
     @BeforeEach
     void setUp() {
-        a1 = Block.init(0, 0);
+        a1 = Block.init(7, 0);
     }
 
-    @DisplayName("체스판의 위치를 나타내는 포지션을 0행, 5열(f1)로 생성할 수 있다")
+    @DisplayName("체스판의 위치를 나타내는 포지션을 0행, 5열(f8)로 생성할 수 있다")
     @Test
     void create() {
         // given
@@ -32,15 +32,15 @@ class BlockTest {
         // then
         assertThat(rank).isEqualTo(0);
         assertThat(file).isEqualTo(5);
-        assertThat(pos).isEqualTo("f1");
+        assertThat(pos).isEqualTo("f8");
         assertThat(blank).isEqualTo(Piece.createBlank());
     }
 
-    @DisplayName("3행 7열은 h4로 변환 할 수 있다")
+    @DisplayName("5행 7열은 h4로 변환 할 수 있다")
     @Test
     void convert_rank_and_file_to_pos() {
         // given
-        int rank = 3;
+        int rank = 4;
         int file = 7;
 
         // when
@@ -50,7 +50,7 @@ class BlockTest {
         assertThat(pos).isEqualTo("h4");
     }
 
-    @DisplayName("a8은 7행 0열로 변환 할 수 있다")
+    @DisplayName("a8은 0행 0열로 변환 할 수 있다")
     @Test
     void convert_pos_to_rank_and_file() {
         // given
@@ -62,7 +62,7 @@ class BlockTest {
         int file = rankAndFile[1];
 
         // then
-        assertThat(rank).isEqualTo(7);
+        assertThat(rank).isEqualTo(0);
         assertThat(file).isEqualTo(0);
     }
 

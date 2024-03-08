@@ -1,16 +1,20 @@
 package chess.board;
 
 import chess.pieces.Piece;
-import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Block {
     private static final Piece BLANK = Piece.createBlank();
-    private int[] rankAndFile = new int[2];
+    private static final Map<Integer, Integer> rankMap = IntStream.rangeClosed(1, 8).boxed().collect(Collectors.toMap(i -> i, i -> 8 - i));
+    private final int rank;
+    private final int file;
     private Piece piece = BLANK;
 
     private Block(int rank, int file) {
-        rankAndFile[0] = rank;
-        rankAndFile[1] = file;
+        this.rank = rank;
+        this.file = file;
     }
 
     public static Block init(int rank, int file) {
@@ -18,14 +22,18 @@ public class Block {
     }
 
     public int getRank() {
-        return rankAndFile[0];
+        return rank;
     }
 
     public int getFile() {
-        return rankAndFile[1];
+        return file;
     }
 
     public int[] getRankAndFile() {
+        int[] rankAndFile = new int[2];
+        rankAndFile[0] = rank;
+        rankAndFile[1] = file;
+
         return rankAndFile;
     }
 
@@ -61,7 +69,7 @@ public class Block {
     }
 
     public boolean isSamePos(String pos) {
-        return Arrays.equals(rankAndFile, convertPosToRankAndFile(pos));
+        return this.rank == convertPosToRank(pos) && this.file == convertPosToFile(pos);
     }
 
     public static int[] convertPosToRankAndFile(String pos) {
@@ -75,7 +83,7 @@ public class Block {
 
     public static int convertPosToRank(String pos) {
         char rank = pos.charAt(1);
-        return Character.getNumericValue(rank) - 1;
+        return rankMap.get(Character.getNumericValue(rank));
     }
 
     public static int convertPosToFile(String pos) {
@@ -88,7 +96,7 @@ public class Block {
     }
 
     public static String convertRankToPos(int rank) {
-        return String.valueOf(rank + 1);
+        return String.valueOf(8 - rank);
     }
 
     public static String convertFileToPos(int file) {
