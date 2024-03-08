@@ -8,26 +8,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PositionTest {
+class BlockTest {
 
-    private Position a1;
+    private Block a1;
 
     @BeforeEach
     void setUp() {
-        a1 = Position.init(0, 0);    
+        a1 = Block.init(0, 0);
     }
 
     @DisplayName("체스판의 위치를 나타내는 포지션을 0행, 5열(f1)로 생성할 수 있다")
     @Test
     void create() {
         // given
-        Position position = Position.init(0, 5);
+        Block block = Block.init(0, 5);
 
         // when
-        int rank = position.getRank();
-        int file = position.getFile();
-        String pos = position.getPos();
-        Piece blank = position.getPiece();
+        int rank = block.getRank();
+        int file = block.getFile();
+        String pos = block.getPos();
+        Piece blank = block.getPiece();
 
         // then
         assertThat(rank).isEqualTo(0);
@@ -44,7 +44,7 @@ class PositionTest {
         int file = 7;
 
         // when
-        String pos = Position.convertRankAndFileToPos(rank, file);
+        String pos = Block.convertRankAndFileToPos(rank, file);
 
         // then
         assertThat(pos).isEqualTo("h4");
@@ -57,7 +57,7 @@ class PositionTest {
         String pos = "a8";
 
         // when
-        int[] rankAndFile = Position.convertPosToRankAndFile(pos);
+        int[] rankAndFile = Block.convertPosToRankAndFile(pos);
         int rank = rankAndFile[0];
         int file = rankAndFile[1];
 
@@ -66,7 +66,7 @@ class PositionTest {
         assertThat(file).isEqualTo(0);
     }
 
-    @DisplayName("Position은 자신의 위치에 해당하는 기물을 뽑을 수 있다")
+    @DisplayName("Block은 자신의 위치에 해당하는 기물을 뽑을 수 있다")
     @Test
     void pick() {
         // given
@@ -79,7 +79,7 @@ class PositionTest {
         assertThat(pickedPiece).isEqualTo(Piece.createBlackKnight());
     }
 
-    @DisplayName("Position은 기물을 뽑으면 빈칸이 된다")
+    @DisplayName("Block은 기물을 뽑으면 빈칸이 된다")
     @Test
     void isBlank() {
         // given
@@ -104,15 +104,15 @@ class PositionTest {
         assertThat(blackKnight).isEqualTo(Piece.createBlackKnight());
     }
 
-    @DisplayName("한 Position에 있는 검은색 킹을 다른 Position으로 옮길 수 있다")
+    @DisplayName("한 Block에 있는 검은색 킹을 다른 Block으로 옮길 수 있다")
     @Test
-    void movePieceToTargetPosition() {
+    void movePieceToTargetBlock() {
         // given
-        Position one = a1.changePiece(Piece.createBlackKing());
-        Position other = Position.init(1, 1);
+        Block one = a1.changePiece(Piece.createBlackKing());
+        Block other = Block.init(1, 1);
 
         // when
-        one.movePieceToTargetPosition(other);
+        one.movePieceToTargetBlock(other);
 
         // then
         assertAll(
@@ -122,15 +122,15 @@ class PositionTest {
         );
     }
 
-    @DisplayName("a8을 가진 Position과 똑같은 위치를 가졌는지 알 수 있다")
+    @DisplayName("a8을 가진 Block과 똑같은 위치를 가졌는지 알 수 있다")
     @Test
-    void isSamePosition() {
+    void isSameBlock() {
         // given
-        int[] rankAndFile = Position.convertPosToRankAndFile("a8");
-        Position position = Position.init(rankAndFile[0], rankAndFile[1]);
+        int[] rankAndFile = Block.convertPosToRankAndFile("a8");
+        Block block = Block.init(rankAndFile[0], rankAndFile[1]);
 
         // when & then
-        assertTrue(position.isSamePos("a8"));
-        assertFalse(position.isSamePos("a7"));
+        assertTrue(block.isSamePos("a8"));
+        assertFalse(block.isSamePos("a7"));
     }
 }

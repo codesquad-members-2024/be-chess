@@ -3,18 +3,18 @@ package chess.board;
 import chess.pieces.Piece;
 import java.util.Arrays;
 
-public class Position {
+public class Block {
     private static final Piece BLANK = Piece.createBlank();
     private int[] rankAndFile = new int[2];
     private Piece piece = BLANK;
 
-    private Position(int rank, int file) {
+    private Block(int rank, int file) {
         rankAndFile[0] = rank;
         rankAndFile[1] = file;
     }
 
-    public static Position init(int rank, int file) {
-        return new Position(rank, file);
+    public static Block init(int rank, int file) {
+        return new Block(rank, file);
     }
 
     public int getRank() {
@@ -44,7 +44,7 @@ public class Position {
         return pick;
     }
 
-    public Position changePiece(Piece piece) {
+    public Block changePiece(Piece piece) {
         this.piece = piece;
         return this;
     }
@@ -53,7 +53,7 @@ public class Position {
         return piece.equals(BLANK);
     }
 
-    public Position movePieceToTargetPosition(Position that) {
+    public Block movePieceToTargetBlock(Block that) {
         Piece pick = this.pick();
         that.changePiece(pick);
 

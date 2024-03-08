@@ -1,7 +1,7 @@
 package chess.board;
 
-import static chess.board.Position.*;
-import static chess.board.Position.convertRankAndFileToPos;
+import static chess.board.Block.*;
+import static chess.board.Block.convertRankAndFileToPos;
 import static chess.common.Color.*;
 import static chess.pieces.Piece.*;
 import static chess.utils.StringUtils.*;
@@ -20,11 +20,11 @@ import java.util.stream.IntStream;
 public class Board {
     private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
-    private List<Position> boardBlocks = new ArrayList<>();
+    private List<Block> boardBlocks = new ArrayList<>();
 
     public Piece findPiece(String pos) {
         return boardBlocks.stream()
-                .filter(positions -> Arrays.equals(convertPosToRankAndFile(pos), positions.getRankAndFile()))
+                .filter(block -> Arrays.equals(convertPosToRankAndFile(pos), block.getRankAndFile()))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new)
                 .getPiece();
@@ -32,7 +32,7 @@ public class Board {
 
     public int pieceCount() {
         return (int) boardBlocks.stream()
-                .map(Position::getPiece)
+                .map(Block::getPiece)
                 .filter(piece -> !piece.isSameColor(NO_COLOR))
                 .count();
     }
@@ -51,7 +51,7 @@ public class Board {
 
     public void move(String pos, Piece piece) {
         boardBlocks.stream()
-                .filter(position -> position.isSamePos(pos))
+                .filter(block -> block.isSamePos(pos))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new)
                 .changePiece(piece);
@@ -105,7 +105,7 @@ public class Board {
 
     private String getPieceResultByColor(Predicate<Piece> filterCondition) {
         return boardBlocks.stream()
-                .map(Position::getPiece)
+                .map(Block::getPiece)
                 .filter(filterCondition::test)
                 .map(Piece::getRepresentation)
                 .collect(Collectors.joining());
@@ -140,7 +140,7 @@ public class Board {
 
     public int getTotalCount(Color color, Type type) {
         return (int) boardBlocks.stream()
-                .map(Position::getPiece)
+                .map(Block::getPiece)
                 .filter(piece -> piece.isSameColor(color) && piece.isSameType(type))
                 .count();
     }
@@ -151,7 +151,7 @@ public class Board {
 
     public double calculateMajorPoints(Color color) {
         return boardBlocks.stream()
-                .map(Position::getPiece)
+                .map(Block::getPiece)
                 .filter(piece -> !piece.isPawn() && piece.isSameColor(color))
                 .mapToDouble(piece -> piece.getType().getDefaultPoint())
                 .reduce(0.0, Double::sum);
@@ -184,7 +184,7 @@ public class Board {
     public boolean hasOtherPawn(Color color, int file) {
         long pawnCount = boardBlocks.stream()
                 .filter(block -> block.getFile() == file)
-                .map(Position::getPiece)
+                .map(Block::getPiece)
                 .filter(piece -> piece.isPawn() && piece.isSameColor(color))
                 .count();
 
