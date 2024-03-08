@@ -1,4 +1,4 @@
-# be-chess
+# be-pieces
 
 2024 마스터즈 체스 프로젝트
 

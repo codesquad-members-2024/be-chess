@@ -1,7 +1,10 @@
+package pieces;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PawnTest {
     @Test
@@ -13,9 +16,6 @@ public class PawnTest {
         color = "Black";
         verifyPawn(color);
         
-//        메서드를 만들면 항상 매개변수로 넘겨줄 생각을함
-        Pawn pawn = new Pawn(color);
-        verifyPawn(pawn, color);
     }
 
 //    컨닝 ㅋㅋ
@@ -24,8 +24,11 @@ public class PawnTest {
         assertThat(pawn.getColor()).isEqualTo(color);
     }
 
-    void verifyPawn(Pawn pawn, final String color) {
-        assertThat(pawn.getColor()).isEqualTo(color);
+
+    @Test
+    public void create_기본생성자() throws Exception {
+        Pawn pawn = new Pawn();
+        assertEquals("white", pawn.getColor());
     }
 
 }
