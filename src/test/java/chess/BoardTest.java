@@ -1,36 +1,37 @@
 package chess;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
+
+import static utils.StringUtils.appendNewLine;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.*;
+
 public class BoardTest {
+
     Board board;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         board = new Board();
     }
 
     @Test
-    @DisplayName("보드에 pawn이 올바르게 추가되는지 테스트")
-    public void create() { // for문
-        int index = 0;
-        Pawn white = new Pawn(Pawn.WHITE_COLOR,Pawn.BLACK_REPRESENTATION);
-        verifyBoard(white,index);
+    @DisplayName("보드 생성시 기물 갯수와 출력값 테스트")
+    public void create() throws Exception {
+        board.initialize();
+        assertThat(board.pieceCount()).isEqualTo(32);
 
-        index+=1;
-        Pawn black = new Pawn(Pawn.BLACK_COLOR,Pawn.BLACK_REPRESENTATION);
-        verifyBoard(black,index);
-    }
-
-    public void verifyBoard(Pawn pawn,int index) {
-        board.add(pawn);
-
-        assertThat(board.size()).isEqualTo(index + 1);
-        assertThat(board.findPawn(index)).isEqualTo(pawn);
+        String blankRank = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+            appendNewLine("RNBQKBNR") +
+                appendNewLine("PPPPPPPP") +
+                blankRank + blankRank + blankRank + blankRank +
+                appendNewLine("pppppppp") +
+                appendNewLine("rnbqkbnr"));
     }
 
     @Test
@@ -41,10 +42,4 @@ public class BoardTest {
         assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
     }
 
-    @Test
-    @DisplayName("검정 폰과 흼색 폰 출력 테스트")
-    public void printTest() {
-        board.initialize();
-        System.out.println(board.print());
-    }
 }
