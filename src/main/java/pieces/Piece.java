@@ -23,6 +23,10 @@ public class Piece {
         return color;
     }
 
+    public char getPieceRepresentation(){
+        return pieceRepresentation;
+    }
+
 
     public static Piece makeWhitePawn(){
         return new Piece(PieceColor.WHITE, PieceName.PAWN);
@@ -62,7 +66,7 @@ public class Piece {
     public static Piece makeWhiteKing(){
         return new Piece(PieceColor.WHITE, PieceName.KING);
     }
-    public static Piece makeBlacKing(){
+    public static Piece makeBlackKing(){
         return new Piece(PieceColor.BLACK, PieceName.KING);
     }
 }
