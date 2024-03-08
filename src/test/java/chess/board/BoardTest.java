@@ -32,7 +32,7 @@ class BoardTest {
         Piece white = createWhitePawn();
 
         // when
-        board.move("a1", white);
+        board.setPiece("a1", white);
 
         // then
         assertEquals(1, board.pieceCount());
@@ -45,8 +45,8 @@ class BoardTest {
         board.initializeBoardBlocks();
         Piece whitePawn = createWhitePawn();
         Piece blackPawn = createBlackPawn();
-        board.move("a1", whitePawn);
-        board.move("a2", blackPawn);
+        board.setPiece("a1", whitePawn);
+        board.setPiece("a2", blackPawn);
 
         // when
         Piece firstFindPiece = board.findPiece("a1");
@@ -65,7 +65,7 @@ class BoardTest {
     void add_compileError(String number) {
         assertThatCode(
                 () -> {
-                    Method addMethod = Board.class.getDeclaredMethod("move", String.class, Piece.class);
+                    Method addMethod = Board.class.getDeclaredMethod("setPiece", String.class, Piece.class);
                     addMethod.setAccessible(true);
                     addMethod.invoke(board, Integer.parseInt(number));
                 }).isInstanceOf(IllegalArgumentException.class);
@@ -121,9 +121,9 @@ class BoardTest {
     void findPiece() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKing());
+        board.setPiece("a1", Piece.createBlackKing());
 
-        board.move("h8", Piece.createWhiteKing());
+        board.setPiece("h8", Piece.createWhiteKing());
 
         // when
         Piece firstInPiece = board.findPiece("a1");
@@ -149,14 +149,14 @@ class BoardTest {
         // given
         board.initializeBoardBlocks();
         // 검정색 나이트 3개 배치
-        board.move("a1", Piece.createBlackKnight());
-        board.move("a2", Piece.createBlackKnight());
-        board.move("a3", Piece.createBlackKnight());
+        board.setPiece("a1", Piece.createBlackKnight());
+        board.setPiece("a2", Piece.createBlackKnight());
+        board.setPiece("a3", Piece.createBlackKnight());
 
         // 흰색 나이트 3개 배치
-        board.move("b1", Piece.createWhiteKnight());
-        board.move("b2", Piece.createWhiteKnight());
-        board.move("b3", Piece.createWhiteKnight());
+        board.setPiece("b1", Piece.createWhiteKnight());
+        board.setPiece("b2", Piece.createWhiteKnight());
+        board.setPiece("b3", Piece.createWhiteKnight());
 
         // when
         int totalCount = board.getTotalCount(BLACK, KNIGHT);
@@ -199,11 +199,11 @@ class BoardTest {
     void calculateMajorPoints() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKing());
-        board.move("a2", Piece.createBlackQueen());
-        board.move("a3", Piece.createBlackKnight());
-        board.move("a4", Piece.createBlackBishop());
-        board.move("a5", Piece.createBlackRook());
+        board.setPiece("a1", Piece.createBlackKing());
+        board.setPiece("a2", Piece.createBlackQueen());
+        board.setPiece("a3", Piece.createBlackKnight());
+        board.setPiece("a4", Piece.createBlackBishop());
+        board.setPiece("a5", Piece.createBlackRook());
 
         // when
         double majorPoints = board.calculateMajorPoints(BLACK);
@@ -217,9 +217,9 @@ class BoardTest {
     void calculatePawnPoints_when_same_file() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackPawn());
-        board.move("a2", Piece.createBlackPawn());
-        board.move("a3", Piece.createBlackPawn());
+        board.setPiece("a1", Piece.createBlackPawn());
+        board.setPiece("a2", Piece.createBlackPawn());
+        board.setPiece("a3", Piece.createBlackPawn());
 
         // when
         double pawnPoints = board.calculatePawnPoints(BLACK);
@@ -233,9 +233,9 @@ class BoardTest {
     void calculatePawnPoints_when_different_file() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackPawn());
-        board.move("b1", Piece.createBlackPawn());
-        board.move("c1", Piece.createBlackPawn());
+        board.setPiece("a1", Piece.createBlackPawn());
+        board.setPiece("b1", Piece.createBlackPawn());
+        board.setPiece("c1", Piece.createBlackPawn());
 
         // when
         double pawnPoints = board.calculatePawnPoints(BLACK);
@@ -249,13 +249,13 @@ class BoardTest {
     void calculatePoints() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKnight());
-        board.move("a2", Piece.createBlackKnight());
-        board.move("a3", Piece.createBlackRook());
-        board.move("a4", Piece.createBlackQueen());
+        board.setPiece("a1", Piece.createBlackKnight());
+        board.setPiece("a2", Piece.createBlackKnight());
+        board.setPiece("a3", Piece.createBlackRook());
+        board.setPiece("a4", Piece.createBlackQueen());
 
-        board.move("b1", Piece.createBlackPawn());
-        board.move("b2", Piece.createBlackPawn());
+        board.setPiece("b1", Piece.createBlackPawn());
+        board.setPiece("b2", Piece.createBlackPawn());
 
         // when
         double points = board.calculatePoints(BLACK);

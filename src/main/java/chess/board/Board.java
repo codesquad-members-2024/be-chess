@@ -49,7 +49,7 @@ public class Board {
                         .forEach(file -> boardBlocks.add(init(rank, file))));
     }
 
-    public void move(String pos, Piece piece) {
+    public void setPiece(String pos, Piece piece) {
         boardBlocks.stream()
                 .filter(block -> block.isSamePos(pos))
                 .findAny()
@@ -61,9 +61,7 @@ public class Board {
         if (color.equals(BLACK)) {
             createMajor(color);
             createPawns(color);
-            createBlank();
         } else {
-            createBlank();
             createPawns(color);
             createMajor(color);
         }
@@ -72,14 +70,14 @@ public class Board {
     private void createMajor(Color color) {
         int rank = InitPos.MAJOR.check(color);
 
-        move(convertRankAndFileToPos(rank, 0), create(color, ROOK));
-        move(convertRankAndFileToPos(rank, 1), create(color, KNIGHT));
-        move(convertRankAndFileToPos(rank, 2), create(color, BISHOP));
-        move(convertRankAndFileToPos(rank, 3), create(color, QUEEN));
-        move(convertRankAndFileToPos(rank, 4), create(color, KING));
-        move(convertRankAndFileToPos(rank, 5), create(color, BISHOP));
-        move(convertRankAndFileToPos(rank, 6), create(color, KNIGHT));
-        move(convertRankAndFileToPos(rank, 7), create(color, ROOK));
+        setPiece(convertRankAndFileToPos(rank, 0), create(color, ROOK));
+        setPiece(convertRankAndFileToPos(rank, 1), create(color, KNIGHT));
+        setPiece(convertRankAndFileToPos(rank, 2), create(color, BISHOP));
+        setPiece(convertRankAndFileToPos(rank, 3), create(color, QUEEN));
+        setPiece(convertRankAndFileToPos(rank, 4), create(color, KING));
+        setPiece(convertRankAndFileToPos(rank, 5), create(color, BISHOP));
+        setPiece(convertRankAndFileToPos(rank, 6), create(color, KNIGHT));
+        setPiece(convertRankAndFileToPos(rank, 7), create(color, ROOK));
     }
 
     private void createPawns(Color color) {
@@ -87,7 +85,7 @@ public class Board {
 
         IntStream.range(0, FILE_COUNT)
                 .forEach(file -> {
-                    move(convertRankAndFileToPos(rank, file), create(color, PAWN));
+                    setPiece(convertRankAndFileToPos(rank, file), create(color, PAWN));
                 });
     }
 
