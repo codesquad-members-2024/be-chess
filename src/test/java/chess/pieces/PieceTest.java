@@ -128,4 +128,35 @@ class PieceTest {
         assertThat(movablePos.size()).isEqualTo(3);
         assertThat(movablePos).contains("a2", "b2", "b1");
     }
+
+    @DisplayName("a1에 놓인 퀸의 움직일 수 있는 문자열 좌표는 c1 ~ c8, a4 ~ h4, a2 ~ g8(대각선), a6 ~ f1(대각선) 이다")
+    @Test
+    void calculateMovablePos_when_queen_at_c4() {
+        // given & when
+        List<String> movablePos = Piece.calculateMovablePos(QUEEN, "c4");
+
+        // then
+        assertThat(movablePos.size()).isEqualTo(25);
+        assertThat(movablePos).contains(
+                "c1", "c2", "c3", "c5", "c6", "c7", "c8", // 같은 열 7개
+                "a4", "b4", "d4", "e4", "f4", "g4", "h4", // 같은 행 7개
+                "a2", "b3", "d5", "e6", "f7", "g8", // 대각선 6갸
+                "a6", "b5", "d3", "e2", "f1" // 대각선 5개
+        );
+    }
+
+    @DisplayName("a1에 놓인 퀸의 움직일 수 있는 문자열 좌표는 b1 ~ h1, a2 ~ a8, b2 ~ h8 이다")
+    @Test
+    void calculateMovablePos_when_queen_at_a1() {
+        // given & when
+        List<String> movablePos = Piece.calculateMovablePos(QUEEN, "a1");
+
+        // then
+        assertThat(movablePos.size()).isEqualTo(21);
+        assertThat(movablePos).contains(
+                "a2", "a3", "a4", "a5", "a6", "a7", "a8", // 같은 열 7개
+                "b1", "c1", "d1", "e1", "f1", "g1", "h1", // 같은 행 7개
+                "b2", "c3", "d4", "e5", "f6", "g7", "h8" // 대각선 7개
+        );
+    }
 }

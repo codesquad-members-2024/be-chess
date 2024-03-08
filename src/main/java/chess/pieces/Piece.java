@@ -148,6 +148,27 @@ public class Piece {
             });
         }
 
+        if (type.equals(QUEEN)) {
+
+            Direction.everyDirection().forEach(direction -> {
+                String currentPos = pos;
+
+                int nextFile;
+                int nextRank;
+
+                do {
+                    nextFile = Block.convertPosToFile(currentPos) + direction.xDegree;
+                    nextRank = Block.convertPosToRank(currentPos) + direction.yDegree;
+                    String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
+                    if (nextFile < 0 || nextFile >= 8 || nextRank < 0 || nextRank >= 8) {
+                        return;
+                    }
+                    movablePosList.add(nextPos);
+                    currentPos = nextPos;
+                } while (true);
+            });
+        }
+
         return movablePosList;
     }
 
