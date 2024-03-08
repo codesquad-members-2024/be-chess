@@ -14,6 +14,7 @@ public class Board {
     public static final int WHITE_OTHER_START_ROW = 0;
     public static final int BLACK_PAWN_START_ROW = 6;
     public static final int BLACK_OTHER_START_ROW = 7;
+    public static final char SPACE_CHARACTER = 'ㅁ';
 
     //private List<Piece> pieces;
     private List<List<Piece>> chessboard;
@@ -105,7 +106,7 @@ public class Board {
 
     public char getPieceFigure(Piece piece){
         if(piece == null){
-            return '.';
+            return SPACE_CHARACTER;
         }
         return piece.getPieceRepresentation();
     }

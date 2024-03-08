@@ -1,11 +1,10 @@
 package chess;
 import org.junit.jupiter.api.*;
-import pieces.Piece;
-import pieces.PieceColor;
-
-import static org.assertj.core.api.Assertions.assertThat; // AssertJ의 assertThat 임포트
+import static org.assertj.core.api.Assertions.*; // AssertJ
+import utils.StringUtils;
 
 public class BoardTest {
+    public static final String EMPTY_LINE = "ㅁㅁㅁㅁㅁㅁㅁㅁ" + StringUtils.getNewLine();
 
     public Board board;
 
@@ -15,24 +14,16 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("초기 chessboard에 기물들이 정상적으로 배치되어야 한다.")
     public void create() throws Exception {
-        Piece white = new Piece(PieceColor.WHITE);
-        board.add(white);
-        assertThat(board.size()).isEqualTo(1);
-        assertThat(board.findPawn(0)).isEqualTo(white);
-
-        Piece black = new Piece(PieceColor.BLACK);
-        board.add(black);
-        assertThat(board.size()).isEqualTo(2);
-        assertThat(board.findPawn(1)).isEqualTo(black);
-    }
-
-    @Test
-    @DisplayName("초기 체스판에 흰색, 검은색 폰이 정상적으로 배치되어야 한다.")
-    public void initialize() throws Exception {
         board.initialize();
-        assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
-        assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+        //assertThat(board.pieceCount(), is(32));
+        assertThat(board.print()).isEqualTo(
+                "♖♘♗♕♔♗♘♖" + StringUtils.getNewLine() +
+                "♙♙♙♙♙♙♙♙" + StringUtils.getNewLine() +
+                EMPTY_LINE + EMPTY_LINE + EMPTY_LINE + EMPTY_LINE +
+                "♙♙♙♙♙♙♙♙" + StringUtils.getNewLine() +
+                "♜♞♝♛♚♝♞♜" + StringUtils.getNewLine());
     }
 
     @Test
