@@ -1,5 +1,6 @@
 package pieces;
 
+import java.util.List;
 import utils.Position;
 
 public abstract class Piece {
@@ -94,9 +95,11 @@ public abstract class Piece {
         this.position = targetPos;
     } // 추상 클래스 구조에 맞게 삭제 필요
 
-    public abstract boolean verifyMovePosition();
+    protected abstract List<Direction> getDirections();
 
-    public abstract boolean move();
+    protected abstract boolean verifyMovePosition(Position position);
+
+    protected abstract boolean move();
 
     public Color getColor() {
         return color;
