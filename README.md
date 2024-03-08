@@ -10,79 +10,26 @@
 
 ## step4 : 모든 기물 배치하기
 ### 기능 구현 목록
-- [x] 리팩토링 진행
-  - [x] 개행 문자 반복되는 부분 삭제
-  - [x] 개행 문자 붙여주는 유틸 추가
-- [x] 모든 기물들의 종류를 만들기 위해 생성자 부분 팩토리 메서드로 변경
-- [x] 보드에 모든 기물이 올바른 위치에 올라가도록 세팅
+- [ ] 리펙토링 진행
+- [x] 기물이 존재하지 않는 경우도 생성할 수 있도록 지원하기
+- [x] 특정 기물이 체스판에 몇개가 존재하는지 확인하는 기능
+- [x] 특정 위치에 어떤 기물이 있는지 확인하는 기능
+- [x] 임의의 기물을 체스판 위에 추가하는 기능
+- [x] 체스 프로그램의 점수를 계산하는 기능
+- [x] 기물의 점수가 높은 순서대로 정렬해서 리스트로 반환해주는 기능
 
 ### 삽질 & 고민 기록
-- 기존에 만들어놓았던 enum끼리의 연결이 애매해졌다. 일단 우선적으로 서로 관련이 있는 상수 데이터들을
-묶는다는 것을 우선적으로 생각해서 정리해보았다. &rarr; enum을 합쳐서 정리했다.
+- 좌표를 가지고 체스판을 올바르게 돌아다니는 것이 생각이 어려웠다.
 
 
-- 윷놀이 미션에서 했던 방법을 떠올려서 이번에 각 말들이 좌표를 가지기 때문에, map으로 좌표와 말 객체를 연결해서 관리하려고 생각했다.
+- equals과 hashCode를 비교 시에 오버라이딩해서 사용한다는 것은 알고 있었지만 사용해보진 못했었는데, 어디 위치에 어떤 기물이 있는지 테스트코드를 작성하다가
+기존에 있는 객체와 new로 생성해서 비교하는 객체가 다르게 인식되는 것을 보고 알아보다가 사용하게 되었다.
 
+- 테스트 코드를 작성하고 해당 테스트 코드를 통과시키기 위해 프로덕션 코드를 작성하는 과정이 처음으로 재밌다고 느껴졌다! 물론 테스트코드가 어느 정도 제공되어서 그런 것 같긴 하지만..
+왜냐면 테스트를 위한 비교 데이터를 어떻게 생성해서 어떻게 비교할 것인지가 더 어려운 부분이었기 때문에.. 앞으로 어떤 식으로 테스트코드를 작성 할 것인지도 고민이 필요.
 
-- 초기화 할 때 말이 놓이지 않는 공간을 null로 설정했더니, Map의 값으로 넘길 때 예외가 발생한다..
-게다가 supplier 를 사용할 때도 null 인 경우 get()을 하면 오류가 나기 때문에 따로 처리가 필요했고, 이래저래 null을
-사용해서는 안 되겠다는 생각이 들었다.
+- 조회나 계산, 기물을 놓는 것의 로직을 생각해보면, 똑같은 로직이 board와 Rank 둘 다에서 이루어지고 있다. (board에서 Rank로 명령을 보내서 값을 가져오고, board에서는 Rank에서
+준 값들을 합산하도록 한다) 어쩔 수 없나?
 
-```
- // enum에서 이런 식으로 Supplier<Piece> 필드가 설정되어 있다.
- E7(Piece::createBlackPawn),F7(Piece::createBlackPawn),G7(Piece::createBlackPawn),H7(Piece::createBlackPawn),
-
- A6(null),B6(null),C6(null),D6(null),E6(null),F6(null),G6(null),H6(null),
-    
-```
-해당 필드에서 get으로 함수 값을 가져오는 과정에서도 처리가 필요했다.
-```
-    public Piece initBoard() {
-        return init == null ? null : init.get();
-    }
-```
-하지만 결정적으로 Map의 값으로 null이 저장되게 되면 예외가 발생하는 문제가 있다.
-```
-    public void initialize() {
-        chessBoard = Arrays.stream(Square.values())
-               .collect(Collectors.toMap(
-                        square -> square,
-                       // 여기서 NullPointerException 발생 중
-                       Square::initBoard
-                ));
-    }
-```
-일반적으로 Map의 vlaue에는 null 값이 들어갈 수 있지만
-Collectors.toMap은 null 값을 허용하지 않는다. 왜냐하면 해당 함수가 내부적으로 merge를 사용해서 Map을 만든하고 하는데, 해당 메서드는 내부에 value가 null이면
-NullPointer예외를 던지고 있다. 그렇기 때문에 값이 null일 경우에는 마찬가지로 예외가 났었던 것
-
-```
-public V merge(K key, V value,
-                   BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
-        if (value == null || remappingFunction == null)
-            throw new NullPointerException();
-            // 이하 생략
-            }
-```
-
-그래서 아래와 같이 forEach로 돌면서 추가하는 것으로 수정했다. 이렇게 하니까 오류는 일단 해결
-```
-       Arrays.stream(Square.values())
-                .forEach(square -> chessBoard.put(square, square.initBoard()));
-```
-
-하지만 여전히 비어있는 것을 의미하는 것을 null로 할지, 아니면 Piece에 비어있는 상태의 기물을 만들어야 하는지?
-잘 모르겠다.
-
-
-- null 체크하는 부분을 삼항연산자 사용에서 requireNonNullElse을 사용하는 것으로 개선해보았다.
-```
-//as-is
-result.append(entry.getValue() != null ? entry.getValue() : ".")
-
-//to-be
-result.append(Objects.requireNonNullElse(entry.getValue(),".")
-```
 ### 알아볼 점
-System.getProperty("line.separator");
-Objects.requireNonNullElse();
+- equals / hashCode 메서드에 대해서 좀 더 자세하게 알아보기
