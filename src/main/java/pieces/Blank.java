@@ -14,7 +14,7 @@ public class Blank extends Piece {
 
     @Override
     public List<Direction> getDirections() {
-        return null;
+        return Direction.everyDirection();
     }
 
     @Override
@@ -25,9 +25,5 @@ public class Blank extends Piece {
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return false;
-    }
-
-    @Override
-    public void move(Position targetPos) {
     }
 }

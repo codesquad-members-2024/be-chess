@@ -14,7 +14,7 @@ public class Rook extends Piece {
 
     @Override
     public List<Direction> getDirections() {
-        return null;
+        return Direction.linearDirection();
     }
 
     @Override
@@ -25,9 +25,5 @@ public class Rook extends Piece {
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return false;
-    }
-
-    @Override
-    public void move(Position targetPos) {
     }
 }

@@ -14,7 +14,10 @@ public class Pawn extends Piece {
 
     @Override
     public List<Direction> getDirections() {
-        return null;
+        if (matchColor(Color.BLACK)) {
+            return Direction.blackPawnDirection();
+        }
+        return Direction.whitePawnDirection();
     }
 
     @Override
@@ -25,9 +28,5 @@ public class Pawn extends Piece {
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return false;
-    }
-
-    @Override
-    public void move(Position targetPos) {
     }
 }

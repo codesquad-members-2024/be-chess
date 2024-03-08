@@ -31,9 +31,4 @@ public class King extends Piece {
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return obstacles.contains(targetPos);
     }
-
-    @Override
-    public void move(Position targetPos) {
-        this.position = targetPos;
-    }
 }

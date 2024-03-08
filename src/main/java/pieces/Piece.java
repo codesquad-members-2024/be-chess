@@ -95,17 +95,15 @@ public abstract class Piece {
         return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 
-//    public void changePos(Position targetPos) {
-//        this.position = targetPos;
-//    } // 추상 클래스 구조에 맞게 삭제 필요
-
     public abstract List<Direction> getDirections();
 
     public abstract boolean verifyMovePosition(Position position);
 
     public abstract boolean isObstacleInPath(Position targetPos, List<Position> obstacles);
 
-    public abstract void move(Position targetPos);
+    public void move(Position targetPos) {
+        this.position = targetPos;
+    }
 
     public Color getColor() {
         return color;

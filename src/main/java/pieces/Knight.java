@@ -14,7 +14,7 @@ public class Knight extends Piece {
 
     @Override
     public List<Direction> getDirections() {
-        return null;
+        return Direction.knightDirection();
     }
 
     @Override
@@ -25,10 +25,5 @@ public class Knight extends Piece {
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
         return false;
-    }
-
-    @Override
-    public void move(Position targetPos) {
-
     }
 }
