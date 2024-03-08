@@ -90,8 +90,8 @@ public class BoardTest {
         addPiece("e1", Piece.createWhite(Type.ROOK));
         addPiece("f1", Piece.createWhite(Type.KING));
 
-        assertThat(15.0).isEqualTo(board.caculcatePoint(Colors.BLACK), Offset.offset(0.01));
-        assertThat(7.0).isEqualTo(board.caculcatePoint(Colors.WHITE), Offset.offset(0.01));
+        assertThat(15.0).isEqualTo(board.calculatePoint(Colors.BLACK), Offset.offset(0.01));
+        assertThat(7.0).isEqualTo(board.calculatePoint(Colors.WHITE), Offset.offset(0.01));
 
         System.out.println(board.showBoard());
     }
