@@ -1,34 +1,29 @@
 package chess.pieces;
 
 import chess.enums.Color;
+import chess.enums.Direction;
 import chess.enums.TypeOfPiece;
 
-public class Piece {
+import java.util.List;
 
-    private static final int UNICODE_DIFF = 6;
+public abstract class Piece {
 
-    public static Piece createWhite(TypeOfPiece type) {
-        return new Piece(Color.WHITE, type, type.getRepresent());
-    }
+    protected static final int UNICODE_DIFF = 6;
 
-    public static Piece createBlack(TypeOfPiece type) {
-        return new Piece(Color.BLACK, type, (char) (type.getRepresent() - UNICODE_DIFF));
-    }
+    protected final Color color;
+    protected final char represent;
+    protected final TypeOfPiece type;
 
-    public static Piece createBlank(TypeOfPiece type) {
-        return new Piece(Color.NO_COLOR, type, TypeOfPiece.NO_PIECE.getRepresent());
-    }
-
-    private final Color color;
-    private final char represent;
-    private final TypeOfPiece type;
-
-    private Piece(Color color, TypeOfPiece type, char represent) {
+    protected Piece(Color color, TypeOfPiece type, char represent) {
         this.color = color;
         this.represent = represent;
         this.type = type;
 
     }
+
+    public abstract Piece create(Color color);
+
+    public abstract List<Direction> getDirections() throws IllegalArgumentException;
 
     public Color getColor() {
         return color;
@@ -60,7 +55,6 @@ public class Piece {
             Piece piece = (Piece) obj;
             return piece.getType().equals(this.type) && piece.getColor().equals(this.color);
         }
-
         return false;
     }
 }

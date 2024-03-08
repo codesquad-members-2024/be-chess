@@ -1,5 +1,5 @@
 package chess.enums;
 
 public enum Order {
-    START, END
+    START, END, MOVE
 }
