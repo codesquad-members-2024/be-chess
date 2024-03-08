@@ -17,12 +17,12 @@ public class BoardTest {
     @DisplayName("초기 chessboard에 기물들이 정상적으로 배치되어야 한다.")
     public void create() throws Exception {
         board.initialize();
-        //assertThat(board.pieceCount(), is(32));
+        assertThat(board.pieceCount()).isEqualTo(32);
         assertThat(board.print()).isEqualTo(
                 "♖♘♗♕♔♗♘♖" + StringUtils.getNewLine() +
                 "♙♙♙♙♙♙♙♙" + StringUtils.getNewLine() +
                 EMPTY_LINE + EMPTY_LINE + EMPTY_LINE + EMPTY_LINE +
-                "♙♙♙♙♙♙♙♙" + StringUtils.getNewLine() +
+                "♟♟♟♟♟♟♟♟" + StringUtils.getNewLine() +
                 "♜♞♝♛♚♝♞♜" + StringUtils.getNewLine());
     }
 

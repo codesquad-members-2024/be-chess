@@ -5,7 +5,9 @@ import pieces.PieceColor;
 import utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Board {
@@ -16,11 +18,10 @@ public class Board {
     public static final int BLACK_OTHER_START_ROW = 7;
     public static final char SPACE_CHARACTER = 'ㅁ';
 
-    //private List<Piece> pieces;
     private List<List<Piece>> chessboard;
 
     Board(){
-        //pieces = new ArrayList<Piece>();
+
         chessboard = new ArrayList<>();
         IntStream.range(0, 8)
                 .forEach(i -> chessboard.add(new ArrayList<>()));
@@ -55,7 +56,7 @@ public class Board {
                     .toList();
         }else{
             pawnRow = IntStream.range(0, 8)
-                    .mapToObj(i -> Piece.makeWhitePawn())
+                    .mapToObj(i -> Piece.makeBlackPawn())
                     .toList();
         }
         chessboard.set(row, pawnRow);
@@ -86,10 +87,18 @@ public class Board {
     }
 
     public void initializeEmpty(int row){
-        List<Piece> enmptyRow = IntStream.range(0, 8)
+        List<Piece> emptyRow = IntStream.range(0, 8)
                 .mapToObj(i -> (Piece)null)
                 .toList();
-        chessboard.set(row, enmptyRow);
+        chessboard.set(row, emptyRow);
+    }
+
+
+    public int pieceCount(){
+        return (int)chessboard.stream()
+                .flatMap(Collection::stream) // list of list를 하나의 stream으로 평면화
+                .filter(Objects::nonNull)
+                .count();
     }
 
 
@@ -110,5 +119,4 @@ public class Board {
         }
         return piece.getPieceRepresentation();
     }
-
 }
