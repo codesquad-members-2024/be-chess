@@ -1,85 +1,122 @@
 package chess;
 
-import pieces.Pawn;
-import pieces.PawnColor;
+import pieces.Piece;
+import pieces.PieceColor;
+import utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Board {
     public static final int CHESSBOARD_MAX_LENGTH = 8;
     public static final int WHITE_PAWN_START_ROW = 1;
+    public static final int WHITE_OTHER_START_ROW = 0;
     public static final int BLACK_PAWN_START_ROW = 6;
+    public static final int BLACK_OTHER_START_ROW = 7;
+    public static final char SPACE_CHARACTER = 'ㅁ';
 
-    private List<Pawn> pawns;
-    private Pawn[][] chessboard;
+    private List<List<Piece>> chessboard;
 
     Board(){
-        pawns = new ArrayList<Pawn>();
-        chessboard = new Pawn[CHESSBOARD_MAX_LENGTH][CHESSBOARD_MAX_LENGTH];
+
+        chessboard = new ArrayList<>();
+        IntStream.range(0, 8)
+                .forEach(i -> chessboard.add(new ArrayList<>()));
     }
 
     public void initialize(){
-        initializePawn(PawnColor.WHITE);
-        initializePawn(PawnColor.BLACK);
+        initializePiece(PieceColor.WHITE);
+        initializePiece(PieceColor.BLACK);
+        initializeEmpty(2);
+        initializeEmpty(3);
+        initializeEmpty(4);
+        initializeEmpty(5);
     }
 
-    public void initializePawn(PawnColor color){ // 매개변수로 받은 색의 pawn 위치 초기화
-        int initRow = WHITE_PAWN_START_ROW; // pawn을 추가할 row, 기본으로 white일때 위치
-        if(color == PawnColor.BLACK){
-            initRow = BLACK_PAWN_START_ROW;
+    public void initializePiece(PieceColor color){ // 매개변수로 받은 색의 Piece 위치 초기화
+        int pawnRow = WHITE_PAWN_START_ROW; // 기본으로 white 일때 위치
+        int otherRow = WHITE_OTHER_START_ROW; // 기본으로 white 일때 위치
+        if(color == PieceColor.BLACK){
+            pawnRow = BLACK_PAWN_START_ROW;
+            otherRow = BLACK_OTHER_START_ROW;
         }
 
-        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
-            Pawn pawn = new Pawn(color);
-            add(pawn);
-            chessboard[initRow][i] = pawn;
-        }
+        initializePawn(pawnRow, color);
+        initializeOther(otherRow, color);
     }
+
+    public void initializePawn(int row, PieceColor color){
+        List<Piece> pawnRow;
+        if(color == PieceColor.WHITE){
+            pawnRow = IntStream.range(0, 8)
+                    .mapToObj(i -> Piece.makeWhitePawn())
+                    .toList();
+        }else{
+            pawnRow = IntStream.range(0, 8)
+                    .mapToObj(i -> Piece.makeBlackPawn())
+                    .toList();
+        }
+        chessboard.set(row, pawnRow);
+    }
+
+    public void initializeOther(int row, PieceColor color){
+        List<Piece> otherRow = new ArrayList<>();
+        if(color == PieceColor.WHITE){
+            otherRow.add(Piece.makeWhiteRook());
+            otherRow.add(Piece.makeWhiteKnight());
+            otherRow.add(Piece.makeWhiteBishop());
+            otherRow.add(Piece.makeWhiteQueen());
+            otherRow.add(Piece.makeWhiteKing());
+            otherRow.add(Piece.makeWhiteBishop());
+            otherRow.add(Piece.makeWhiteKnight());
+            otherRow.add(Piece.makeWhiteRook());
+        }else{
+            otherRow.add(Piece.makeBlackRook());
+            otherRow.add(Piece.makeBlackKnight());
+            otherRow.add(Piece.makeBlackBishop());
+            otherRow.add(Piece.makeBlackQueen());
+            otherRow.add(Piece.makeBlackKing());
+            otherRow.add(Piece.makeBlackBishop());
+            otherRow.add(Piece.makeBlackKnight());
+            otherRow.add(Piece.makeBlackRook());
+        }
+        chessboard.set(row, otherRow);
+    }
+
+    public void initializeEmpty(int row){
+        List<Piece> emptyRow = IntStream.range(0, 8)
+                .mapToObj(i -> (Piece)null)
+                .toList();
+        chessboard.set(row, emptyRow);
+    }
+
+
+    public int pieceCount(){
+        return (int)chessboard.stream()
+                .flatMap(Collection::stream) // list of list를 하나의 stream으로 평면화
+                .filter(Objects::nonNull)
+                .count();
+    }
+
 
     public String print(){ // chessboard 상태 string 으로 변환 후 반환
         StringBuilder stringBuilder = new StringBuilder(); // chessboard 상태 출력 위해
-        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++){
-            for(int j=0; j<CHESSBOARD_MAX_LENGTH; j++){
-                stringBuilder.append(getPawnStatus(chessboard[i][j]));
+        for(List<Piece> row : chessboard) {
+            for(Piece piece : row) {
+                stringBuilder.append(getPieceFigure(piece));
             }
-            stringBuilder.append("\n");
+            stringBuilder.append(StringUtils.getNewLine());
         }
         return stringBuilder.toString();
     }
 
-    public char getPawnStatus(Pawn pawn){
-        if(pawn == null){
-            return '.';
+    public char getPieceFigure(Piece piece){
+        if(piece == null){
+            return SPACE_CHARACTER;
         }
-        return pawn.getChessPiece();
-    }
-
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
-    }
-
-    public int size() {
-        return pawns.size();
-    }
-
-    public Pawn findPawn(int index) {
-        return pawns.get(index);
-    }
-
-    public String getWhitePawnsResult() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++) {
-            stringBuilder.append(getPawnStatus(chessboard[WHITE_PAWN_START_ROW][i]));
-        }
-        return stringBuilder.toString();
-    }
-
-    public String getBlackPawnsResult() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i=0; i<CHESSBOARD_MAX_LENGTH; i++) {
-            stringBuilder.append(getPawnStatus(chessboard[BLACK_PAWN_START_ROW][i]));
-        }
-        return stringBuilder.toString();
+        return piece.getPieceRepresentation();
     }
 }
