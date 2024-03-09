@@ -6,7 +6,9 @@ import static org.assertj.core.api.Assertions.within;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pieces.Blank;
 import pieces.King;
+import pieces.Knight;
 import pieces.Pawn;
 import pieces.Piece;
 import pieces.Piece.Color;
@@ -67,18 +69,18 @@ class ChessGameTest {
         assertThat(String.join("", chessGame.sortPiecesReversed(Color.BLACK))).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
     }
 
-//    @Test
-//    @DisplayName("기물이 현재 위치에서 다른 위치로 이동할 수 있다.")
-//    public void movePieceFromSourceToTarget() throws Exception {
-//        board.initialize();
-//        chessView.showBoard();
-//
-//        String sourcePosition = "b2";
-//        String targetPosition = "b3";
-//        chessGame.move(sourcePosition, targetPosition);
-//        assertThat(Blank.create(new Position(sourcePosition)))
-//                .isEqualTo(board.findPiece(new Position(sourcePosition)));
-//        assertThat(Pawn.create(Color.WHITE, new Position(targetPosition)))
-//                .isEqualTo(board.findPiece(new Position(targetPosition)));
-//    }
+    @Test
+    @DisplayName("기물이 현재 위치에서 다른 위치로 이동할 수 있다.")
+    public void movePieceFromSourceToTarget() throws Exception {
+        board.initialize();
+        chessView.showBoard();
+
+        String sourcePosition = "b8";
+        String targetPosition = "c6";
+        chessGame.move(sourcePosition, targetPosition);
+        assertThat(Blank.create(new Position(sourcePosition)))
+                .isEqualTo(board.findPiece(new Position(sourcePosition)));
+        assertThat(Knight.create(Color.BLACK, new Position(targetPosition)))
+                .isEqualTo(board.findPiece(new Position(targetPosition)));
+    }
 }
