@@ -4,38 +4,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
-import src.chess.pieces.Colors;
 import src.chess.pieces.Piece;
 import org.junit.jupiter.api.Test;
-import src.chess.pieces.PieceType;
+import src.chess.pieces.Piece.Type;
 
 public class PieceTest {
     @Test
-    @DisplayName("폰을 생성할 때 올바른 색의 폰인지, 색에 따라 올바른 기물 모양이 세팅되었는지 확인한다.")
+    @DisplayName("생성한 기물이 올바른 색, 올바른 기물 타입을 가지는지 확인한다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), Colors.WHITE.getColorName(), PieceType.PAWN.getPieceByColor(Colors.WHITE));
-        verifyPiece(Piece.createBlackPawn(), Colors.BLACK.getColorName(), PieceType.PAWN.getPieceByColor(Colors.BLACK));
+        verifyPiece(Piece.createWhite(Type.PAWN), Piece.createBlack(Type.PAWN), Type.PAWN);
+        verifyPiece(Piece.createWhite(Type.KNIGHT), Piece.createBlack(Type.KNIGHT), Type.PAWN);
+        verifyPiece(Piece.createWhite(Type.ROOK), Piece.createBlack(Type.ROOK), Type.ROOK);
+        verifyPiece(Piece.createWhite(Type.BISHOP), Piece.createBlack(Type.BISHOP), Type.BISHOP);
+        verifyPiece(Piece.createWhite(Type.QUEEN), Piece.createBlack(Type.QUEEN), Type.QUEEN);
+        verifyPiece(Piece.createWhite(Type.KING), Piece.createBlack(Type.KING), Type.KING);
+
+        Piece blank = Piece.createBlank();
+        assertThat(blank.isWhite()).isFalse();
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(Type.NO_PIECE).isEqualTo(blank.getType());
     }
 
-    private void verifyPiece(final Piece piece, final String color, final String representation) {
-        assertEquals(color, piece.getColor());
-        assertEquals(representation, piece.toString());
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Type type) {
+        assertThat(whitePiece.isWhite()).isTrue();
+        assertThat(type).isEqualTo(whitePiece.getType());
+
+        assertThat(blackPiece.isBlack()).isTrue();
+        assertThat(type).isEqualTo(blackPiece.getType());
     }
 
     @Test
-    @DisplayName("해당 폰이 black 폰인지 확인한다")
-    public void isBlackPawn() {
-        Piece pawn = Piece.createBlackPawn();
-        assertThat(pawn.isBlack()).isTrue();
-        assertThat(pawn.isWhite()).isFalse();
-    }
-
-    @Test
-    @DisplayName("해당 나이트가 white 나이트인지 확인한다")
-    public void isWhiteKnight() {
-        Piece knight = Piece.createWhiteKnight();
-        assertThat(knight.isWhite()).isTrue();
-        assertThat(knight.isBlack()).isFalse();
+    @DisplayName("폰의 기물 모양이 색에 맞게 올바르게 관리되고 있는지 확인한다.")
+    public void getRepresentationPerPiece() throws Exception {
+        assertThat('p').isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.WHITE));
+        assertThat('P').isEqualTo(Piece.Type.PAWN.getPieceByColor(Piece.Colors.BLACK));
     }
 }
 
