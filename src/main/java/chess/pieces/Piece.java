@@ -136,14 +136,15 @@ public abstract class Piece {
 
 
     public enum Type {
-        PAWN('p', 1.0, Pawn::new),
-        ROOK('r', 5.0, Rook::new),
-        KNIGHT('n', 2.5, Knight::new),
-        BISHOP('b', 3.0, Bishop::new),
-        QUEEN('q', 9.0, Queen::new),
-        KING('k', 0.0, King::new),
-        NO_PIECE('.', 0.0, null);
+        PAWN('♙', 1.0, Pawn::new),
+        ROOK('♖', 5.0, Rook::new),
+        KNIGHT('♘', 2.5, Knight::new),
+        BISHOP('♗', 3.0, Bishop::new),
+        QUEEN('♕', 9.0, Queen::new),
+        KING('♔', 0.0, King::new),
+        NO_PIECE(' ', 0.0, null);
 
+        private static final int UNICODE__DIFFERENCE = 6;
         private final char representation;
         private final double defaultPoint;
         private final BiFunction<Color, Position, Piece> biFunction;
@@ -168,7 +169,7 @@ public abstract class Piece {
         }
 
         public char getBlackRepresentation() {
-            return Character.toUpperCase(representation);
+            return (char) (representation + UNICODE__DIFFERENCE);
         }
     }
 
