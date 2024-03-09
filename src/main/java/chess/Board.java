@@ -40,15 +40,7 @@ public class Board {
         board = new ArrayList<>(RANK_CAPACITY);
     }
 
-    public void addPiece(Color color, Piece piece) {
-        if (color.equals(Color.WHITE)) {
-            whitePieces.add(piece);
-            return;
-        }
-        blackPieces.add(piece);
-    }
-
-    public void addPieces(Color color, List<Piece> piece) {
+    private void addPieces(Color color, List<Piece> piece) {
         if (color.equals(Color.WHITE)) {
             whitePieces.addAll(piece);
             return;

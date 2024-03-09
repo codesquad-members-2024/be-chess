@@ -20,9 +20,9 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean verifyMovePosition(Position position) {
-        int rowDiff = Math.abs(this.position.getRow() - position.getRow());
-        int colDiff = Math.abs(this.position.getCol() - position.getCol());
+    public boolean verifyMovePosition(Position targetPos) {
+        int rowDiff = Math.abs(this.position.getRow() - targetPos.getRow());
+        int colDiff = Math.abs(this.position.getCol() - targetPos.getCol());
 
         return rowDiff <= KING_MOVEMENT && colDiff <= KING_MOVEMENT;
     }
