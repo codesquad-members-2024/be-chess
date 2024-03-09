@@ -17,7 +17,14 @@ public enum Direction {
     EEN(2, 1),
     EES(2, -1),
     WWN(-2, 1),
-    WWS(-2, -1);
+    WWS(-2, -1),
+
+    EEE(3,0),
+    EE(2,0),
+    WW(-2,0);
+    ;
+
+
 
     private final int fileMove;
     private final int rankMove;

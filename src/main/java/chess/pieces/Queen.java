@@ -16,7 +16,7 @@ public class Queen extends Piece{
     }
 
     @Override
-    public List<Direction> getDirection() {
+    protected List<Direction> getDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 }

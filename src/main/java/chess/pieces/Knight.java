@@ -15,7 +15,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Direction> getDirection() {
+    protected List<Direction> getDirection() {
         return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 }

@@ -10,8 +10,8 @@ public class Blank extends Piece{
     protected Blank() {
         super(Color.NOCOLOR, Type.BLANK, 0);
     }
-
-    public List<Direction> getDirection() {
+    @Override
+    protected List<Direction> getDirection() {
         return new ArrayList<>();
     }
 }
