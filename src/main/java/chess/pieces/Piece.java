@@ -5,7 +5,7 @@ public class Piece {
     private final Color color;
     private final Representation representation;
 
-    public Piece(Color color, Representation representation) {
+    private Piece(Color color, Representation representation) {
         this.color = color;
         this.representation = representation;
     }
@@ -58,6 +58,10 @@ public class Piece {
         return new Piece(Color.BLACK, Representation.BLACK_KING);
     }
 
+    public static Piece createBlank() {
+        return new Piece(Color.COLORLESS, Representation.BLANK);
+    }
+
     public boolean isBlack() {
         return color == Color.BLACK;
     }
@@ -68,5 +72,9 @@ public class Piece {
 
     public boolean verifyPiece(final Color color, final Representation representation) {
         return (this.color == color) && (this.representation == representation);
+    }
+
+    public Representation getRepresentation() {
+        return representation;
     }
 }
