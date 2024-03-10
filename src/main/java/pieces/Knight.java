@@ -13,17 +13,16 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Direction> getDirections() {
-        return Direction.knightDirection();
+    public List<Position> getPositions() {
+        return Direction.knightDirection().stream()
+                .filter(this.position::isValidDirection)
+                .map(this.position::addPos)
+                .toList(); // 이동 가능한 위치 리스트
     }
 
     @Override
     public boolean verifyMovePosition(Position targetPos) {
-        List<Position> positions = getDirections().stream()
-                .filter(this.position::isValidDirection)
-                .map(this.position::addPos)
-                .toList(); // 이동 가능한 위치 리스트
-
+        List<Position> positions = getPositions();
         return positions.contains(targetPos);
     }
 

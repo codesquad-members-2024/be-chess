@@ -95,7 +95,7 @@ public abstract class Piece {
         return this.color.equals(color) && this.pieceSymbol.equals(pieceSymbol);
     }
 
-    public abstract List<Direction> getDirections();
+    public abstract List<Position> getPositions();
 
     public abstract boolean verifyMovePosition(Position position);
 

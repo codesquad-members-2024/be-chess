@@ -51,4 +51,8 @@ public class Position {
         Position position = (Position) object;
         return this.row == position.row && this.col == position.col;
     }
+
+    public boolean isValidPosition() {
+        return FIRST_ROW <= this.row && this.row <= LAST_ROW && FIRST_COLUMN <= this.col && this.col <= LAST_COLUMN;
+    }
 }

@@ -15,16 +15,17 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Direction> getDirections() {
-        return Direction.everyDirection();
+    public List<Position> getPositions() {
+        return Direction.everyDirection().stream()
+                .filter(this.position::isValidDirection)
+                .map(this.position::addPos)
+                .toList(); // 이동 가능한 위치 리스트
     }
 
     @Override
     public boolean verifyMovePosition(Position targetPos) {
-        int rowDiff = Math.abs(this.position.getRow() - targetPos.getRow());
-        int colDiff = Math.abs(this.position.getCol() - targetPos.getCol());
-
-        return rowDiff <= KING_MOVEMENT && colDiff <= KING_MOVEMENT;
+        List<Position> positions = getPositions();
+        return positions.contains(targetPos);
     }
 
     @Override

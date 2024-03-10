@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import pieces.Direction;
 import pieces.Piece;
 import pieces.Piece.Color;
 import utils.Position;
@@ -59,12 +58,10 @@ public class ChessGame {
     }
 
     public List<Position> getObstacle(Piece piece) {
-        Position position = piece.getPosition();
-        List<Direction> directions = piece.getDirections();
-        return directions.stream()
-                .filter(position::isValidDirection)
-                .filter(direction -> chessBoard.findPiece(position.addPos(direction)).matchColor(piece.getColor()))
-                .map(position::addPos).toList();
+        List<Position> positions = piece.getPositions();
+        return positions.stream()
+                .filter(pos -> chessBoard.findPiece(pos).matchColor(piece.getColor()))
+                .toList();
     }
 
     public double calculatePoint(Color color) {
