@@ -1,13 +1,13 @@
 package chess.board;
 
 import static chess.common.Color.*;
-import static chess.pieces.Piece.*;
 import static chess.pieces.Piece.Type.*;
 import static chess.utils.StringUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class BoardTest {
     void create() {
         // given
         board.initializeBoardBlocks();
-        Piece white = createWhitePawn();
+        Piece white = PieceFactory.createWhitePawn();
 
         // when
         board.setPiece("a1", white);
@@ -43,8 +43,8 @@ class BoardTest {
     void findPawn() {
         // given
         board.initializeBoardBlocks();
-        Piece whitePawn = createWhitePawn();
-        Piece blackPawn = createBlackPawn();
+        Piece whitePawn = PieceFactory.createWhitePawn();
+        Piece blackPawn = PieceFactory.createBlackPawn();
         board.setPiece("a1", whitePawn);
         board.setPiece("a2", blackPawn);
 
@@ -121,9 +121,9 @@ class BoardTest {
     void findPiece() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackKing());
+        board.setPiece("a1", PieceFactory.createBlackKing());
 
-        board.setPiece("h8", Piece.createWhiteKing());
+        board.setPiece("h8", PieceFactory.createWhiteKing());
 
         // when
         Piece firstInPiece = board.findPiece("a1");
@@ -149,14 +149,14 @@ class BoardTest {
         // given
         board.initializeBoardBlocks();
         // 검정색 나이트 3개 배치
-        board.setPiece("a1", Piece.createBlackKnight());
-        board.setPiece("a2", Piece.createBlackKnight());
-        board.setPiece("a3", Piece.createBlackKnight());
+        board.setPiece("a1", PieceFactory.createBlackKnight());
+        board.setPiece("a2", PieceFactory.createBlackKnight());
+        board.setPiece("a3", PieceFactory.createBlackKnight());
 
         // 흰색 나이트 3개 배치
-        board.setPiece("b1", Piece.createWhiteKnight());
-        board.setPiece("b2", Piece.createWhiteKnight());
-        board.setPiece("b3", Piece.createWhiteKnight());
+        board.setPiece("b1", PieceFactory.createWhiteKnight());
+        board.setPiece("b2", PieceFactory.createWhiteKnight());
+        board.setPiece("b3", PieceFactory.createWhiteKnight());
 
         // when
         int totalCount = board.getTotalCount(BLACK, KNIGHT);
@@ -199,11 +199,11 @@ class BoardTest {
     void calculateMajorPoints() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackKing());
-        board.setPiece("a2", Piece.createBlackQueen());
-        board.setPiece("a3", Piece.createBlackKnight());
-        board.setPiece("a4", Piece.createBlackBishop());
-        board.setPiece("a5", Piece.createBlackRook());
+        board.setPiece("a1", PieceFactory.createBlackKing());
+        board.setPiece("a2", PieceFactory.createBlackQueen());
+        board.setPiece("a3", PieceFactory.createBlackKnight());
+        board.setPiece("a4", PieceFactory.createBlackBishop());
+        board.setPiece("a5", PieceFactory.createBlackRook());
 
         // when
         double majorPoints = board.calculateMajorPoints(BLACK);
@@ -217,9 +217,9 @@ class BoardTest {
     void calculatePawnPoints_when_same_file() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackPawn());
-        board.setPiece("a2", Piece.createBlackPawn());
-        board.setPiece("a3", Piece.createBlackPawn());
+        board.setPiece("a1", PieceFactory.createBlackPawn());
+        board.setPiece("a2", PieceFactory.createBlackPawn());
+        board.setPiece("a3", PieceFactory.createBlackPawn());
 
         // when
         double pawnPoints = board.calculatePawnPoints(BLACK);
@@ -233,9 +233,9 @@ class BoardTest {
     void calculatePawnPoints_when_different_file() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackPawn());
-        board.setPiece("b1", Piece.createBlackPawn());
-        board.setPiece("c1", Piece.createBlackPawn());
+        board.setPiece("a1", PieceFactory.createBlackPawn());
+        board.setPiece("b1", PieceFactory.createBlackPawn());
+        board.setPiece("c1", PieceFactory.createBlackPawn());
 
         // when
         double pawnPoints = board.calculatePawnPoints(BLACK);
@@ -249,13 +249,13 @@ class BoardTest {
     void calculatePoints() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackKnight());
-        board.setPiece("a2", Piece.createBlackKnight());
-        board.setPiece("a3", Piece.createBlackRook());
-        board.setPiece("a4", Piece.createBlackQueen());
+        board.setPiece("a1", PieceFactory.createBlackKnight());
+        board.setPiece("a2", PieceFactory.createBlackKnight());
+        board.setPiece("a3", PieceFactory.createBlackRook());
+        board.setPiece("a4", PieceFactory.createBlackQueen());
 
-        board.setPiece("b1", Piece.createBlackPawn());
-        board.setPiece("b2", Piece.createBlackPawn());
+        board.setPiece("b1", PieceFactory.createBlackPawn());
+        board.setPiece("b2", PieceFactory.createBlackPawn());
 
         // when
         double points = board.calculatePoints(BLACK);
@@ -269,13 +269,13 @@ class BoardTest {
     void move() {
         // given
         board.initializeBoardBlocks();
-        board.setPiece("a1", Piece.createBlackPawn());
+        board.setPiece("a1", PieceFactory.createBlackPawn());
 
         // when
         board.move("a1", "a2");
 
         // then
-        assertThat(board.findPiece("a1")).isEqualTo(Piece.createBlank());
-        assertThat(board.findPiece("a2")).isEqualTo(Piece.createBlackPawn());
+        assertThat(board.findPiece("a1")).isEqualTo(PieceFactory.createBlank());
+        assertThat(board.findPiece("a2")).isEqualTo(PieceFactory.createBlackPawn());
     }
 }

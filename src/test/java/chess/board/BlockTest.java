@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class BlockTest {
         assertThat(rank).isEqualTo(0);
         assertThat(file).isEqualTo(5);
         assertThat(pos).isEqualTo("f8");
-        assertThat(blank).isEqualTo(Piece.createBlank());
+        assertThat(blank).isEqualTo(PieceFactory.createBlank());
     }
 
     @DisplayName("5행 7열은 h4로 변환 할 수 있다")
@@ -70,20 +71,20 @@ class BlockTest {
     @Test
     void pick() {
         // given
-        a1.changePiece(Piece.createBlackKnight());
+        a1.changePiece(PieceFactory.createBlackKnight());
 
         // when
         Piece pickedPiece = a1.pick();
 
         // then
-        assertThat(pickedPiece).isEqualTo(Piece.createBlackKnight());
+        assertThat(pickedPiece).isEqualTo(PieceFactory.createBlackKnight());
     }
 
     @DisplayName("Block은 기물을 뽑으면 빈칸이 된다")
     @Test
     void isBlank() {
         // given
-        a1.changePiece(Piece.createBlackKnight());
+        a1.changePiece(PieceFactory.createBlackKnight());
 
         // when
         a1.pick();
@@ -96,19 +97,19 @@ class BlockTest {
     @Test
     void changePiece() {
         // given & when
-        Piece whitePawn = a1.changePiece(Piece.createWhitePawn()).getPiece();
-        Piece blackKnight = a1.changePiece(Piece.createBlackKnight()).getPiece();
+        Piece whitePawn = a1.changePiece(PieceFactory.createWhitePawn()).getPiece();
+        Piece blackKnight = a1.changePiece(PieceFactory.createBlackKnight()).getPiece();
 
         // then
         assertThat(whitePawn).isNotEqualTo(blackKnight);
-        assertThat(blackKnight).isEqualTo(Piece.createBlackKnight());
+        assertThat(blackKnight).isEqualTo(PieceFactory.createBlackKnight());
     }
 
     @DisplayName("한 Block에 있는 검은색 킹을 다른 Block으로 옮길 수 있다")
     @Test
     void movePieceToTargetBlock() {
         // given
-        Block one = a1.changePiece(Piece.createBlackKing());
+        Block one = a1.changePiece(PieceFactory.createBlackKing());
         Block other = Block.init(1, 1);
 
         // when
@@ -118,7 +119,7 @@ class BlockTest {
         assertAll(
                 "기물을 다른 Postion에 옮긴 후엔 빈칸이 된다",
                 () -> assertTrue(one.isBlank()),
-                () -> assertThat(other.getPiece()).isEqualTo(Piece.createBlackKing())
+                () -> assertThat(other.getPiece()).isEqualTo(PieceFactory.createBlackKing())
         );
     }
 

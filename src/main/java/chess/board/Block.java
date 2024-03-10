@@ -1,12 +1,13 @@
 package chess.board;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Block {
-    private static final Piece BLANK = Piece.createBlank();
+    private static final Piece BLANK = PieceFactory.createBlank();
     private static final Map<Integer, Integer> rankMap = IntStream.rangeClosed(1, 8).boxed().collect(Collectors.toMap(i -> i, i -> 8 - i));
     private final int rank;
     private final int file;

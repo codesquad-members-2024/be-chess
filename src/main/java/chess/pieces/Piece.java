@@ -1,11 +1,10 @@
 package chess.pieces;
 
 import static chess.common.Color.*;
-import static chess.pieces.Piece.Type.*;
+import static chess.pieces.Piece.Type.NO_PIECE;
+import static chess.pieces.Piece.Type.PAWN;
 
-import chess.board.Block;
 import chess.common.Color;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -18,66 +17,10 @@ public class Piece {
     private final Function<Piece, String> representation = piece -> piece.isWhite() ? piece.type.whiteRepresentation
             : piece.type.blackRepresentation;
 
-    private Piece(Color color, String name, Type type) {
+    public Piece(Color color, String name, Type type) {
         this.color = color;
         this.name = name;
         this.type = type;
-    }
-
-    public static Piece createWhitePawn() {
-        return createPiece(WHITE, PAWN);
-    }
-
-    public static Piece createBlackPawn() {
-        return createPiece(BLACK, PAWN);
-    }
-
-    public static Piece createWhiteKnight() {
-        return createPiece(WHITE, KNIGHT);
-    }
-
-    public static Piece createBlackKnight() {
-        return createPiece(BLACK, KNIGHT);
-    }
-
-    public static Piece createWhiteBishop() {
-        return createPiece(WHITE, BISHOP);
-    }
-
-    public static Piece createBlackBishop() {
-        return createPiece(BLACK, BISHOP);
-    }
-
-    public static Piece createWhiteRook() {
-        return createPiece(WHITE, ROOK);
-    }
-
-    public static Piece createBlackRook() {
-        return createPiece(BLACK, ROOK);
-    }
-
-    public static Piece createWhiteQueen() {
-        return createPiece(WHITE, QUEEN);
-    }
-
-    public static Piece createBlackQueen() {
-        return createPiece(BLACK, QUEEN);
-    }
-
-    public static Piece createWhiteKing() {
-        return createPiece(WHITE, KING);
-    }
-
-    public static Piece createBlackKing() {
-        return createPiece(BLACK, KING);
-    }
-
-    public static Piece createBlank() {
-        return createPiece(NO_COLOR, NO_PIECE);
-    }
-
-    private static Piece createPiece(Color color, Type type) {
-        return new Piece(color, type.allowedName, type);
     }
 
     public Color getColor() {
@@ -132,46 +75,6 @@ public class Piece {
         return Objects.hash(getColor(), getType());
     }
 
-    public static List<String> calculateMovablePos(Type type, String pos) {
-        List<String> movablePosList = new ArrayList<>();
-
-        if (type.equals(KING)) {
-            Direction.everyDirection().forEach(direction -> {
-                int nextFile = Block.convertPosToFile(pos) + direction.xDegree;
-                int nextRank = Block.convertPosToRank(pos) + direction.yDegree;
-
-                if (nextFile < 0 || nextFile >= 8 || nextRank < 0 || nextRank >= 8) {
-                    return;
-                }
-                String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
-                movablePosList.add(nextPos);
-            });
-        }
-
-        if (type.equals(QUEEN)) {
-
-            Direction.everyDirection().forEach(direction -> {
-                String currentPos = pos;
-
-                int nextFile;
-                int nextRank;
-
-                do {
-                    nextFile = Block.convertPosToFile(currentPos) + direction.xDegree;
-                    nextRank = Block.convertPosToRank(currentPos) + direction.yDegree;
-                    String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
-                    if (nextFile < 0 || nextFile >= 8 || nextRank < 0 || nextRank >= 8) {
-                        return;
-                    }
-                    movablePosList.add(nextPos);
-                    currentPos = nextPos;
-                } while (true);
-            });
-        }
-
-        return movablePosList;
-    }
-
     public enum Type {
         PAWN("♙", "♟", "pawn", 1.0),
         KNIGHT("♘", "♞", "knight", 2.5),
@@ -215,26 +118,26 @@ public class Piece {
     }
 
     public enum Direction {
-        NORTH(0, 1),
-        NORTHEAST(1, 1),
+        NORTH(0, -1),
+        NORTHEAST(1, -1),
         EAST(1, 0),
-        SOUTHEAST(1, -1),
-        SOUTH(0, -1),
-        SOUTHWEST(-1, -1),
+        SOUTHEAST(1, 1),
+        SOUTH(0, 1),
+        SOUTHWEST(-1, 1),
         WEST(-1, 0),
-        NORTHWEST(-1, 1),
+        NORTHWEST(-1, -1),
 
-        NNE(1, 2),
-        NNW(-1, 2),
-        SSE(1, -2),
-        SSW(-1, -2),
-        EEN(2, 1),
-        EES(2, -1),
-        WWN(-2, 1),
-        WWS(-2, -1);
+        NNE(1, -2),
+        NNW(-1, -2),
+        SSE(1, 2),
+        SSW(-1, 2),
+        EEN(2, -1),
+        EES(2, 1),
+        WWN(-2, -1),
+        WWS(-2, 1);
 
-        private int xDegree;
-        private int yDegree;
+        private final int xDegree;
+        private final int yDegree;
 
         Direction(int xDegree, int yDegree) {
             this.xDegree = xDegree;

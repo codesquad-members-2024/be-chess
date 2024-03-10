@@ -202,4 +202,16 @@ public class Board {
 
         fromBlock.movePieceToTargetBlock(toBlock);
     }
+
+    public void calculateMovableDirections(Block block) {
+        // 기물에 따라 이동할 수 있는 방향과, 그 거리를 계산한다
+
+    }
+
+    public List<Block> calculateMovableBlock(Color color, String pos) {
+        return boardBlocks.stream()
+                .filter(block -> block.isSamePos(pos))
+                .filter(block -> block.getPiece().isSameColor(color))
+                .toList();
+    }
 }

@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.common.Color;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ class PieceTest {
     @ParameterizedTest(name = "기물 색상: {0}")
     @EnumSource(mode = Mode.INCLUDE, names = {"WHITE"})
     public void create(Color color) {
-        Piece piece = createWhitePawn();
+        Piece piece = PieceFactory.createWhitePawn();
 
         assertThat(piece.getColor()).isEqualTo(color);
     }
@@ -37,8 +36,8 @@ class PieceTest {
     @CsvSource(value = "♙, ♟")
     void display(String whiteShape, String blackShape) {
         // given
-        Piece white = createWhitePawn();
-        Piece black = createBlackPawn();
+        Piece white = PieceFactory.createWhitePawn();
+        Piece black = PieceFactory.createBlackPawn();
 
         // when
         String whiteRepresentation = white.getRepresentation();
@@ -55,8 +54,8 @@ class PieceTest {
     @DisplayName("팩토리 메서드로 흰색 폰과 검정색 폰을 올바르게 생성할 수 있다")
     @Test
     void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), WHITE, PAWN.whiteRepresentation);
-        verifyPiece(Piece.createBlackPawn(), BLACK, PAWN.blackRepresentation);
+        verifyPiece(PieceFactory.createWhitePawn(), WHITE, PAWN.whiteRepresentation);
+        verifyPiece(PieceFactory.createBlackPawn(), BLACK, PAWN.blackRepresentation);
     }
 
     private void verifyPiece(final Piece piece, final Color color, final String representation) {
@@ -68,8 +67,8 @@ class PieceTest {
     @Test
     void checkPieceColor() {
         // given
-        Piece blackPawn = createBlackPawn();
-        Piece whitePawn = createWhitePawn();
+        Piece blackPawn = PieceFactory.createBlackPawn();
+        Piece whitePawn = PieceFactory.createWhitePawn();
 
         // when & then
         assertTrue(blackPawn.isBlack());
@@ -82,7 +81,7 @@ class PieceTest {
     @Test
     void create_no_piece() {
         // given
-        Piece blank = createBlank();
+        Piece blank = PieceFactory.createBlank();
 
         // when & then
         assertAll(
@@ -105,58 +104,5 @@ class PieceTest {
 
         assertThat(blackPawnRank).isEqualTo(1);
         assertThat(whitePawnRank).isEqualTo(6);
-    }
-
-    @DisplayName("c4에 놓인 킹의 움직일 수 있는 문자열 좌표는 b5, c5, d5, b4, d4, b3, c3, d3 이다")
-    @Test
-    void calculateMovablePos_when_king_at_c4() {
-        // given & when
-        List<String> movablePos = Piece.calculateMovablePos(KING, "c4");
-
-        // then
-        assertThat(movablePos.size()).isEqualTo(8);
-        assertThat(movablePos).contains("b5", "c5", "d5", "b4", "d4", "b3", "c3", "d3");
-    }
-
-    @DisplayName("a1에 놓인 킹의 움직일 수 있는 문자열 좌표는 a2, b2, b1 이다")
-    @Test
-    void calculateMovablePos_when_king_at_a1() {
-        // given & when
-        List<String> movablePos = Piece.calculateMovablePos(KING, "a1");
-
-        // then
-        assertThat(movablePos.size()).isEqualTo(3);
-        assertThat(movablePos).contains("a2", "b2", "b1");
-    }
-
-    @DisplayName("a1에 놓인 퀸의 움직일 수 있는 문자열 좌표는 c1 ~ c8, a4 ~ h4, a2 ~ g8(대각선), a6 ~ f1(대각선) 이다")
-    @Test
-    void calculateMovablePos_when_queen_at_c4() {
-        // given & when
-        List<String> movablePos = Piece.calculateMovablePos(QUEEN, "c4");
-
-        // then
-        assertThat(movablePos.size()).isEqualTo(25);
-        assertThat(movablePos).contains(
-                "c1", "c2", "c3", "c5", "c6", "c7", "c8", // 같은 열 7개
-                "a4", "b4", "d4", "e4", "f4", "g4", "h4", // 같은 행 7개
-                "a2", "b3", "d5", "e6", "f7", "g8", // 대각선 6갸
-                "a6", "b5", "d3", "e2", "f1" // 대각선 5개
-        );
-    }
-
-    @DisplayName("a1에 놓인 퀸의 움직일 수 있는 문자열 좌표는 b1 ~ h1, a2 ~ a8, b2 ~ h8 이다")
-    @Test
-    void calculateMovablePos_when_queen_at_a1() {
-        // given & when
-        List<String> movablePos = Piece.calculateMovablePos(QUEEN, "a1");
-
-        // then
-        assertThat(movablePos.size()).isEqualTo(21);
-        assertThat(movablePos).contains(
-                "a2", "a3", "a4", "a5", "a6", "a7", "a8", // 같은 열 7개
-                "b1", "c1", "d1", "e1", "f1", "g1", "h1", // 같은 행 7개
-                "b2", "c3", "d4", "e5", "f6", "g7", "h8" // 대각선 7개
-        );
     }
 }
