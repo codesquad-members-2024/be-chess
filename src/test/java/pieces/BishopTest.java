@@ -50,7 +50,7 @@ class BishopTest {
     }
 
     @DisplayName("이동하고자 하는 위치에 같은 색의 기물이 존재한다면 움직일 수 없다.")
-    @ValueSource(strings = {"b7", "d7"})
+    @ValueSource(strings = {"b7", "d7", "a6", "f5"})
     @ParameterizedTest
     void 같은_색의_기물_존재(String pos) {
         chessBoard.initialize();
@@ -59,7 +59,7 @@ class BishopTest {
     }
 
     @DisplayName("이동하고자 하는 위치에 아무것도 없거나 다른 색의 기물이 존재한다면 이동할 수 있다.")
-    @ValueSource(strings = {"a6", "a2"})
+    @ValueSource(strings = {"a6", "a2", "e6"})
     @ParameterizedTest
     void 같은_색의_기물_존재하지않음(String pos) {
         chessBoard.initialize();

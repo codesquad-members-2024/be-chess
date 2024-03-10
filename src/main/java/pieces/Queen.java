@@ -46,6 +46,17 @@ public class Queen extends Piece {
 
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
-        return obstacles.contains(targetPos);
+        List<Direction> directions = Direction.everyDirection();
+        for (Direction direction : directions) {
+            List<Position> validPositions = getValidPositions(this.position, direction, new ArrayList<>());
+            List<Position> pos = new ArrayList<>();
+            for (Position validPos : validPositions) {
+                pos.add(validPos);
+                if (validPos.equals(targetPos)) {
+                    return pos.stream().anyMatch(obstacles::contains);
+                }
+            }
+        }
+        return false;
     }
 }

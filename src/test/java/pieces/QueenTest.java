@@ -50,7 +50,7 @@ class QueenTest {
     }
 
     @DisplayName("이동하고자 하는 위치에 같은 색의 기물이 존재한다면 움직일 수 없다.")
-    @ValueSource(strings = {"c8", "c7", "d7", "e7", "e8"})
+    @ValueSource(strings = {"c8", "c7", "d7", "f6", "d5", "g5"})
     @ParameterizedTest
     void 같은_색의_기물_존재(String pos) {
         chessBoard.initialize();
