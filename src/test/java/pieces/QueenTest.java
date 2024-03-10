@@ -59,11 +59,11 @@ class QueenTest {
     }
 
     @DisplayName("이동하고자 하는 위치에 아무것도 없거나 다른 색의 기물이 존재한다면 이동할 수 있다.")
-    @ValueSource(strings = {"d2", "d3", "d4", "e2", "e4", "f2", "f3", "f4"})
+    @ValueSource(strings = {"a2", "a6", "e2", "e6"})
     @ParameterizedTest
     void 같은_색의_기물_존재하지않음(String pos) {
         chessBoard.initialize();
-        Queen blackQueen = Queen.create(Color.BLACK, new Position("e3"));
+        Queen blackQueen = Queen.create(Color.BLACK, new Position("c4"));
         assertThat(blackQueen.isObstacleInPath(new Position(pos), chessGame.getObstacle(blackQueen))).isFalse();
     }
 

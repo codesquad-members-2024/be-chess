@@ -46,6 +46,12 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
+        for (Direction direction : Direction.diagonalDirection()) {
+            List<Position> validPositions = getValidPositions(position, direction, new ArrayList<>());
+            if (validPositions.contains(targetPos)) {
+                return validPositions.stream().anyMatch(obstacles::contains);
+            }
+        }
         return false;
     }
 }
