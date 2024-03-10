@@ -46,6 +46,17 @@ public class Rook extends Piece {
 
     @Override
     public boolean isObstacleInPath(Position targetPos, List<Position> obstacles) {
+        List<Direction> directions = Direction.linearDirection();
+        for (Direction direction : directions) {
+            List<Position> validPositions = getValidPositions(this.position, direction, new ArrayList<>());
+            List<Position> pos = new ArrayList<>();
+            for (Position validPos : validPositions) {
+                pos.add(validPos);
+                if (validPos.equals(targetPos)) {
+                    return pos.stream().anyMatch(obstacles::contains);
+                }
+            }
+        }
         return false;
     }
 }
