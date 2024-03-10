@@ -26,7 +26,17 @@ public class ChessSimulator {
             }
             if (command.startsWith("move")) {
                 List<String> posList = getPosList(command);
-                game.move(posList.get(0), posList.get(1));
+                boolean isCorrectCommand = false;
+
+                while (!isCorrectCommand) {
+                    try {
+                        game.move(posList.get(0), posList.get(1));
+                        isCorrectCommand = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
                 board.print();
             }
             if (command.equals("end")) {

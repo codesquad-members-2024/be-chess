@@ -1,5 +1,7 @@
 package chess.board;
 
+import static chess.common.Color.*;
+
 import chess.common.Color;
 import chess.pieces.Piece;
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.stream.IntStream;
 public class Game {
     private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
-    private final List<Block> boardBlocks;
+    private List<Block> boardBlocks;
+    private Color currentTurn = BLACK;
 
     public Game(List<Block> boardBlocks) {
         this.boardBlocks = boardBlocks;
@@ -61,10 +64,15 @@ public class Game {
     }
 
     public void move(String from, String to) {
+        validateFromPos(from);
+
         Block fromBlock = boardBlocks.stream()
                 .filter(black -> black.isSamePos(from))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+
+        validateOrder(fromBlock);
+        validateToPos(fromBlock, to);
 
         Block toBlock = boardBlocks.stream()
                 .filter(black -> black.isSamePos(to))
@@ -74,16 +82,42 @@ public class Game {
         fromBlock.movePieceToTargetBlock(toBlock);
     }
 
-
-    public void calculateMovableDirections(Block block) {
-        // 기물에 따라 이동할 수 있는 방향과, 그 거리를 계산한다
-
+    public void validateFromPos(String startPos) {
+        boardBlocks.stream()
+                .map(Block::getPos)
+                .filter(pos -> pos.equals(startPos))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 시작 좌표입니다."));
     }
 
-    public List<Block> calculateMovableBlock(Color color, String pos) {
-        return boardBlocks.stream()
-                .filter(block -> block.isSamePos(pos))
-                .filter(block -> block.getPiece().isSameColor(color))
-                .toList();
+    public void validateToPos(Block block, String pos) {
+        Piece blockPiece = block.getPiece();
+        List<String> movablePosList = blockPiece.movablePosList(block.getPos());
+
+        if (!movablePosList.contains(pos)) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 목적 좌표입니다.");
+        }
+    }
+
+    public void validateOrder(Block block) {
+        Piece blockPiece = block.getPiece();
+
+        if (!blockPiece.isSameColor(currentTurn)) {
+            throw new IllegalArgumentException("[ERROR] 다른 색 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    public void changeTurn() {
+        if (currentTurn.equals(BLACK)) {
+            currentTurn = WHITE;
+        }
+
+        if (currentTurn.equals(WHITE)) {
+            currentTurn = BLACK;
+        }
+    }
+
+    public void setCurrentTurn(Color color) {
+        currentTurn = color;
     }
 }
