@@ -28,7 +28,7 @@ class RookTest {
     @DisplayName("Rook 기물의 색깔과 유니코드 심볼이 알맞게 생성되어야 한다.")
     void create() {
         Rook blackRook = Rook.create(Color.BLACK, new Position("a8"));
-        Rook whiteRook = Rook.create(Color.WHITE, new Position("h8"));
+        Rook whiteRook = Rook.create(Color.WHITE, new Position("a1"));
 
         verifyRook(blackRook, Color.BLACK);
         verifyRook(whiteRook, Color.WHITE);

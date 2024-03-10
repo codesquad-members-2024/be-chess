@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import pieces.Piece;
 import pieces.Piece.Color;
+import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class ChessGame {
@@ -58,9 +59,21 @@ public class ChessGame {
     }
 
     public List<Position> getObstacle(Piece piece) {
+        if (piece.matchSymbol(PieceSymbol.PAWN)) {
+            return getPawnObstacle(piece);
+        }
         List<Position> positions = piece.getPositions();
         return positions.stream()
                 .filter(pos -> chessBoard.findPiece(pos).matchColor(piece.getColor()))
+                .toList();
+    }
+
+    public List<Position> getPawnObstacle(Piece piece) {
+        List<Position> positions = piece.getPositions();
+        return positions.stream()
+                .filter(pos -> chessBoard.findPiece(pos).matchColor(piece.getColor()) ||
+                        (!chessBoard.findPiece(pos).matchColor(piece.getColor()) &&
+                                piece.getPosition().getCol() == chessBoard.findPiece(pos).getPosition().getCol()))
                 .toList();
     }
 
