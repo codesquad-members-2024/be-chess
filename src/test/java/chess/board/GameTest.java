@@ -16,7 +16,7 @@ class GameTest {
     @BeforeEach
     void setUp() {
         board = new Board();
-        game = new Game(board.getBoardBlocks());
+        board.clear();
     }
 
 
@@ -30,6 +30,8 @@ class GameTest {
         board.setPiece("a3", PieceFactory.createBlackKnight());
         board.setPiece("a4", PieceFactory.createBlackBishop());
         board.setPiece("a5", PieceFactory.createBlackRook());
+
+        game = new Game(board.getBoardBlocks());
 
         // when
         double majorPoints = game.calculateMajorPoints(BLACK);
@@ -47,6 +49,8 @@ class GameTest {
         board.setPiece("a2", PieceFactory.createBlackPawn());
         board.setPiece("a3", PieceFactory.createBlackPawn());
 
+        game = new Game(board.getBoardBlocks());
+
         // when
         double pawnPoints = game.calculatePawnPoints(BLACK);
 
@@ -62,6 +66,8 @@ class GameTest {
         board.setPiece("a1", PieceFactory.createBlackPawn());
         board.setPiece("b1", PieceFactory.createBlackPawn());
         board.setPiece("c1", PieceFactory.createBlackPawn());
+
+        game = new Game(board.getBoardBlocks());
 
         // when
         double pawnPoints = game.calculatePawnPoints(BLACK);
@@ -82,6 +88,8 @@ class GameTest {
 
         board.setPiece("b1", PieceFactory.createBlackPawn());
         board.setPiece("b2", PieceFactory.createBlackPawn());
+
+        game = new Game(board.getBoardBlocks());
 
         // when
         double points = game.calculatePoints(BLACK);

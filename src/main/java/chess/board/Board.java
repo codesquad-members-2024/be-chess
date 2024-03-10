@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 public class Board {
     private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
-    private List<Block> boardBlocks = new ArrayList<>();
+    private static List<Block> boardBlocks = new ArrayList<>();
 
     public Piece findPiece(String pos) {
         return boardBlocks.stream()
@@ -144,6 +144,17 @@ public class Board {
     }
 
     public List<Block> getBoardBlocks() {
-        return boardBlocks;
+        return new ArrayList<>(boardBlocks);
+    }
+
+    public static List<String> getSameColorBlockPos(Color color) {
+        return boardBlocks.stream()
+                .filter(b -> b.getPiece().isSameColor(color))
+                .map(Block::getPos)
+                .toList();
+    }
+
+    public void clear() {
+        boardBlocks.clear();
     }
 }

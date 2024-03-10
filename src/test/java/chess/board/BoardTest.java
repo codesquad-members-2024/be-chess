@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import chess.pieces.Piece;
 import chess.pieces.PieceFactory;
 import java.lang.reflect.Method;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         board = new Board();
+        board.clear();
     }
 
     @DisplayName("체스판 a1 위치에 흰색 폰을 추가할 수 있다")
@@ -191,6 +193,29 @@ class BoardTest {
                         blankRank + blankRank +
                         blankRank + blankRank,
                 board.showBoard()
+        );
+    }
+
+    @DisplayName("초기화된 체스판에서 검정색 기물은 16개, 흰색 기물은 16개다")
+    @Test
+    void getSameColorBlockPos() {
+        // given
+        board.initialize();
+
+        // when
+        List<String> blockPos = Board.getSameColorBlockPos(BLACK);
+        List<String> whitePos = Board.getSameColorBlockPos(WHITE);
+
+        // then
+        assertThat(blockPos.size()).isEqualTo(16);
+        assertThat(blockPos).contains(
+                "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
+                "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"
+        );
+        assertThat(whitePos.size()).isEqualTo(16);
+        assertThat(whitePos).contains(
+                "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
+                "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
         );
     }
 }
