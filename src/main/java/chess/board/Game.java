@@ -80,6 +80,7 @@ public class Game {
                 .orElseThrow(IllegalArgumentException::new);
 
         fromBlock.movePieceToTargetBlock(toBlock);
+        changeTurn();
     }
 
     public void validateFromPos(String startPos) {
@@ -110,11 +111,16 @@ public class Game {
     public void changeTurn() {
         if (currentTurn.equals(BLACK)) {
             currentTurn = WHITE;
+            return;
         }
 
         if (currentTurn.equals(WHITE)) {
             currentTurn = BLACK;
         }
+    }
+
+    public Color getCurrentTurn() {
+        return currentTurn;
     }
 
     public void setCurrentTurn(Color color) {

@@ -149,4 +149,20 @@ class GameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 다른 색 기물을 움직일 수 없습니다.");
     }
+
+    @DisplayName("검은색 턴이 지나면 흰색 턴이 된다")
+    @Test
+    void changeTurn() {
+        // given
+        board.initialize();
+
+        game = new Game(board.getBoardBlocks());
+        game.setCurrentTurn(BLACK);
+
+        // when
+        game.move("a7", "a6");
+
+        // then
+        assertThat(game.getCurrentTurn()).isEqualTo(WHITE);
+    }
 }
