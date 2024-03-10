@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.board.Block;
+import chess.board.Board;
 import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,16 @@ public class Rook extends Piece {
             do {
                 nextFile = Block.convertPosToFile(currentPos) + direction.getXDegree();
                 nextRank = Block.convertPosToRank(currentPos) + direction.getYDegree();
-                String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
                 if (nextFile < 0 || nextFile >= 8 || nextRank < 0 || nextRank >= 8) {
                     return;
                 }
+
+                String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
+
+                if (Board.getSameColorBlockPos(getColor()).contains(nextPos)) {
+                    return;
+                }
+
                 movablePosList.add(nextPos);
                 currentPos = nextPos;
             } while (true);

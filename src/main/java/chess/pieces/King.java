@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.board.Block;
+import chess.board.Board;
 import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,13 @@ public class King extends Piece {
             if (nextFile < 0 || nextFile >= 8 || nextRank < 0 || nextRank >= 8) {
                 return;
             }
+
             String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
+
+            if (Board.getSameColorBlockPos(getColor()).contains(nextPos)) {
+                return;
+            }
+
             movablePosList.add(nextPos);
         });
 

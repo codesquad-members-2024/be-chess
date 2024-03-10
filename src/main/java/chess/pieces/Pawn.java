@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.board.Block;
+import chess.board.Board;
 import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class Pawn extends Piece {
             }
 
             String nextPos = Block.convertRankAndFileToPos(nextRank, nextFile);
+
+            if (Board.getSameColorBlockPos(getColor()).contains(nextPos)) {
+                return;
+            }
+
             movablePosList.add(nextPos);
         });
 
