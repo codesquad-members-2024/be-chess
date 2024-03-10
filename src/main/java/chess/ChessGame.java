@@ -12,7 +12,7 @@ import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class ChessGame {
-    private static final int SOURCE_POS_INDEX = 1;
+    public static final int SOURCE_POS_INDEX = 1;
     private static final int TARGET_POS_INDEX = 2;
     public static final double DIVIDE_IN_HALF = 2.0;
     private static final String MOVE = "move";
@@ -31,8 +31,12 @@ public class ChessGame {
     }
 
     public void moveBoard(String userInput) {
-        String[] commands = userInput.replaceAll(MOVE, BLANK).split(BLANK);
+        String[] commands = convertToPos(userInput);
         move(commands[SOURCE_POS_INDEX], commands[TARGET_POS_INDEX]);
+    }
+
+    public String[] convertToPos(String userInput) {
+        return userInput.replaceAll(MOVE, BLANK).split(BLANK);
     }
 
     public void addPiece(String position, Piece piece) {
