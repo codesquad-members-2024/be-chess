@@ -17,6 +17,8 @@ public class ChessGame {
     public static final double DIVIDE_IN_HALF = 2.0;
     private static final String MOVE = "move";
     private static final String BLANK = "\\s+";
+    private static final String INVALID_POSITION_ERROR_MESSAGE = "이동할 수 없는 위치값입니다.";
+    private static final String IS_OBSTACLE_IN_PATH_ERROR_MESSAGE = "같은 색의 기물이 존재하여 움직일 수 없습니다.";
 
     private final Board chessBoard;
     private final List<Piece> whitePieces;
@@ -50,11 +52,11 @@ public class ChessGame {
         Piece piece = chessBoard.findPiece(sourcePos);
 
         if (!piece.verifyMovePosition(targetPos)) {
-            System.out.println("이동할 수 없는 위치값입니다.");
+            System.out.println(INVALID_POSITION_ERROR_MESSAGE);
             return;
         }
         if (piece.isObstacleInPath(targetPos, getObstacle(piece))) {
-            System.out.println("같은 색의 기물이 존재하여 움직일 수 없습니다.");
+            System.out.println(IS_OBSTACLE_IN_PATH_ERROR_MESSAGE);
             return;
         }
 
