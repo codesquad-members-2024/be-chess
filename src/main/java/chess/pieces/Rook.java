@@ -5,7 +5,7 @@ import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece implements Movable {
+public class Rook extends Piece {
 
     protected Rook(Color color) {
         super(color, Type.ROOK.allowedName, Type.ROOK);

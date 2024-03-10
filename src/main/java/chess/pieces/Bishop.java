@@ -5,7 +5,7 @@ import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends Piece implements Movable {
+public class Bishop extends Piece {
 
     protected Bishop(Color color) {
         super(color, Type.BISHOP.allowedName, Type.BISHOP);

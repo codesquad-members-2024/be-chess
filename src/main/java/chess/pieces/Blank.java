@@ -3,7 +3,7 @@ package chess.pieces;
 import chess.common.Color;
 import java.util.List;
 
-public class Blank extends Piece implements Movable {
+public class Blank extends Piece {
 
     protected Blank() {
         super(Color.NO_COLOR, Type.NO_PIECE.allowedName, Type.NO_PIECE);

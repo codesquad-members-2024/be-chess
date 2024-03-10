@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class Piece {
+public class Piece implements Movable {
     private final Color color;
     private final String name;
     private final Type type;
@@ -175,5 +175,10 @@ public class Piece {
         public static List<Direction> blackPawnDirection() {
             return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
         }
+    }
+
+    @Override
+    public List<String> movablePosList(String pos) {
+        return List.of();
     }
 }

@@ -5,7 +5,7 @@ import chess.common.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece implements Movable {
+public class Pawn extends Piece {
     protected Pawn(Color color) {
         super(color, Type.PAWN.allowedName, Type.PAWN);
     }
