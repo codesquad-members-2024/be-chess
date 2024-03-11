@@ -1,14 +1,15 @@
 package chess.board;
 
 import static chess.common.Color.*;
-import static chess.pieces.Piece.*;
 import static chess.pieces.Piece.Type.*;
 import static chess.utils.StringUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.pieces.Piece;
+import chess.pieces.PieceFactory;
 import java.lang.reflect.Method;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         board = new Board();
+        board.clear();
     }
 
     @DisplayName("체스판 a1 위치에 흰색 폰을 추가할 수 있다")
@@ -29,10 +31,10 @@ class BoardTest {
     void create() {
         // given
         board.initializeBoardBlocks();
-        Piece white = createWhitePawn();
+        Piece white = PieceFactory.createWhitePawn();
 
         // when
-        board.move("a1", white);
+        board.setPiece("a1", white);
 
         // then
         assertEquals(1, board.pieceCount());
@@ -43,10 +45,10 @@ class BoardTest {
     void findPawn() {
         // given
         board.initializeBoardBlocks();
-        Piece whitePawn = createWhitePawn();
-        Piece blackPawn = createBlackPawn();
-        board.move("a1", whitePawn);
-        board.move("a2", blackPawn);
+        Piece whitePawn = PieceFactory.createWhitePawn();
+        Piece blackPawn = PieceFactory.createBlackPawn();
+        board.setPiece("a1", whitePawn);
+        board.setPiece("a2", blackPawn);
 
         // when
         Piece firstFindPiece = board.findPiece("a1");
@@ -65,7 +67,7 @@ class BoardTest {
     void add_compileError(String number) {
         assertThatCode(
                 () -> {
-                    Method addMethod = Board.class.getDeclaredMethod("move", String.class, Piece.class);
+                    Method addMethod = Board.class.getDeclaredMethod("setPiece", String.class, Piece.class);
                     addMethod.setAccessible(true);
                     addMethod.invoke(board, Integer.parseInt(number));
                 }).isInstanceOf(IllegalArgumentException.class);
@@ -121,9 +123,9 @@ class BoardTest {
     void findPiece() {
         // given
         board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKing());
+        board.setPiece("a1", PieceFactory.createBlackKing());
 
-        board.move("h8", Piece.createWhiteKing());
+        board.setPiece("h8", PieceFactory.createWhiteKing());
 
         // when
         Piece firstInPiece = board.findPiece("a1");
@@ -149,14 +151,14 @@ class BoardTest {
         // given
         board.initializeBoardBlocks();
         // 검정색 나이트 3개 배치
-        board.move("a1", Piece.createBlackKnight());
-        board.move("a2", Piece.createBlackKnight());
-        board.move("a3", Piece.createBlackKnight());
+        board.setPiece("a1", PieceFactory.createBlackKnight());
+        board.setPiece("a2", PieceFactory.createBlackKnight());
+        board.setPiece("a3", PieceFactory.createBlackKnight());
 
         // 흰색 나이트 3개 배치
-        board.move("b1", Piece.createWhiteKnight());
-        board.move("b2", Piece.createWhiteKnight());
-        board.move("b3", Piece.createWhiteKnight());
+        board.setPiece("b1", PieceFactory.createWhiteKnight());
+        board.setPiece("b2", PieceFactory.createWhiteKnight());
+        board.setPiece("b3", PieceFactory.createWhiteKnight());
 
         // when
         int totalCount = board.getTotalCount(BLACK, KNIGHT);
@@ -194,73 +196,26 @@ class BoardTest {
         );
     }
 
-    @DisplayName("검정색 기물에 대해 폰이 아닌 킹, 퀸, 나이트, 비숍, 룩의 합은 19.5점이다")
+    @DisplayName("초기화된 체스판에서 검정색 기물은 16개, 흰색 기물은 16개다")
     @Test
-    void calculateMajorPoints() {
+    void getSameColorBlockPos() {
         // given
-        board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKing());
-        board.move("a2", Piece.createBlackQueen());
-        board.move("a3", Piece.createBlackKnight());
-        board.move("a4", Piece.createBlackBishop());
-        board.move("a5", Piece.createBlackRook());
+        board.initialize();
 
         // when
-        double majorPoints = board.calculateMajorPoints(BLACK);
+        List<String> blockPos = Board.getSameColorBlockPos(BLACK);
+        List<String> whitePos = Board.getSameColorBlockPos(WHITE);
 
         // then
-        assertEquals(19.5, majorPoints, 0.01);
-    }
-
-    @DisplayName("검정색 기물에 대해, 폰이 같은 열에 3개 있으면 합은 1.5점이다")
-    @Test
-    void calculatePawnPoints_when_same_file() {
-        // given
-        board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackPawn());
-        board.move("a2", Piece.createBlackPawn());
-        board.move("a3", Piece.createBlackPawn());
-
-        // when
-        double pawnPoints = board.calculatePawnPoints(BLACK);
-
-        // then
-        assertEquals(1.5, pawnPoints, 0.01);
-    }
-
-    @DisplayName("검은색 기물에 대해, 폰이 같은 행에 3개 있으면 합은 3.0점이다")
-    @Test
-    void calculatePawnPoints_when_different_file() {
-        // given
-        board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackPawn());
-        board.move("b1", Piece.createBlackPawn());
-        board.move("c1", Piece.createBlackPawn());
-
-        // when
-        double pawnPoints = board.calculatePawnPoints(BLACK);
-
-        // then
-        assertEquals(3.0, pawnPoints, 0.01);
-    }
-
-    @DisplayName("검정색 기물에 대해, 나이트 2개, 룩 1개, 퀸 1개, 같은 열의 폰 2개의 점수 합은 20.0 이다")
-    @Test
-    void calculatePoints() {
-        // given
-        board.initializeBoardBlocks();
-        board.move("a1", Piece.createBlackKnight());
-        board.move("a2", Piece.createBlackKnight());
-        board.move("a3", Piece.createBlackRook());
-        board.move("a4", Piece.createBlackQueen());
-
-        board.move("b1", Piece.createBlackPawn());
-        board.move("b2", Piece.createBlackPawn());
-
-        // when
-        double points = board.calculatePoints(BLACK);
-
-        // then
-        assertEquals(20.0, points, 0.01);
+        assertThat(blockPos.size()).isEqualTo(16);
+        assertThat(blockPos).contains(
+                "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
+                "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"
+        );
+        assertThat(whitePos.size()).isEqualTo(16);
+        assertThat(whitePos).contains(
+                "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
+                "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
+        );
     }
 }

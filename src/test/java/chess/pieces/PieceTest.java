@@ -19,7 +19,7 @@ class PieceTest {
     @ParameterizedTest(name = "기물 색상: {0}")
     @EnumSource(mode = Mode.INCLUDE, names = {"WHITE"})
     public void create(Color color) {
-        Piece piece = createWhitePawn();
+        Piece piece = PieceFactory.createWhitePawn();
 
         assertThat(piece.getColor()).isEqualTo(color);
     }
@@ -36,8 +36,8 @@ class PieceTest {
     @CsvSource(value = "♙, ♟")
     void display(String whiteShape, String blackShape) {
         // given
-        Piece white = createWhitePawn();
-        Piece black = createBlackPawn();
+        Piece white = PieceFactory.createWhitePawn();
+        Piece black = PieceFactory.createBlackPawn();
 
         // when
         String whiteRepresentation = white.getRepresentation();
@@ -54,8 +54,8 @@ class PieceTest {
     @DisplayName("팩토리 메서드로 흰색 폰과 검정색 폰을 올바르게 생성할 수 있다")
     @Test
     void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), WHITE, PAWN.whiteRepresentation);
-        verifyPiece(Piece.createBlackPawn(), BLACK, PAWN.blackRepresentation);
+        verifyPiece(PieceFactory.createWhitePawn(), WHITE, PAWN.whiteRepresentation);
+        verifyPiece(PieceFactory.createBlackPawn(), BLACK, PAWN.blackRepresentation);
     }
 
     private void verifyPiece(final Piece piece, final Color color, final String representation) {
@@ -67,8 +67,8 @@ class PieceTest {
     @Test
     void checkPieceColor() {
         // given
-        Piece blackPawn = createBlackPawn();
-        Piece whitePawn = createWhitePawn();
+        Piece blackPawn = PieceFactory.createBlackPawn();
+        Piece whitePawn = PieceFactory.createWhitePawn();
 
         // when & then
         assertTrue(blackPawn.isBlack());
@@ -81,7 +81,7 @@ class PieceTest {
     @Test
     void create_no_piece() {
         // given
-        Piece blank = createBlank();
+        Piece blank = PieceFactory.createBlank();
 
         // when & then
         assertAll(
@@ -101,7 +101,6 @@ class PieceTest {
     void initRank() {
         int blackPawnRank = InitPos.PAWN.check(BLACK);
         int whitePawnRank = InitPos.PAWN.check(WHITE);
-
 
         assertThat(blackPawnRank).isEqualTo(1);
         assertThat(whitePawnRank).isEqualTo(6);

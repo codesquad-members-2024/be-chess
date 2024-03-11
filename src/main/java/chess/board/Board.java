@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 public class Board {
     private static final int RANK_COUNT = 8;
     private static final int FILE_COUNT = 8;
-    private List<Block> boardBlocks = new ArrayList<>();
+    private static List<Block> boardBlocks = new ArrayList<>();
 
     public Piece findPiece(String pos) {
         return boardBlocks.stream()
@@ -49,7 +49,7 @@ public class Board {
                         .forEach(file -> boardBlocks.add(init(rank, file))));
     }
 
-    public void move(String pos, Piece piece) {
+    public void setPiece(String pos, Piece piece) {
         boardBlocks.stream()
                 .filter(block -> block.isSamePos(pos))
                 .findAny()
@@ -61,9 +61,7 @@ public class Board {
         if (color.equals(BLACK)) {
             createMajor(color);
             createPawns(color);
-            createBlank();
         } else {
-            createBlank();
             createPawns(color);
             createMajor(color);
         }
@@ -72,14 +70,14 @@ public class Board {
     private void createMajor(Color color) {
         int rank = InitPos.MAJOR.check(color);
 
-        move(convertRankAndFileToPos(rank, 0), create(color, ROOK));
-        move(convertRankAndFileToPos(rank, 1), create(color, KNIGHT));
-        move(convertRankAndFileToPos(rank, 2), create(color, BISHOP));
-        move(convertRankAndFileToPos(rank, 3), create(color, QUEEN));
-        move(convertRankAndFileToPos(rank, 4), create(color, KING));
-        move(convertRankAndFileToPos(rank, 5), create(color, BISHOP));
-        move(convertRankAndFileToPos(rank, 6), create(color, KNIGHT));
-        move(convertRankAndFileToPos(rank, 7), create(color, ROOK));
+        setPiece(convertRankAndFileToPos(rank, 0), create(color, ROOK));
+        setPiece(convertRankAndFileToPos(rank, 1), create(color, KNIGHT));
+        setPiece(convertRankAndFileToPos(rank, 2), create(color, BISHOP));
+        setPiece(convertRankAndFileToPos(rank, 3), create(color, QUEEN));
+        setPiece(convertRankAndFileToPos(rank, 4), create(color, KING));
+        setPiece(convertRankAndFileToPos(rank, 5), create(color, BISHOP));
+        setPiece(convertRankAndFileToPos(rank, 6), create(color, KNIGHT));
+        setPiece(convertRankAndFileToPos(rank, 7), create(color, ROOK));
     }
 
     private void createPawns(Color color) {
@@ -87,7 +85,7 @@ public class Board {
 
         IntStream.range(0, FILE_COUNT)
                 .forEach(file -> {
-                    move(convertRankAndFileToPos(rank, file), create(color, PAWN));
+                    setPiece(convertRankAndFileToPos(rank, file), create(color, PAWN));
                 });
     }
 
@@ -145,49 +143,18 @@ public class Board {
                 .count();
     }
 
-    public double calculatePoints(Color color) {
-        return calculateMajorPoints(color) + calculatePawnPoints(color);
+    public List<Block> getBoardBlocks() {
+        return new ArrayList<>(boardBlocks);
     }
 
-    public double calculateMajorPoints(Color color) {
+    public static List<String> getSameColorBlockPos(Color color) {
         return boardBlocks.stream()
-                .map(Block::getPiece)
-                .filter(piece -> !piece.isPawn() && piece.isSameColor(color))
-                .mapToDouble(piece -> piece.getType().getDefaultPoint())
-                .reduce(0.0, Double::sum);
+                .filter(b -> b.getPiece().isSameColor(color))
+                .map(Block::getPos)
+                .toList();
     }
 
-    public double calculatePawnPoints(Color color) {
-        return IntStream.range(0, FILE_COUNT)
-                .mapToDouble(file -> boardBlocks.stream()
-                        .filter(block -> block.getFile() == file)
-                        .filter(block -> {
-                            Piece piece = block.getPiece();
-                            return piece.isPawn() && piece.isSameColor(color);
-                        })
-                        .mapToDouble(block -> {
-                            double pawnDefaultPoint = block.getPiece().getType().getDefaultPoint();
-                            return convertDefaultPointByCondition(color, file, pawnDefaultPoint);
-                        })
-                        .reduce(0.0, Double::sum))
-                .sum();
-    }
-
-    private double convertDefaultPointByCondition(Color color, int file, double pawnDefaultPoint) {
-        if (hasOtherPawn(color, file)) {
-            return 0.5 * pawnDefaultPoint;
-        } else {
-            return pawnDefaultPoint;
-        }
-    }
-
-    public boolean hasOtherPawn(Color color, int file) {
-        long pawnCount = boardBlocks.stream()
-                .filter(block -> block.getFile() == file)
-                .map(Block::getPiece)
-                .filter(piece -> piece.isPawn() && piece.isSameColor(color))
-                .count();
-
-        return pawnCount > 1;
+    public void clear() {
+        boardBlocks.clear();
     }
 }
