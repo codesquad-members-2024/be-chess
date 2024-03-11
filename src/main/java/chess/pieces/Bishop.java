@@ -13,7 +13,7 @@ public class Bishop extends Piece{
         super(color, Type.BISHOP, 8);
     }
     @Override
-    public List<Direction> getDirection() {
+    protected List<Direction> getDirection() {
         return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 }

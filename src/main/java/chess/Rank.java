@@ -4,7 +4,9 @@ import chess.pieces.Piece;
 import chess.pieces.PieceFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Stream;
 
 import static chess.ChessHelp.MAX_FILE;
@@ -29,5 +31,17 @@ public class Rank {
 
     public Stream<Piece> stream() {
         return rank.stream();
+    }
+
+
+    public static String getRankRepresentation(Rank rank) {
+        StringJoiner sj = new StringJoiner("");
+        rank.stream().forEach(p -> sj.add(p.getRepresentation()));
+
+        return sj.toString();
+    }
+
+    public List<Piece> getPieceList(){
+        return Collections.unmodifiableList(rank);
     }
 }
