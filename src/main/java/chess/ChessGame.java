@@ -12,11 +12,13 @@ import pieces.Piece.PieceSymbol;
 import utils.Position;
 
 public class ChessGame {
-    private static final int SOURCE_POS_INDEX = 1;
+    public static final int SOURCE_POS_INDEX = 1;
     private static final int TARGET_POS_INDEX = 2;
     public static final double DIVIDE_IN_HALF = 2.0;
     private static final String MOVE = "move";
     private static final String BLANK = "\\s+";
+    private static final String INVALID_POSITION_ERROR_MESSAGE = "이동할 수 없는 위치값입니다.";
+    private static final String IS_OBSTACLE_IN_PATH_ERROR_MESSAGE = "같은 색의 기물이 존재하여 움직일 수 없습니다.";
 
     private final Board chessBoard;
     private final List<Piece> whitePieces;
@@ -31,8 +33,12 @@ public class ChessGame {
     }
 
     public void moveBoard(String userInput) {
-        String[] commands = userInput.replaceAll(MOVE, BLANK).split(BLANK);
+        String[] commands = convertToPos(userInput);
         move(commands[SOURCE_POS_INDEX], commands[TARGET_POS_INDEX]);
+    }
+
+    public String[] convertToPos(String userInput) {
+        return userInput.replaceAll(MOVE, BLANK).split(BLANK);
     }
 
     public void addPiece(String position, Piece piece) {
@@ -46,11 +52,11 @@ public class ChessGame {
         Piece piece = chessBoard.findPiece(sourcePos);
 
         if (!piece.verifyMovePosition(targetPos)) {
-            System.out.println("이동할 수 없는 위치값입니다.");
+            System.out.println(INVALID_POSITION_ERROR_MESSAGE);
             return;
         }
         if (piece.isObstacleInPath(targetPos, getObstacle(piece))) {
-            System.out.println("같은 색의 기물이 존재하여 움직일 수 없습니다.");
+            System.out.println(IS_OBSTACLE_IN_PATH_ERROR_MESSAGE);
             return;
         }
 
