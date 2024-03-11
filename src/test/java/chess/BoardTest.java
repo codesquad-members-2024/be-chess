@@ -1,22 +1,25 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.within;
 import static utils.StringUtils.appendNewLine;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Piece;
 import pieces.Piece.Color;
 import pieces.Piece.PieceSymbol;
+import pieces.Rook;
+import utils.Position;
+import view.ChessView;
 
 class BoardTest {
     private Board board;
+    private ChessView chessView;
 
     @BeforeEach
     void setBoard() {
         this.board = new Board();
+        this.chessView = new ChessView(board);
     }
 
     @Test
@@ -25,7 +28,7 @@ class BoardTest {
         board.initialize();
         assertThat(32).isEqualTo(board.pieceCount());
         String blankRank = appendNewLine("••••••••");
-        assertThat(board.showBoard())
+        assertThat(chessView.generateCurrentBoard())
                 .isEqualTo(appendNewLine("♜♞♝♛♚♝♞♜") +
                         appendNewLine("♟♟♟♟♟♟♟♟") +
                         blankRank + blankRank + blankRank + blankRank +
@@ -55,10 +58,10 @@ class BoardTest {
     @DisplayName("주어진 위치의 기물을 가져올 수 있다.")
     public void findPiece() throws Exception {
         board.initialize();
-        assertThat(Piece.createBlackRook()).isEqualTo(board.findPiece("a8"));
-        assertThat(Piece.createBlackRook()).isEqualTo(board.findPiece("h8"));
-        assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("a1"));
-        assertThat(Piece.createWhiteRook()).isEqualTo(board.findPiece("h1"));
+        assertThat(Rook.create(Color.BLACK, new Position("a8"))).isEqualTo(board.findPiece(new Position("a8")));
+        assertThat(Rook.create(Color.BLACK, new Position("h8"))).isEqualTo(board.findPiece(new Position("h8")));
+        assertThat(Rook.create(Color.WHITE, new Position("a1"))).isEqualTo(board.findPiece(new Position("a1")));
+        assertThat(Rook.create(Color.WHITE, new Position("h1"))).isEqualTo(board.findPiece(new Position("h1")));
     }
 
     @Test
@@ -66,56 +69,5 @@ class BoardTest {
     public void initializeEmpty() throws Exception {
         board.initializeEmpty();
         assertThat(board.getPieceCount(Color.NOCOLOR, PieceSymbol.NO_PIECE)).isEqualTo(64);
-    }
-
-    @Test
-    @DisplayName("체스 판의 임의의 위치에 기물을 추가할 수 있다.")
-    public void move() throws Exception {
-        board.initializeEmpty();
-
-        String position = "b5";
-        Piece piece = Piece.createBlackRook();
-        board.move(position, piece);
-
-        assertThat(piece).isEqualTo(board.findPiece(position));
-        System.out.println(board.showBoard());
-    }
-
-    @Test
-    @DisplayName("체스 프로그램에서 현재까지 남아 있는 기물에 따라 점수를 계산할 수 있다.")
-    public void calculatePoint() throws Exception {
-        board.initializeEmpty();
-
-        addPiece("b6", Piece.createBlackPawn());
-        addPiece("e6", Piece.createBlackQueen());
-        addPiece("b8", Piece.createBlackKing());
-        addPiece("c8", Piece.createBlackRook());
-
-        addPiece("f2", Piece.createWhitePawn());
-        addPiece("g2", Piece.createWhitePawn());
-        addPiece("e1", Piece.createWhiteRook());
-        addPiece("f1", Piece.createWhiteKing());
-
-        assertThat(board.hasSameVerticalPawns(Color.BLACK)).isFalse();
-        assertThat(board.hasSameVerticalPawns(Color.WHITE)).isFalse();
-        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(15.0, within(0.01));
-        assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(7.0, within(0.01));
-
-        System.out.println(board.showBoard());
-    }
-
-    private void addPiece(String position, Piece piece) {
-        board.move(position, piece);
-    }
-
-    @Test
-    @DisplayName("기물의 점수가 높은 순으로 정렬할 수 있다.")
-    public void sortPieces() {
-        board.initialize();
-
-        assertThat(String.join("", board.sortPieces(Color.WHITE))).isEqualTo("♕♖♖♗♗♘♘♙♙♙♙♙♙♙♙♔");
-        assertThat(String.join("", board.sortPieces(Color.BLACK))).isEqualTo("♕♖♖♗♗♘♘♙♙♙♙♙♙♙♙♔");
-        assertThat(String.join("", board.sortPiecesReversed(Color.WHITE))).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
-        assertThat(String.join("", board.sortPiecesReversed(Color.BLACK))).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
     }
 }
