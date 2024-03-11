@@ -22,6 +22,10 @@ public class Board {
     private static final int FILE_COUNT = 8;
     private static List<Block> boardBlocks = new ArrayList<>();
 
+    public Board() {
+        initialize();
+    }
+
     public Piece findPiece(String pos) {
         return boardBlocks.stream()
                 .filter(block -> Arrays.equals(convertPosToRankAndFile(pos), block.getRankAndFile()))
