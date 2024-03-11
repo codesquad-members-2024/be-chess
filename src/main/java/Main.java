@@ -1,4 +1,4 @@
-import chess.Board;
+import chess.board.Board;
 
 import java.util.Scanner;
 
